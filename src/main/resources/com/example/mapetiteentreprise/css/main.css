@@ -1,0 +1,126 @@
+.backgroundFerme{
+	-fx-background-image: url("../images/fondsHerbe.png");
+	-fx-background-repeat: no-repeat;
+	-fx-background-size: cover;
+}
+
+.buttonLight{
+    -fx-font-size: 10px;
+    -fx-padding: 5 10 5 10;
+}
+
+Button{
+    -fx-background-color:
+        linear-gradient(#ffd65b, #e68400),
+        linear-gradient(#ffef84, #f2ba44),
+        linear-gradient(#ffea6a, #efaa22),
+        linear-gradient(#ffe657 0%, #f8c202 50%, #eea10b 100%),
+        linear-gradient(from 0% 0% to 15% 50%, rgba(255,255,255,0.9), rgba(255,255,255,0));
+    -fx-background-radius: 30;
+    -fx-background-insets: 0,1,2,3,0;
+    -fx-text-fill: #654b00;
+    -fx-font-weight: bold;
+    -fx-font-size: 18px;
+    -fx-padding: 10 20 10 20;
+}
+Button:hover{
+    -fx-cursor: hand;
+    -fx-background-color: white;
+}
+
+.boutonSupr{
+        -fx-background-color: linear-gradient(#ff5400, #be1d00);
+        -fx-background-radius: 30;
+        -fx-background-insets: 0;
+        -fx-text-fill: white;
+        -fx-padding: 5 12 5 12;
+        -fx-font-size: 18px;
+}
+
+.boutonSupr:hover{
+    -fx-background-color: white;
+    -fx-text-fill: #654b00;
+    }
+
+Label{
+    -fx-background-color: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-padding: 2px;
+}
+.labelText{
+    -fx-pref-width: 180px;
+    -fx-pref-height: 14px;
+}
+.label2{
+-fx-font-size: 10px;
+}
+
+.labelText2{
+    -fx-font-size: 10px;
+    -fx-pref-width: 180px;
+    -fx-pref-height: 14px;
+}
+.labelChifres{
+    -fx-pref-width: 50px;
+    -fx-pref-height: 14px;
+    -fx-text-align: right;
+}
+.labelTaxe{
+    -fx-pref-width: 80px;
+    -fx-pref-height: 14px;
+    -fx-text-align: right;
+}
+
+#progressOeufs {
+    -fx-background-color: gray;
+    -fx-accent: #478806;
+    -fx-padding: 1px;
+    -fx-border-radius: 10px;
+    -fx-text-fill: white;
+}
+
+#btnBChaudes{
+    -fx-background-image: url("../images/fondsCafe.jpg");
+}
+
+.paneDistributeurs{
+    -fx-border-color: gray;
+    -fx-border-width: 2px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
+
+#fondsChaud{
+    -fx-background-image: url("../images/textureBois.jpg");
+}
+#fondsFroid{
+    -fx-background-image: url("../images/textureFroid.jpg");
+}
+#fondsConfiseries{
+    -fx-background-image: url("../images/textureSucrerie.jpg");
+}
+#fondsSandwich{
+    -fx-background-image: url("../images/textureSandwich.jpg");
+}
+
+.fondsPancarte{
+    -fx-background-image: url("../images/pancarte.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
+
+.fondsTableau{
+    -fx-background-image: url("../images/cadreArdoise.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
+
+#titre{
+    -fx-font-size: 40px;
+}
+
+#titre2{
+    -fx-font-size: 30px;
+    -fx-text-fill: white;
+}
