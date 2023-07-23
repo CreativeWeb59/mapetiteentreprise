@@ -1,6 +1,7 @@
 package com.example.mapetiteentreprise.controllersFx;
 
 import com.example.mapetiteentreprise.Main;
+import com.example.mapetiteentreprise.actions.Outils;
 import com.example.mapetiteentreprise.bdd.ConnectionBdd;
 import com.example.mapetiteentreprise.bdd.Sauvegarde;
 import com.example.mapetiteentreprise.bdd.SauvegardeService;
@@ -12,9 +13,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.text.DecimalFormat;
 
@@ -31,7 +35,7 @@ public class GestionController {
     private Jeu jeu;
     private final String monnaie = " €";
     // pattern des nombre décimaux
-    private final DecimalFormat decimalFormat = new DecimalFormat("0.00");
+    private final DecimalFormat decimalFormat = Outils.getDecimalFormatWithSpaceSeparator();
 
     /**
      *
@@ -51,6 +55,7 @@ public class GestionController {
         testDistributeur();
 
     }
+
 
     /**
      * Test si l'activite ferme est active
@@ -101,14 +106,16 @@ public class GestionController {
             root = loader.load();
             FermeController fermeController = loader.getController();
             fermeController.nouveau(jeu);
+            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            // Permet de récupérer le gestionnaire d'événements pour la fermeture de la fenêtre
+            stage.setOnCloseRequest(fermeController::onWindowClose);
+            stage.show();
+            stage.centerOnScreen();
         } catch (Exception e) {
             System.out.println(e);
         }
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-        stage.centerOnScreen();
     }
 
     /**
@@ -128,15 +135,16 @@ public class GestionController {
 
             FermeController fermeController = loader.getController();
             fermeController.demarrer(jeu);
+            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            // Permet de récupérer le gestionnaire d'événements pour la fermeture de la fenêtre
+            stage.setOnCloseRequest(fermeController::onWindowClose);
+            stage.show();
+            stage.centerOnScreen();
         } catch (Exception e) {
             System.out.println(e);
         }
-
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-        stage.centerOnScreen();
     }
     /**
      * Permet d'executer la fenetre de gestion des distributeurs
@@ -155,15 +163,16 @@ public class GestionController {
 
             GestionDistributeursController gestionDistributeursController = loader.getController();
             gestionDistributeursController.demarrer(jeu);
+            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            // Permet de récupérer le gestionnaire d'événements pour la fermeture de la fenêtre
+            stage.setOnCloseRequest(gestionDistributeursController::onWindowClose);
+            stage.show();
+            stage.centerOnScreen();
         } catch (Exception e) {
             System.out.println(e);
         }
-
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-        stage.centerOnScreen();
     }
 
     /**
@@ -202,6 +211,21 @@ public class GestionController {
         stage.setScene(scene);
         stage.show();
         stage.centerOnScreen();
+    }
+
+    /**
+     * Action a executé lors de la fermeture de la fentre avec la croix : sauvegarde
+     * @param event
+     */
+
+    public void onWindowClose(WindowEvent event) {
+        // Sauvegarde de la base de donnees
+        System.out.println("fermeture fenetre : Sauvegarde");
+        try {
+            sauvegardejeu();
+        } catch (Exception e){
+            System.out.println(e);
+        }
     }
 
     /**

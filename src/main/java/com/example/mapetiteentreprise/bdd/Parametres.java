@@ -38,10 +38,10 @@ public class Parametres {
     private int nbMarchandisesCo = 0;
 
     // valeur des marchandises contenues dans les distributeurs
-    private BigDecimal prixMarchandiseBC = BigDecimal.valueOf(1.50);
-    private BigDecimal prixMarchandiseBF = BigDecimal.valueOf(2.50);
-    private BigDecimal prixMarchandiseSa = BigDecimal.valueOf(4.00);
-    private BigDecimal prixMarchandiseCo = BigDecimal.valueOf(3.00);
+    private BigDecimal prixMarchandiseBC = BigDecimal.valueOf(15.00);
+    private BigDecimal prixMarchandiseBF = BigDecimal.valueOf(20.00);
+    private BigDecimal prixMarchandiseSa = BigDecimal.valueOf(40.00);
+    private BigDecimal prixMarchandiseCo = BigDecimal.valueOf(30.00);
 
     private int vitesseBC = 60;
     private int vitesseBF = 60;

@@ -1,6 +1,9 @@
 package com.example.mapetiteentreprise.controllersFx;
 
 import com.example.mapetiteentreprise.Main;
+import com.example.mapetiteentreprise.actions.Outils;
+import com.example.mapetiteentreprise.bdd.ConnectionBdd;
+import com.example.mapetiteentreprise.bdd.SauvegardeService;
 import com.example.mapetiteentreprise.jeu.Jeu;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -17,6 +20,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
 import java.math.BigDecimal;
@@ -64,7 +68,7 @@ public class GestionDistributeursController {
     private Parent root;
     private final String monnaie = " €";
     // pattern des nombre décimaux
-    private final DecimalFormat decimalFormat = new DecimalFormat("0.00");
+    private final DecimalFormat decimalFormat = Outils.getDecimalFormatWithSpaceSeparator();
 
     /**
      *  Declaraation des boutons, labels, progressBar necessaires
@@ -210,6 +214,21 @@ public class GestionDistributeursController {
         if (jeu.getJoueur().getDistributeursActive() == 1 && jeu.getJoueur().getSandwichs().getNbDistributeurs() > 0) {
             double vitesse = jeu.getParametres().getVitesseSa() - (jeu.getParametres().getVitesseSa() * jeu.getJoueur().getSandwichs().getEtatProgressDistributeur());
             this.progressBarStartTimelineEncoursSa(1, vitesse);
+        }
+    }
+
+    /**
+     * Action a executé lors de la fermeture de la fentre avec la croix : sauvegarde
+     * @param event
+     */
+
+    public void onWindowClose(WindowEvent event) {
+        // Sauvegarde de la base de donnees
+        System.out.println("fermeture fenetre : Sauvegarde");
+        try {
+            sauvegardejeu();
+        } catch (Exception e){
+            System.out.println(e);
         }
     }
 
@@ -1412,4 +1431,48 @@ public class GestionDistributeursController {
      // Fin distributeur Sandwichs
      /**************************************
      */
+
+    /**
+     * Permet de sauvegarder la partie dans la Bdd
+     */
+    public void sauvegardejeu()  {
+        // mise a jour instance sauvegarde
+        jeu.getSauvegarde().setArgent(jeu.getJoueur().getArgent());
+        jeu.getSauvegarde().setNbPoules(jeu.getJoueur().getFerme().getNbPoules());
+        jeu.getSauvegarde().setNbOeufs(jeu.getJoueur().getFerme().getNbOeufs());
+        jeu.getSauvegarde().setEtatProgressOeuf(jeu.getJoueur().getFerme().getEtatProgressOeuf());
+        // a modifier quand plusieurs activites
+        jeu.getSauvegarde().setDateDeco(jeu.getJoueur().getFerme().getDateDeco());
+        jeu.getSauvegarde().setFermeActive(jeu.getJoueur().getFermeActive());
+        jeu.getSauvegarde().setDistributeursActive(jeu.getJoueur().getDistributeursActive());
+        jeu.getSauvegarde().setDistributeurBCActive(jeu.getJoueur().getDistributeurBCActive());
+        jeu.getSauvegarde().setDistributeurBFActive(jeu.getJoueur().getDistributeurBFActive());
+        jeu.getSauvegarde().setDistributeurSaActive(jeu.getJoueur().getDistributeurSaActive());
+        jeu.getSauvegarde().setDistributeurCoActive(jeu.getJoueur().getDistributeurCoActive());
+        jeu.getSauvegarde().setNbDistributeurBC(jeu.getJoueur().getBoissonsChaudes().getNbDistributeurs());
+        jeu.getSauvegarde().setNbDistributeurBF(jeu.getJoueur().getBoissonsFraiches().getNbDistributeurs());
+        jeu.getSauvegarde().setNbDistributeurSa(jeu.getJoueur().getSandwichs().getNbDistributeurs());
+        jeu.getSauvegarde().setNbDistributeurCo(jeu.getJoueur().getConfiseries().getNbDistributeurs());
+        jeu.getSauvegarde().setNbMarchandisesBC(jeu.getJoueur().getBoissonsChaudes().getNbMarchandises());
+        jeu.getSauvegarde().setNbMarchandisesBF(jeu.getJoueur().getBoissonsFraiches().getNbMarchandises());
+        jeu.getSauvegarde().setNbMarchandisesSa(jeu.getJoueur().getSandwichs().getNbMarchandises());
+        jeu.getSauvegarde().setNbMarchandisesCo(jeu.getJoueur().getConfiseries().getNbMarchandises());
+        jeu.getSauvegarde().setEtatProgressBC(jeu.getJoueur().getBoissonsChaudes().getEtatProgressDistributeur());
+        jeu.getSauvegarde().setEtatProgressBF(jeu.getJoueur().getBoissonsFraiches().getEtatProgressDistributeur());
+        jeu.getSauvegarde().setEtatProgressSa(jeu.getJoueur().getSandwichs().getEtatProgressDistributeur());
+        jeu.getSauvegarde().setEtatProgressCo(jeu.getJoueur().getConfiseries().getEtatProgressDistributeur());
+
+        System.out.println("Nouvelles valeurs a sauvegarder" + jeu.getSauvegarde());
+
+        // sauvegarde dans la bdd
+        ConnectionBdd connectionBdd = new ConnectionBdd();
+        connectionBdd.connect();
+        SauvegardeService sauvegardeService = new SauvegardeService(connectionBdd);
+        try {
+            sauvegardeService.majSauvegarde(jeu.getSauvegarde());
+        } catch (Exception e){
+            System.out.println(e);
+        }
+        connectionBdd.close();
+    }
 }

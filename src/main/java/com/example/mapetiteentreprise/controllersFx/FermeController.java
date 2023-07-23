@@ -4,6 +4,7 @@ import com.example.mapetiteentreprise.Main;
 import com.example.mapetiteentreprise.bdd.ConnectionBdd;
 import com.example.mapetiteentreprise.bdd.SauvegardeService;
 import com.example.mapetiteentreprise.jeu.Jeu;
+import com.example.mapetiteentreprise.actions.Outils;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -22,6 +23,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
 import java.math.BigDecimal;
@@ -33,7 +35,8 @@ import java.util.List;
 public class FermeController {
     private final String monnaie = " €";
     // pattern des nombre décimaux
-    private final DecimalFormat decimalFormat = new DecimalFormat("0.00");
+//    private final DecimalFormat decimalFormat = new DecimalFormat("0.00");
+    private final DecimalFormat decimalFormat = Outils.getDecimalFormatWithSpaceSeparator();
     private BigDecimal gainEnAttente = new BigDecimal(0);
     private BigDecimal taxeEnAttente = new BigDecimal(0);
     @FXML
@@ -116,6 +119,20 @@ public class FermeController {
         progressBarStartTimeline(0, jeu.getParametres().getVitessePonteOeuf());
         this.executerAnimation();
 
+    }
+
+    /**
+     * Action a executé lors de la fermeture de la fentre avec la croix : sauvegarde
+     * @param event
+     */
+    public void onWindowClose(WindowEvent event) {
+        // Sauvegarde de la base de donnees
+        System.out.println("fermeture fenetre : Sauvegarde");
+        try {
+            sauvegardejeu();
+        } catch (Exception e){
+            System.out.println(e);
+        }
     }
 
     public void retourGestion(ActionEvent event) {
@@ -655,7 +672,7 @@ public class FermeController {
     }
 
     /**
-     * Timeline Animation de la pour
+     * Timeline Animation de la poule
      */
     public void executerAnimation() {
         Timeline timelinePoule = new Timeline();

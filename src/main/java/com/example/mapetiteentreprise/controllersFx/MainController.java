@@ -170,15 +170,17 @@ public class MainController {
             root = loader.load();
             GestionController gestionController = loader.getController();
             gestionController.debutJeu(jeu);
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            // Permet de récupérer le gestionnaire d'événements pour la fermeture de la fenêtre
+            stage.setOnCloseRequest(gestionController::onWindowClose);
+            stage.show();
+            stage.centerOnScreen();
         } catch (Exception e) {
             System.out.println(e);
         }
 
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-        stage.centerOnScreen();
     }
 
     public void exitJeu(ActionEvent event) {

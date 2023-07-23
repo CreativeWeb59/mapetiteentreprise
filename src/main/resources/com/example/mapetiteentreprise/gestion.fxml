@@ -55,7 +55,7 @@
                         <Button fx:id="btnLavage" disable="true" layoutX="4.0" layoutY="250.0" mnemonicParsing="false" text="Lavage de voiture" />
                     </children>
                 </Pane>
-                <Label alignment="CENTER" contentDisplay="CENTER" layoutX="230.0" layoutY="310.0" style="-fx-background-color: transparent;" styleClass="label2" text="Débloqué à partir de 3.000 €" textFill="WHITE" wrapText="true">
+                <Label alignment="CENTER" contentDisplay="CENTER" layoutX="230.0" layoutY="310.0" style="-fx-background-color: transparent;" styleClass="label2" text="Débloqué à partir de 1.500 €" textFill="WHITE" wrapText="true">
                     <font>
                         <Font size="3.0" />
                     </font>

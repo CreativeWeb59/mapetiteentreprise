@@ -1,5 +1,9 @@
 package com.example.mapetiteentreprise.actions;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
+
 public class Outils {
     /**
      * Mise en forme du pseudo :
@@ -100,5 +104,16 @@ public class Outils {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Formate les nombres décimaux avec séparateur de milliers
+     * @return
+     */
+    public static DecimalFormat getDecimalFormatWithSpaceSeparator() {
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.getDefault());
+        symbols.setGroupingSeparator(' '); // Espace pour le séparateur de milliers
+        DecimalFormat decimalFormat = new DecimalFormat("#,##0.00", symbols);
+        return decimalFormat;
     }
 }

@@ -62,7 +62,6 @@ Label{
     -fx-pref-height: 14px;
 }
 .labelChifres{
-    -fx-pref-width: 50px;
     -fx-pref-height: 14px;
     -fx-text-align: right;
 }
@@ -106,6 +105,12 @@ Label{
 
 .fondsPancarte{
     -fx-background-image: url("../images/pancarte.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
+
+.fondsPancarte2{
+    -fx-background-image: url("../images/pancarte2.png");
     -fx-background-repeat: no-repeat;
     -fx-background-size: cover;
 }
