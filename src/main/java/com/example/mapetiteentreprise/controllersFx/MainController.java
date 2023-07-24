@@ -23,6 +23,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -46,14 +47,17 @@ public class MainController {
     private JoueursService joueursService = new JoueursService();
     private SauvegardeService sauvegardeService;
     private ParametresService parametresService;
+    private CreditsService creditsService;
     private Sauvegarde sauvegarde;
     private Parametres parametres = new Parametres();
+    private Credits credits = new Credits();
     private Jeu jeu;
     private Ferme ferme;
     private BoissonsChaudes boissonsChaudes;
     private BoissonsFraiches boissonsFraiches;
     private Sandwichs sandwichs;
     private Confiseries confiseries;
+    private CreditEnCours creditEnCours;
 
     /**
      * Execute au lancement du programme
@@ -96,7 +100,7 @@ public class MainController {
                 // et cree l'instance joueur
                 this.creerJoueur();
                 // ouvre la page de gestion du jeu
-                this.switchPageGestion(event);
+                this.switchPageIntroduction(event);
             } else {
                 // Le joueur existe on bloque le lancement du jeu
                 this.labelErreur.setText("Le joueur existe déja");
@@ -124,17 +128,27 @@ public class MainController {
         connectionBdd.connect();
         // recupere la sauvegarde
         this.sauvegarde = sauvegardeService.getJoueurbyPseudo(userName);
-        System.out.println("distributeur actif Co : " + this.sauvegarde.getDistributeurCoActive());
-        System.out.println("distributeur actif Sa : " + this.sauvegarde.getDistributeurSaActive());
+
+        // teste si un credit est en cours
+        // recupere le credit en cours
+
+        if(creditsService.isCreditEnCours(userName)){
+            this.credits = creditsService.creditEnCours(userName);
+            this.creditEnCours = new CreditEnCours(credits.getMontantPret(), credits.getCoutPret(), credits.getMontantRembourse(), credits.getMensualite(), credits.getNbMMensualite(),
+                    credits.getCycleMensualite(), credits.getTermine(), credits.getDateDebutCredit(), credits.getDateDebutCredit());
+        } else {
+            System.out.println("Pas de crédit en cours");
+        }
+
+
         // renseigne les parametres (tarifs...) dans les activites
         this.creerActivites(false);
         // creation de la classe joueur
         Joueur joueur = new Joueur(userName, sauvegarde.getArgent(), this.ferme, this.boissonsChaudes, this.boissonsFraiches, this.sandwichs, this.confiseries,
-                this.sauvegarde.getFermeActive(), this.sauvegarde.getDistributeursActive(), this.sauvegarde.getDistributeurBCActive(),
+                this.creditEnCours, this.sauvegarde.getFermeActive(), this.sauvegarde.getDistributeursActive(), this.sauvegarde.getDistributeurBCActive(),
                 this.sauvegarde.getDistributeurBFActive(), this.sauvegarde.getDistributeurCoActive(), this.sauvegarde.getDistributeurSaActive());
 
-
-        this.jeu = new Jeu(joueur, sauvegarde, parametres);
+        this.jeu = new Jeu(joueur, sauvegarde, parametres, sauvegarde.getNumeroJour());
         connectionBdd.close();
         System.out.println("Le jeu complet içi : " + this.jeu);
         this.switchPageGestion(event);
@@ -159,12 +173,12 @@ public class MainController {
         }
     }
 
+    /**
+     * Ouvre la page gestion
+     *
+     * @param event
+     */
     public void switchPageGestion(Event event) {
-
-        // Tester le pseudo
-        // Test nombre de caractères
-        // Test si non vide
-
         try {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("gestion.fxml"));
             root = loader.load();
@@ -180,7 +194,27 @@ public class MainController {
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
 
+    /**
+     * Ouvre la page d'introduction quand nouveau jeu
+     *
+     * @param event
+     */
+    public void switchPageIntroduction(Event event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("introduction.fxml"));
+            root = loader.load();
+            IntroductionController introductionController = loader.getController();
+            introductionController.debutIntro(jeu);
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+            stage.centerOnScreen();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     public void exitJeu(ActionEvent event) {
@@ -207,18 +241,18 @@ public class MainController {
 
         // creation de la sauvegarde en bdd
         this.sauvegarde = new Sauvegarde(this.pseudo, parametres.getArgentDepart(), parametres.getNbPoules(), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                dateDeco,0,0,0,0, 0,0,0,0, 0, 0, 0, 0);
+                dateDeco, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1);
         sauvegardeService.addJoueur(sauvegarde);
 
         this.creerActivites(true);
 
         // creation de la classe joueur
         Joueur joueur = new Joueur(this.pseudo, parametres.getArgentDepart(), this.ferme, this.boissonsChaudes, this.boissonsFraiches, this.sandwichs, this.confiseries,
-                this.parametres.getFermeActive(), this.parametres.getDistributeursActive(), this.parametres.getDistributeurBCActive(),
+                this.creditEnCours, this.parametres.getFermeActive(), this.parametres.getDistributeursActive(), this.parametres.getDistributeurBCActive(),
                 this.parametres.getDistributeurBFActive(), this.parametres.getDistributeurSaActive(), this.parametres.getDistributeurCoActive());
 
         // creation de la partie
-        this.jeu = new Jeu(joueur, sauvegarde, parametres);
+        this.jeu = new Jeu(joueur, sauvegarde, parametres, 1);
     }
 
     /**
@@ -291,6 +325,9 @@ public class MainController {
         if (!connectionBdd.isModel("sauvegarde")) {
             connectionBdd.createModelSauvegarde();
         }
+        if (!connectionBdd.isModel("credits")) {
+            connectionBdd.createModelCredits();
+        }
         connectionBdd.close();
     }
 
@@ -299,6 +336,7 @@ public class MainController {
 //        ConnectionBdd connexion = new ConnectionBdd();
         connectionBdd.connect();
         sauvegardeService = new SauvegardeService(connectionBdd);
+        creditsService = new CreditsService(connectionBdd);
         List<String> tousLesJoueurs = sauvegardeService.listePseudos();
         connectionBdd.close();
 

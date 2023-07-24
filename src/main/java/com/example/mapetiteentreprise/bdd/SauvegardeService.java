@@ -78,8 +78,8 @@ public class SauvegardeService {
         String sql = "INSERT INTO sauvegarde (pseudo, argent, nbPoules, nbOeufs, fermeActive, distributeursActive, distributeurBCActive, distributeurBFActive, distributeurCoActive, distributeurSaActive, livraisonActive, lavageActive, etatProgressOeuf, dateDeco, " +
                 "nbDistributeurBC, nbDistributeurBF, nbDistributeurSa, nbDistributeurCo," +
                 "nbMarchandisesBC, nbMarchandisesBF, nbMarchandisesSa, nbMarchandisesCo," +
-                "etatProgressBC, etatProgressBF, etatProgressSa, etatProgressCo"+
-                ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                "etatProgressBC, etatProgressBF, etatProgressSa, etatProgressCo, numeroJour"+
+                ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         PreparedStatement stmt = connectionBdd.prepareStatement(sql);
         stmt.setString(1, sauvegarde.getPseudo());
@@ -111,6 +111,8 @@ public class SauvegardeService {
         stmt.setDouble(24, sauvegarde.getEtatProgressBF());
         stmt.setDouble(25, sauvegarde.getEtatProgressSa());
         stmt.setDouble(26, sauvegarde.getEtatProgressCo());
+
+        stmt.setInt(27, sauvegarde.getNumeroJour());
 
         try {
             stmt.executeUpdate();
@@ -180,6 +182,8 @@ public class SauvegardeService {
             double etatProgressSa = resultSet.getDouble("etatProgressSa");
             double etatProgressCo = resultSet.getDouble("etatProgressCo");
 
+            int numeroJour = resultSet.getInt("numeroJour");
+
             LocalDateTime dateDeco = LocalDateTime.ofInstant(Instant.ofEpochMilli(timestampMillis), ZoneId.systemDefault());
 
             Sauvegarde sauvegarde = new Sauvegarde(pseudo, argent, nbPoules, nbOeufs, fermeActive, distributeursActive, distributeurBCActive,
@@ -187,7 +191,7 @@ public class SauvegardeService {
                     , etatProgressOeuf, dateDeco,
                     nbDistributeurBC, nbDistributeurBF, nbDistributeurSa, nbDistributeurCo,
                     nbMarchandisesBC, nbMarchandisesBF, nbMarchandisesSa, nbMarchandisesCo,
-                    etatProgressBC, etatProgressBF, etatProgressSa, etatProgressCo);
+                    etatProgressBC, etatProgressBF, etatProgressSa, etatProgressCo, numeroJour);
             sauvegarde.setId(id);
             System.out.println(sauvegarde);
             return sauvegarde;
@@ -205,7 +209,7 @@ public class SauvegardeService {
                 " etatProgressOeuf = ?, dateDeco = ?," +
                 "nbDistributeurBC = ?, nbDistributeurBF = ?, nbDistributeurSa = ?, nbDistributeurCo = ?," +
                 "nbMarchandisesBC = ?, nbMarchandisesBF = ?, nbMarchandisesSa = ?, nbMarchandisesCo = ?," +
-                "etatProgressBC = ?, etatProgressBF = ?, etatProgressSa = ?, etatProgressCo = ?"+
+                "etatProgressBC = ?, etatProgressBF = ?, etatProgressSa = ?, etatProgressCo = ?, numeroJour = ?"+
                 " WHERE pseudo LIKE ?";
 
         System.out.println("Requete : " + sql);
@@ -246,7 +250,9 @@ public class SauvegardeService {
         stmt.setDouble(24, sauvegarde.getEtatProgressSa());
         stmt.setDouble(25, sauvegarde.getEtatProgressCo());
 
-        stmt.setString(26, sauvegarde.getPseudo());
+        stmt.setInt(26, sauvegarde.getNumeroJour());
+
+        stmt.setString(27, sauvegarde.getPseudo());
 
         // Insertion des données
         try {

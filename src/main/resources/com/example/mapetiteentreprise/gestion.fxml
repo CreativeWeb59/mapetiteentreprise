@@ -7,12 +7,12 @@
 
 <AnchorPane prefHeight="1024.0" prefWidth="1280.0" styleClass="fondsTableau" stylesheets="@css/main.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.mapetiteentreprise.controllersFx.GestionController">
     <children>
-        <Pane layoutX="240.0" layoutY="212.0" prefHeight="100.0" prefWidth="800.0">
+        <Pane layoutX="240.0" layoutY="100.0" prefHeight="100.0" prefWidth="800.0">
             <children>
                 <Label id="titre2" fx:id="pseudoLabel" layoutX="3.0" layoutY="30.0" prefHeight="62.0" prefWidth="791.0" style="-fx-background-color: transparent;" text="Hello" />
             </children>
         </Pane>
-        <Pane layoutX="240.0" layoutY="312.0" prefHeight="400.0" prefWidth="800.0">
+        <Pane layoutX="240.0" layoutY="200.0" prefHeight="340.0" prefWidth="800.0">
             <children>
                 <Pane prefHeight="300.0" prefWidth="200.0">
                     <children>
@@ -62,15 +62,92 @@
                 </Label>
             </children>
         </Pane>
-        <Pane layoutX="240.0" layoutY="752.0" prefHeight="60.0" prefWidth="800.0">
-            <children>
-                <Label fx:id="labelConsole" alignment="TOP_LEFT" layoutX="50.0" prefHeight="60.0" prefWidth="700.0" style="-fx-background-color: transparent;" />
-            </children>
-        </Pane>
-        <Pane layoutX="240.0" layoutY="692.0" prefHeight="40.0" prefWidth="800.0">
+      <Pane layoutX="185.0" layoutY="560.0" prefHeight="120.0" prefWidth="910.0">
+         <children>
+            <Pane prefHeight="120.0" prefWidth="118.0" styleClass="fondsCalendrierCoche">
+               <children>
+                  <Label alignment="CENTER" layoutY="10.0" prefHeight="29.0" prefWidth="120.0" styleClass="labelCalendrier" text="Jour 1" />
+               </children>
+            </Pane>
+             <Pane layoutX="130.0" prefHeight="120.0" prefWidth="118.0" styleClass="fondsCalendrierCoche">
+               <children>
+                   <Label alignment="CENTER" layoutY="10.0" prefHeight="29.0" prefWidth="120.0" styleClass="labelCalendrier" text="Jour 2" />
+               </children>
+            </Pane>
+             <Pane layoutX="258.0" prefHeight="120.0" prefWidth="118.0" styleClass="fondsCalendrierCercle">
+               <children>
+                   <Label alignment="CENTER" layoutY="10.0" prefHeight="29.0" prefWidth="120.0" styleClass="labelCalendrier" text="Jour 3" />
+               </children>
+            </Pane>
+             <Pane layoutX="388.0" prefHeight="120.0" prefWidth="118.0" styleClass="fondsCalendrier">
+               <children>
+                   <Label alignment="CENTER" layoutY="10.0" prefHeight="29.0" prefWidth="120.0" styleClass="labelCalendrier" text="Jour 4" />
+               </children>
+            </Pane>
+             <Pane layoutX="518.0" prefHeight="120.0" prefWidth="118.0" styleClass="fondsCalendrier">
+               <children>
+                   <Label alignment="CENTER" layoutY="10.0" prefHeight="29.0" prefWidth="120.0" styleClass="labelCalendrier" text="Jour 5" />
+               </children>
+            </Pane>
+             <Pane layoutX="648.0" prefHeight="120.0" prefWidth="118.0" styleClass="fondsCalendrier">
+               <children>
+                   <Label alignment="CENTER" layoutY="10.0" prefHeight="29.0" prefWidth="120.0" styleClass="labelCalendrier" text="Jour 6" />
+               </children>
+            </Pane>
+             <Pane layoutX="778.0" prefHeight="120.0" prefWidth="118.0" styleClass="fondsCalendrier">
+               <children>
+                   <Label alignment="CENTER" layoutY="10.0" prefHeight="29.0" prefWidth="120.0" styleClass="labelCalendrier" text="Jour 7" />
+               </children>
+            </Pane>
+         </children></Pane>
+      <Pane layoutX="185.0" layoutY="690.0" prefHeight="120.0" prefWidth="910.0">
+         <children>
+            <Pane prefHeight="120.0" prefWidth="118.0" styleClass="fondsCalendrier">
+               <children>
+                  <Label alignment="CENTER" layoutY="10.0" prefHeight="29.0" prefWidth="120.0" styleClass="labelCalendrier" text="Jour 8" />
+               </children>
+            </Pane>
+            <Pane layoutX="130.0" prefHeight="120.0" prefWidth="118.0" styleClass="fondsCalendrier">
+               <children>
+                  <Label alignment="CENTER" layoutY="10.0" prefHeight="29.0" prefWidth="120.0" styleClass="labelCalendrier" text="Jour 9" />
+               </children>
+            </Pane>
+            <Pane layoutX="258.0" prefHeight="120.0" prefWidth="118.0" styleClass="fondsCalendrier">
+               <children>
+                  <Label alignment="CENTER" layoutY="10.0" prefHeight="29.0" prefWidth="120.0" styleClass="labelCalendrier" text="Jour 10" />
+               </children>
+            </Pane>
+            <Pane layoutX="388.0" prefHeight="120.0" prefWidth="118.0" styleClass="fondsCalendrier">
+               <children>
+                  <Label alignment="CENTER" layoutY="10.0" prefHeight="29.0" prefWidth="120.0" styleClass="labelCalendrier" text="Jour 11" />
+               </children>
+            </Pane>
+            <Pane layoutX="518.0" prefHeight="120.0" prefWidth="118.0" styleClass="fondsCalendrier">
+               <children>
+                  <Label alignment="CENTER" layoutY="10.0" prefHeight="29.0" prefWidth="120.0" styleClass="labelCalendrier" text="Jour 12" />
+               </children>
+            </Pane>
+            <Pane layoutX="648.0" prefHeight="120.0" prefWidth="118.0" styleClass="fondsCalendrier">
+               <children>
+                  <Label alignment="CENTER" layoutY="10.0" prefHeight="29.0" prefWidth="120.0" styleClass="labelCalendrier" text="Jour 13" />
+               </children>
+            </Pane>
+            <Pane layoutX="778.0" prefHeight="120.0" prefWidth="118.0" styleClass="fondsCalendrierBanquier">
+               <children>
+                  <Label alignment="CENTER" layoutY="10.0" prefHeight="29.0" prefWidth="120.0" styleClass="labelCalendrier" text="Jour 14" />
+               </children>
+            </Pane>
+         </children>
+      </Pane>
+        <Pane layoutX="240.0" layoutY="840.0" prefHeight="40.0" prefWidth="800.0">
             <children>
                 <Button layoutX="150.0" mnemonicParsing="false" onAction="#exitJeu" text="Enregistrer et Quitter" />
                 <Button layoutX="430.0" mnemonicParsing="false" onAction="#retourMenu" text="Menu principal" />
+            </children>
+        </Pane>
+        <Pane layoutX="240.0" layoutY="752.0" prefHeight="60.0" prefWidth="800.0">
+            <children>
+                <Label fx:id="labelConsole" alignment="TOP_LEFT" layoutX="50.0" prefHeight="60.0" prefWidth="700.0" style="-fx-background-color: transparent;" />
             </children>
         </Pane>
     </children>

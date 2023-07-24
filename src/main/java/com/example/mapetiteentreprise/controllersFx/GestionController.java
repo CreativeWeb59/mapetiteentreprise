@@ -2,9 +2,7 @@ package com.example.mapetiteentreprise.controllersFx;
 
 import com.example.mapetiteentreprise.Main;
 import com.example.mapetiteentreprise.actions.Outils;
-import com.example.mapetiteentreprise.bdd.ConnectionBdd;
-import com.example.mapetiteentreprise.bdd.Sauvegarde;
-import com.example.mapetiteentreprise.bdd.SauvegardeService;
+import com.example.mapetiteentreprise.bdd.*;
 import com.example.mapetiteentreprise.jeu.Jeu;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -193,6 +191,7 @@ public class GestionController {
     public void retourMenu(ActionEvent event)  {
         try {
             sauvegardejeu();
+            sauvegardeCredit();
         } catch (Exception e){
             System.out.println(e);
         }
@@ -223,6 +222,7 @@ public class GestionController {
         System.out.println("fermeture fenetre : Sauvegarde");
         try {
             sauvegardejeu();
+            sauvegardeCredit();
         } catch (Exception e){
             System.out.println(e);
         }
@@ -279,6 +279,18 @@ public class GestionController {
         } catch (Exception e){
             System.out.println(e);
         }
+        connectionBdd.close();
+    }
+
+    public void sauvegardeCredit(){
+        ConnectionBdd connectionBdd = new ConnectionBdd();
+        connectionBdd.connect();
+        Credits credits = new Credits();
+        CreditsService creditsService = new CreditsService(connectionBdd);
+        credits.setMontantRembourse(jeu.getJoueur().getCreditEnCours().getMontantRembourse());
+        credits.setDateDerniereMensualite(jeu.getJoueur().getCreditEnCours().getDateDerniereMensualite());
+        credits.setTermine(jeu.getJoueur().getCreditEnCours().getTermine());
+
         connectionBdd.close();
     }
 }

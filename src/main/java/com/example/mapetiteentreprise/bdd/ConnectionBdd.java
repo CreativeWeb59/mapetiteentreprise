@@ -1,6 +1,8 @@
 package com.example.mapetiteentreprise.bdd;
 
+import java.math.BigDecimal;
 import java.sql.*;
+import java.time.LocalDateTime;
 
 public class ConnectionBdd {
     private String DBPath = "Chemin aux base de donnée SQLite";
@@ -72,11 +74,12 @@ public class ConnectionBdd {
                 "nbPoules INTEGER, nbOeufs INTEGER, fermeActive INTEGER, distributeursActive INTEGER, distributeurBCActive INTEGER, distributeurBFActive INTEGER, distributeurCoActive INTEGER, distributeurSaActive INTEGER, livraisonActive INTEGER, lavageActive INTEGER, etatProgressOeuf REAL, dateDeco TEXT," +
                 "nbDistributeurBC INTEGER, nbDistributeurBF INTEGER, nbDistributeurSa INTEGER, nbDistributeurCo INTEGER," +
                 "nbMarchandisesBC INTEGER, nbMarchandisesBF INTEGER, nbMarchandisesSa INTEGER, nbMarchandisesCo INTEGER," +
-                "etatProgressBC REAL, etatProgressBF REAL, etatProgressSa REAL, etatProgressCo REAL)";
+                "etatProgressBC REAL, etatProgressBF REAL, etatProgressSa REAL, etatProgressCo REAL, numeroJour INTEGER)";
         Statement stmt = connection.createStatement();
         stmt.execute(sql);
         System.out.println("La table 'sauvegarde' a été créée avec succès.");
     }
+
     /**
      * cree la table parametres
      *
@@ -106,4 +109,19 @@ public class ConnectionBdd {
             return resultSet.next();
         }
     }
+
+    /**
+     * cree la table credits
+     * conserve une liste des credits par pseudo
+     *
+     * @throws SQLException
+     */
+    public void createModelCredits() throws SQLException {
+        String sql = "CREATE TABLE credits (id INTEGER PRIMARY KEY, pseudo TEXT, montantPret REAL, coutPret REAL, montantRembourse REAL," +
+                "mensualite REAL, nbMMensualite INTEGER, cycleMensualite INTEGER, termine INTEGER, dateDebutCredit TEXT, dateDerniereMensualite TEXT)";
+        Statement stmt = connection.createStatement();
+        stmt.execute(sql);
+        System.out.println("La table 'credits' a été créée avec succès.");
+    }
+
 }

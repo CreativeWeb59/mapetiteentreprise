@@ -10,6 +10,7 @@ public class Joueur {
     private BoissonsFraiches boissonsFraiches;
     private Sandwichs sandwichs;
     private Confiseries confiseries;
+    private CreditEnCours creditEnCours;
     private int fermeActive = 0;
     private int distributeursActive;
     private int distributeurBCActive;
@@ -17,7 +18,7 @@ public class Joueur {
     private int distributeurCoActive;
     private int distributeurSaActive;
 
-    public Joueur(String pseudo, BigDecimal argent, Ferme ferme, BoissonsChaudes boissonsChaudes, BoissonsFraiches boissonsFraiches, Sandwichs sandwichs, Confiseries confiseries, int fermeActive, int distributeursActive, int distributeurBCActive, int distributeurBFActive, int distributeurCoActive, int distributeurSaActive) {
+    public Joueur(String pseudo, BigDecimal argent, Ferme ferme, BoissonsChaudes boissonsChaudes, BoissonsFraiches boissonsFraiches, Sandwichs sandwichs, Confiseries confiseries, CreditEnCours creditEnCours, int fermeActive, int distributeursActive, int distributeurBCActive, int distributeurBFActive, int distributeurCoActive, int distributeurSaActive) {
         this.pseudo = pseudo;
         this.argent = argent;
         this.ferme = ferme;
@@ -25,6 +26,7 @@ public class Joueur {
         this.boissonsFraiches = boissonsFraiches;
         this.sandwichs = sandwichs;
         this.confiseries = confiseries;
+        this.creditEnCours = creditEnCours;
         this.fermeActive = fermeActive;
         this.distributeursActive = distributeursActive;
         this.distributeurBCActive = distributeurBCActive;
@@ -137,6 +139,14 @@ public class Joueur {
         this.distributeurSaActive = distributeurSaActive;
     }
 
+    public CreditEnCours getCreditEnCours() {
+        return creditEnCours;
+    }
+
+    public void setCreditEnCours(CreditEnCours creditEnCours) {
+        this.creditEnCours = creditEnCours;
+    }
+
     @Override
     public String toString() {
         return "Joueur{" +
@@ -147,6 +157,7 @@ public class Joueur {
                 ", boissonsFraiches=" + boissonsFraiches +
                 ", sandwichs=" + sandwichs +
                 ", confiseries=" + confiseries +
+                ", creditEnCours=" + creditEnCours +
                 ", fermeActive=" + fermeActive +
                 ", distributeursActive=" + distributeursActive +
                 ", distributeurBCActive=" + distributeurBCActive +

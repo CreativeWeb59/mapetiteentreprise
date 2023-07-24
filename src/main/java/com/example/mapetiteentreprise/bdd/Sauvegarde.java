@@ -38,8 +38,13 @@ public class Sauvegarde {
     private double etatProgressBF;
     private double etatProgressSa;
     private double etatProgressCo;
+    private int numeroJour;
 
-    public Sauvegarde(int id, String pseudo, BigDecimal argent, int nbPoules, long nbOeufs, int fermeActive, int distributeursActive, int distributeurBCActive, int distributeurBFActive, int distributeurCoActive, int distributeurSaActive, int livraisonActive, int lavageActive, double etatProgressOeuf, LocalDateTime dateDeco, int nbDistributeurBC, int nbDistributeurBF, int nbDistributeurSa, int nbDistributeurCo, long nbMarchandisesBC, long nbMarchandisesBF, long nbMarchandisesSa, long nbMarchandisesCo, double etatProgressBC, double etatProgressBF, double etatProgressSa, double etatProgressCo) {
+    public Sauvegarde(int id, String pseudo, BigDecimal argent, int nbPoules, long nbOeufs, int fermeActive, int distributeursActive, int distributeurBCActive,
+                      int distributeurBFActive, int distributeurCoActive, int distributeurSaActive, int livraisonActive, int lavageActive,
+                      double etatProgressOeuf, LocalDateTime dateDeco, int nbDistributeurBC, int nbDistributeurBF, int nbDistributeurSa, int nbDistributeurCo,
+                      long nbMarchandisesBC, long nbMarchandisesBF, long nbMarchandisesSa, long nbMarchandisesCo, double etatProgressBC,
+                      double etatProgressBF, double etatProgressSa, double etatProgressCo, int numeroJour) {
         this.id = id;
         this.pseudo = pseudo;
         this.argent = argent;
@@ -67,9 +72,14 @@ public class Sauvegarde {
         this.etatProgressBF = etatProgressBF;
         this.etatProgressSa = etatProgressSa;
         this.etatProgressCo = etatProgressCo;
+        this.numeroJour = numeroJour;
     }
 
-    public Sauvegarde(String pseudo, BigDecimal argent, int nbPoules, long nbOeufs, int fermeActive, int distributeursActive, int distributeurBCActive, int distributeurBFActive, int distributeurCoActive, int distributeurSaActive, int livraisonActive, int lavageActive, double etatProgressOeuf, LocalDateTime dateDeco, int nbDistributeurBC, int nbDistributeurBF, int nbDistributeurSa, int nbDistributeurCo, long nbMarchandisesBC, long nbMarchandisesBF, long nbMarchandisesSa, long nbMarchandisesCo, double etatProgressBC, double etatProgressBF, double etatProgressSa, double etatProgressCo) {
+    public Sauvegarde(String pseudo, BigDecimal argent, int nbPoules, long nbOeufs, int fermeActive, int distributeursActive, int distributeurBCActive,
+                      int distributeurBFActive, int distributeurCoActive, int distributeurSaActive, int livraisonActive, int lavageActive,
+                      double etatProgressOeuf, LocalDateTime dateDeco, int nbDistributeurBC, int nbDistributeurBF, int nbDistributeurSa,
+                      int nbDistributeurCo, long nbMarchandisesBC, long nbMarchandisesBF, long nbMarchandisesSa, long nbMarchandisesCo,
+                      double etatProgressBC, double etatProgressBF, double etatProgressSa, double etatProgressCo, int numeroJour) {
         this.pseudo = pseudo;
         this.argent = argent;
         this.nbPoules = nbPoules;
@@ -96,6 +106,7 @@ public class Sauvegarde {
         this.etatProgressBF = etatProgressBF;
         this.etatProgressSa = etatProgressSa;
         this.etatProgressCo = etatProgressCo;
+        this.numeroJour = numeroJour;
     }
 
     public int getId() {
@@ -314,6 +325,14 @@ public class Sauvegarde {
         this.etatProgressCo = etatProgressCo;
     }
 
+    public int getNumeroJour() {
+        return numeroJour;
+    }
+
+    public void setNumeroJour(int numeroJour) {
+        this.numeroJour = numeroJour;
+    }
+
     @Override
     public String toString() {
         return "Sauvegarde{" +
@@ -344,6 +363,7 @@ public class Sauvegarde {
                 ", etatProgressBF=" + etatProgressBF +
                 ", etatProgressSa=" + etatProgressSa +
                 ", etatProgressCo=" + etatProgressCo +
+                ", numeroJour=" + numeroJour +
                 '}';
     }
 }

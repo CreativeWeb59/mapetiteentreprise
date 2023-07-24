@@ -7,11 +7,13 @@ public class Jeu {
     private Joueur joueur;
     private Sauvegarde sauvegarde;
     private Parametres parametres;
+    private int numeroJour;
 
-    public Jeu(Joueur joueur, Sauvegarde sauvegarde, Parametres parametres) {
+    public Jeu(Joueur joueur, Sauvegarde sauvegarde, Parametres parametres, int numeroJour) {
         this.joueur = joueur;
         this.sauvegarde = sauvegarde;
         this.parametres = parametres;
+        this.numeroJour = numeroJour;
     }
 
     public Joueur getJoueur() {
@@ -38,12 +40,21 @@ public class Jeu {
         this.parametres = parametres;
     }
 
+    public int getNumeroJour() {
+        return numeroJour;
+    }
+
+    public void setNumeroJour(int numeroJour) {
+        this.numeroJour = numeroJour;
+    }
+
     @Override
     public String toString() {
         return "Jeu{" +
                 "joueur=" + joueur +
                 ", sauvegarde=" + sauvegarde +
                 ", parametres=" + parametres +
+                ", numeroJour=" + numeroJour +
                 '}';
     }
 }
