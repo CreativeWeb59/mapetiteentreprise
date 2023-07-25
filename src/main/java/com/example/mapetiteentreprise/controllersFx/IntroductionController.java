@@ -34,8 +34,8 @@ public class IntroductionController {
     private BigDecimal montantPret = BigDecimal.valueOf(1200);
     private BigDecimal coutPret = BigDecimal.valueOf(1296);
     private BigDecimal montantRembourse = BigDecimal.valueOf(0);
-    private BigDecimal mensualite = BigDecimal.valueOf(18);
-    private int nbMMensualite = 72;
+    private BigDecimal mensualite = BigDecimal.valueOf(84);
+    private int nbMMensualite = 16;
     private int cycleMensualite = 18000; // 1 jour = 600 secondes, // 30 jours = 18000 secondes
     private int termine = 0; // 0 credit en cours, 1 credit termine
     private Jeu jeu;

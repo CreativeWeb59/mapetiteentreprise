@@ -34,13 +34,14 @@ import java.util.List;
 
 public class FermeController {
     private final String monnaie = " €";
+    private final String separationTexte = System.getProperty("line.separator");
     // pattern des nombre décimaux
 //    private final DecimalFormat decimalFormat = new DecimalFormat("0.00");
     private final DecimalFormat decimalFormat = Outils.getDecimalFormatWithSpaceSeparator();
     private BigDecimal gainEnAttente = new BigDecimal(0);
     private BigDecimal taxeEnAttente = new BigDecimal(0);
     @FXML
-    private Label montantBanque, labelConsole, nbPoules, nbOeufs, labelPseudo, labelPoule, gainARecuperer, labelCredit;
+    private Label montantBanque, labelConsole, nbPoules, nbOeufs, labelPseudo, labelPoule, gainARecuperer, labelCredit, labelJourEncours;
 //    labelTaxe, montantTaxe;
 
     @FXML
@@ -171,6 +172,7 @@ public class FermeController {
         setNbOeufs();
         setLabelPoule();
         majGainsEnCours();
+        setLabelJourEncours();
         setLabelCredit();
 //        setLabelTaxe();
 //        setMontantTaxe();
@@ -751,14 +753,46 @@ public class FermeController {
         connectionBdd.close();
     }
 
+    public void setLabelJourEncours(){
+        String texte = "Jour " + jeu.getCalendrier().getJourEnCours();
+        labelJourEncours.setText(texte);
+    }
     /**
      * Affiche le message en haut
      * avec les infos sur le crédit : Montant restant dù, date prochaine échéance et montant prochaine échéance
      */
     public void setLabelCredit(){
+        BigDecimal montantPret = jeu.getJoueur().getCreditEnCours().getMontantPret();
+        String SMontantPret = decimalFormat.format(montantPret) + monnaie;
+
+        BigDecimal montantRestantDu = jeu.getJoueur().getCreditEnCours().getCoutPret().subtract(jeu.getJoueur().getCreditEnCours().getMontantRembourse());
+        String SMontantRestantDu = decimalFormat.format(montantRestantDu) + monnaie;
+
+        BigDecimal coutPret = jeu.getJoueur().getCreditEnCours().getCoutPret();
+        String SCoutPret = decimalFormat.format(coutPret) + monnaie;
+
+        BigDecimal interets = jeu.getJoueur().getCreditEnCours().getCoutPret().subtract(montantPret);
+        String Sinterets = decimalFormat.format(interets) + monnaie;
+
+        BigDecimal mensualite = jeu.getJoueur().getCreditEnCours().getMensualite();
+        String SMensualite = decimalFormat.format(mensualite) + monnaie;
+
+        long prochainPrelevement = jeu.getCalendrier().jourPrelevement(jeu.getJoueur().getCreditEnCours());
+
         String texte = "";
+        texte += "Emprunt : " + SMontantPret + separationTexte;
+        texte += "Interêts : " + Sinterets + separationTexte;
+        texte += "Total : " + SCoutPret + separationTexte;
+        texte += "Restant dû : " + SMontantRestantDu + separationTexte;
+        texte += "Prélèvement : " + SMensualite + separationTexte;
+        texte += "Le jour : " + prochainPrelevement + separationTexte;
+
         // recuperation des infos
-        BigDecimal montantRestantDu = jeu.getJoueur().getCreditEnCours().getMontantPret().subtract(jeu.getJoueur().getCreditEnCours().getMontantRembourse());
-        labelCredit.setText("Montant du crédit restant dù :" + montantRestantDu);
+        labelCredit.setText(texte);
+
+        // emprunt en cours 1200
+        // cout du credit 1296
+        // 16 remboursements = 15x84 + 36
+        jeu.getJoueur().getCreditEnCours().nbMensualiteEffectuee();
     }
 }

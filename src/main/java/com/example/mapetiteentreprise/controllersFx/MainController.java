@@ -141,6 +141,7 @@ public class MainController {
         }
 
 
+
         // renseigne les parametres (tarifs...) dans les activites
         this.creerActivites(false);
         // creation de la classe joueur

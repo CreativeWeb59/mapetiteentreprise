@@ -1,5 +1,6 @@
 package com.example.mapetiteentreprise.jeu;
 
+import com.example.mapetiteentreprise.actions.Outils;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
@@ -237,4 +238,29 @@ public class Calendrier {
             return "fondsCalendrierCoche";
         }
     }
+
+    /**
+     * Calcule le jour du prochain prelevement du pret
+     * tous les 7 jours ou 60 x 10 x 7
+     * @return
+     */
+    public int jourPrelevement(CreditEnCours creditEnCours){
+        long jourEnCours = this.getJourEnCours();
+
+        LocalDateTime datePret = creditEnCours.getDateDebutCredit();
+        LocalDateTime heureActuelle = LocalDateTime.now();
+
+        long ecartEnSecondes = Outils.differenceEntreDeuxDates(heureActuelle, datePret);
+        // correspondance en jours
+        //int nbJours = ecartEnSecondes / this.getDureeJour();
+
+    return 2;
+
+    }
+
+    /**
+     * Modifie le montant du prelevement si c'est la derniere mensualite
+     */
+
+
 }

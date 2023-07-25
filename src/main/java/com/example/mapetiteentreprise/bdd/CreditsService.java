@@ -26,10 +26,10 @@ public class CreditsService {
     public Credits creditEnCours(String pseudo) throws SQLException {
         // liste des joueurs
         String query = "SELECT * FROM credits WHERE pseudo = ? AND termine = 0";
+        System.out.println("requete : " + query);
         PreparedStatement statement = connectionBdd.prepareStatement(query);
         statement.setString(1, pseudo);
         ResultSet resultSet = statement.executeQuery();
-        System.out.println("Pseudo : " + pseudo);
         if (resultSet.next()) {
             int id = resultSet.getInt("id");
             BigDecimal montantPret = resultSet.getBigDecimal("montantPret");
@@ -59,9 +59,11 @@ public class CreditsService {
      * @return
      */
     public boolean isCreditEnCours(String pseudo) {
-        String query = "SELECT * FROM credits WHERE pseudo = ? AND termine = 0";
+        String query = "SELECT * FROM credits WHERE pseudo LIKE ?";
         try {
             PreparedStatement statement = connectionBdd.prepareStatement(query);
+            // Paramètre pour la recherche du mot "pseudo"
+            statement.setString(1, pseudo);
             ResultSet resultSet = statement.executeQuery();
             return resultSet.next();
         } catch (SQLException e) {

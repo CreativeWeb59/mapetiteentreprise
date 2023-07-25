@@ -2,6 +2,8 @@ package com.example.mapetiteentreprise.actions;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Locale;
 
 public class Outils {
@@ -115,5 +117,15 @@ public class Outils {
         symbols.setGroupingSeparator(' '); // Espace pour le séparateur de milliers
         DecimalFormat decimalFormat = new DecimalFormat("#,##0.00", symbols);
         return decimalFormat;
+    }
+
+    /**
+     * Calcule la difference entre deux dates
+     * @param date1
+     * @param date2
+     * @return un long representant des secondes écoulées entre la date2 et la date1
+     */
+    public static long differenceEntreDeuxDates(LocalDateTime date1, LocalDateTime date2){
+        return ChronoUnit.SECONDS.between(date2, date1);
     }
 }

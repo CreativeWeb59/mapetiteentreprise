@@ -98,6 +98,29 @@ public class CreditEnCours {
         this.dateDerniereMensualite = dateDerniereMensualite;
     }
 
+    /**
+     * Calcule la mensualite en cours
+     * @return
+     */
+
+    public void mensualiteEnCours(){
+        // nb mensualite : nbMMensualite
+
+        BigDecimal montantRestantDu = coutPret.subtract(montantRembourse);
+
+    }
+
+    /**
+     * Calcule le nombre de mensualites payees
+     */
+    public void nbMensualiteEffectuee(){
+//        BigDecimal montantPaye = coutPret.subtract(montantRembourse);
+        BigDecimal nbMensualitesPayes = montantRembourse.divide(mensualite);
+//        System.out.println("Montant paye : " + montantPaye);
+        System.out.println("Mensualite : " + mensualite);
+        System.out.println("nombre mensualites payees " + nbMensualitesPayes);
+    }
+
     @Override
     public String toString() {
         return "CreditEnCours{" +
