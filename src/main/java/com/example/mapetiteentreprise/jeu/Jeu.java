@@ -7,13 +7,13 @@ public class Jeu {
     private Joueur joueur;
     private Sauvegarde sauvegarde;
     private Parametres parametres;
-    private int numeroJour;
+    private Calendrier calendrier;
 
-    public Jeu(Joueur joueur, Sauvegarde sauvegarde, Parametres parametres, int numeroJour) {
+    public Jeu(Joueur joueur, Sauvegarde sauvegarde, Parametres parametres, Calendrier calendrier) {
         this.joueur = joueur;
         this.sauvegarde = sauvegarde;
         this.parametres = parametres;
-        this.numeroJour = numeroJour;
+        this.calendrier = calendrier;
     }
 
     public Joueur getJoueur() {
@@ -40,12 +40,12 @@ public class Jeu {
         this.parametres = parametres;
     }
 
-    public int getNumeroJour() {
-        return numeroJour;
+    public Calendrier getCalendrier() {
+        return calendrier;
     }
 
-    public void setNumeroJour(int numeroJour) {
-        this.numeroJour = numeroJour;
+    public void setCalendrier(Calendrier calendrier) {
+        this.calendrier = calendrier;
     }
 
     @Override
@@ -54,7 +54,6 @@ public class Jeu {
                 "joueur=" + joueur +
                 ", sauvegarde=" + sauvegarde +
                 ", parametres=" + parametres +
-                ", numeroJour=" + numeroJour +
                 '}';
     }
 }

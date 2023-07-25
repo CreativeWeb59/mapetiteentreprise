@@ -38,13 +38,16 @@ public class Sauvegarde {
     private double etatProgressBF;
     private double etatProgressSa;
     private double etatProgressCo;
-    private int numeroJour;
+
+    // gestion du calendrier
+    private LocalDateTime dateDebutJeu;
+
 
     public Sauvegarde(int id, String pseudo, BigDecimal argent, int nbPoules, long nbOeufs, int fermeActive, int distributeursActive, int distributeurBCActive,
                       int distributeurBFActive, int distributeurCoActive, int distributeurSaActive, int livraisonActive, int lavageActive,
                       double etatProgressOeuf, LocalDateTime dateDeco, int nbDistributeurBC, int nbDistributeurBF, int nbDistributeurSa, int nbDistributeurCo,
                       long nbMarchandisesBC, long nbMarchandisesBF, long nbMarchandisesSa, long nbMarchandisesCo, double etatProgressBC,
-                      double etatProgressBF, double etatProgressSa, double etatProgressCo, int numeroJour) {
+                      double etatProgressBF, double etatProgressSa, double etatProgressCo, LocalDateTime dateDebutJeu) {
         this.id = id;
         this.pseudo = pseudo;
         this.argent = argent;
@@ -72,14 +75,14 @@ public class Sauvegarde {
         this.etatProgressBF = etatProgressBF;
         this.etatProgressSa = etatProgressSa;
         this.etatProgressCo = etatProgressCo;
-        this.numeroJour = numeroJour;
+        this.dateDebutJeu = dateDebutJeu;
     }
 
     public Sauvegarde(String pseudo, BigDecimal argent, int nbPoules, long nbOeufs, int fermeActive, int distributeursActive, int distributeurBCActive,
                       int distributeurBFActive, int distributeurCoActive, int distributeurSaActive, int livraisonActive, int lavageActive,
                       double etatProgressOeuf, LocalDateTime dateDeco, int nbDistributeurBC, int nbDistributeurBF, int nbDistributeurSa,
                       int nbDistributeurCo, long nbMarchandisesBC, long nbMarchandisesBF, long nbMarchandisesSa, long nbMarchandisesCo,
-                      double etatProgressBC, double etatProgressBF, double etatProgressSa, double etatProgressCo, int numeroJour) {
+                      double etatProgressBC, double etatProgressBF, double etatProgressSa, double etatProgressCo, LocalDateTime dateDebutJeu) {
         this.pseudo = pseudo;
         this.argent = argent;
         this.nbPoules = nbPoules;
@@ -106,7 +109,7 @@ public class Sauvegarde {
         this.etatProgressBF = etatProgressBF;
         this.etatProgressSa = etatProgressSa;
         this.etatProgressCo = etatProgressCo;
-        this.numeroJour = numeroJour;
+        this.dateDebutJeu = dateDebutJeu;
     }
 
     public int getId() {
@@ -325,12 +328,12 @@ public class Sauvegarde {
         this.etatProgressCo = etatProgressCo;
     }
 
-    public int getNumeroJour() {
-        return numeroJour;
+    public LocalDateTime getDateDebutJeu() {
+        return dateDebutJeu;
     }
 
-    public void setNumeroJour(int numeroJour) {
-        this.numeroJour = numeroJour;
+    public void setDateDebutJeu(LocalDateTime dateDebutJeu) {
+        this.dateDebutJeu = dateDebutJeu;
     }
 
     @Override
@@ -363,7 +366,7 @@ public class Sauvegarde {
                 ", etatProgressBF=" + etatProgressBF +
                 ", etatProgressSa=" + etatProgressSa +
                 ", etatProgressCo=" + etatProgressCo +
-                ", numeroJour=" + numeroJour +
+                ", dateDebutJeu=" + dateDebutJeu +
                 '}';
     }
 }

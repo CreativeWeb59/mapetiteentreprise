@@ -148,7 +148,10 @@ public class MainController {
                 this.creditEnCours, this.sauvegarde.getFermeActive(), this.sauvegarde.getDistributeursActive(), this.sauvegarde.getDistributeurBCActive(),
                 this.sauvegarde.getDistributeurBFActive(), this.sauvegarde.getDistributeurCoActive(), this.sauvegarde.getDistributeurSaActive());
 
-        this.jeu = new Jeu(joueur, sauvegarde, parametres, sauvegarde.getNumeroJour());
+        // creation du calendrier
+        Calendrier calendrier = new Calendrier(this.sauvegarde.getDateDebutJeu());
+
+        this.jeu = new Jeu(joueur, sauvegarde, parametres, calendrier);
         connectionBdd.close();
         System.out.println("Le jeu complet içi : " + this.jeu);
         this.switchPageGestion(event);
@@ -237,11 +240,11 @@ public class MainController {
         System.out.println("Jeu lancé, Bienvenue " + this.pseudo);
         System.out.println("Creation du joueur");
 
-        LocalDateTime dateDeco = LocalDateTime.now();
+        LocalDateTime dateEncours = LocalDateTime.now();
 
         // creation de la sauvegarde en bdd
         this.sauvegarde = new Sauvegarde(this.pseudo, parametres.getArgentDepart(), parametres.getNbPoules(), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                dateDeco, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1);
+                dateEncours, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, dateEncours);
         sauvegardeService.addJoueur(sauvegarde);
 
         this.creerActivites(true);
@@ -251,8 +254,10 @@ public class MainController {
                 this.creditEnCours, this.parametres.getFermeActive(), this.parametres.getDistributeursActive(), this.parametres.getDistributeurBCActive(),
                 this.parametres.getDistributeurBFActive(), this.parametres.getDistributeurSaActive(), this.parametres.getDistributeurCoActive());
 
+        // creation du calendrier
+        Calendrier calendrier = new Calendrier(dateEncours);
         // creation de la partie
-        this.jeu = new Jeu(joueur, sauvegarde, parametres, 1);
+        this.jeu = new Jeu(joueur, sauvegarde, parametres, calendrier);
     }
 
     /**

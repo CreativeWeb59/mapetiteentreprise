@@ -48,6 +48,7 @@ public class Parametres {
     private int vitesseSa = 60;
     private int vitesseCo = 60;
 
+
     public Parametres() {
     }
 

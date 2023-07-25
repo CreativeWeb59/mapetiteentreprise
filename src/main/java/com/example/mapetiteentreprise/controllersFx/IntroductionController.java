@@ -36,7 +36,7 @@ public class IntroductionController {
     private BigDecimal montantRembourse = BigDecimal.valueOf(0);
     private BigDecimal mensualite = BigDecimal.valueOf(18);
     private int nbMMensualite = 72;
-    private int cycleMensualite = 1800; // 1 jour = 60 secondes, // 30 jours = 1800 secondes
+    private int cycleMensualite = 18000; // 1 jour = 600 secondes, // 30 jours = 18000 secondes
     private int termine = 0; // 0 credit en cours, 1 credit termine
     private Jeu jeu;
     private Stage stage;

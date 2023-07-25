@@ -40,12 +40,11 @@ public class FermeController {
     private BigDecimal gainEnAttente = new BigDecimal(0);
     private BigDecimal taxeEnAttente = new BigDecimal(0);
     @FXML
-    private Label montantBanque, labelConsole, nbPoules, nbOeufs, labelPseudo, labelPoule, gainARecuperer;
+    private Label montantBanque, labelConsole, nbPoules, nbOeufs, labelPseudo, labelPoule, gainARecuperer, labelCredit;
 //    labelTaxe, montantTaxe;
 
     @FXML
     private ProgressBar progressOeufs;
-
     @FXML
     private Button btnVendre, btnPPoule, btnPPoulePDix, btnPPouleMax;
     @FXML
@@ -172,6 +171,7 @@ public class FermeController {
         setNbOeufs();
         setLabelPoule();
         majGainsEnCours();
+        setLabelCredit();
 //        setLabelTaxe();
 //        setMontantTaxe();
     }
@@ -588,9 +588,9 @@ public class FermeController {
      * on compare l'heure et le jour actuel avec la date deco
      */
     public void reajustementSwitchFenetre() {
-        LocalDateTime heureDecp = jeu.getJoueur().getFerme().getDateDeco();
+        LocalDateTime heureDeco = jeu.getJoueur().getFerme().getDateDeco();
         LocalDateTime heureActuelle = LocalDateTime.now();
-        long ecartEnSecondes = ChronoUnit.SECONDS.between(heureDecp, heureActuelle);
+        long ecartEnSecondes = ChronoUnit.SECONDS.between(heureDeco, heureActuelle);
         System.out.println("ecart de temps : " + ecartEnSecondes);
         // effectue les calculs du nombre d'oeufs en plus pendant le switch de fenetres ou déco
         calculTravailHorsConnection(ecartEnSecondes);
@@ -749,5 +749,16 @@ public class FermeController {
             System.out.println(e);
         }
         connectionBdd.close();
+    }
+
+    /**
+     * Affiche le message en haut
+     * avec les infos sur le crédit : Montant restant dù, date prochaine échéance et montant prochaine échéance
+     */
+    public void setLabelCredit(){
+        String texte = "";
+        // recuperation des infos
+        BigDecimal montantRestantDu = jeu.getJoueur().getCreditEnCours().getMontantPret().subtract(jeu.getJoueur().getCreditEnCours().getMontantRembourse());
+        labelCredit.setText("Montant du crédit restant dù :" + montantRestantDu);
     }
 }

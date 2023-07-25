@@ -4,19 +4,23 @@ import com.example.mapetiteentreprise.Main;
 import com.example.mapetiteentreprise.actions.Outils;
 import com.example.mapetiteentreprise.bdd.*;
 import com.example.mapetiteentreprise.jeu.Jeu;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import javafx.util.Duration;
 
 import java.text.DecimalFormat;
 
@@ -34,18 +38,30 @@ public class GestionController {
     private final String monnaie = " €";
     // pattern des nombre décimaux
     private final DecimalFormat decimalFormat = Outils.getDecimalFormatWithSpaceSeparator();
+    // necessaire au calendrier
+    private long jourEnCours;
+    @FXML
+    private Pane paneSemaine1, paneSemaine2;
+    @FXML
+    private ProgressBar progressJour;
+    private Timeline timelineCalendrier;
 
     /**
-     *
      * Recupere le nom de la sauvegarde
      * Utile pour relancer une partie
+     *
      * @param jeu
      */
-    public void debutJeu(Jeu jeu){
+    public void debutJeu(Jeu jeu) {
         // Recuperation du jeu
         this.jeu = jeu;
         this.pseudoLabel.setText("Bonjour " + jeu.getJoueur().getPseudo() + System.getProperty("line.separator") + "Montant en banque : " + decimalFormat.format(jeu.getJoueur().getArgent()) + monnaie);
         System.out.println(jeu);
+
+        // Affichage du calendrier
+        this.afficheCalendrier();
+        progressBarStartTimelineJournee(0, jeu.getCalendrier().getDureeJour());
+//        progressBarStartTimelineJournee(0, 180);
 
         // desactivation des activites non acquises
         // test activation ferme
@@ -60,11 +76,11 @@ public class GestionController {
      * 0 pour non
      * et 1 pour oui
      */
-    public void testFerme(){
+    public void testFerme() {
         // on verifie si la ferme est active
         // Gestion des boutons Acheter ferme / Gerer la ferme
         // de l'achat ferme
-        if(jeu.getJoueur().getFermeActive() == 0){
+        if (jeu.getJoueur().getFermeActive() == 0) {
             btnAchatFerme.setDisable(false);
             btnAchatFerme.setVisible(true);
             btnFerme.setDisable(true);
@@ -77,11 +93,11 @@ public class GestionController {
         }
     }
 
-    public void testDistributeur(){
+    public void testDistributeur() {
         // on verifie si le distributeur commun est débloqué
         // si débloqué => bouton visible
 
-        if(jeu.getJoueur().getDistributeursActive() == 0){
+        if (jeu.getJoueur().getDistributeursActive() == 0) {
             btnDistributeurs.setDisable(true);
         } else {
             btnDistributeurs.setDisable(false);
@@ -93,7 +109,7 @@ public class GestionController {
      * Arrivee dans le jeu
      * desactivation de la ferme
      */
-    public void switchToAchatFerme(ActionEvent event){
+    public void switchToAchatFerme(ActionEvent event) {
         // achat de la ferme
         // Tester le pseudo
         // Test nombre de caractères
@@ -104,7 +120,7 @@ public class GestionController {
             root = loader.load();
             FermeController fermeController = loader.getController();
             fermeController.nouveau(jeu);
-            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             scene = new Scene(root);
             stage.setScene(scene);
             // Permet de récupérer le gestionnaire d'événements pour la fermeture de la fenêtre
@@ -118,9 +134,10 @@ public class GestionController {
 
     /**
      * Permet d'executer la fenetre de gestion de la ferme
+     *
      * @param event
      */
-    public void switchToFerme(ActionEvent event)  {
+    public void switchToFerme(ActionEvent event) {
 
         // Tester le pseudo
         // Test nombre de caractères
@@ -133,7 +150,7 @@ public class GestionController {
 
             FermeController fermeController = loader.getController();
             fermeController.demarrer(jeu);
-            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             scene = new Scene(root);
             stage.setScene(scene);
             // Permet de récupérer le gestionnaire d'événements pour la fermeture de la fenêtre
@@ -144,11 +161,13 @@ public class GestionController {
             System.out.println(e);
         }
     }
+
     /**
      * Permet d'executer la fenetre de gestion des distributeurs
+     *
      * @param event
      */
-    public void switchToDistributeurs(ActionEvent event)  {
+    public void switchToDistributeurs(ActionEvent event) {
 
         // Tester le pseudo
         // Test nombre de caractères
@@ -161,7 +180,7 @@ public class GestionController {
 
             GestionDistributeursController gestionDistributeursController = loader.getController();
             gestionDistributeursController.demarrer(jeu);
-            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             scene = new Scene(root);
             stage.setScene(scene);
             // Permet de récupérer le gestionnaire d'événements pour la fermeture de la fenêtre
@@ -176,9 +195,10 @@ public class GestionController {
     /**
      * permet de recuperer et transferer la partie
      * vers le choix des distributeurs
+     *
      * @param sauvegarde
      */
-    public void lancerSauvegarde(Sauvegarde sauvegarde){
+    public void lancerSauvegarde(Sauvegarde sauvegarde) {
         System.out.println("Anciennement lancer sauvegarde");
     }
 
@@ -186,13 +206,14 @@ public class GestionController {
      * Sauvegarde les donnees
      * Ferme la partie du joueur => ne renvoie pas l'instance jeu
      * Permet de revenir au menu principal
+     *
      * @param event
      */
-    public void retourMenu(ActionEvent event)  {
+    public void retourMenu(ActionEvent event) {
         try {
             sauvegardejeu();
             sauvegardeCredit();
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
 
@@ -205,7 +226,7 @@ public class GestionController {
             System.out.println(e);
         }
 
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
@@ -214,6 +235,7 @@ public class GestionController {
 
     /**
      * Action a executé lors de la fermeture de la fentre avec la croix : sauvegarde
+     *
      * @param event
      */
 
@@ -223,16 +245,17 @@ public class GestionController {
         try {
             sauvegardejeu();
             sauvegardeCredit();
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
 
     /**
      * Bouton de sorite du jeu
+     *
      * @param event
      */
-    public void exitJeu(ActionEvent event)  {
+    public void exitJeu(ActionEvent event) {
         sauvegardejeu();
         // Code pour quitter l'application
         Platform.exit();
@@ -241,7 +264,7 @@ public class GestionController {
     /**
      * Permet de sauvegarder la partie dans la Bdd
      */
-    public void sauvegardejeu()  {
+    public void sauvegardejeu() {
         // mise a jour instance sauvegarde
         jeu.getSauvegarde().setArgent(jeu.getJoueur().getArgent());
         jeu.getSauvegarde().setNbPoules(jeu.getJoueur().getFerme().getNbPoules());
@@ -276,13 +299,13 @@ public class GestionController {
         SauvegardeService sauvegardeService = new SauvegardeService(connectionBdd);
         try {
             sauvegardeService.majSauvegarde(jeu.getSauvegarde());
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
         connectionBdd.close();
     }
 
-    public void sauvegardeCredit(){
+    public void sauvegardeCredit() {
         ConnectionBdd connectionBdd = new ConnectionBdd();
         connectionBdd.connect();
         Credits credits = new Credits();
@@ -292,5 +315,96 @@ public class GestionController {
         credits.setTermine(jeu.getJoueur().getCreditEnCours().getTermine());
 
         connectionBdd.close();
+    }
+
+    public void afficheCalendrier() {
+        // met en place la semaine en cours
+        this.jeu.getCalendrier().setSemainesEnCours();
+        this.jourEnCours = jeu.getCalendrier().getJourEnCours();
+        jeu.getCalendrier().createSemaine1Calendrier(paneSemaine1);
+        jeu.getCalendrier().createSemaine2Calendrier(paneSemaine2);
+    }
+
+    public ProgressBar getProgressJour() {
+        return progressJour;
+    }
+
+    /**
+     * Met à jour la barre de progression
+     *
+     * @param cycle
+     * @param vitesse
+     */
+    public void progressBarStartTimelineEncoursJournee(int cycle, double vitesse) {
+        ProgressBar progressOeufs = getProgressJour();
+//        Button btnVendre = getBtnVendre();
+        // Réinitialise la barre de progression à 0
+//        progressOeufs.setProgress(this.jeu.getJoueur().getFerme().getEtatProgressOeuf());
+//        timeline = new Timeline(
+//                new KeyFrame(Duration.ZERO, new KeyValue(progressOeufs.progressProperty(), this.jeu.getJoueur().getFerme().getEtatProgressOeuf())),
+//                new KeyFrame(Duration.seconds(vitesse), e -> {
+//                    System.out.println("Oeuf terminé");
+//                    btnVendre.setDisable(false);
+//                    // ajoute un nombre d'oeuf correspondant au nombre de poules
+//                    this.majNbOeufs();
+//                    // met à jour les gains en cours
+//                    this.majGainsEnCours();
+//                }, new KeyValue(progressOeufs.progressProperty(), 1))
+//        );
+//        timeline.setOnFinished(event -> {
+//            if (cycle == 1) {
+//                // Lancer la deuxième exécution de la méthode progressBarStartTimeline
+//                jeu.getJoueur().getFerme().setEtatProgressOeuf(0);
+//                // recalcul de la vitesse suivant le niveau de la barre de progression
+//                progressBarStartTimeline(cycle - 1, jeu.getParametres().getVitessePonteOeuf());
+//            }
+//        });
+//
+//        if (cycle == 0) {
+//            timeline.setCycleCount(Animation.INDEFINITE);
+//        } else {
+//            timeline.setCycleCount(cycle);
+//        }
+//        timeline.play();
+    }
+
+    public void progressBarStartTimelineJournee(int cycle, double vitesse) {
+        ProgressBar getProgressJour = getProgressJour();
+//        Button btnVendre = getBtnVendre();
+        // Réinitialise la barre de progression à 0
+        getProgressJour.setProgress(0);
+        timelineCalendrier = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(getProgressJour.progressProperty(), 0)),
+                new KeyFrame(Duration.seconds(vitesse), e -> {
+                    System.out.println("Jour terminé");
+                    // mise à jour du calendrier
+                    afficheCalendrier();
+                    // btnVendre.setDisable(false);
+                }, new KeyValue(getProgressJour.progressProperty(), 1))
+        );
+
+        if (cycle == 0) {
+            timelineCalendrier.setCycleCount(Animation.INDEFINITE);
+        } else {
+            timelineCalendrier.setCycleCount(cycle);
+        }
+        timelineCalendrier.play();
+    }
+
+    private void progressBarStop() {
+        if (timelineCalendrier != null) {
+            timelineCalendrier.stop();
+            timelineCalendrier = null;
+            System.out.println("Arret de la barre de progression");
+        }
+    }
+
+    private Boolean isProgressBar() {
+        if (timelineCalendrier == null) {
+            timelineCalendrier = null;
+            System.out.println("Barre de progression terminee");
+            return false;
+        }
+        return true;
     }
 }

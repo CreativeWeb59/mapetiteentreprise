@@ -78,7 +78,7 @@ public class SauvegardeService {
         String sql = "INSERT INTO sauvegarde (pseudo, argent, nbPoules, nbOeufs, fermeActive, distributeursActive, distributeurBCActive, distributeurBFActive, distributeurCoActive, distributeurSaActive, livraisonActive, lavageActive, etatProgressOeuf, dateDeco, " +
                 "nbDistributeurBC, nbDistributeurBF, nbDistributeurSa, nbDistributeurCo," +
                 "nbMarchandisesBC, nbMarchandisesBF, nbMarchandisesSa, nbMarchandisesCo," +
-                "etatProgressBC, etatProgressBF, etatProgressSa, etatProgressCo, numeroJour"+
+                "etatProgressBC, etatProgressBF, etatProgressSa, etatProgressCo, dateDebutJeu"+
                 ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         PreparedStatement stmt = connectionBdd.prepareStatement(sql);
@@ -112,7 +112,7 @@ public class SauvegardeService {
         stmt.setDouble(25, sauvegarde.getEtatProgressSa());
         stmt.setDouble(26, sauvegarde.getEtatProgressCo());
 
-        stmt.setInt(27, sauvegarde.getNumeroJour());
+        stmt.setTimestamp(27, timestamp);
 
         try {
             stmt.executeUpdate();
@@ -165,7 +165,7 @@ public class SauvegardeService {
             double etatProgressOeuf = resultSet.getDouble("etatProgressOeuf");
 //            Timestamp timestamp = resultSet.getTimestamp("dateDeco");
 //            LocalDateTime dateDeco = timestamp.toLocalDateTime();
-            long timestampMillis = resultSet.getLong("dateDeco");
+            long timestampMillisDeco = resultSet.getLong("dateDeco");
 
             int nbDistributeurBC = resultSet.getInt("nbDistributeurBC");
             int nbDistributeurBF = resultSet.getInt("nbDistributeurBF");
@@ -182,16 +182,17 @@ public class SauvegardeService {
             double etatProgressSa = resultSet.getDouble("etatProgressSa");
             double etatProgressCo = resultSet.getDouble("etatProgressCo");
 
-            int numeroJour = resultSet.getInt("numeroJour");
+            long timestampMillisDebutJeu = resultSet.getLong("dateDebutJeu");
 
-            LocalDateTime dateDeco = LocalDateTime.ofInstant(Instant.ofEpochMilli(timestampMillis), ZoneId.systemDefault());
+            LocalDateTime dateDeco = LocalDateTime.ofInstant(Instant.ofEpochMilli(timestampMillisDeco), ZoneId.systemDefault());
+            LocalDateTime dateDebutJeu = LocalDateTime.ofInstant(Instant.ofEpochMilli(timestampMillisDebutJeu), ZoneId.systemDefault());
 
             Sauvegarde sauvegarde = new Sauvegarde(pseudo, argent, nbPoules, nbOeufs, fermeActive, distributeursActive, distributeurBCActive,
                     distributeurBFActive, distributeurCoActive, distributeurSaActive, livraisonActive, livraisonActive
                     , etatProgressOeuf, dateDeco,
                     nbDistributeurBC, nbDistributeurBF, nbDistributeurSa, nbDistributeurCo,
                     nbMarchandisesBC, nbMarchandisesBF, nbMarchandisesSa, nbMarchandisesCo,
-                    etatProgressBC, etatProgressBF, etatProgressSa, etatProgressCo, numeroJour);
+                    etatProgressBC, etatProgressBF, etatProgressSa, etatProgressCo, dateDebutJeu);
             sauvegarde.setId(id);
             System.out.println(sauvegarde);
             return sauvegarde;
@@ -209,7 +210,7 @@ public class SauvegardeService {
                 " etatProgressOeuf = ?, dateDeco = ?," +
                 "nbDistributeurBC = ?, nbDistributeurBF = ?, nbDistributeurSa = ?, nbDistributeurCo = ?," +
                 "nbMarchandisesBC = ?, nbMarchandisesBF = ?, nbMarchandisesSa = ?, nbMarchandisesCo = ?," +
-                "etatProgressBC = ?, etatProgressBF = ?, etatProgressSa = ?, etatProgressCo = ?, numeroJour = ?"+
+                "etatProgressBC = ?, etatProgressBF = ?, etatProgressSa = ?, etatProgressCo = ?"+
                 " WHERE pseudo LIKE ?";
 
         System.out.println("Requete : " + sql);
@@ -250,9 +251,7 @@ public class SauvegardeService {
         stmt.setDouble(24, sauvegarde.getEtatProgressSa());
         stmt.setDouble(25, sauvegarde.getEtatProgressCo());
 
-        stmt.setInt(26, sauvegarde.getNumeroJour());
-
-        stmt.setString(27, sauvegarde.getPseudo());
+        stmt.setString(26, sauvegarde.getPseudo());
 
         // Insertion des données
         try {

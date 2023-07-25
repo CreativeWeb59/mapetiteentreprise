@@ -10,8 +10,9 @@
             <children>
                 <Pane layoutX="424.0" layoutY="14.0" prefHeight="188.0" prefWidth="463.0" styleClass="fondsPancarte">
                     <children>
-                        <Label fx:id="montantBanque" layoutX="66.0" layoutY="103.0" text="Banque : 0.00 €" />
-                        <Label fx:id="labelPseudo" layoutX="66.0" layoutY="40.0" text="Hello" />
+                        <Label fx:id="labelPseudo" layoutX="60.0" layoutY="30.0" text="Hello" />
+                        <Label fx:id="montantBanque" layoutX="60.0" layoutY="70.0" text="Banque : 0.00 €" />
+                  <Label fx:id="labelCredit" layoutX="60.0" layoutY="110.0" text="Hello" />
                     </children>
                 </Pane>
                 <Pane layoutX="40.0" layoutY="160.0" prefHeight="800.0" prefWidth="1200.0">
