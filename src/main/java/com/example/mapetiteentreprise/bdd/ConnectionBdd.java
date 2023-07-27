@@ -118,7 +118,8 @@ public class ConnectionBdd {
      */
     public void createModelCredits() throws SQLException {
         String sql = "CREATE TABLE credits (id INTEGER PRIMARY KEY, pseudo TEXT, montantPret REAL, coutPret REAL, montantRembourse REAL," +
-                "mensualite REAL, nbMMensualite INTEGER, cycleMensualite INTEGER, termine INTEGER, dateDebutCredit TEXT, dateDerniereMensualite TEXT)";
+                "mensualite REAL, nbMMensualite INTEGER, cycleMensualite INTEGER, termine INTEGER, dateDebutCredit INTEGER," +
+                " dateDerniereMensualite INTEGER, dateProchaineMensualite INTEGER, datePreavis INTEGER, blocageDatePreavis INTEGER)";
         Statement stmt = connection.createStatement();
         stmt.execute(sql);
         System.out.println("La table 'credits' a été créée avec succès.");

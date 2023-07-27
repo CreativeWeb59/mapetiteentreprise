@@ -2,6 +2,8 @@ package com.example.mapetiteentreprise.controllersFx;
 
 import com.example.mapetiteentreprise.Main;
 import com.example.mapetiteentreprise.bdd.ConnectionBdd;
+import com.example.mapetiteentreprise.bdd.Credits;
+import com.example.mapetiteentreprise.bdd.CreditsService;
 import com.example.mapetiteentreprise.bdd.SauvegardeService;
 import com.example.mapetiteentreprise.jeu.Jeu;
 import com.example.mapetiteentreprise.actions.Outils;
@@ -22,6 +24,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
@@ -41,15 +44,16 @@ public class FermeController {
     private BigDecimal gainEnAttente = new BigDecimal(0);
     private BigDecimal taxeEnAttente = new BigDecimal(0);
     @FXML
-    private Label montantBanque, labelConsole, nbPoules, nbOeufs, labelPseudo, labelPoule, gainARecuperer, labelCredit, labelJourEncours;
+    private Label montantBanque, labelConsole, nbPoules, nbOeufs, labelPseudo, labelPoule, gainARecuperer, labelCredit, labelJourEncours, labelBanquier;
 //    labelTaxe, montantTaxe;
-
+    @FXML
+    private Pane paneFerme;
     @FXML
     private ProgressBar progressOeufs;
     @FXML
-    private Button btnVendre, btnPPoule, btnPPoulePDix, btnPPouleMax;
+    private Button btnVendre, btnPPoule, btnPPoulePDix, btnPPouleMax, rembourserCredit;
     @FXML
-    private ImageView imgAnimation;
+    private ImageView imgAnimation, evenement;
     private String messageConsole;
     private Stage stage;
     private Scene scene;
@@ -96,11 +100,15 @@ public class FermeController {
 
         this.miseEnPlaceValeurs();
 
+        blocageComplet();
         // plus le chiffre est gros plus la vitesse est lente
         // correspond à un nombre de secondes d'un passage de 0 à 100
         double vitesse = jeu.getParametres().getVitessePonteOeuf() - (jeu.getParametres().getVitessePonteOeuf() * jeu.getJoueur().getFerme().getEtatProgressOeuf());
         this.progressBarStartTimelineEncours(1, vitesse);
         this.executerAnimation();
+
+        // affiche ou non le banquier
+        affichageEvenementBanquier();
     }
 
     public void nouveau(Jeu jeu) {
@@ -123,6 +131,7 @@ public class FermeController {
 
     /**
      * Action a executé lors de la fermeture de la fentre avec la croix : sauvegarde
+     *
      * @param event
      */
     public void onWindowClose(WindowEvent event) {
@@ -130,7 +139,8 @@ public class FermeController {
         System.out.println("fermeture fenetre : Sauvegarde");
         try {
             sauvegardejeu();
-        } catch (Exception e){
+            sauvegardeCredit();
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
@@ -145,6 +155,7 @@ public class FermeController {
         // on stoppe la barre de progression;
         this.progressBarStop();
 
+        sauvegardeCredit();
         sauvegardejeu();
 
         try {
@@ -294,6 +305,11 @@ public class FermeController {
         // calcule le nombre maximum de poules achetables pour mettre à jour le bouton
         achatMaxPoules();
 
+        // maj du bouton rembourser credit
+        this.majCredit();
+
+        // bloque les boutons d'achat si credit non rembourse a la date prévue
+        blocageAchats();
     }
 
     /**
@@ -357,13 +373,11 @@ public class FermeController {
      * où x est le nombre de poules maximum achetables
      */
 
-    public void addPouleX(){
+    public void addPouleX() {
         addPoule(achatMaxPoules());
     }
 
     /**
-     *
-     *
      * action a effectuer lors du clic sur le achat d'une poule
      */
     public void addPoule(int nbPoules) {
@@ -450,6 +464,10 @@ public class FermeController {
                     this.majNbOeufs();
                     // met à jour les gains en cours
                     this.majGainsEnCours();
+                    // mets à jour le jour en cours
+                    this.setLabelJourEncours();
+                    // affiche ou non le banquier
+                    affichageEvenementBanquier();
                 }, new KeyValue(progressOeufs.progressProperty(), 1))
         );
         timeline.setOnFinished(event -> {
@@ -483,6 +501,10 @@ public class FermeController {
                     this.majNbOeufs();
                     // met à jour les gains en cours
                     this.majGainsEnCours();
+                    // mets à jour le jour en cours
+                    this.setLabelJourEncours();
+                    // affiche ou non le banquier
+                    affichageEvenementBanquier();
                 }, new KeyValue(progressOeufs.progressProperty(), 1))
         );
 
@@ -577,8 +599,8 @@ public class FermeController {
 
         // calcul de la taxe
         this.taxeEnAttente = this.jeu.getParametres().calulTaxe(nbOeufsVendre);
-        // on enleve la taxe
 
+        // on enleve la taxe
         this.gainEnAttente = this.gainEnAttente.subtract(this.taxeEnAttente);
 
 //        setMontantTaxe();
@@ -712,7 +734,7 @@ public class FermeController {
     /**
      * Permet de sauvegarder la partie dans la Bdd
      */
-    public void sauvegardejeu()  {
+    public void sauvegardejeu() {
         // mise a jour instance sauvegarde
         jeu.getSauvegarde().setArgent(jeu.getJoueur().getArgent());
         jeu.getSauvegarde().setNbPoules(jeu.getJoueur().getFerme().getNbPoules());
@@ -747,45 +769,103 @@ public class FermeController {
         SauvegardeService sauvegardeService = new SauvegardeService(connectionBdd);
         try {
             sauvegardeService.majSauvegarde(jeu.getSauvegarde());
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
         connectionBdd.close();
     }
 
-    public void setLabelJourEncours(){
+    /**
+     * Sauvegarde les modifications du credits
+     * desactive si pas de credit en cours
+     */
+    public void sauvegardeCredit() {
+        if (jeu.getJoueur().getCreditEnCours() != null) {
+            ConnectionBdd connectionBdd = new ConnectionBdd();
+            connectionBdd.connect();
+            Credits credits = new Credits();
+            CreditsService creditsService = new CreditsService(connectionBdd);
+            credits.setPseudo(jeu.getJoueur().getPseudo());
+            credits.setMontantRembourse(jeu.getJoueur().getCreditEnCours().getMontantRembourse());
+            credits.setDateDerniereMensualite(jeu.getJoueur().getCreditEnCours().getDateDerniereMensualite());
+            credits.setTermine(jeu.getJoueur().getCreditEnCours().getTermine());
+            credits.setMensualite(jeu.getJoueur().getCreditEnCours().getMensualite());
+            credits.setDateProchaineMensualite(jeu.getJoueur().getCreditEnCours().getDateProchaineMensualite());
+            credits.setDatePreavis(jeu.getJoueur().getCreditEnCours().getDatePreavis());
+            credits.setBlocageDatePreavis(jeu.getJoueur().getCreditEnCours().getBlocageDatePreavis());
+            try {
+                creditsService.majCredit(credits);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+            connectionBdd.close();
+        }
+    }
+
+    public void setLabelJourEncours() {
         String texte = "Jour " + jeu.getCalendrier().getJourEnCours();
         labelJourEncours.setText(texte);
     }
+
     /**
      * Affiche le message en haut
      * avec les infos sur le crédit : Montant restant dù, date prochaine échéance et montant prochaine échéance
      */
-    public void setLabelCredit(){
-        BigDecimal montantPret = jeu.getJoueur().getCreditEnCours().getMontantPret();
-        String SMontantPret = decimalFormat.format(montantPret) + monnaie;
-
-        BigDecimal montantRestantDu = jeu.getJoueur().getCreditEnCours().getCoutPret().subtract(jeu.getJoueur().getCreditEnCours().getMontantRembourse());
-        String SMontantRestantDu = decimalFormat.format(montantRestantDu) + monnaie;
-
-        BigDecimal coutPret = jeu.getJoueur().getCreditEnCours().getCoutPret();
-        String SCoutPret = decimalFormat.format(coutPret) + monnaie;
-
-        BigDecimal interets = jeu.getJoueur().getCreditEnCours().getCoutPret().subtract(montantPret);
-        String Sinterets = decimalFormat.format(interets) + monnaie;
-
-        BigDecimal mensualite = jeu.getJoueur().getCreditEnCours().getMensualite();
-        String SMensualite = decimalFormat.format(mensualite) + monnaie;
-
-        long prochainPrelevement = jeu.getCalendrier().jourPrelevement(jeu.getJoueur().getCreditEnCours());
-
+    public void setLabelCredit() {
         String texte = "";
-        texte += "Emprunt : " + SMontantPret + separationTexte;
-        texte += "Interêts : " + Sinterets + separationTexte;
-        texte += "Total : " + SCoutPret + separationTexte;
-        texte += "Restant dû : " + SMontantRestantDu + separationTexte;
-        texte += "Prélèvement : " + SMensualite + separationTexte;
-        texte += "Le jour : " + prochainPrelevement + separationTexte;
+        if (jeu.getJoueur().getCreditEnCours() != null) {
+            BigDecimal montantPret = jeu.getJoueur().getCreditEnCours().getMontantPret();
+            String SMontantPret = decimalFormat.format(montantPret) + monnaie;
+
+            BigDecimal montantRestantDu = jeu.getJoueur().getCreditEnCours().getCoutPret().subtract(jeu.getJoueur().getCreditEnCours().getMontantRembourse());
+            String SMontantRestantDu = decimalFormat.format(montantRestantDu) + monnaie;
+
+            BigDecimal coutPret = jeu.getJoueur().getCreditEnCours().getCoutPret();
+            String SCoutPret = decimalFormat.format(coutPret) + monnaie;
+
+            BigDecimal interets = jeu.getJoueur().getCreditEnCours().getCoutPret().subtract(montantPret);
+            String Sinterets = decimalFormat.format(interets) + monnaie;
+
+            BigDecimal mensualite = jeu.getJoueur().getCreditEnCours().getMensualite();
+            String SMensualite = decimalFormat.format(mensualite) + monnaie;
+
+            // calcul mensualites en retard
+            long nbRetardMensualite = jeu.getJoueur().getCreditEnCours().nbRetardMensualite(jeu.getCalendrier().getJourEnCours());
+
+            long prochainPrelevement = jeu.getJoueur().getCreditEnCours().getDateProchaineMensualite();
+
+            texte += "Emprunt : " + SMontantPret + separationTexte;
+            texte += "Interêts : " + Sinterets + separationTexte;
+            texte += "Total : " + SCoutPret + separationTexte;
+            texte += "Restant dû : " + SMontantRestantDu + separationTexte;
+            texte += "Prélèvement : " + SMensualite + separationTexte;
+
+            // gestion si echeances en retard
+            if(nbRetardMensualite == 0){
+                if(jeu.getJoueur().getCreditEnCours().getDateProchaineMensualite() == jeu.getCalendrier().getJourEnCours()){
+                    texte += "A payer immédiatement";
+                } else {
+                    texte += "A payer le jour : " + prochainPrelevement;
+                }
+
+            } else {
+                texte += "Vous avez " + nbRetardMensualite + " écheance(s) en retard" + separationTexte;
+                texte += "A payer immédiatement";
+
+                // Arrivee du banquier
+                // A faire Blocage des boutons d'achat
+            }
+
+
+
+            // met à jour le bouton rembourser si assez d'argent
+            this.majCredit();
+        } else {
+            texte += "Pas de crédits en cours";
+            // on cache et desactive le bouton pour rembourser le credit
+            rembourserCredit.setVisible(false);
+            rembourserCredit.setDisable(true);
+        }
 
         // recuperation des infos
         labelCredit.setText(texte);
@@ -793,6 +873,98 @@ public class FermeController {
         // emprunt en cours 1200
         // cout du credit 1296
         // 16 remboursements = 15x84 + 36
-        jeu.getJoueur().getCreditEnCours().nbMensualiteEffectuee();
+
+    }
+
+    /**
+     * gere le bouton pour rembourser une mensualite du credit
+     */
+    public void onRembourserCredit() {
+        // teste si assez argent en banque
+        if (jeu.getJoueur().isArgent(jeu.getJoueur().getCreditEnCours().getMensualite())) {
+            // enleve le montant de la banque
+            jeu.getJoueur().depenser(jeu.getJoueur().getCreditEnCours().getMensualite());
+            // met a jour le credit
+            // met a jour le montant du credit rembourse
+            jeu.getJoueur().getCreditEnCours().payerMensualite(jeu.getCalendrier().getJourEnCours());
+            // met a jour la prochaine date du reglement
+
+            System.out.println("remboursement");
+            this.miseEnPlaceValeurs();
+            this.affichageEvenementBanquier();
+        } else {
+            System.out.println("Vous n'avez pas assez d'argent pour rembourser le credit");
+        }
+
+    }
+
+    /**
+     * methode executee à la fin de la barre de progression des poules
+     * doit verifier si assez d'argent pour rembourser le prêt
+     */
+    public void majCredit(){
+        if(jeu.getJoueur().isArgent(jeu.getJoueur().getCreditEnCours().getMensualite())){
+            rembourserCredit.setVisible(true);
+            rembourserCredit.setDisable(false);
+        } else {
+            rembourserCredit.setVisible(true);
+            rembourserCredit.setDisable(true);
+        }
+    }
+
+    /**
+     * gerer l'arrivee du banquier
+     */
+    public void affichageEvenementBanquier(){
+        if(afficherBanquier()){
+            evenement.setDisable(false);
+            evenement.setVisible(true);
+            evenement.setOpacity(1);
+            blocageAchats();
+        } else {
+            evenement.setDisable(true);
+            evenement.setVisible(false);
+            evenement.setOpacity(0);
+            labelBanquier.setVisible(false);
+        }
+    }
+
+    public boolean afficherBanquier(){
+        if(jeu.getCalendrier().getJourEnCours() >= jeu.getJoueur().getCreditEnCours().getDateProchaineMensualite()){
+            // moddifie la date du preavis qu'une fois
+            if(jeu.getJoueur().getCreditEnCours().getBlocageDatePreavis() == 0){
+                this.jeu.getJoueur().getCreditEnCours().setDatePreavis(this.jeu.getCalendrier().getJourEnCours() + 200);
+                this.jeu.getJoueur().getCreditEnCours().setBlocageDatePreavis(1);
+                System.out.println("Date du preavis : " + this.jeu.getJoueur().getCreditEnCours().getDatePreavis());
+            }
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * rends disable les boutons achats quand c'est le moment de payer
+     */
+    public void blocageAchats(){
+        if(afficherBanquier()){
+            btnPPoule.setDisable(true);
+            btnPPoulePDix.setDisable(true);
+            btnPPouleMax.setDisable(true);
+        } else {
+            btnPPoule.setDisable(false);
+            btnPPoulePDix.setDisable(false);
+            btnPPouleMax.setDisable(false);
+        }
+    }
+
+    /**
+     * Verifie la date du preavis et bloque tout si elle est dépassée
+     */
+    public void blocageComplet(){
+        if(jeu.getJoueur().getCreditEnCours().getDatePreavis() <= this.jeu.getCalendrier().getJourEnCours()) {
+            labelBanquier.setText("Le délai est écoulé, vous avez perdu le jeu et je récupère votre ferme. Elle sera vendue à quelqu'un de plus performant en affaires !!!");
+            paneFerme.setOpacity(0.6);
+            paneFerme.setDisable(true);
+        }
     }
 }

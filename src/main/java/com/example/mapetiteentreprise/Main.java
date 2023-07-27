@@ -24,6 +24,8 @@ public class Main extends Application {
         stage.setTitle("Ma petite entreprise !");
         stage.getIcons().add(icon);
         stage.setScene(scene);
+        // fenêtre en plein écran
+        // stage.setFullScreen(true);
         stage.show();
     }
 

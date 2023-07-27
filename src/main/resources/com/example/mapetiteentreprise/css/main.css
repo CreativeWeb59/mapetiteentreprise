@@ -160,3 +160,12 @@ Label{
     -fx-font-weight: bold;
     -fx-background-color: transparent;
 }
+
+.fondsBulleDroite{
+    -fx-background-image: url("../images/bulleDroite.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-padding: 20px;
+}

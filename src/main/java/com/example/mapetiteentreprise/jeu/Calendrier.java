@@ -5,6 +5,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 
+import java.sql.PreparedStatement;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
@@ -85,15 +86,13 @@ public class Calendrier {
         } else if (jourEnCours % 7 == 0) { // fin de la semaine
             borneDebut = jourEnCours - 6;
             borneFin = jourEnCours;
-        } else if ((jourEnCours -1) % 7 == 0) { // premier jour de la semaine
+        } else if ((jourEnCours - 1) % 7 == 0) { // premier jour de la semaine
             borneDebut = jourEnCours;
             borneFin = jourEnCours + 6;
         } else {
             borneDebut = jourEnCours - (jourEnCours % 7) + 1; // milieu de la semaine
             borneFin = borneDebut + 6;
         }
-
-        System.out.println("Borne debut : " + borneDebut);
 
         // mise en place des valeurs semaine 1
         for (int i = 0; i < 7; i++) {
@@ -145,14 +144,6 @@ public class Calendrier {
     }
 
     /**
-     * Renvoi le numero du jour d'arrivee du banquier
-     * tous les 30 jours + 1
-     */
-    public int numJourBanquier() {
-        return 31;
-    }
-
-    /**
      * Renvoi le numero de jour actuel
      * calcule la differnce entre la date actuelle et la date de creation de la partie
      * divise par 60 (ou le nombre de secondes dans une journée)
@@ -162,35 +153,29 @@ public class Calendrier {
      */
     public long getJourEnCours() {
         LocalDateTime dateDuJours = LocalDateTime.now();
-        System.out.println("date de creation partie " + this.dateDebutJeu);
-
         long ecartEnSecondes = ChronoUnit.SECONDS.between(dateDebutJeu, dateDuJours);
-        System.out.println("ecart de temps : " + ecartEnSecondes);
-
-        long jourEnCours = ecartEnSecondes / this.dureeJour;
-
-        System.out.println("nombre de jours passés : " + jourEnCours);
+        long jourEnCours = (ecartEnSecondes / this.dureeJour) + 1;
         return jourEnCours;
     }
 
-    public void createSemaine1Calendrier(Pane paneParent){
+
+    public void createSemaine1Calendrier(Pane paneParent, long jourBanquier) {
         double valeurX = 0;
 
         for (long jour : this.semaine1EnCours) {
-            String laClasse = choixClasseCalendrier(jour);
+            String laClasse = choixClasseCalendrier(jour, jourBanquier);
             createJourCalendrier(paneParent, jour, laClasse, valeurX);
             valeurX += 130;
-            System.out.println("Valeur : " + jour);
         }
     }
-    public void createSemaine2Calendrier(Pane paneParent){
+
+    public void createSemaine2Calendrier(Pane paneParent, long jourBanquier) {
         double valeurX = 0;
 
         for (long jour : this.semaine2EnCours) {
-            String laClasse = choixClasseCalendrier(jour);
+            String laClasse = choixClasseCalendrier(jour, jourBanquier);
             createJourCalendrier(paneParent, jour, laClasse, valeurX);
             valeurX += 130;
-            System.out.println("Valeur : " + jour);
         }
     }
 
@@ -228,35 +213,20 @@ public class Calendrier {
      * Choisi la classe du calendrier a afficher
      * suivant le jour en cours
      */
-    public String choixClasseCalendrier(long jourCalendrier){
+    public String choixClasseCalendrier(long jourCalendrier, long jourBanquier) {
         long jourEnCours = this.getJourEnCours();
-        if (jourEnCours == jourCalendrier){
+        if (jourCalendrier == jourBanquier) {
+            return "fondsCalendrierBanquier";
+        }
+        if (jourEnCours == jourCalendrier) {
             return "fondsCalendrierCercle";
-        } else if (jourEnCours < jourCalendrier){
+        } else if (jourEnCours < jourCalendrier) {
             return "fondsCalendrier";
         } else {
             return "fondsCalendrierCoche";
         }
     }
 
-    /**
-     * Calcule le jour du prochain prelevement du pret
-     * tous les 7 jours ou 60 x 10 x 7
-     * @return
-     */
-    public int jourPrelevement(CreditEnCours creditEnCours){
-        long jourEnCours = this.getJourEnCours();
-
-        LocalDateTime datePret = creditEnCours.getDateDebutCredit();
-        LocalDateTime heureActuelle = LocalDateTime.now();
-
-        long ecartEnSecondes = Outils.differenceEntreDeuxDates(heureActuelle, datePret);
-        // correspondance en jours
-        //int nbJours = ecartEnSecondes / this.getDureeJour();
-
-    return 2;
-
-    }
 
     /**
      * Modifie le montant du prelevement si c'est la derniere mensualite

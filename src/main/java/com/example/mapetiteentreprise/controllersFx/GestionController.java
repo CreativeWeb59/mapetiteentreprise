@@ -12,7 +12,6 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -257,6 +256,7 @@ public class GestionController {
      */
     public void exitJeu(ActionEvent event) {
         sauvegardejeu();
+        sauvegardeCredit();
         // Code pour quitter l'application
         Platform.exit();
     }
@@ -305,24 +305,39 @@ public class GestionController {
         connectionBdd.close();
     }
 
+    /**
+     * Sauvegarde les modifications du credits
+     * desactive si pas de credit en cours
+     */
     public void sauvegardeCredit() {
-        ConnectionBdd connectionBdd = new ConnectionBdd();
-        connectionBdd.connect();
-        Credits credits = new Credits();
-        CreditsService creditsService = new CreditsService(connectionBdd);
-        credits.setMontantRembourse(jeu.getJoueur().getCreditEnCours().getMontantRembourse());
-        credits.setDateDerniereMensualite(jeu.getJoueur().getCreditEnCours().getDateDerniereMensualite());
-        credits.setTermine(jeu.getJoueur().getCreditEnCours().getTermine());
-
-        connectionBdd.close();
+        if (jeu.getJoueur().getCreditEnCours() != null) {
+            ConnectionBdd connectionBdd = new ConnectionBdd();
+            connectionBdd.connect();
+            Credits credits = new Credits();
+            CreditsService creditsService = new CreditsService(connectionBdd);
+            credits.setPseudo(jeu.getJoueur().getPseudo());
+            credits.setMontantRembourse(jeu.getJoueur().getCreditEnCours().getMontantRembourse());
+            credits.setDateDerniereMensualite(jeu.getJoueur().getCreditEnCours().getDateDerniereMensualite());
+            credits.setTermine(jeu.getJoueur().getCreditEnCours().getTermine());
+            credits.setMensualite(jeu.getJoueur().getCreditEnCours().getMensualite());
+            credits.setDateProchaineMensualite(jeu.getJoueur().getCreditEnCours().getDateProchaineMensualite());
+            credits.setDatePreavis(jeu.getJoueur().getCreditEnCours().getDatePreavis());
+            credits.setBlocageDatePreavis(jeu.getJoueur().getCreditEnCours().getBlocageDatePreavis());
+            try {
+                creditsService.majCredit(credits);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+            connectionBdd.close();
+        }
     }
 
     public void afficheCalendrier() {
         // met en place la semaine en cours
         this.jeu.getCalendrier().setSemainesEnCours();
         this.jourEnCours = jeu.getCalendrier().getJourEnCours();
-        jeu.getCalendrier().createSemaine1Calendrier(paneSemaine1);
-        jeu.getCalendrier().createSemaine2Calendrier(paneSemaine2);
+        jeu.getCalendrier().createSemaine1Calendrier(paneSemaine1, jeu.getJoueur().getCreditEnCours().getDateProchaineMensualite());
+        jeu.getCalendrier().createSemaine2Calendrier(paneSemaine2, jeu.getJoueur().getCreditEnCours().getDateProchaineMensualite());
     }
 
     public ProgressBar getProgressJour() {

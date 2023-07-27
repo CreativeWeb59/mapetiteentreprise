@@ -22,8 +22,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
-import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -129,29 +127,30 @@ public class MainController {
         // recupere la sauvegarde
         this.sauvegarde = sauvegardeService.getJoueurbyPseudo(userName);
 
+        // renseigne les parametres (tarifs...) dans les activites
+        this.creerActivites(false);
+
+        // creation du calendrier
+        Calendrier calendrier = new Calendrier(this.sauvegarde.getDateDebutJeu());
+
         // teste si un credit est en cours
         // recupere le credit en cours
 
         if(creditsService.isCreditEnCours(userName)){
             this.credits = creditsService.creditEnCours(userName);
             this.creditEnCours = new CreditEnCours(credits.getMontantPret(), credits.getCoutPret(), credits.getMontantRembourse(), credits.getMensualite(), credits.getNbMMensualite(),
-                    credits.getCycleMensualite(), credits.getTermine(), credits.getDateDebutCredit(), credits.getDateDebutCredit());
+                    credits.getCycleMensualite(), credits.getTermine(), credits.getDateDebutCredit(), credits.getDateDerniereMensualite(), credits.getDateProchaineMensualite(), credits.getDatePreavis(), credits.getBlocageDatePreavis());
+            System.out.println("Nous sommes le jour : " + calendrier.getJourEnCours());
         } else {
             System.out.println("Pas de crédit en cours");
         }
 
-
-
-        // renseigne les parametres (tarifs...) dans les activites
-        this.creerActivites(false);
         // creation de la classe joueur
         Joueur joueur = new Joueur(userName, sauvegarde.getArgent(), this.ferme, this.boissonsChaudes, this.boissonsFraiches, this.sandwichs, this.confiseries,
                 this.creditEnCours, this.sauvegarde.getFermeActive(), this.sauvegarde.getDistributeursActive(), this.sauvegarde.getDistributeurBCActive(),
                 this.sauvegarde.getDistributeurBFActive(), this.sauvegarde.getDistributeurCoActive(), this.sauvegarde.getDistributeurSaActive());
 
-        // creation du calendrier
-        Calendrier calendrier = new Calendrier(this.sauvegarde.getDateDebutJeu());
-
+        // cree le jeu avec tous les parametres
         this.jeu = new Jeu(joueur, sauvegarde, parametres, calendrier);
         connectionBdd.close();
         System.out.println("Le jeu complet içi : " + this.jeu);

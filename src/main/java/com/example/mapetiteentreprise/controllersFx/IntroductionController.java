@@ -34,9 +34,9 @@ public class IntroductionController {
     private BigDecimal montantPret = BigDecimal.valueOf(1200);
     private BigDecimal coutPret = BigDecimal.valueOf(1296);
     private BigDecimal montantRembourse = BigDecimal.valueOf(0);
-    private BigDecimal mensualite = BigDecimal.valueOf(84);
-    private int nbMMensualite = 16;
-    private int cycleMensualite = 18000; // 1 jour = 600 secondes, // 30 jours = 18000 secondes
+    private BigDecimal mensualite = BigDecimal.valueOf(42);
+    private int nbMMensualite = 31;
+    private int cycleMensualite = 7; // pour un remboursement tous les 7 jours de jeu
     private int termine = 0; // 0 credit en cours, 1 credit termine
     private Jeu jeu;
     private Stage stage;
@@ -133,8 +133,9 @@ public class IntroductionController {
      */
     public void acheterFerme(Event event){
         // creation du prêt
-        LocalDateTime dateEnCours = LocalDateTime.now();
-        CreditEnCours creditEnCours = new CreditEnCours(montantPret, coutPret, montantRembourse, mensualite, nbMMensualite, cycleMensualite, termine, dateEnCours, dateEnCours);
+        long dateDebutCredit = 1 + cycleMensualite;
+        long datePreavis = (nbMMensualite * cycleMensualite) + 1;
+        CreditEnCours creditEnCours = new CreditEnCours(montantPret, coutPret, montantRembourse, mensualite, nbMMensualite, cycleMensualite, termine, 1, 1, 8, datePreavis, 0);
 
         // ajout du prêt en bdd
         creationBddPret();
@@ -166,7 +167,8 @@ public class IntroductionController {
     }
     public void creationBddPret(){
         LocalDateTime dateEnCours = LocalDateTime.now();
-        credits = new Credits(jeu.getJoueur().getPseudo(), montantPret, coutPret, montantRembourse, mensualite, nbMMensualite, cycleMensualite, termine, dateEnCours, dateEnCours);
+        long datePreavis = (nbMMensualite * cycleMensualite) + 1;
+        credits = new Credits(jeu.getJoueur().getPseudo(), montantPret, coutPret, montantRembourse, mensualite, nbMMensualite, cycleMensualite, termine, 1, 1, 8, datePreavis, 0);
 
         connectionBdd.connect();
         creditsService = new CreditsService(connectionBdd);

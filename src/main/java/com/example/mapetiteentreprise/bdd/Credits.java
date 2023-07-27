@@ -13,13 +13,18 @@ public class Credits {
     private int nbMMensualite;
     private int cycleMensualite;
     private int termine; // 0 credit en cours, 1 credit termine
-    private LocalDateTime dateDebutCredit;
-    private LocalDateTime dateDerniereMensualite;
+    private long dateDebutCredit; // correspond au jour du jeu auquel on fait le crédit
+    private long dateDerniereMensualite;
+    private long dateProchaineMensualite;
+    private long datePreavis;
+    private int blocageDatePreavis;
 
     public Credits() {
     }
 
-    public Credits(int id, String pseudo, BigDecimal montantPret, BigDecimal coutPret, BigDecimal montantRembourse, BigDecimal mensualite, int nbMMensualite, int cycleMensualite, int termine, LocalDateTime dateDebutCredit, LocalDateTime dateDerniereMensualite) {
+    public Credits(int id, String pseudo, BigDecimal montantPret, BigDecimal coutPret, BigDecimal montantRembourse, BigDecimal mensualite,
+                   int nbMMensualite, int cycleMensualite, int termine, long dateDebutCredit,
+                   long dateDerniereMensualite, long dateProchaineMensualite, long datePreavis, int blocageDatePreavis) {
         this.id = id;
         this.pseudo = pseudo;
         this.montantPret = montantPret;
@@ -31,9 +36,12 @@ public class Credits {
         this.termine = termine;
         this.dateDebutCredit = dateDebutCredit;
         this.dateDerniereMensualite = dateDerniereMensualite;
+        this.dateProchaineMensualite = dateProchaineMensualite;
+        this.datePreavis = datePreavis;
+        this.blocageDatePreavis = blocageDatePreavis;
     }
 
-    public Credits(String pseudo, BigDecimal montantPret, BigDecimal coutPret, BigDecimal montantRembourse, BigDecimal mensualite, int nbMMensualite, int cycleMensualite, int termine, LocalDateTime dateDebutCredit, LocalDateTime dateDerniereMensualite) {
+    public Credits(String pseudo, BigDecimal montantPret, BigDecimal coutPret, BigDecimal montantRembourse, BigDecimal mensualite, int nbMMensualite, int cycleMensualite, int termine, long dateDebutCredit, long dateDerniereMensualite, long dateProchaineMensualite, long datePreavis, int blocageDatePreavis) {
         this.pseudo = pseudo;
         this.montantPret = montantPret;
         this.coutPret = coutPret;
@@ -44,6 +52,9 @@ public class Credits {
         this.termine = termine;
         this.dateDebutCredit = dateDebutCredit;
         this.dateDerniereMensualite = dateDerniereMensualite;
+        this.dateProchaineMensualite = dateProchaineMensualite;
+        this.datePreavis = datePreavis;
+        this.blocageDatePreavis = blocageDatePreavis;
     }
 
     public int getId() {
@@ -102,11 +113,11 @@ public class Credits {
         this.termine = termine;
     }
 
-    public LocalDateTime getDateDebutCredit() {
+    public long getDateDebutCredit() {
         return dateDebutCredit;
     }
 
-    public void setDateDebutCredit(LocalDateTime dateDebutCredit) {
+    public void setDateDebutCredit(long dateDebutCredit) {
         this.dateDebutCredit = dateDebutCredit;
     }
 
@@ -126,11 +137,35 @@ public class Credits {
         this.montantRembourse = montantRembourse;
     }
 
-    public LocalDateTime getDateDerniereMensualite() {
+    public long getDateDerniereMensualite() {
         return dateDerniereMensualite;
     }
 
-    public void setDateDerniereMensualite(LocalDateTime dateDerniereMensualite) {
+    public void setDateDerniereMensualite(long dateDerniereMensualite) {
         this.dateDerniereMensualite = dateDerniereMensualite;
+    }
+
+    public long getDateProchaineMensualite() {
+        return dateProchaineMensualite;
+    }
+
+    public void setDateProchaineMensualite(long dateProchaineMensualite) {
+        this.dateProchaineMensualite = dateProchaineMensualite;
+    }
+
+    public long getDatePreavis() {
+        return datePreavis;
+    }
+
+    public void setDatePreavis(long datePreavis) {
+        this.datePreavis = datePreavis;
+    }
+
+    public int getBlocageDatePreavis() {
+        return blocageDatePreavis;
+    }
+
+    public void setBlocageDatePreavis(int blocageDatePreavis) {
+        this.blocageDatePreavis = blocageDatePreavis;
     }
 }

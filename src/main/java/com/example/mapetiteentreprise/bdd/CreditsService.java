@@ -8,8 +8,6 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.List;
 
 public class CreditsService {
     private ConnectionBdd connectionBdd;
@@ -39,11 +37,17 @@ public class CreditsService {
             int nbMMensualite = resultSet.getInt("nbMMensualite");
             int cycleMensualite = resultSet.getInt("cycleMensualite");
             int termine = resultSet.getInt("termine");
-            long timestampMillis = resultSet.getLong("dateDebutCredit");
+//            long timestampMillis = resultSet.getLong("dateDebutCredit");
+            long dateDebutCredit = resultSet.getLong("dateDebutCredit");
+            long dateDerniereMensualite = resultSet.getLong("dateDerniereMensualite");
+            long dateProchaineMensualite = resultSet.getLong("dateProchaineMensualite");
+            long datePreavis = resultSet.getLong("datePreavis");
+            int blocageDatePreavis = resultSet.getInt("blocageDatePreavis");
 
-            LocalDateTime dateDebutCredit = LocalDateTime.ofInstant(Instant.ofEpochMilli(timestampMillis), ZoneId.systemDefault());
+//            LocalDateTime dateDebutCredit = LocalDateTime.ofInstant(Instant.ofEpochMilli(timestampMillis), ZoneId.systemDefault());
 
-            Credits credit = new Credits(pseudo, montantPret, coutPret, montantRembourse, mensualite, nbMMensualite, cycleMensualite, termine, dateDebutCredit, dateDebutCredit);
+            Credits credit = new Credits(pseudo, montantPret, coutPret, montantRembourse, mensualite, nbMMensualite, cycleMensualite,
+                    termine, dateDebutCredit, dateDerniereMensualite, dateProchaineMensualite, datePreavis, blocageDatePreavis);
             credit.setId(id);
             System.out.println(credit);
             return credit;
@@ -59,7 +63,7 @@ public class CreditsService {
      * @return
      */
     public boolean isCreditEnCours(String pseudo) {
-        String query = "SELECT * FROM credits WHERE pseudo LIKE ?";
+        String query = "SELECT * FROM credits WHERE pseudo LIKE ? AND termine=0";
         try {
             PreparedStatement statement = connectionBdd.prepareStatement(query);
             // Paramètre pour la recherche du mot "pseudo"
@@ -85,8 +89,8 @@ public class CreditsService {
         Timestamp timestamp = Timestamp.valueOf(dateDebutCredit);
         // Insertion des données
         String sql = "INSERT INTO credits (pseudo, montantPret, coutPret, montantRembourse, mensualite," +
-                "nbMMensualite, cycleMensualite, termine, dateDebutCredit" +
-                ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                "nbMMensualite, cycleMensualite, termine, dateDebutCredit, datePreavis, blocageDatePreavis" +
+                ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try {
             PreparedStatement stmt = connectionBdd.prepareStatement(sql);
@@ -98,7 +102,10 @@ public class CreditsService {
             stmt.setInt(6, credits.getNbMMensualite());
             stmt.setInt(7, credits.getCycleMensualite());
             stmt.setInt(8, credits.getTermine());
-            stmt.setTimestamp(9, timestamp);
+            stmt.setLong(9, credits.getDateDebutCredit());
+            stmt.setLong(10, credits.getDatePreavis());
+            stmt.setInt(11, credits.getBlocageDatePreavis());
+//            stmt.setTimestamp(9, timestamp);
             stmt.executeUpdate();
             // Récupération de l'ID généré
             ResultSet generatedKeys = stmt.getGeneratedKeys();
@@ -112,7 +119,36 @@ public class CreditsService {
             e.printStackTrace();
             System.out.println("Probleme lors de la creation du prêt " + e);
         }
-
-
     }
+
+    public void majCredit(Credits credits) {
+        // Requête de mise à jour
+        String sql = "UPDATE credits SET montantRembourse = ?, "
+                + "mensualite = ?, dateDerniereMensualite = ?, termine = ?, dateProchaineMensualite = ?, datePreavis = ?, blocageDatePreavis = ?" +
+                " WHERE pseudo LIKE ? AND TERMINE = 0";
+
+        System.out.println("Requete : " + sql);
+        // formate le champ date deco en timeStamp
+        // Timestamp timestamp = Timestamp.valueOf(sauvegarde.getDateDeco());
+
+        try {
+        PreparedStatement stmt = connectionBdd.prepareStatement(sql);
+        // Paramétrage des valeurs
+        stmt.setBigDecimal(1, credits.getMontantRembourse());
+        stmt.setBigDecimal(2, credits.getMensualite());
+        stmt.setLong(3, credits.getDateDerniereMensualite());
+        stmt.setInt(4, credits.getTermine());
+        stmt.setLong(5,credits.getDateProchaineMensualite());
+        stmt.setLong(6, credits.getDatePreavis());
+        stmt.setInt(7, credits.getBlocageDatePreavis());
+        stmt.setString(8, credits.getPseudo());
+
+        // Insertion des données
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
 }
