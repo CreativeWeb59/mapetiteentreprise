@@ -2,12 +2,14 @@ package com.example.mapetiteentreprise.jeu;
 
 import com.example.mapetiteentreprise.actions.Outils;
 import javafx.geometry.Pos;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 
 import java.sql.PreparedStatement;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.time.temporal.Temporal;
 
 /**
  * Classe qui gere l'affichage du calendrier et la gestion des journées du jeu
@@ -25,12 +27,22 @@ public class Calendrier {
     private LocalDateTime dateDebutJeu;
     private int dureeJour = 600; // pour 60 secondes
     private int nbJoursSemaine = 7;
-    private int nbJoursMois = 30; // 30 + 1 => correspond à l'arrivee du banquier
     private long semaine1EnCours[] = new long[]{1, 2, 3, 4, 5, 6, 7}; // contiendra les jours de la premiere semaine semaine à afficher sur le calendrier
     private long semaine2EnCours[] = new long[]{8, 9, 10, 11, 12, 13, 14}; // contiendra les jours de la premiere deuxieme semaine à afficher sur le calendrier
+    public long numJour = 10;
+    public double progressJour = 0.7;
+    public int heureActuelle = 1; // chiffre de 1 à 10 => 1 jour = 10 fois 60s ou 10 fois un progressOeuf
+    public PieChart pieHorloge;
 
     public Calendrier(LocalDateTime dateDebutJeu) {
         this.dateDebutJeu = dateDebutJeu;
+    }
+
+    public Calendrier(LocalDateTime dateDebutJeu, long numJour, double progressJour, int heureActuelle) {
+        this.dateDebutJeu = dateDebutJeu;
+        this.numJour = numJour;
+        this.progressJour = progressJour;
+        this.heureActuelle = heureActuelle;
     }
 
     public LocalDateTime getDateDebutJeu() {
@@ -57,14 +69,21 @@ public class Calendrier {
         this.nbJoursSemaine = nbJoursSemaine;
     }
 
-    public int getNbJoursMois() {
-        return nbJoursMois;
+    public double getProgressJour() {
+        return progressJour;
     }
 
-    public void setNbJoursMois(int nbJoursMois) {
-        this.nbJoursMois = nbJoursMois;
+    public void setProgressJour(double progressJour) {
+        this.progressJour = progressJour;
     }
 
+    public int getHeureActuelle() {
+        return heureActuelle;
+    }
+
+    public void setHeureActuelle(int heureActuelle) {
+        this.heureActuelle = heureActuelle;
+    }
 
     public long[] getSemaine1EnCours() {
         return semaine1EnCours;
@@ -119,29 +138,6 @@ public class Calendrier {
         this.semaine2EnCours = semaine2EnCours;
     }
 
-    /**
-     * Creation du calendrier
-     */
-    public void createCalendrier() {
-
-    }
-
-
-    /**
-     * Creation de la semaine 1 a afficher
-     * correspond a la semaine du jour en cours
-     */
-    public void createSemaine1() {
-
-    }
-
-    /**
-     * Creation de la semaine 2 a afficher
-     * correspond a la semaine du jour en cours
-     */
-    public void createSemaine2() {
-
-    }
 
     /**
      * Renvoi le numero de jour actuel
@@ -227,10 +223,66 @@ public class Calendrier {
         }
     }
 
+    public void createHorloge(PieChart pieHorlogeController){
+        this.pieHorloge = pieHorlogeController;
+        // Masque les libellés
+        this.pieHorloge.setLabelsVisible(false);
+        // Désactive l'espacement entre les tranches
+        this.pieHorloge.setLabelLineLength(0);
+
+        // creation du tableau pour les heures
+        PieChart.Data[] heures = new PieChart.Data[10];
+
+        for (int i = 0; i < heures.length; i++) {
+            heures[i] = new PieChart.Data("Heure " + (i + 1), 10);
+            this.pieHorloge.getData().add(heures[i]);
+        }
+
+        // Modifier la couleur des tranches en utilisant une couleur personnalisée
+        setCouleurTranchesHorloge(heures);
+
+        // Définir l'angle de départ de la première tranche à 90 degrés (commençant en haut du cercle)
+        pieHorloge.setStartAngle(90);
+
+        // rend le titre transparent
+        pieHorloge.lookup(".chart-title").setStyle("-fx-background-color: transparent;");
+    }
+    public void setCouleurTranchesHorloge(PieChart.Data[] heures) {
+        String[] customColors = couleursTranchesHoraires();
+        for (int i = 0; i < heures.length; i++) {
+            heures[i].getNode().setStyle("-fx-pie-color: " + customColors[i] + ";");
+        }
+    }
 
     /**
-     * Modifie le montant du prelevement si c'est la derniere mensualite
+     * Permet de remplir le tableau des couleurs de l'horloge
+     * suivant l'heure actuelle
+     * @return
      */
+    public String[] couleursTranchesHoraires(){
+        // tableau par defaut qui correspond à 1 heure
+        String ecoulee = "#0F9DE8";
+        String pasEcoulee = "white";
 
+        String[] resultatCouleurs = {ecoulee, pasEcoulee, pasEcoulee, pasEcoulee, pasEcoulee, pasEcoulee, pasEcoulee, pasEcoulee, pasEcoulee, pasEcoulee};
+        for (int i = 0; i < resultatCouleurs.length; i++) {
+            if (this.heureActuelle > i){
+                resultatCouleurs[i] = ecoulee;
+            } else {
+                resultatCouleurs[i] = pasEcoulee;
+            }
+        }
+        return resultatCouleurs;
+    }
 
+    /**
+     * permet de modifier les couleurs au changement d'heure
+     * @param pieChart
+     */
+    public void modifyPieChartColors(PieChart pieChart) {
+        // Vous pouvez appeler cette méthode pour modifier les couleurs du PieChart existant
+        // en utilisant l'objet pieChart passé en paramètre.
+        PieChart.Data[] heures = pieChart.getData().toArray(new PieChart.Data[0]);
+        setCouleurTranchesHorloge(heures);
+    }
 }

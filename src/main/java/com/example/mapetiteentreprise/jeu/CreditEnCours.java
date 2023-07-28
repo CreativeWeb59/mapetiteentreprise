@@ -226,13 +226,15 @@ public class CreditEnCours {
 
         if (nbRetardMensualite(jourEnCours) == 0){
             // date de prochaine mensualite
-            this.setDateProchaineMensualite(dateProchaineMensualite(jourEnCours));
+            this.setDateProchaineMensualite(dateProchaineMensualite(jourEnCours)); // paiement normal
+            this.setDateDerniereMensualite(jourEnCours);
         } else if ((nbRetardMensualite(jourEnCours) < 0)) {
             // cas du joueur qui paie en avance
-            long nbAvanceMensualite = Math.abs(nbRetardMensualite(jourEnCours));
-            this.setDateProchaineMensualite(dateProchaineMensualite(jourEnCours, nbAvanceMensualite));
+            this.setDateProchaineMensualite(getDateProchaineMensualite() + cycleMensualite); // paiement en avance
+            this.setDateDerniereMensualite(jourEnCours);
         }
 
+        // manque maj date derniere mensualite
     }
 
     /**
@@ -244,29 +246,11 @@ public class CreditEnCours {
      */
     public long dateProchaineMensualite(long jourEnCours){
         // date de prochaine mensualite
-        // egale ((debut du pret + mensualites obligtoires) * cycle)
-        long resultat = ((this.getDateDebutCredit() + this.nombreEcheancesObligatoires(jourEnCours)) * this.getCycleMensualite());
+        // egale ((debut du pret + mensualites obligtoires) * cycle +1)
+        long resultat = ((this.getDateDebutCredit() + this.nombreEcheancesObligatoires(jourEnCours)) * this.getCycleMensualite() + 1);
         System.out.println("Date prochaine mensualite (resultat) " + resultat);
         return resultat;
     }
-
-    /**
-     * Calcule la date de la prochaine mensualite
-     * par rapport au nombre d'echeance de crédit obligatoires
-     * et au jourEnCours
-     * Quand le joueur paie d'avance
-     * @param jourEnCours
-     * @param nbMensualiteAvance
-     * @return
-     */
-    public long dateProchaineMensualite(long jourEnCours, long nbMensualiteAvance){
-        // date de prochaine mensualite
-        // egale ((debut du pret + mensualites obligtoires) * cycle)
-        long resultat = ((this.getDateDebutCredit() + this.nombreEcheancesObligatoires(jourEnCours)) * (this.getCycleMensualite() * nbMensualiteAvance));
-        System.out.println("Date prochaine mensualite (resultat) " + resultat);
-        return resultat;
-    }
-
 
     /**
      * Calcule le nombre de mensualites en retard

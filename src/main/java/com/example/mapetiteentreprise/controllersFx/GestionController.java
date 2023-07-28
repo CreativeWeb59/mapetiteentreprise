@@ -191,15 +191,7 @@ public class GestionController {
         }
     }
 
-    /**
-     * permet de recuperer et transferer la partie
-     * vers le choix des distributeurs
-     *
-     * @param sauvegarde
-     */
-    public void lancerSauvegarde(Sauvegarde sauvegarde) {
-        System.out.println("Anciennement lancer sauvegarde");
-    }
+
 
     /**
      * Sauvegarde les donnees

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.*?>
+<?import javafx.scene.chart.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
@@ -52,24 +53,24 @@
 
                             </children>
                         </Pane>
-                        <ImageView id="poule" fx:id="poule" fitHeight="100.0" fitWidth="72.0" layoutX="949.0" layoutY="22.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
+                        <ImageView id="poule" fx:id="poule" fitHeight="100.0" fitWidth="72.0" layoutX="1000.0" layoutY="350.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@images/pouleOeuf.png" />
                             </image>
                         </ImageView>
                         <Label fx:id="labelConsole" alignment="TOP_LEFT" layoutX="50.0" layoutY="680.0" prefHeight="100.0" prefWidth="1100.0" />
-                        <Button layoutX="1044.0" layoutY="44.0" mnemonicParsing="false" onAction="#retourGestion" styleClass="buttonVendre" text="Retour" />
+                        <Button layoutX="550.0" layoutY="70.0" mnemonicParsing="false" onAction="#retourGestion" styleClass="buttonVendre" text="Retour au menu" />
                    <Button fx:id="rembourserCredit" layoutX="71.0" layoutY="110.0" mnemonicParsing="false" onAction="#onRembourserCredit" styleClass="buttonVendre" text="Rembourser" />
                     </children>
                 </Pane>
             </children>
         </Pane>
-        <ImageView id="evenement" fx:id="evenement" fitHeight="465.0" fitWidth="360.0" layoutX="500.0" layoutY="310.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView id="evenement" fx:id="evenement" disable="true" fitHeight="465.0" fitWidth="360.0" layoutX="500.0" layoutY="310.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" visible="false">
             <image>
                 <Image url="@images/banquier.png" />
             </image>
         </ImageView>
-        <Label fx:id="labelBanquier" alignment="TOP_LEFT" layoutX="320.0" layoutY="220.0" prefHeight="188.0" prefWidth="330.0" style="-fx-background-color: transparent;" styleClass="fondsBulleDroite" text="Je vous laisse une journee pour régulariser votre prêt, au delà je récupère votre ferme et vous avez perdu le jeu ! En attendant, vous ne pouvez plus rien dépenser." wrapText="true">
+        <Label fx:id="labelBanquier" alignment="TOP_LEFT" disable="true" layoutX="320.0" layoutY="220.0" opacity="0.0" prefHeight="188.0" prefWidth="330.0" style="-fx-background-color: transparent;" styleClass="fondsBulleDroite" text="Je vous laisse une journee pour régulariser votre prêt, au delà je récupère votre ferme et vous avez perdu le jeu ! En attendant, vous ne pouvez plus rien dépenser." visible="false" wrapText="true">
             <padding>
                 <Insets bottom="20.0" left="30.0" right="30.0" />
             </padding>
@@ -78,5 +79,10 @@
                 <Font name="System Bold" size="14.0" />
             </font>
         </Label>
+      <Pane fx:id="paneHorloge" layoutX="1000.0" layoutY="24.0" prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <PieChart fx:id="pieHorloge" prefHeight="200.0" prefWidth="200.0" title="Horloge" />
+         </children>
+      </Pane>
     </children>
 </AnchorPane>

@@ -20,7 +20,7 @@
                   <Image url="@images/homme_banc.png" />
                </image>
             </ImageView>
-            <Label layoutX="98.0" layoutY="26.0" prefHeight="130.0" prefWidth="219.0" styleClass="fondsBulleDroite" text="Hé ! Ca vous dirais d'investir dans une ferme ?" wrapText="true">
+            <Label layoutX="98.0" layoutY="26.0" prefHeight="130.0" prefWidth="219.0" styleClass="fondsBulleDroite" text="Hé ! Ca vous dirait d'investir dans une ferme ?" wrapText="true">
                <padding>
                   <Insets bottom="40.0" left="20.0" right="20.0" />
                </padding>
@@ -112,7 +112,7 @@
                <padding>
                   <Insets bottom="50.0" left="20.0" right="20.0" />
                </padding></Label>
-            <Label layoutX="14.0" layoutY="216.0" prefHeight="150.0" prefWidth="256.0" styleClass="fondsBulleDroiteHaut" text="Je viendrai une fois par mois récupérer vos remboursements, qui seront de 18.00 € mensuels" wrapText="true">
+            <Label layoutX="14.0" layoutY="216.0" prefHeight="150.0" prefWidth="256.0" styleClass="fondsBulleDroiteHaut" text="Je viendrai régulèrement récupérer vos remboursements, qui seront de 42.00 €" wrapText="true">
                <padding>
                   <Insets left="20.0" right="20.0" top="50.0" />
                </padding></Label>

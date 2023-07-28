@@ -17,6 +17,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
@@ -25,6 +26,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
@@ -45,7 +47,7 @@ public class FermeController {
     private BigDecimal taxeEnAttente = new BigDecimal(0);
     @FXML
     private Label montantBanque, labelConsole, nbPoules, nbOeufs, labelPseudo, labelPoule, gainARecuperer, labelCredit, labelJourEncours, labelBanquier;
-//    labelTaxe, montantTaxe;
+    //    labelTaxe, montantTaxe;
     @FXML
     private Pane paneFerme;
     @FXML
@@ -54,6 +56,8 @@ public class FermeController {
     private Button btnVendre, btnPPoule, btnPPoulePDix, btnPPouleMax, rembourserCredit;
     @FXML
     private ImageView imgAnimation, evenement;
+    @FXML
+    private PieChart pieHorloge;
     private String messageConsole;
     private Stage stage;
     private Scene scene;
@@ -109,6 +113,9 @@ public class FermeController {
 
         // affiche ou non le banquier
         affichageEvenementBanquier();
+
+        // affichage de l'horloge
+        setPieHorloge();
     }
 
     public void nouveau(Jeu jeu) {
@@ -126,7 +133,7 @@ public class FermeController {
         // correspond à un nombre de secondes d'un passage de 0 à 100
         progressBarStartTimeline(0, jeu.getParametres().getVitessePonteOeuf());
         this.executerAnimation();
-
+        setPieHorloge();
     }
 
     /**
@@ -303,7 +310,7 @@ public class FermeController {
 
         System.out.println("Vente des oeufs");
         // calcule le nombre maximum de poules achetables pour mettre à jour le bouton
-        achatMaxPoules();
+//        achatMaxPoules();
 
         // maj du bouton rembourser credit
         this.majCredit();
@@ -326,18 +333,10 @@ public class FermeController {
      * suivant l'argent en banque
      */
     public void majBtnAchats() {
-        BigDecimal enBanque = jeu.getJoueur().getArgent();
+//        BigDecimal enBanque = jeu.getJoueur().getArgent();
         int nbAchatPouleMax = achatMaxPoules();
 
-        // comparaisons avec BigDecimal
-        // test pour une poule
-//        int comparaison = enBanque.compareTo(jeu.getParametres().getTarifPoule());
-//        // Test du bouton poule
-//        if (comparaison >= 0) {
-//            this.getBtnbAchatPoule().setDisable(false);
-//        } else {
-//            this.getBtnbAchatPoule().setDisable(true);
-//        }
+        System.out.println("nombre de poules achetables : " + nbAchatPouleMax);
 
         if (nbAchatPouleMax >= 10) {
             this.getBtnPPoulePDix().setDisable(false);
@@ -466,6 +465,9 @@ public class FermeController {
                     this.majGainsEnCours();
                     // mets à jour le jour en cours
                     this.setLabelJourEncours();
+                    // mets à jour l'heure actuelle et l'horloge
+                    this.jeu.getCalendrier().setHeureActuelle(this.jeu.getCalendrier().getHeureActuelle() + 1);
+                    this.setHeureHorloge();
                     // affiche ou non le banquier
                     affichageEvenementBanquier();
                 }, new KeyValue(progressOeufs.progressProperty(), 1))
@@ -502,6 +504,10 @@ public class FermeController {
                     // met à jour les gains en cours
                     this.majGainsEnCours();
                     // mets à jour le jour en cours
+                    // mets à jour l'heure actuelle et l'horloge
+                    this.jeu.getCalendrier().setHeureActuelle(this.jeu.getCalendrier().getHeureActuelle() + 1);
+                    this.setHeureHorloge();
+
                     this.setLabelJourEncours();
                     // affiche ou non le banquier
                     affichageEvenementBanquier();
@@ -841,14 +847,10 @@ public class FermeController {
             texte += "Prélèvement : " + SMensualite + separationTexte;
 
             // gestion si echeances en retard
-            if(nbRetardMensualite == 0){
-                if(jeu.getJoueur().getCreditEnCours().getDateProchaineMensualite() == jeu.getCalendrier().getJourEnCours()){
-                    texte += "A payer immédiatement";
-                } else {
-                    texte += "A payer le jour : " + prochainPrelevement;
-                }
-
-            } else {
+            if (nbRetardMensualite <= 0) {
+                texte += "A payer le jour : " + prochainPrelevement;
+            }
+            else {
                 texte += "Vous avez " + nbRetardMensualite + " écheance(s) en retard" + separationTexte;
                 texte += "A payer immédiatement";
 
@@ -900,8 +902,8 @@ public class FermeController {
      * methode executee à la fin de la barre de progression des poules
      * doit verifier si assez d'argent pour rembourser le prêt
      */
-    public void majCredit(){
-        if(jeu.getJoueur().isArgent(jeu.getJoueur().getCreditEnCours().getMensualite())){
+    public void majCredit() {
+        if (jeu.getJoueur().isArgent(jeu.getJoueur().getCreditEnCours().getMensualite())) {
             rembourserCredit.setVisible(true);
             rembourserCredit.setDisable(false);
         } else {
@@ -913,24 +915,29 @@ public class FermeController {
     /**
      * gerer l'arrivee du banquier
      */
-    public void affichageEvenementBanquier(){
-        if(afficherBanquier()){
+    public void affichageEvenementBanquier() {
+        if (afficherBanquier()) {
             evenement.setDisable(false);
             evenement.setVisible(true);
             evenement.setOpacity(1);
+            labelBanquier.setVisible(true);
+            labelBanquier.setDisable(false);
+            labelBanquier.setOpacity(1);
             blocageAchats();
         } else {
             evenement.setDisable(true);
             evenement.setVisible(false);
             evenement.setOpacity(0);
+            labelBanquier.setDisable(true);
             labelBanquier.setVisible(false);
+            labelBanquier.setOpacity(0);
         }
     }
 
-    public boolean afficherBanquier(){
-        if(jeu.getCalendrier().getJourEnCours() >= jeu.getJoueur().getCreditEnCours().getDateProchaineMensualite()){
+    public boolean afficherBanquier() {
+        if (jeu.getCalendrier().getJourEnCours() >= jeu.getJoueur().getCreditEnCours().getDateProchaineMensualite()) {
             // moddifie la date du preavis qu'une fois
-            if(jeu.getJoueur().getCreditEnCours().getBlocageDatePreavis() == 0){
+            if (jeu.getJoueur().getCreditEnCours().getBlocageDatePreavis() == 0) {
                 this.jeu.getJoueur().getCreditEnCours().setDatePreavis(this.jeu.getCalendrier().getJourEnCours() + 200);
                 this.jeu.getJoueur().getCreditEnCours().setBlocageDatePreavis(1);
                 System.out.println("Date du preavis : " + this.jeu.getJoueur().getCreditEnCours().getDatePreavis());
@@ -943,26 +950,38 @@ public class FermeController {
     /**
      * rends disable les boutons achats quand c'est le moment de payer
      */
-    public void blocageAchats(){
-        if(afficherBanquier()){
+    public void blocageAchats() {
+        if (afficherBanquier()) {
             btnPPoule.setDisable(true);
             btnPPoulePDix.setDisable(true);
             btnPPouleMax.setDisable(true);
         } else {
-            btnPPoule.setDisable(false);
-            btnPPoulePDix.setDisable(false);
-            btnPPouleMax.setDisable(false);
+            majBtnAchats();
         }
     }
 
     /**
      * Verifie la date du preavis et bloque tout si elle est dépassée
      */
-    public void blocageComplet(){
-        if(jeu.getJoueur().getCreditEnCours().getDatePreavis() <= this.jeu.getCalendrier().getJourEnCours()) {
+    public void blocageComplet() {
+        if (jeu.getJoueur().getCreditEnCours().getDatePreavis() <= this.jeu.getCalendrier().getJourEnCours()) {
             labelBanquier.setText("Le délai est écoulé, vous avez perdu le jeu et je récupère votre ferme. Elle sera vendue à quelqu'un de plus performant en affaires !!!");
             paneFerme.setOpacity(0.6);
             paneFerme.setDisable(true);
         }
+    }
+
+    /**
+     * execute la methode qui creer l'horloge
+     */
+    public void setPieHorloge(){
+        this.jeu.getCalendrier().createHorloge(pieHorloge);
+    }
+
+    /**
+     * Maj les couleurs de l'horloge
+     */
+    public void setHeureHorloge(){
+        this.jeu.getCalendrier().modifyPieChartColors(pieHorloge);
     }
 }

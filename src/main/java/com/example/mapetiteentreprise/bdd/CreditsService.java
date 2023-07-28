@@ -151,4 +151,20 @@ public class CreditsService {
         }
     }
 
+    /**
+     * permet de supprimer le credit
+     * @param pseudo
+     */
+    public void suprCredits(String pseudo) {
+
+        String sql = "DELETE FROM credits WHERE pseudo LIKE ?";
+        try {
+            PreparedStatement stmt = connectionBdd.prepareStatement(sql);
+            stmt.setString(1, pseudo);
+            stmt.executeUpdate();
+            System.out.println("Credits de " + pseudo + " supprimée");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

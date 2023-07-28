@@ -7,6 +7,9 @@ public class Sauvegarde {
     private int id;
     private String pseudo;
     private BigDecimal argent;
+    public long numJour;
+    public double progressJour;
+    public long heureJour; // chiffre de 1 à 10 => 1 jour = 10 fois 60s ou 10 fois un progressOeuf
     private int nbPoules;
     private long nbOeufs;
     private int fermeActive;

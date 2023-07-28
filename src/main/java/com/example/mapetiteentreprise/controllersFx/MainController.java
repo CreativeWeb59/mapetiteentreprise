@@ -159,7 +159,8 @@ public class MainController {
 
     /**
      * Supprime la partie selectionnee en bdd
-     *
+     * supprime dans la table sauvegarde le pseudo
+     * supprime dans la table crédits les crédits du joueur
      * @param event
      */
     public void suprPartie(ActionEvent event) {
@@ -167,6 +168,7 @@ public class MainController {
         try {
             connectionBdd.connect();
             this.sauvegardeService.suprSauvegarde(userName);
+            this.creditsService.suprCredits(userName);
 
             // refresh de la liste des sauvegardes
             listeDesSsauvegardes();
