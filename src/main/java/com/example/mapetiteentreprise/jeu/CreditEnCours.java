@@ -219,51 +219,86 @@ public class CreditEnCours {
             this.termine = 1;
         }
 
-        // verfifie si date depassée sinon rembourse le crédit avec les bonnes dates pour les mensualites
-        if(this.getDateProchaineMensualite() >= jourEnCours){
-            this.setDateProchaineMensualite(this.getDateProchaineMensualite() + cycleMensualite);
-            this.setDateDerniereMensualite(jourEnCours);
-            this.setDatePreavis(jourEnCours + cycleMensualite + 2);
-            this.setBlocageDatePreavis(1);
-        } else {
-            this.setDateDerniereMensualite(jourEnCours);
+        // recupere le nombre de retard de paiement
+        // si c'est egal à 0
+        // alors on modifie les dates
+        // sinon on modifie juste la date de paiement d'un remboursement
+
+        if (nbRetardMensualite(jourEnCours) == 0){
+            // date de prochaine mensualite
+            this.setDateProchaineMensualite(dateProchaineMensualite(jourEnCours));
+        } else if ((nbRetardMensualite(jourEnCours) < 0)) {
+            // cas du joueur qui paie en avance
+            long nbAvanceMensualite = Math.abs(nbRetardMensualite(jourEnCours));
+            this.setDateProchaineMensualite(dateProchaineMensualite(jourEnCours, nbAvanceMensualite));
         }
 
-        // modifie la date de la prochaine mensualite
-
-        this.setDateProchaineMensualite(this.getDateDerniereMensualite() + cycleMensualite);
-        this.setDateDerniereMensualite(jourEnCours);
     }
+
+    /**
+     * Calcule la date de la prochaine mensualite
+     * par rapport au nombre d'echeance de crédit obligatoires
+     * et au jourEnCours
+     * @param jourEnCours
+     * @return
+     */
+    public long dateProchaineMensualite(long jourEnCours){
+        // date de prochaine mensualite
+        // egale ((debut du pret + mensualites obligtoires) * cycle)
+        long resultat = ((this.getDateDebutCredit() + this.nombreEcheancesObligatoires(jourEnCours)) * this.getCycleMensualite());
+        System.out.println("Date prochaine mensualite (resultat) " + resultat);
+        return resultat;
+    }
+
+    /**
+     * Calcule la date de la prochaine mensualite
+     * par rapport au nombre d'echeance de crédit obligatoires
+     * et au jourEnCours
+     * Quand le joueur paie d'avance
+     * @param jourEnCours
+     * @param nbMensualiteAvance
+     * @return
+     */
+    public long dateProchaineMensualite(long jourEnCours, long nbMensualiteAvance){
+        // date de prochaine mensualite
+        // egale ((debut du pret + mensualites obligtoires) * cycle)
+        long resultat = ((this.getDateDebutCredit() + this.nombreEcheancesObligatoires(jourEnCours)) * (this.getCycleMensualite() * nbMensualiteAvance));
+        System.out.println("Date prochaine mensualite (resultat) " + resultat);
+        return resultat;
+    }
+
 
     /**
      * Calcule le nombre de mensualites en retard
      */
     public long nbRetardMensualite(long jourEnCours) {
-        long datePrevueProchaineMensualite = this.getDateProchaineMensualite();
-        System.out.println("date prevue prochaine mensualite " + this.getDateProchaineMensualite());
-        System.out.println("Cycle mensualite : " + getCycleMensualite());
-        if (datePrevueProchaineMensualite < jourEnCours) {
-            long nbMensualitesAPayer = 0;
-            while (datePrevueProchaineMensualite < jourEnCours) {
-                datePrevueProchaineMensualite += getCycleMensualite();
-                System.out.println(" date prochaine mensualite" + datePrevueProchaineMensualite);
-                nbMensualitesAPayer ++ ;
-            }
+        long nbMensualitesPayees = nombreMensualitesPayees();
+        long nbEcheancesObligatoires = nombreEcheancesObligatoires(jourEnCours);
 
-            System.out.println("retard de paiement de : " + nbMensualitesAPayer);
-            return nbMensualitesAPayer;
-
-        } else {
-            System.out.println("Pas de retard de paiement");
-            return 0;
-        }
+        return nbEcheancesObligatoires - nbMensualitesPayees;
     }
 
     /**
-     * Calcule le nombre de mensualites payees
+     * Calcule le nombre de mensualites deja payées
      */
-    public long nbMensualitesPayees() {
-        return this.montantRembourse.divide(mensualite).longValue();
+    public long nombreMensualitesPayees() {
+        // divise montant paye par valeur mensualite => nb de mensualites payées
+        System.out.println("Nombre de mensualites payées : " + getMontantRembourse().divide(getMensualite()).intValue());
+        return (getMontantRembourse().divide(getMensualite()).intValue());
+    }
+
+    /**
+     * Renvoi le nombre d'echeance minimum a effectuer au credi suivant la date du jour
+     * prends la date du debut du credit
+     * @param jourEnCours
+     * @return
+     */
+    public long nombreEcheancesObligatoires(long jourEnCours){
+        // prends la date du debut du credit
+        // prends le jour en cours - date debut credit et divise par le cyle => trouve le nombre d'echeances obligatoires
+
+        System.out.println("Nombre d'échéances obligatoires : " + (jourEnCours - this.getDateDebutCredit()) / this.getCycleMensualite());
+        return (jourEnCours - this.getDateDebutCredit()) / this.getCycleMensualite();
     }
 
 

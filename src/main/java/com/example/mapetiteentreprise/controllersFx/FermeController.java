@@ -856,8 +856,6 @@ public class FermeController {
                 // A faire Blocage des boutons d'achat
             }
 
-
-
             // met à jour le bouton rembourser si assez d'argent
             this.majCredit();
         } else {
