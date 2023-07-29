@@ -131,7 +131,7 @@ public class MainController {
         this.creerActivites(false);
 
         // creation du calendrier
-        Calendrier calendrier = new Calendrier(this.sauvegarde.getDateDebutJeu());
+        Calendrier calendrier = new Calendrier(this.sauvegarde.getDateDebutJeu(), this.sauvegarde.getNumJourDeco(), this.sauvegarde.getHeureDeco(), this.sauvegarde.getProgressJour());
 
         // teste si un credit est en cours
         // recupere le credit en cours
@@ -140,7 +140,7 @@ public class MainController {
             this.credits = creditsService.creditEnCours(userName);
             this.creditEnCours = new CreditEnCours(credits.getMontantPret(), credits.getCoutPret(), credits.getMontantRembourse(), credits.getMensualite(), credits.getNbMMensualite(),
                     credits.getCycleMensualite(), credits.getTermine(), credits.getDateDebutCredit(), credits.getDateDerniereMensualite(), credits.getDateProchaineMensualite(), credits.getDatePreavis(), credits.getBlocageDatePreavis());
-            System.out.println("Nous sommes le jour : " + calendrier.getJourEnCours());
+            System.out.println("Nous sommes le jour : " + calendrier.getNumJour());
         } else {
             System.out.println("Pas de crédit en cours");
         }
@@ -245,7 +245,7 @@ public class MainController {
         LocalDateTime dateEncours = LocalDateTime.now();
 
         // creation de la sauvegarde en bdd
-        this.sauvegarde = new Sauvegarde(this.pseudo, parametres.getArgentDepart(), parametres.getNbPoules(), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        this.sauvegarde = new Sauvegarde(this.pseudo, parametres.getArgentDepart(),1, 1, 0, parametres.getNbPoules(), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                 dateEncours, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, dateEncours);
         sauvegardeService.addJoueur(sauvegarde);
 
@@ -257,7 +257,7 @@ public class MainController {
                 this.parametres.getDistributeurBFActive(), this.parametres.getDistributeurSaActive(), this.parametres.getDistributeurCoActive());
 
         // creation du calendrier
-        Calendrier calendrier = new Calendrier(dateEncours);
+        Calendrier calendrier = new Calendrier(dateEncours, 1, 1, 0);
         // creation de la partie
         this.jeu = new Jeu(joueur, sauvegarde, parametres, calendrier);
     }
@@ -281,7 +281,7 @@ public class MainController {
             confiseries = new Confiseries(parametres.getNbDistributeurCo(), 0, 0, LocalDateTime.now());
             sandwichs = new Sandwichs(parametres.getNbDistributeurSa(), 0, 0, LocalDateTime.now());
         } else {
-            // recuperation des donnees de la ferme
+            // recuperation des donnees de la ferme dont dateDeco
             ferme = new Ferme(sauvegarde.getNbPoules(), sauvegarde.getNbOeufs(), sauvegarde.getDateDeco());
             // recuperation des donnees des distributeurs
             boissonsChaudes = new BoissonsChaudes(sauvegarde.getNbDistributeurBC(), sauvegarde.getNbMarchandisesBC(), sauvegarde.getEtatProgressBC(), sauvegarde.getDateDeco());

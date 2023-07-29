@@ -7,9 +7,9 @@ public class Sauvegarde {
     private int id;
     private String pseudo;
     private BigDecimal argent;
-    public long numJour;
+    public long numJourDeco;
+    public int heureDeco; // chiffre de 1 à 10 => 1 jour = 10 fois 60s ou 10 fois un progressOeuf
     public double progressJour;
-    public long heureJour; // chiffre de 1 à 10 => 1 jour = 10 fois 60s ou 10 fois un progressOeuf
     private int nbPoules;
     private long nbOeufs;
     private int fermeActive;
@@ -45,15 +45,13 @@ public class Sauvegarde {
     // gestion du calendrier
     private LocalDateTime dateDebutJeu;
 
-
-    public Sauvegarde(int id, String pseudo, BigDecimal argent, int nbPoules, long nbOeufs, int fermeActive, int distributeursActive, int distributeurBCActive,
-                      int distributeurBFActive, int distributeurCoActive, int distributeurSaActive, int livraisonActive, int lavageActive,
-                      double etatProgressOeuf, LocalDateTime dateDeco, int nbDistributeurBC, int nbDistributeurBF, int nbDistributeurSa, int nbDistributeurCo,
-                      long nbMarchandisesBC, long nbMarchandisesBF, long nbMarchandisesSa, long nbMarchandisesCo, double etatProgressBC,
-                      double etatProgressBF, double etatProgressSa, double etatProgressCo, LocalDateTime dateDebutJeu) {
+    public Sauvegarde(int id, String pseudo, BigDecimal argent, long numJourDeco, int heureDeco, double progressJour, int nbPoules, long nbOeufs, int fermeActive, int distributeursActive, int distributeurBCActive, int distributeurBFActive, int distributeurCoActive, int distributeurSaActive, int livraisonActive, int lavageActive, double etatProgressOeuf, LocalDateTime dateDeco, int nbDistributeurBC, int nbDistributeurBF, int nbDistributeurSa, int nbDistributeurCo, long nbMarchandisesBC, long nbMarchandisesBF, long nbMarchandisesSa, long nbMarchandisesCo, double etatProgressBC, double etatProgressBF, double etatProgressSa, double etatProgressCo, LocalDateTime dateDebutJeu) {
         this.id = id;
         this.pseudo = pseudo;
         this.argent = argent;
+        this.numJourDeco = numJourDeco;
+        this.heureDeco = heureDeco;
+        this.progressJour = progressJour;
         this.nbPoules = nbPoules;
         this.nbOeufs = nbOeufs;
         this.fermeActive = fermeActive;
@@ -81,13 +79,12 @@ public class Sauvegarde {
         this.dateDebutJeu = dateDebutJeu;
     }
 
-    public Sauvegarde(String pseudo, BigDecimal argent, int nbPoules, long nbOeufs, int fermeActive, int distributeursActive, int distributeurBCActive,
-                      int distributeurBFActive, int distributeurCoActive, int distributeurSaActive, int livraisonActive, int lavageActive,
-                      double etatProgressOeuf, LocalDateTime dateDeco, int nbDistributeurBC, int nbDistributeurBF, int nbDistributeurSa,
-                      int nbDistributeurCo, long nbMarchandisesBC, long nbMarchandisesBF, long nbMarchandisesSa, long nbMarchandisesCo,
-                      double etatProgressBC, double etatProgressBF, double etatProgressSa, double etatProgressCo, LocalDateTime dateDebutJeu) {
+    public Sauvegarde(String pseudo, BigDecimal argent, long numJourDeco, int heureDeco, double progressJour, int nbPoules, long nbOeufs, int fermeActive, int distributeursActive, int distributeurBCActive, int distributeurBFActive, int distributeurCoActive, int distributeurSaActive, int livraisonActive, int lavageActive, double etatProgressOeuf, LocalDateTime dateDeco, int nbDistributeurBC, int nbDistributeurBF, int nbDistributeurSa, int nbDistributeurCo, long nbMarchandisesBC, long nbMarchandisesBF, long nbMarchandisesSa, long nbMarchandisesCo, double etatProgressBC, double etatProgressBF, double etatProgressSa, double etatProgressCo, LocalDateTime dateDebutJeu) {
         this.pseudo = pseudo;
         this.argent = argent;
+        this.numJourDeco = numJourDeco;
+        this.heureDeco = heureDeco;
+        this.progressJour = progressJour;
         this.nbPoules = nbPoules;
         this.nbOeufs = nbOeufs;
         this.fermeActive = fermeActive;
@@ -339,12 +336,39 @@ public class Sauvegarde {
         this.dateDebutJeu = dateDebutJeu;
     }
 
+    public long getNumJourDeco() {
+        return numJourDeco;
+    }
+
+    public void setNumJourDeco(long numJourDeco) {
+        this.numJourDeco = numJourDeco;
+    }
+
+    public int getHeureDeco() {
+        return heureDeco;
+    }
+
+    public void setHeureDeco(int heureDeco) {
+        this.heureDeco = heureDeco;
+    }
+
+    public double getProgressJour() {
+        return progressJour;
+    }
+
+    public void setProgressJour(double progressJour) {
+        this.progressJour = progressJour;
+    }
+
     @Override
     public String toString() {
         return "Sauvegarde{" +
                 "id=" + id +
                 ", pseudo='" + pseudo + '\'' +
                 ", argent=" + argent +
+                ", numJourDeco=" + numJourDeco +
+                ", heureDeco=" + heureDeco +
+                ", progressJour=" + progressJour +
                 ", nbPoules=" + nbPoules +
                 ", nbOeufs=" + nbOeufs +
                 ", fermeActive=" + fermeActive +

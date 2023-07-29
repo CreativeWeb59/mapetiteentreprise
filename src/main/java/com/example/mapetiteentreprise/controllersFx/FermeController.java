@@ -26,11 +26,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
-
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
@@ -809,7 +807,7 @@ public class FermeController {
     }
 
     public void setLabelJourEncours() {
-        String texte = "Jour " + jeu.getCalendrier().getJourEnCours();
+        String texte = "Jour " + jeu.getCalendrier().getNumJour();
         labelJourEncours.setText(texte);
     }
 
@@ -836,7 +834,7 @@ public class FermeController {
             String SMensualite = decimalFormat.format(mensualite) + monnaie;
 
             // calcul mensualites en retard
-            long nbRetardMensualite = jeu.getJoueur().getCreditEnCours().nbRetardMensualite(jeu.getCalendrier().getJourEnCours());
+            long nbRetardMensualite = jeu.getJoueur().getCreditEnCours().nbRetardMensualite(jeu.getCalendrier().getNumJour());
 
             long prochainPrelevement = jeu.getJoueur().getCreditEnCours().getDateProchaineMensualite();
 
@@ -886,7 +884,7 @@ public class FermeController {
             jeu.getJoueur().depenser(jeu.getJoueur().getCreditEnCours().getMensualite());
             // met a jour le credit
             // met a jour le montant du credit rembourse
-            jeu.getJoueur().getCreditEnCours().payerMensualite(jeu.getCalendrier().getJourEnCours());
+            jeu.getJoueur().getCreditEnCours().payerMensualite(jeu.getCalendrier().getNumJour());
             // met a jour la prochaine date du reglement
 
             System.out.println("remboursement");
@@ -935,10 +933,10 @@ public class FermeController {
     }
 
     public boolean afficherBanquier() {
-        if (jeu.getCalendrier().getJourEnCours() >= jeu.getJoueur().getCreditEnCours().getDateProchaineMensualite()) {
+        if (jeu.getCalendrier().getNumJour() >= jeu.getJoueur().getCreditEnCours().getDateProchaineMensualite()) {
             // moddifie la date du preavis qu'une fois
             if (jeu.getJoueur().getCreditEnCours().getBlocageDatePreavis() == 0) {
-                this.jeu.getJoueur().getCreditEnCours().setDatePreavis(this.jeu.getCalendrier().getJourEnCours() + 200);
+                this.jeu.getJoueur().getCreditEnCours().setDatePreavis(this.jeu.getCalendrier().getNumJour() + 200);
                 this.jeu.getJoueur().getCreditEnCours().setBlocageDatePreavis(1);
                 System.out.println("Date du preavis : " + this.jeu.getJoueur().getCreditEnCours().getDatePreavis());
             }
@@ -964,7 +962,7 @@ public class FermeController {
      * Verifie la date du preavis et bloque tout si elle est dépassée
      */
     public void blocageComplet() {
-        if (jeu.getJoueur().getCreditEnCours().getDatePreavis() <= this.jeu.getCalendrier().getJourEnCours()) {
+        if (jeu.getJoueur().getCreditEnCours().getDatePreavis() <= this.jeu.getCalendrier().getNumJour()) {
             labelBanquier.setText("Le délai est écoulé, vous avez perdu le jeu et je récupère votre ferme. Elle sera vendue à quelqu'un de plus performant en affaires !!!");
             paneFerme.setOpacity(0.6);
             paneFerme.setDisable(true);

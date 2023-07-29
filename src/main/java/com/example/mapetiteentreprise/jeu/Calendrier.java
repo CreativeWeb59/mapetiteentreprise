@@ -1,15 +1,12 @@
 package com.example.mapetiteentreprise.jeu;
 
-import com.example.mapetiteentreprise.actions.Outils;
 import javafx.geometry.Pos;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 
-import java.sql.PreparedStatement;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.Temporal;
 
 /**
  * Classe qui gere l'affichage du calendrier et la gestion des journées du jeu
@@ -29,20 +26,16 @@ public class Calendrier {
     private int nbJoursSemaine = 7;
     private long semaine1EnCours[] = new long[]{1, 2, 3, 4, 5, 6, 7}; // contiendra les jours de la premiere semaine semaine à afficher sur le calendrier
     private long semaine2EnCours[] = new long[]{8, 9, 10, 11, 12, 13, 14}; // contiendra les jours de la premiere deuxieme semaine à afficher sur le calendrier
-    public long numJour = 10;
-    public double progressJour = 0.7;
-    public int heureActuelle = 1; // chiffre de 1 à 10 => 1 jour = 10 fois 60s ou 10 fois un progressOeuf
+    public long numJour;
+    public int heureActuelle ; // chiffre de 1 à 10 => 1 jour = 10 fois 60s ou 10 fois un progressOeuf
+    public double progressJour;
     public PieChart pieHorloge;
 
-    public Calendrier(LocalDateTime dateDebutJeu) {
-        this.dateDebutJeu = dateDebutJeu;
-    }
-
-    public Calendrier(LocalDateTime dateDebutJeu, long numJour, double progressJour, int heureActuelle) {
+    public Calendrier(LocalDateTime dateDebutJeu, long numJour, int heureActuelle, double progressJour) {
         this.dateDebutJeu = dateDebutJeu;
         this.numJour = numJour;
-        this.progressJour = progressJour;
         this.heureActuelle = heureActuelle;
+        this.progressJour = progressJour;
     }
 
     public LocalDateTime getDateDebutJeu() {
@@ -89,12 +82,20 @@ public class Calendrier {
         return semaine1EnCours;
     }
 
+    public long getNumJour() {
+        return numJour;
+    }
+
+    public void setNumJour(long numJour) {
+        this.numJour = numJour;
+    }
+
     /**
      * Met en place la premiere semaine du calendrier a afficher
      */
     public void setSemainesEnCours() {
         // recupere le numero de jour actuel
-        long jourEnCours = this.getJourEnCours();
+        long jourEnCours = this.getNumJour();
         long borneDebut; // chaque borne debut est un multiple de 7 + 1
         long borneFin; // chaque borne de fin est un multiple de 7
 
@@ -146,13 +147,15 @@ public class Calendrier {
      * pour recuperer un entier correspondant au numero de jour actuel
      *
      * @return
+     *
+     * N'est plus utilise depuis la version : pas de jeu en mode deco
      */
-    public long getJourEnCours() {
-        LocalDateTime dateDuJours = LocalDateTime.now();
-        long ecartEnSecondes = ChronoUnit.SECONDS.between(dateDebutJeu, dateDuJours);
-        long jourEnCours = (ecartEnSecondes / this.dureeJour) + 1;
-        return jourEnCours;
-    }
+//    public long getJourEnCours() {
+//        LocalDateTime dateDuJours = LocalDateTime.now();
+//        long ecartEnSecondes = ChronoUnit.SECONDS.between(dateDebutJeu, dateDuJours);
+//        long jourEnCours = (ecartEnSecondes / this.dureeJour) + 1;
+//        return jourEnCours;
+//    }
 
 
     public void createSemaine1Calendrier(Pane paneParent, long jourBanquier) {
@@ -210,7 +213,7 @@ public class Calendrier {
      * suivant le jour en cours
      */
     public String choixClasseCalendrier(long jourCalendrier, long jourBanquier) {
-        long jourEnCours = this.getJourEnCours();
+        long jourEnCours = this.getNumJour();
         if (jourCalendrier == jourBanquier) {
             return "fondsCalendrierBanquier";
         }
@@ -284,5 +287,14 @@ public class Calendrier {
         // en utilisant l'objet pieChart passé en paramètre.
         PieChart.Data[] heures = pieChart.getData().toArray(new PieChart.Data[0]);
         setCouleurTranchesHorloge(heures);
+    }
+
+    /**
+     * Incremente le numero de jour
+     * Remet le compteur des heures à 1
+     */
+    public void setJourSuivant(){
+        this.setNumJour(this.getNumJour()+1);
+        this.setHeureActuelle(1);
     }
 }

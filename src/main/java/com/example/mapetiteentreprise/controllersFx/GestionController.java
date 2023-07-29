@@ -59,7 +59,12 @@ public class GestionController {
 
         // Affichage du calendrier
         this.afficheCalendrier();
-        progressBarStartTimelineJournee(0, jeu.getCalendrier().getDureeJour());
+
+        // recuperation de l'etat de la barre de progression
+
+        double vitesse = jeu.getCalendrier().getDureeJour() - (jeu.getCalendrier().getDureeJour() * jeu.getCalendrier().getProgressJour());
+
+        progressBarStartTimelineJourneeEnCours(0, jeu.getCalendrier().getDureeJour());
 //        progressBarStartTimelineJournee(0, 180);
 
         // desactivation des activites non acquises
@@ -68,7 +73,6 @@ public class GestionController {
         testDistributeur();
 
     }
-
 
     /**
      * Test si l'activite ferme est active
@@ -114,6 +118,12 @@ public class GestionController {
         // Test nombre de caractères
         // Test si non vide
         System.out.println("Lancement du jeu, déblocage de la ferme");
+
+        // on enregistre le niveauu de la barre de progression dans le calendrier
+        this.jeu.getCalendrier().setProgressJour(this.progressJour.getProgress());
+        // on stoppe la barre de progression;
+        this.progressBarStop();
+
         try {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("ferme.fxml"));
             root = loader.load();
@@ -242,7 +252,7 @@ public class GestionController {
     }
 
     /**
-     * Bouton de sorite du jeu
+     * Bouton de sortie du jeu
      *
      * @param event
      */
@@ -262,7 +272,14 @@ public class GestionController {
         jeu.getSauvegarde().setNbPoules(jeu.getJoueur().getFerme().getNbPoules());
         jeu.getSauvegarde().setNbOeufs(jeu.getJoueur().getFerme().getNbOeufs());
         jeu.getSauvegarde().setEtatProgressOeuf(jeu.getJoueur().getFerme().getEtatProgressOeuf());
+
+        // A faire ************************************************************************************************************
         // a modifier quand plusieurs activites
+        // gestion de la date de deco
+        // recupere les dates de chaque activite : ferme, distributeurs...
+        // choisi la plus recente et la sauvegarde
+        // du coup quand on ferme direct la fenetre : ferme ou distributeurs : prendre cette date
+
         jeu.getSauvegarde().setDateDeco(jeu.getJoueur().getFerme().getDateDeco());
         jeu.getSauvegarde().setFermeActive(jeu.getJoueur().getFermeActive());
         jeu.getSauvegarde().setDistributeursActive(jeu.getJoueur().getDistributeursActive());
@@ -327,7 +344,7 @@ public class GestionController {
     public void afficheCalendrier() {
         // met en place la semaine en cours
         this.jeu.getCalendrier().setSemainesEnCours();
-        this.jourEnCours = jeu.getCalendrier().getJourEnCours();
+        this.jourEnCours = jeu.getCalendrier().getNumJour();
         jeu.getCalendrier().createSemaine1Calendrier(paneSemaine1, jeu.getJoueur().getCreditEnCours().getDateProchaineMensualite());
         jeu.getCalendrier().createSemaine2Calendrier(paneSemaine2, jeu.getJoueur().getCreditEnCours().getDateProchaineMensualite());
     }
@@ -342,51 +359,51 @@ public class GestionController {
      * @param cycle
      * @param vitesse
      */
-    public void progressBarStartTimelineEncoursJournee(int cycle, double vitesse) {
+    public void progressBarStartTimelineJourneeEnCours(int cycle, double vitesse) {
         ProgressBar progressOeufs = getProgressJour();
-//        Button btnVendre = getBtnVendre();
         // Réinitialise la barre de progression à 0
-//        progressOeufs.setProgress(this.jeu.getJoueur().getFerme().getEtatProgressOeuf());
-//        timeline = new Timeline(
-//                new KeyFrame(Duration.ZERO, new KeyValue(progressOeufs.progressProperty(), this.jeu.getJoueur().getFerme().getEtatProgressOeuf())),
-//                new KeyFrame(Duration.seconds(vitesse), e -> {
-//                    System.out.println("Oeuf terminé");
-//                    btnVendre.setDisable(false);
-//                    // ajoute un nombre d'oeuf correspondant au nombre de poules
-//                    this.majNbOeufs();
-//                    // met à jour les gains en cours
-//                    this.majGainsEnCours();
-//                }, new KeyValue(progressOeufs.progressProperty(), 1))
-//        );
-//        timeline.setOnFinished(event -> {
-//            if (cycle == 1) {
-//                // Lancer la deuxième exécution de la méthode progressBarStartTimeline
-//                jeu.getJoueur().getFerme().setEtatProgressOeuf(0);
-//                // recalcul de la vitesse suivant le niveau de la barre de progression
-//                progressBarStartTimeline(cycle - 1, jeu.getParametres().getVitessePonteOeuf());
-//            }
-//        });
-//
-//        if (cycle == 0) {
-//            timeline.setCycleCount(Animation.INDEFINITE);
-//        } else {
-//            timeline.setCycleCount(cycle);
-//        }
-//        timeline.play();
+        progressOeufs.setProgress(this.jeu.getJoueur().getFerme().getEtatProgressOeuf());
+        timelineCalendrier = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(progressOeufs.progressProperty(), this.jeu.getJoueur().getFerme().getEtatProgressOeuf())),
+                new KeyFrame(Duration.seconds(vitesse), e -> {
+                    System.out.println("jour terminé");
+                    // incremente un jour et remet l'heure à 1
+                    this.jeu.getCalendrier().setJourSuivant();
+                    // mise à jour du calendrier
+                    afficheCalendrier();
+                }, new KeyValue(progressOeufs.progressProperty(), 1))
+        );
+        timelineCalendrier.setOnFinished(event -> {
+            if (cycle == 1) {
+                // Lancer la deuxième exécution de la méthode progressBarStartTimeline
+                jeu.getJoueur().getFerme().setEtatProgressOeuf(0);
+                // recalcul de la vitesse suivant le niveau de la barre de progression
+                progressBarStartTimelineJournee(cycle - 1, jeu.getCalendrier().getDureeJour());
+            }
+        });
+
+        if (cycle == 0) {
+            timelineCalendrier.setCycleCount(Animation.INDEFINITE);
+        } else {
+            timelineCalendrier.setCycleCount(cycle);
+        }
+        timelineCalendrier.play();
     }
 
     public void progressBarStartTimelineJournee(int cycle, double vitesse) {
         ProgressBar getProgressJour = getProgressJour();
 //        Button btnVendre = getBtnVendre();
         // Réinitialise la barre de progression à 0
+        vitesse = 60;
         getProgressJour.setProgress(0);
         timelineCalendrier = new Timeline(
                 new KeyFrame(Duration.ZERO, new KeyValue(getProgressJour.progressProperty(), 0)),
                 new KeyFrame(Duration.seconds(vitesse), e -> {
                     System.out.println("Jour terminé");
+                    // incremente un jour et remet l'heure à 1
+                    this.jeu.getCalendrier().setJourSuivant();
                     // mise à jour du calendrier
                     afficheCalendrier();
-                    // btnVendre.setDisable(false);
                 }, new KeyValue(getProgressJour.progressProperty(), 1))
         );
 

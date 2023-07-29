@@ -71,6 +71,7 @@ public class ConnectionBdd {
      */
     public void createModelSauvegarde() throws SQLException {
         String sql = "CREATE TABLE sauvegarde (id INTEGER PRIMARY KEY, pseudo TEXT, argent REAL," +
+                "numJourDeco INTEGER, heureDeco INTEGER, progressJour REAL," +
                 "nbPoules INTEGER, nbOeufs INTEGER, fermeActive INTEGER, distributeursActive INTEGER, distributeurBCActive INTEGER, distributeurBFActive INTEGER, distributeurCoActive INTEGER, distributeurSaActive INTEGER, livraisonActive INTEGER, lavageActive INTEGER, etatProgressOeuf REAL, dateDeco TEXT," +
                 "nbDistributeurBC INTEGER, nbDistributeurBF INTEGER, nbDistributeurSa INTEGER, nbDistributeurCo INTEGER," +
                 "nbMarchandisesBC INTEGER, nbMarchandisesBF INTEGER, nbMarchandisesSa INTEGER, nbMarchandisesCo INTEGER," +

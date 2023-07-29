@@ -18,6 +18,7 @@ public class Joueur {
     private int distributeurCoActive;
     private int distributeurSaActive;
 
+
     public Joueur(String pseudo, BigDecimal argent, Ferme ferme, BoissonsChaudes boissonsChaudes, BoissonsFraiches boissonsFraiches, Sandwichs sandwichs, Confiseries confiseries, CreditEnCours creditEnCours, int fermeActive, int distributeursActive, int distributeurBCActive, int distributeurBFActive, int distributeurCoActive, int distributeurSaActive) {
         this.pseudo = pseudo;
         this.argent = argent;
