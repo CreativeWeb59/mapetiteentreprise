@@ -98,9 +98,13 @@ public class FermeController {
         // ajustement de la barre de progression et des oeufs pondus
         // on compare l'heure et le jour actuel avec la date deco
         // on met a jour les oeufs pondus
-        this.reajustementSwitchFenetre();
+//        this.reajustementSwitchFenetre();
 
+        // recupere la valeur de la progressBar principale pour l'adapater a celle de la ferme
+        this.recupProgress();
         this.miseEnPlaceValeurs();
+        // on met a jour les boutons d'achat
+        this.majBtnAchats();
 
         blocageComplet();
         // plus le chiffre est gros plus la vitesse est lente
@@ -168,6 +172,7 @@ public class FermeController {
             root = loader.load();
             GestionController gestionController = loader.getController();
             // on renvoi les infos a la fenetre suivante (tout est dans l'instance jeu)
+
             gestionController.debutJeu(jeu);
         } catch (Exception e) {
             System.out.println(e);
@@ -537,46 +542,6 @@ public class FermeController {
         return true;
     }
 
-    /** autre barre de progression
-     *
-     */
-//    public void progressBarStartTimeline(int cycle, double vitesse) {
-//        ProgressBar progressOeufs = getProgressOeufs();
-//        Button btnVendre = getBtnVendre();
-//        // Réinitialise la barre de progression à la valeur de départ spécifiée
-//        progressOeufs.setProgress(jeu.getJoueur().getFerme().getVitessePonteOeuf());
-//
-//        double dureeTotale = vitesse * (1 - jeu.getJoueur().getFerme().getVitessePonteOeuf());
-//        KeyFrame startKeyFrame = new KeyFrame(Duration.ZERO, new KeyValue(progressOeufs.progressProperty(), jeu.getJoueur().getFerme().getVitessePonteOeuf()));
-//        KeyFrame endKeyFrame = new KeyFrame(Duration.seconds(dureeTotale), e -> {
-//            System.out.println("Oeuf terminé");
-//            btnVendre.setDisable(false);
-//            // ajoute un nombre d'oeuf correspondant au nombre de poules
-//            this.majNbOeufs();
-//            // met à jour les gains en cours
-//            this.majGainsEnCours();
-//            attenteFinBarre = false;
-//        });
-//        timeline.setOnFinished(event -> {
-//            if (cycle == 1) {
-//                // Lancer la deuxième exécution de la méthode progressBarStartTimeline
-//                jeu.getJoueur().getFerme().setEtatProgressOeuf(0);
-//                // recalcul de la vitesse suivant le niveau de la barre de progression
-//                progressBarStartTimeline(cycle - 1, jeu.getJoueur().getFerme().getVitessePonteOeuf());
-//            }
-//        });
-//
-//        Timeline timeline = new Timeline(startKeyFrame, endKeyFrame);
-//        if (cycle == 0) {
-//            timeline.setCycleCount(Animation.INDEFINITE);
-//        } else {
-//            timeline.setCycleCount(cycle);
-//        }
-//
-//        timeline.play();
-//    }
-
-
     /**
      * Met à jour le nombre d'oeufs prêts à la vente
      */
@@ -612,25 +577,27 @@ public class FermeController {
     }
 
     /**
+     * Sert quand le jeu continue hors connexion
      * ajustement de la barre de progression et des oeufs pondus
      * on compare l'heure et le jour actuel avec la date deco
      */
-    public void reajustementSwitchFenetre() {
+    public void reajustementSwitchFenetreAnc() {
         LocalDateTime heureDeco = jeu.getJoueur().getFerme().getDateDeco();
         LocalDateTime heureActuelle = LocalDateTime.now();
         long ecartEnSecondes = ChronoUnit.SECONDS.between(heureDeco, heureActuelle);
         System.out.println("ecart de temps : " + ecartEnSecondes);
         // effectue les calculs du nombre d'oeufs en plus pendant le switch de fenetres ou déco
-        calculTravailHorsConnection(ecartEnSecondes);
+        calculTravailHorsConnectionAnc(ecartEnSecondes);
     }
 
     /**
+     * Sert quand le jeu continue hors connexion
      * Calcule le nombre d'oeuf qu'une poule aurait pû pondre
      * pendant un temps donné
      *
      * @param ecartEnSecondes
      */
-    public void calculTravailHorsConnection(long ecartEnSecondes) {
+    public void calculTravailHorsConnectionAnc(long ecartEnSecondes) {
         int vitessePonte = jeu.getParametres().getVitessePonteOeuf();
         long nbOeufsHc = ecartEnSecondes / vitessePonte;
         double calculReste = ecartEnSecondes % vitessePonte;
@@ -659,6 +626,22 @@ public class FermeController {
         // met a jour les autres boutons si disponibles
         this.majBtnAchats();
     }
+
+    /**
+     * Calcule le nombre d'oeufs pondus quand on n'est pas sur la fenetre de la ferme
+     */
+    public void calculTravailHorsConnection(){
+        int vitessePonte = jeu.getParametres().getVitessePonteOeuf();
+        // recupere la progress du calendrier jour
+        double ancienneProgression = this.jeu.getJoueur().getFerme().getEtatProgressOeuf();
+        double jourProgression = this.jeu.getCalendrier().getProgressJour();
+
+        // on converti la progression du jour en oeuf en multipliant par 10
+        jourProgression = jourProgression * 10;
+
+
+    }
+
 
     public double calculBarreHc(double barreHc) {
         double ancBarre = jeu.getJoueur().getFerme().getEtatProgressOeuf();
@@ -764,6 +747,9 @@ public class FermeController {
         jeu.getSauvegarde().setEtatProgressBF(jeu.getJoueur().getBoissonsFraiches().getEtatProgressDistributeur());
         jeu.getSauvegarde().setEtatProgressSa(jeu.getJoueur().getSandwichs().getEtatProgressDistributeur());
         jeu.getSauvegarde().setEtatProgressCo(jeu.getJoueur().getConfiseries().getEtatProgressDistributeur());
+        jeu.getSauvegarde().setNumJourDeco(jeu.getCalendrier().getNumJour());
+        jeu.getSauvegarde().setHeureDeco(jeu.getCalendrier().getHeureActuelle());
+        jeu.getSauvegarde().setProgressJour(jeu.getCalendrier().getProgressJour());
 
         System.out.println("Nouvelles valeurs a sauvegarder" + jeu.getSauvegarde());
 
@@ -981,5 +967,20 @@ public class FermeController {
      */
     public void setHeureHorloge(){
         this.jeu.getCalendrier().modifyPieChartColors(pieHorloge);
+    }
+
+    /**
+     * recupere la valeur de la progressBar principale pour l'adapater a celle de la ferme
+     * permet de reajuster la progressBar heure et jour
+     * exemple si valeur = 5.25, recupere : 0.25;
+     * on ne recupere que la partie entiere
+     */
+        public void recupProgress(){
+            double progressJour = jeu.getCalendrier().getProgressJour();
+            int partieEntiere = (int)progressJour;
+            progressJour = progressJour - partieEntiere;
+            System.out.println("progress jour " + progressJour);
+            jeu.getJoueur().getFerme().setEtatProgressOeuf(progressJour);
+            System.out.println("Nouvelle valeur progress ferme : " + jeu.getJoueur().getFerme().getEtatProgressOeuf());
     }
 }

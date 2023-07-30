@@ -26,10 +26,12 @@ public class Calendrier {
     private int nbJoursSemaine = 7;
     private long semaine1EnCours[] = new long[]{1, 2, 3, 4, 5, 6, 7}; // contiendra les jours de la premiere semaine semaine à afficher sur le calendrier
     private long semaine2EnCours[] = new long[]{8, 9, 10, 11, 12, 13, 14}; // contiendra les jours de la premiere deuxieme semaine à afficher sur le calendrier
-    public long numJour;
-    public int heureActuelle ; // chiffre de 1 à 10 => 1 jour = 10 fois 60s ou 10 fois un progressOeuf
-    public double progressJour;
-    public PieChart pieHorloge;
+    private long numJour;
+    private int heureActuelle ; // chiffre de 1 à 10 => 1 jour = 10 fois 60s ou 10 fois un progressOeuf
+    private double progressJour;
+    private PieChart pieHorloge;
+    private final int nbHeures = 10;
+
 
     public Calendrier(LocalDateTime dateDebutJeu, long numJour, int heureActuelle, double progressJour) {
         this.dateDebutJeu = dateDebutJeu;
@@ -88,6 +90,10 @@ public class Calendrier {
 
     public void setNumJour(long numJour) {
         this.numJour = numJour;
+    }
+
+    public int getNbHeures() {
+        return nbHeures;
     }
 
     /**
@@ -295,6 +301,18 @@ public class Calendrier {
      */
     public void setJourSuivant(){
         this.setNumJour(this.getNumJour()+1);
-        this.setHeureActuelle(1);
+    }
+
+    /**
+     * permet d'ajouter une heure
+     * au dessus de 10 passe à 1 heure
+     * et incremente un jour
+     */
+    public void setIncrementHeure(){
+        if(this.getHeureActuelle() > this.nbHeures){
+            this.setHeureActuelle(1);
+            this.setJourSuivant();
+        }
+        this.setHeureActuelle(this.getHeureActuelle()+1);
     }
 }
