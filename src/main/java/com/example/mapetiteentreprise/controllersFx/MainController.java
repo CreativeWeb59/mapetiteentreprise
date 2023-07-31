@@ -140,7 +140,6 @@ public class MainController {
             this.credits = creditsService.creditEnCours(userName);
             this.creditEnCours = new CreditEnCours(credits.getMontantPret(), credits.getCoutPret(), credits.getMontantRembourse(), credits.getMensualite(), credits.getNbMMensualite(),
                     credits.getCycleMensualite(), credits.getTermine(), credits.getDateDebutCredit(), credits.getDateDerniereMensualite(), credits.getDateProchaineMensualite(), credits.getDatePreavis(), credits.getBlocageDatePreavis());
-            System.out.println("Nous sommes le jour : " + calendrier.getNumJour());
         } else {
             System.out.println("Pas de crédit en cours");
         }
@@ -239,7 +238,6 @@ public class MainController {
      */
     public void creerJoueur() throws SQLException {
         connectionBdd.connect();
-        System.out.println("Jeu lancé, Bienvenue " + this.pseudo);
         System.out.println("Creation du joueur");
 
         LocalDateTime dateEncours = LocalDateTime.now();
@@ -257,7 +255,7 @@ public class MainController {
                 this.parametres.getDistributeurBFActive(), this.parametres.getDistributeurSaActive(), this.parametres.getDistributeurCoActive());
 
         // creation du calendrier
-        Calendrier calendrier = new Calendrier(dateEncours, 1, 1, 0);
+        Calendrier calendrier = new Calendrier(dateEncours, 1, 0, 0);
         // creation de la partie
         this.jeu = new Jeu(joueur, sauvegarde, parametres, calendrier);
     }
@@ -274,7 +272,7 @@ public class MainController {
 
         if (nouveauJeu) {
             // creation de la ferme
-            ferme = new Ferme(parametres.getNbPoules(), 0, LocalDateTime.now());
+            ferme = new Ferme(parametres.getNbPoules(), 0, 0, LocalDateTime.now());
             // creation des distributeurs
             boissonsChaudes = new BoissonsChaudes(parametres.getNbDistributeurBC(), 0, 0, LocalDateTime.now());
             boissonsFraiches = new BoissonsFraiches(parametres.getNbDistributeurBF(), 0, 0, LocalDateTime.now());
@@ -282,14 +280,13 @@ public class MainController {
             sandwichs = new Sandwichs(parametres.getNbDistributeurSa(), 0, 0, LocalDateTime.now());
         } else {
             // recuperation des donnees de la ferme dont dateDeco
-            ferme = new Ferme(sauvegarde.getNbPoules(), sauvegarde.getNbOeufs(), sauvegarde.getDateDeco());
+            ferme = new Ferme(sauvegarde.getNbPoules(), sauvegarde.getNbOeufs(), sauvegarde.getEtatProgressOeuf(), sauvegarde.getDateDeco());
             // recuperation des donnees des distributeurs
             boissonsChaudes = new BoissonsChaudes(sauvegarde.getNbDistributeurBC(), sauvegarde.getNbMarchandisesBC(), sauvegarde.getEtatProgressBC(), sauvegarde.getDateDeco());
             boissonsFraiches = new BoissonsFraiches(sauvegarde.getNbDistributeurBF(), sauvegarde.getNbMarchandisesBF(), sauvegarde.getEtatProgressBF(), sauvegarde.getDateDeco());
             confiseries = new Confiseries(sauvegarde.getNbDistributeurCo(), sauvegarde.getNbMarchandisesCo(), sauvegarde.getEtatProgressCo(), sauvegarde.getDateDeco());
             sandwichs = new Sandwichs(sauvegarde.getNbDistributeurSa(), sauvegarde.getNbMarchandisesSa(), sauvegarde.getEtatProgressSa(), sauvegarde.getDateDeco());
         }
-        System.out.println("Confiserie :" + confiseries);
     }
 
     /**
@@ -322,11 +319,9 @@ public class MainController {
      */
     public void createDonnees() throws SQLException {
         connectionBdd.connect();
-        System.out.println("Connection");
         if (!connectionBdd.isModel("parametres")) {
             connectionBdd.createModelParametres();
             parametresService = new ParametresService(connectionBdd);
-            System.out.println("parametres : " + parametres);
             parametresService.addParametresDefaut(parametres);
         }
         if (!connectionBdd.isModel("sauvegarde")) {

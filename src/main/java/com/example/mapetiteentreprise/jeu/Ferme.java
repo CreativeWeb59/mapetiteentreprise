@@ -8,9 +8,10 @@ public class Ferme {
     private double etatProgressOeuf = 0;
     private LocalDateTime dateDeco;
 
-    public Ferme(int nbPoules, long nbOeufs, LocalDateTime dateDeco) {
+    public Ferme(int nbPoules, long nbOeufs, double etatProgressOeuf , LocalDateTime dateDeco) {
         this.nbPoules = nbPoules;
         this.nbOeufs = nbOeufs;
+        this.etatProgressOeuf = etatProgressOeuf;
         this.dateDeco = dateDeco;
     }
 
@@ -55,5 +56,15 @@ public class Ferme {
                 ", etatProgressOeuf=" + etatProgressOeuf +
                 ", dateDeco=" + dateDeco +
                 '}';
+    }
+
+    /**
+     * ajuste la barre de progress oeuf en fonction de la barre de progress jour et de l'heure actuelle
+     * @param progressJour
+     * @param heureActuelle
+     */
+    public void ajustementProgressOeuf(double progressJour, int heureActuelle){
+        double resultat = (progressJour * 10) - heureActuelle ;
+        System.out.println("valeur nouvelle barre : " + resultat);
     }
 }

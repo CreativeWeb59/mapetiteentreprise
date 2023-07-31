@@ -5,6 +5,7 @@ import com.example.mapetiteentreprise.bdd.ConnectionBdd;
 import com.example.mapetiteentreprise.bdd.Credits;
 import com.example.mapetiteentreprise.bdd.CreditsService;
 import com.example.mapetiteentreprise.bdd.SauvegardeService;
+import com.example.mapetiteentreprise.jeu.CreditEnCours;
 import com.example.mapetiteentreprise.jeu.Jeu;
 import com.example.mapetiteentreprise.actions.Outils;
 import javafx.animation.Animation;
@@ -29,6 +30,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
+
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
@@ -49,9 +51,9 @@ public class FermeController {
     @FXML
     private Pane paneFerme;
     @FXML
-    private ProgressBar progressOeufs;
+    private ProgressBar progressOeufs, progressJour;
     @FXML
-    private Button btnVendre, btnPPoule, btnPPoulePDix, btnPPouleMax, rembourserCredit;
+    private Button btnVendre, btnPPoule, btnPPoulePDix, btnPPouleMax, rembourserCredit, retourMenu;
     @FXML
     private ImageView imgAnimation, evenement;
     @FXML
@@ -61,7 +63,7 @@ public class FermeController {
     private Scene scene;
     private Parent root;
     private Jeu jeu;
-    private Timeline timeline;
+    private Timeline timelineOeufs, timelineJour;
     double etatProgress; // permet de gerer l'etat d'avancement de la barre de progression
     private Boolean attenteFinBarre = true;
 
@@ -101,16 +103,30 @@ public class FermeController {
 //        this.reajustementSwitchFenetre();
 
         // recupere la valeur de la progressBar principale pour l'adapater a celle de la ferme
-        this.recupProgress();
+//        this.recupProgress();
+
         this.miseEnPlaceValeurs();
         // on met a jour les boutons d'achat
-        this.majBtnAchats();
 
         blocageComplet();
         // plus le chiffre est gros plus la vitesse est lente
         // correspond à un nombre de secondes d'un passage de 0 à 100
+
+        this.majBtnAchats();
+        this.majBtnVendre();
+
+//        this.jeu.getCalendrier().setDureeJour(200);
+//        jeu.getParametres().setVitessePonteOeuf(20);
+
         double vitesse = jeu.getParametres().getVitessePonteOeuf() - (jeu.getParametres().getVitessePonteOeuf() * jeu.getJoueur().getFerme().getEtatProgressOeuf());
         this.progressBarStartTimelineEncours(1, vitesse);
+
+        if (jeu.getCalendrier().getHeureActuelle() != 0) {
+            // recuperation de l'etat de la barre de progression pour la journee
+            double vitesseJour = jeu.getCalendrier().getDureeJour() - (jeu.getCalendrier().getDureeJour() * jeu.getCalendrier().getProgressJour());
+            progressBarStartTimelineJourneeEnCours(1, vitesseJour);
+        }
+
         this.executerAnimation();
 
         // affiche ou non le banquier
@@ -130,10 +146,24 @@ public class FermeController {
         // activation de la ferme
         this.jeu.getJoueur().setFermeActive(1);
 
+        // desactivation du retour au menu
+        // afin de laisser la barre de progression du premier jour s'activer
+        setBtnMenuActive();
+
         System.out.println("Etat de la sauvegarde " + jeu);
         // plus le chiffre est gros plus la vitesse est lente
         // correspond à un nombre de secondes d'un passage de 0 à 100
+
+//        this.jeu.getCalendrier().setDureeJour(200);
+//        this.jeu.getParametres().setVitessePonteOeuf(20);
+
         progressBarStartTimeline(0, jeu.getParametres().getVitessePonteOeuf());
+        if (jeu.getCalendrier().getHeureActuelle() != 0) {
+            // recuperation de l'etat de la barre de progression pour la journee
+            double vitesseJour = jeu.getCalendrier().getDureeJour() - (jeu.getCalendrier().getDureeJour() * jeu.getCalendrier().getProgressJour());
+            progressBarStartTimelineJourneeEnCours(1, vitesseJour);
+        }
+
         this.executerAnimation();
         setPieHorloge();
     }
@@ -144,6 +174,10 @@ public class FermeController {
      * @param event
      */
     public void onWindowClose(WindowEvent event) {
+        // sauvegarde des barres de progression
+        this.jeu.getCalendrier().setProgressJour(this.progressJour.getProgress());
+        this.jeu.getJoueur().getFerme().setEtatProgressOeuf(this.progressOeufs.getProgress());
+
         // Sauvegarde de la base de donnees
         System.out.println("fermeture fenetre : Sauvegarde");
         try {
@@ -157,12 +191,14 @@ public class FermeController {
     public void retourGestion(ActionEvent event) {
         // on recupere l'etat de la barre de progression des oeufs
         this.jeu.getJoueur().getFerme().setEtatProgressOeuf(this.progressOeufs.getProgress());
+        this.jeu.getCalendrier().setProgressJour(this.progressJour.getProgress());
 
         // on enregistre l'heure de switch de fenetre
         this.jeu.getJoueur().getFerme().setDateDeco(LocalDateTime.now());
 
-        // on stoppe la barre de progression;
-        this.progressBarStop();
+        // on stoppe les barres de progression;
+        this.progressBarStop(timelineOeufs);
+        this.progressBarStop(timelineJour);
 
         sauvegardeCredit();
         sauvegardejeu();
@@ -195,6 +231,7 @@ public class FermeController {
         majGainsEnCours();
         setLabelJourEncours();
         setLabelCredit();
+
 //        setLabelTaxe();
 //        setMontantTaxe();
     }
@@ -268,6 +305,14 @@ public class FermeController {
     public void setLabelPoule() {
         String formattedString = "Ajouter une poule " + decimalFormat.format(jeu.getParametres().getTarifPoule()) + monnaie;
         this.labelPoule.setText(formattedString);
+    }
+
+    public void setBtnMenuActive() {
+        if (jeu.getCalendrier().getHeureActuelle() == 0) {
+            retourMenu.setDisable(true);
+        } else {
+            retourMenu.setDisable(false);
+        }
     }
 
 //    /**
@@ -357,6 +402,18 @@ public class FermeController {
     }
 
     /**
+     * Active/desactive le bouton vendre suivant s'il y a un montant a recuperer
+     */
+    public void majBtnVendre() {
+        // affiche le bouton vendre si nbOeufs > 0
+        if (jeu.getJoueur().getFerme().getNbOeufs() > 0) {
+            this.btnVendre.setDisable(false);
+        } else {
+            this.btnVendre.setDisable(true);
+        }
+    }
+
+    /**
      * achat d'une poule
      */
     public void addPoule1() {
@@ -419,6 +476,16 @@ public class FermeController {
     }
 
     /**
+     * declare la ProgressBar Jours afin de pouvoir l'utiliser
+     * pour l'effet de remplissage
+     *
+     * @return
+     */
+    public ProgressBar getProgressJour() {
+        return progressJour;
+    }
+
+    /**
      * declare le bouton afin de pouvoir l'utiliser
      * par exemple disable true ou false
      *
@@ -457,9 +524,14 @@ public class FermeController {
         Button btnVendre = getBtnVendre();
         // Réinitialise la barre de progression à 0
         progressOeufs.setProgress(this.jeu.getJoueur().getFerme().getEtatProgressOeuf());
-        timeline = new Timeline(
+        timelineOeufs = new Timeline(
                 new KeyFrame(Duration.ZERO, new KeyValue(progressOeufs.progressProperty(), this.jeu.getJoueur().getFerme().getEtatProgressOeuf())),
                 new KeyFrame(Duration.seconds(vitesse), e -> {
+                    System.out.println("Ajoute une heure");
+                    this.jeu.getCalendrier().setIncrementHeure();
+                    this.setHeureHorloge();
+                    System.out.println("Heure actuelle : " + jeu.getCalendrier().getHeureActuelle());
+
                     System.out.println("Oeuf terminé");
                     btnVendre.setDisable(false);
                     // ajoute un nombre d'oeuf correspondant au nombre de poules
@@ -468,28 +540,26 @@ public class FermeController {
                     this.majGainsEnCours();
                     // mets à jour le jour en cours
                     this.setLabelJourEncours();
-                    // mets à jour l'heure actuelle et l'horloge
-                    this.jeu.getCalendrier().setHeureActuelle(this.jeu.getCalendrier().getHeureActuelle() + 1);
-                    this.setHeureHorloge();
                     // affiche ou non le banquier
                     affichageEvenementBanquier();
                 }, new KeyValue(progressOeufs.progressProperty(), 1))
         );
-        timeline.setOnFinished(event -> {
+        timelineOeufs.setOnFinished(event -> {
             if (cycle == 1) {
                 // Lancer la deuxième exécution de la méthode progressBarStartTimeline
                 jeu.getJoueur().getFerme().setEtatProgressOeuf(0);
                 // recalcul de la vitesse suivant le niveau de la barre de progression
                 progressBarStartTimeline(cycle - 1, jeu.getParametres().getVitessePonteOeuf());
+
             }
         });
 
         if (cycle == 0) {
-            timeline.setCycleCount(Animation.INDEFINITE);
+            timelineOeufs.setCycleCount(Animation.INDEFINITE);
         } else {
-            timeline.setCycleCount(cycle);
+            timelineOeufs.setCycleCount(cycle);
         }
-        timeline.play();
+        timelineOeufs.play();
     }
 
     public void progressBarStartTimeline(int cycle, double vitesse) {
@@ -497,35 +567,110 @@ public class FermeController {
         Button btnVendre = getBtnVendre();
         // Réinitialise la barre de progression à 0
         progressOeufs.setProgress(0);
-        timeline = new Timeline(
+        timelineOeufs = new Timeline(
                 new KeyFrame(Duration.ZERO, new KeyValue(progressOeufs.progressProperty(), 0)),
                 new KeyFrame(Duration.seconds(vitesse), e -> {
+                    System.out.println("Ajoute une heure");
+                    this.jeu.getCalendrier().setIncrementHeure();
+                    System.out.println("Heure actuelle : " + jeu.getCalendrier().getHeureActuelle());
+
+                    this.setHeureHorloge();
                     System.out.println("Oeuf terminé");
                     btnVendre.setDisable(false);
                     // ajoute un nombre d'oeuf correspondant au nombre de poules
                     this.majNbOeufs();
                     // met à jour les gains en cours
                     this.majGainsEnCours();
-                    // mets à jour le jour en cours
-                    // mets à jour l'heure actuelle et l'horloge
-                    this.jeu.getCalendrier().setHeureActuelle(this.jeu.getCalendrier().getHeureActuelle() + 1);
-                    this.setHeureHorloge();
-
                     this.setLabelJourEncours();
                     // affiche ou non le banquier
                     affichageEvenementBanquier();
+                    setBtnMenuActive();
+                    // lance la progress jour lorsque le jeu est nouveau
+                    if (!isProgressBar(timelineJour)) {
+                        progressBarStartTimelineJournee(cycle - 1, this.jeu.getCalendrier().getDureeJour());
+                    }
                 }, new KeyValue(progressOeufs.progressProperty(), 1))
         );
 
         if (cycle == 0) {
-            timeline.setCycleCount(Animation.INDEFINITE);
+            timelineOeufs.setCycleCount(Animation.INDEFINITE);
         } else {
-            timeline.setCycleCount(cycle);
+            timelineOeufs.setCycleCount(cycle);
         }
-        timeline.play();
+        timelineOeufs.play();
     }
 
-    private void progressBarStop() {
+    /**
+     * Met à jour la barre de progression pour la journee
+     * avec un demarrage de la barre par rapport à la sauvegarde
+     *
+     * @param cycle   : 1 pour on effectue une seule fois
+     * @param vitesse : calculee suivant le temps restant à effectuer
+     */
+    public void progressBarStartTimelineJourneeEnCours(int cycle, double vitesse) {
+        ProgressBar getProgressJour = getProgressJour();
+        // Réinitialise la barre de progression à 0
+        getProgressJour.setProgress(this.jeu.getCalendrier().getProgressJour());
+        timelineJour = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(getProgressJour.progressProperty(), this.jeu.getCalendrier().getProgressJour())),
+                new KeyFrame(Duration.seconds(vitesse), e -> {
+                    System.out.println("jour terminé");
+                    // incremente un jour et remet l'heure à 1
+                    // mise à jour du calendrier
+                    this.jeu.getCalendrier().setJourSuivant();
+                    setLabelJourEncours();
+                }, new KeyValue(getProgressJour.progressProperty(), 1))
+        );
+        timelineJour.setOnFinished(event -> {
+            if (cycle == 1) {
+                // Lancer la deuxième exécution de la méthode progressBarStartTimeline
+                jeu.getCalendrier().setProgressJour(0);
+                // recalcul de la vitesse suivant le niveau de la barre de progression
+                progressBarStartTimelineJournee(cycle - 1, this.jeu.getCalendrier().getDureeJour());
+            }
+        });
+
+        if (cycle == 0) {
+            timelineJour.setCycleCount(Animation.INDEFINITE);
+        } else {
+            timelineJour.setCycleCount(cycle);
+        }
+        timelineJour.play();
+    }
+
+
+    /**
+     * Methode qui affiche la progressbar du calendrier
+     * met a jour le calendrier avec le jour en cours, banquier...
+     *
+     * @param cycle
+     * @param vitesse
+     */
+
+    public void progressBarStartTimelineJournee(int cycle, double vitesse) {
+        ProgressBar getProgressJour = getProgressJour();
+        // Réinitialise la barre de progression à 0
+        getProgressJour.setProgress(0);
+        System.out.println("Progress barre : " + getProgressJour.getProgress());
+        timelineJour = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(getProgressJour.progressProperty(), 0)),
+                new KeyFrame(Duration.seconds(vitesse), e -> {
+                    System.out.println("Jour terminé ");
+                    // mise à jour du calendrier
+                    this.jeu.getCalendrier().setJourSuivant();
+                    setLabelJourEncours();
+                }, new KeyValue(getProgressJour.progressProperty(), 1))
+        );
+
+        if (cycle == 0) {
+            timelineJour.setCycleCount(Animation.INDEFINITE);
+        } else {
+            timelineJour.setCycleCount(cycle);
+        }
+        timelineJour.play();
+    }
+
+    private void progressBarStop(Timeline timeline) {
         if (timeline != null) {
             timeline.stop();
             timeline = null;
@@ -533,7 +678,7 @@ public class FermeController {
         }
     }
 
-    private Boolean isProgressBar() {
+    private Boolean isProgressBar(Timeline timeline) {
         if (timeline == null) {
             timeline = null;
             System.out.println("Barre de progression terminee");
@@ -630,7 +775,7 @@ public class FermeController {
     /**
      * Calcule le nombre d'oeufs pondus quand on n'est pas sur la fenetre de la ferme
      */
-    public void calculTravailHorsConnection(){
+    public void calculTravailHorsConnection() {
         int vitessePonte = jeu.getParametres().getVitessePonteOeuf();
         // recupere la progress du calendrier jour
         double ancienneProgression = this.jeu.getJoueur().getFerme().getEtatProgressOeuf();
@@ -803,7 +948,8 @@ public class FermeController {
      */
     public void setLabelCredit() {
         String texte = "";
-        if (jeu.getJoueur().getCreditEnCours() != null) {
+        CreditEnCours creditEnCours = jeu.getJoueur().getCreditEnCours();
+        if (creditEnCours != null) {
             BigDecimal montantPret = jeu.getJoueur().getCreditEnCours().getMontantPret();
             String SMontantPret = decimalFormat.format(montantPret) + monnaie;
 
@@ -833,8 +979,7 @@ public class FermeController {
             // gestion si echeances en retard
             if (nbRetardMensualite <= 0) {
                 texte += "A payer le jour : " + prochainPrelevement;
-            }
-            else {
+            } else {
                 texte += "Vous avez " + nbRetardMensualite + " écheance(s) en retard" + separationTexte;
                 texte += "A payer immédiatement";
 
@@ -887,12 +1032,15 @@ public class FermeController {
      * doit verifier si assez d'argent pour rembourser le prêt
      */
     public void majCredit() {
-        if (jeu.getJoueur().isArgent(jeu.getJoueur().getCreditEnCours().getMensualite())) {
-            rembourserCredit.setVisible(true);
-            rembourserCredit.setDisable(false);
-        } else {
-            rembourserCredit.setVisible(true);
-            rembourserCredit.setDisable(true);
+        CreditEnCours creditEnCours = jeu.getJoueur().getCreditEnCours();
+        if (creditEnCours != null) {
+            if (jeu.getJoueur().isArgent(jeu.getJoueur().getCreditEnCours().getMensualite())) {
+                rembourserCredit.setVisible(true);
+                rembourserCredit.setDisable(false);
+            } else {
+                rembourserCredit.setVisible(true);
+                rembourserCredit.setDisable(true);
+            }
         }
     }
 
@@ -919,14 +1067,17 @@ public class FermeController {
     }
 
     public boolean afficherBanquier() {
-        if (jeu.getCalendrier().getNumJour() >= jeu.getJoueur().getCreditEnCours().getDateProchaineMensualite()) {
-            // moddifie la date du preavis qu'une fois
-            if (jeu.getJoueur().getCreditEnCours().getBlocageDatePreavis() == 0) {
-                this.jeu.getJoueur().getCreditEnCours().setDatePreavis(this.jeu.getCalendrier().getNumJour() + 200);
-                this.jeu.getJoueur().getCreditEnCours().setBlocageDatePreavis(1);
-                System.out.println("Date du preavis : " + this.jeu.getJoueur().getCreditEnCours().getDatePreavis());
+        CreditEnCours creditEnCours = jeu.getJoueur().getCreditEnCours();
+        if (creditEnCours != null) {
+            if (jeu.getCalendrier().getNumJour() >= jeu.getJoueur().getCreditEnCours().getDateProchaineMensualite()) {
+                // moddifie la date du preavis qu'une fois
+                if (jeu.getJoueur().getCreditEnCours().getBlocageDatePreavis() == 0) {
+                    this.jeu.getJoueur().getCreditEnCours().setDatePreavis(this.jeu.getCalendrier().getNumJour() + 200);
+                    this.jeu.getJoueur().getCreditEnCours().setBlocageDatePreavis(1);
+                    System.out.println("Date du preavis : " + this.jeu.getJoueur().getCreditEnCours().getDatePreavis());
+                }
+                return true;
             }
-            return true;
         }
         return false;
     }
@@ -948,24 +1099,30 @@ public class FermeController {
      * Verifie la date du preavis et bloque tout si elle est dépassée
      */
     public void blocageComplet() {
-        if (jeu.getJoueur().getCreditEnCours().getDatePreavis() <= this.jeu.getCalendrier().getNumJour()) {
-            labelBanquier.setText("Le délai est écoulé, vous avez perdu le jeu et je récupère votre ferme. Elle sera vendue à quelqu'un de plus performant en affaires !!!");
-            paneFerme.setOpacity(0.6);
-            paneFerme.setDisable(true);
+        CreditEnCours creditEnCours = jeu.getJoueur().getCreditEnCours();
+        if (creditEnCours != null) {
+            if (jeu.getJoueur().getCreditEnCours().getDatePreavis() <= this.jeu.getCalendrier().getNumJour()) {
+                labelBanquier.setText("Le délai est écoulé, vous avez perdu le jeu et je récupère votre ferme. Elle sera vendue à quelqu'un de plus performant en affaires !!!");
+                paneFerme.setOpacity(0.6);
+                paneFerme.setDisable(true);
+            }
+        } else {
+            System.out.println("pas de credit");
         }
+
     }
 
     /**
      * execute la methode qui creer l'horloge
      */
-    public void setPieHorloge(){
+    public void setPieHorloge() {
         this.jeu.getCalendrier().createHorloge(pieHorloge);
     }
 
     /**
      * Maj les couleurs de l'horloge
      */
-    public void setHeureHorloge(){
+    public void setHeureHorloge() {
         this.jeu.getCalendrier().modifyPieChartColors(pieHorloge);
     }
 
@@ -975,12 +1132,12 @@ public class FermeController {
      * exemple si valeur = 5.25, recupere : 0.25;
      * on ne recupere que la partie entiere
      */
-        public void recupProgress(){
-            double progressJour = jeu.getCalendrier().getProgressJour();
-            int partieEntiere = (int)progressJour;
-            progressJour = progressJour - partieEntiere;
-            System.out.println("progress jour " + progressJour);
-            jeu.getJoueur().getFerme().setEtatProgressOeuf(progressJour);
-            System.out.println("Nouvelle valeur progress ferme : " + jeu.getJoueur().getFerme().getEtatProgressOeuf());
+    public void recupProgress() {
+        double progressJour = jeu.getCalendrier().getProgressJour();
+        int partieEntiere = (int) progressJour;
+        progressJour = progressJour - partieEntiere;
+        System.out.println("progress jour " + progressJour);
+        jeu.getJoueur().getFerme().setEtatProgressOeuf(progressJour);
+        System.out.println("Nouvelle valeur progress ferme : " + jeu.getJoueur().getFerme().getEtatProgressOeuf());
     }
 }

@@ -243,7 +243,7 @@ public class Calendrier {
         PieChart.Data[] heures = new PieChart.Data[10];
 
         for (int i = 0; i < heures.length; i++) {
-            heures[i] = new PieChart.Data("Heure " + (i + 1), 10);
+            heures[i] = new PieChart.Data("Heure " + (i), 10);
             this.pieHorloge.getData().add(heures[i]);
         }
 
@@ -273,7 +273,7 @@ public class Calendrier {
         String ecoulee = "#0F9DE8";
         String pasEcoulee = "white";
 
-        String[] resultatCouleurs = {ecoulee, pasEcoulee, pasEcoulee, pasEcoulee, pasEcoulee, pasEcoulee, pasEcoulee, pasEcoulee, pasEcoulee, pasEcoulee};
+        String[] resultatCouleurs = {pasEcoulee, pasEcoulee, pasEcoulee, pasEcoulee, pasEcoulee, pasEcoulee, pasEcoulee, pasEcoulee, pasEcoulee, pasEcoulee, pasEcoulee};
         for (int i = 0; i < resultatCouleurs.length; i++) {
             if (this.heureActuelle > i){
                 resultatCouleurs[i] = ecoulee;
@@ -309,9 +309,8 @@ public class Calendrier {
      * et incremente un jour
      */
     public void setIncrementHeure(){
-        if(this.getHeureActuelle() > this.nbHeures){
-            this.setHeureActuelle(1);
-            this.setJourSuivant();
+        if(this.getHeureActuelle() >= this.nbHeures){
+            this.setHeureActuelle(0);
         }
         this.setHeureActuelle(this.getHeureActuelle()+1);
     }

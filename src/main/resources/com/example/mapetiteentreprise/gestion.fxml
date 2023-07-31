@@ -81,6 +81,7 @@
       <Pane fx:id="paneParentProgressJour" layoutX="185.0" layoutY="820.0" prefHeight="20.0" prefWidth="900.0">
          <children>
             <ProgressBar fx:id="progressJour" prefHeight="20.0" prefWidth="900.0" progress="0.0" />
+             <ProgressBar id="progressOeufs" fx:id="progressOeufs" cache="true" layoutX="0.0" layoutY="30.0" prefHeight="20.0" prefWidth="180.0" progress="0.0" visible="false" />
          </children>
       </Pane>
         <Pane layoutX="240.0" layoutY="880.0" prefHeight="40.0" prefWidth="800.0">

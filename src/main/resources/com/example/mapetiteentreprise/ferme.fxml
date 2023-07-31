@@ -59,7 +59,7 @@
                             </image>
                         </ImageView>
                         <Label fx:id="labelConsole" alignment="TOP_LEFT" layoutX="50.0" layoutY="680.0" prefHeight="100.0" prefWidth="1100.0" />
-                        <Button layoutX="550.0" layoutY="70.0" mnemonicParsing="false" onAction="#retourGestion" styleClass="buttonVendre" text="Retour au menu" />
+                        <Button fx:id="retourMenu" layoutX="550.0" layoutY="70.0" mnemonicParsing="false" onAction="#retourGestion" styleClass="buttonVendre" text="Retour au menu" />
                    <Button fx:id="rembourserCredit" layoutX="71.0" layoutY="110.0" mnemonicParsing="false" onAction="#onRembourserCredit" styleClass="buttonVendre" text="Rembourser" />
                     </children>
                 </Pane>
@@ -84,5 +84,10 @@
             <PieChart fx:id="pieHorloge" prefHeight="200.0" prefWidth="200.0" title="Horloge" />
          </children>
       </Pane>
+        <Pane fx:id="paneParentProgressJour" layoutX="200.0" layoutY="940.0" prefHeight="20.0" prefWidth="900.0">
+            <children>
+                <ProgressBar fx:id="progressJour" prefHeight="20.0" prefWidth="900.0" progress="0.0" visible="false" />
+            </children>
+        </Pane>
     </children>
 </AnchorPane>

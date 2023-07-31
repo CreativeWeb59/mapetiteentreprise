@@ -49,7 +49,6 @@ public class IntroductionController {
         System.out.println("Lance la page d'indroduction");
         animationPanes();
         this.jeu = jeu;
-        System.out.println("Le jeu : " + jeu);
     }
 
     /**
@@ -148,7 +147,6 @@ public class IntroductionController {
         this.jeu.getJoueur().getFerme().setNbPoules(10);
 
         // switch vers la ferme
-        System.out.println("Lancement du jeu, déblocage de la ferme");
         try {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("ferme.fxml"));
             root = loader.load();

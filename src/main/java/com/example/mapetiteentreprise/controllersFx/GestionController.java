@@ -3,13 +3,13 @@ package com.example.mapetiteentreprise.controllersFx;
 import com.example.mapetiteentreprise.Main;
 import com.example.mapetiteentreprise.actions.Outils;
 import com.example.mapetiteentreprise.bdd.*;
+import com.example.mapetiteentreprise.jeu.CreditEnCours;
 import com.example.mapetiteentreprise.jeu.Jeu;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -43,9 +43,8 @@ public class GestionController {
     @FXML
     private Pane paneSemaine1, paneSemaine2, paneParentProgressJour;
     @FXML
-    private ProgressBar progressJour;
+    private ProgressBar progressJour, progressOeufs;
     private Timeline timelineCalendrier, timelineHeure;
-    private SimpleDoubleProperty progressionHeure = new SimpleDoubleProperty(); // utilisé pour stocker la valeur de la progressBar Heures
 
     /**
      * Recupere le nom de la sauvegarde
@@ -57,24 +56,29 @@ public class GestionController {
         // Recuperation du jeu
         this.jeu = jeu;
         this.pseudoLabel.setText("Bonjour " + jeu.getJoueur().getPseudo() + System.getProperty("line.separator") + "Montant en banque : " + decimalFormat.format(jeu.getJoueur().getArgent()) + monnaie+ System.getProperty("line.separator"));
-        System.out.println(jeu);
 
         // Affichage du calendrier
         this.afficheCalendrier();
 
-        this.jeu.getCalendrier().setDureeJour(200);
-        jeu.getParametres().setVitessePonteOeuf(20);
+//        this.jeu.getCalendrier().setDureeJour(200);
+//        jeu.getParametres().setVitessePonteOeuf(20);
 
-        // recuperation de l'etat de la barre de progression pour les heures
+        // ajustement oeuf par rapport au jour
+        this.jeu.getJoueur().getFerme().ajustementProgressOeuf(jeu.getCalendrier().getProgressJour(), jeu.getCalendrier().getHeureActuelle());
+        // recuperation de l'etat de la barre de progression pour les heures / oeufs
+
         double vitesseHeure = jeu.getParametres().getVitessePonteOeuf() - (jeu.getParametres().getVitessePonteOeuf() * jeu.getJoueur().getFerme().getEtatProgressOeuf());
         progressBarStartTimelineHeureEnCours(1, vitesseHeure);
+
+        System.out.println("vitesse ponte oeuf : " + jeu.getParametres().getVitessePonteOeuf());
+        System.out.println("etat progress oeuf : " + jeu.getJoueur().getFerme().getEtatProgressOeuf());
+        System.out.println("vitesseHeure: " + vitesseHeure);
+
 
         // recuperation de l'etat de la barre de progression pour la journee
         double vitesse = jeu.getCalendrier().getDureeJour() - (jeu.getCalendrier().getDureeJour() * jeu.getCalendrier().getProgressJour());
 
         progressBarStartTimelineJourneeEnCours(1, vitesse);
-
-
 
         // desactivation des activites non acquises
         // test activation ferme
@@ -129,8 +133,9 @@ public class GestionController {
         // Test si non vide
         System.out.println("Lancement du jeu, déblocage de la ferme");
 
-        // on enregistre le niveauu de la barre de progression dans le calendrier
+        // sauvegarde des barres de progression
         this.jeu.getCalendrier().setProgressJour(this.progressJour.getProgress());
+        this.jeu.getJoueur().getFerme().setEtatProgressOeuf(this.progressOeufs.getProgress());
 
         // on stoppe les barres de progression;
         this.progressBarStop(timelineCalendrier);
@@ -163,12 +168,11 @@ public class GestionController {
         // Tester le pseudo
         // Test nombre de caractères
         // Test si non vide
-        System.out.println("Lancement de la ferme et de la production d'oeufs");
 
-        // on enregistre le niveauu de la barre de progression dans le calendrier
+        // sauvegarde des barres de progression
         this.jeu.getCalendrier().setProgressJour(this.progressJour.getProgress());
-        System.out.println("Valeur barre de progression du jour : " + jeu.getCalendrier().getProgressJour());
-        System.out.println("Valeur progression heure : " + progressionHeure.getValue());
+        this.jeu.getJoueur().getFerme().setEtatProgressOeuf(this.progressOeufs.getProgress());
+
 
         // on stoppe les barres de progression;
         this.progressBarStop(timelineCalendrier);
@@ -204,8 +208,10 @@ public class GestionController {
         // Test si non vide
         System.out.println("Menu de gestion des distributeurs");
 
-        // on enregistre le niveauu de la barre de progression dans le calendrier
+        // sauvegarde des barres de progression
         this.jeu.getCalendrier().setProgressJour(this.progressJour.getProgress());
+        this.jeu.getJoueur().getFerme().setEtatProgressOeuf(this.progressOeufs.getProgress());
+
         // on stoppe les barres de progression;
         this.progressBarStop(timelineCalendrier);
         this.progressBarStop(timelineHeure);
@@ -237,9 +243,14 @@ public class GestionController {
      * @param event
      */
     public void retourMenu(ActionEvent event) {
+        // sauvegarde des barres de progression
+        this.jeu.getCalendrier().setProgressJour(this.progressJour.getProgress());
+        this.jeu.getJoueur().getFerme().setEtatProgressOeuf(this.progressOeufs.getProgress());
+
         // on stoppe les barres de progression;
         this.progressBarStop(timelineCalendrier);
         this.progressBarStop(timelineHeure);
+
         // sauvegardes
         try {
             sauvegardejeu();
@@ -272,6 +283,9 @@ public class GestionController {
      */
 
     public void onWindowClose(WindowEvent event) {
+        // sauvegarde des barres de progression
+        this.jeu.getCalendrier().setProgressJour(this.progressJour.getProgress());
+        this.jeu.getJoueur().getFerme().setEtatProgressOeuf(this.progressOeufs.getProgress());
         // Sauvegarde de la base de donnees
         System.out.println("fermeture fenetre : Sauvegarde");
         try {
@@ -288,6 +302,10 @@ public class GestionController {
      * @param event
      */
     public void exitJeu(ActionEvent event) {
+        // sauvegarde des barres de progression
+        this.jeu.getCalendrier().setProgressJour(this.progressJour.getProgress());
+        this.jeu.getJoueur().getFerme().setEtatProgressOeuf(this.progressOeufs.getProgress());
+
         sauvegardejeu();
         sauvegardeCredit();
         // Code pour quitter l'application
@@ -298,8 +316,9 @@ public class GestionController {
      * Permet de sauvegarder la partie dans la Bdd
      */
     public void sauvegardejeu() {
-        // recuperation barre de progress
+        // sauvegarde des barres de progression
         this.jeu.getCalendrier().setProgressJour(this.progressJour.getProgress());
+        this.jeu.getJoueur().getFerme().setEtatProgressOeuf(this.progressOeufs.getProgress());
 
         // mise a jour instance sauvegarde
         jeu.getSauvegarde().setArgent(jeu.getJoueur().getArgent());
@@ -375,12 +394,29 @@ public class GestionController {
         // met en place la semaine en cours
         this.jeu.getCalendrier().setSemainesEnCours();
         this.jourEnCours = jeu.getCalendrier().getNumJour();
-        jeu.getCalendrier().createSemaine1Calendrier(paneSemaine1, jeu.getJoueur().getCreditEnCours().getDateProchaineMensualite());
-        jeu.getCalendrier().createSemaine2Calendrier(paneSemaine2, jeu.getJoueur().getCreditEnCours().getDateProchaineMensualite());
+        CreditEnCours creditEnCours = jeu.getJoueur().getCreditEnCours();
+        if (jeu.getJoueur().getCreditEnCours() != null) {
+            jeu.getCalendrier().createSemaine1Calendrier(paneSemaine1, jeu.getJoueur().getCreditEnCours().getDateProchaineMensualite());
+            jeu.getCalendrier().createSemaine2Calendrier(paneSemaine2, jeu.getJoueur().getCreditEnCours().getDateProchaineMensualite());
+        } else {
+            jeu.getCalendrier().createSemaine1Calendrier(paneSemaine1, 0);
+            jeu.getCalendrier().createSemaine2Calendrier(paneSemaine2, 0);
+        }
+
     }
 
     public ProgressBar getProgressJour() {
         return progressJour;
+    }
+
+    /**
+     * declare la ProgressBar afin de pouvoir l'utiliser
+     * pour l'effet de remplissage
+     *
+     * @return
+     */
+    public ProgressBar getProgressOeufs() {
+        return progressOeufs;
     }
 
     /**
@@ -408,7 +444,7 @@ public class GestionController {
                 // Lancer la deuxième exécution de la méthode progressBarStartTimeline
                 jeu.getCalendrier().setProgressJour(0);
                 // recalcul de la vitesse suivant le niveau de la barre de progression
-                progressBarStartTimelineJournee(cycle - 1, jeu.getCalendrier().getDureeJour());
+                progressBarStartTimelineJournee(cycle - 1, jeu.getCalendrier().getDureeJour() - jeu.getParametres().getVitessePonteOeuf());
             }
         });
 
@@ -462,27 +498,22 @@ public class GestionController {
      * @param vitesse
      */
     public void progressBarStartTimelineHeureEnCours(int cycle, double vitesse) {
-        this.progressionHeure.set(this.jeu.getJoueur().getFerme().getEtatProgressOeuf());
-        // recupere l'etat de la progression des oeufs
-//        getProgressJour.setProgress(this.jeu.getCalendrier().getProgressJour());
+        ProgressBar progressOeufs = getProgressOeufs();
+        // Réinitialise la barre de progression à 0
+        progressOeufs.setProgress(this.jeu.getJoueur().getFerme().getEtatProgressOeuf());
         timelineHeure = new Timeline(
-                new KeyFrame(Duration.ZERO, new KeyValue(this.progressionHeure, this.jeu.getJoueur().getFerme().getEtatProgressOeuf())),
+                new KeyFrame(Duration.ZERO, new KeyValue(progressOeufs.progressProperty(), this.jeu.getJoueur().getFerme().getEtatProgressOeuf())),
                 new KeyFrame(Duration.seconds(vitesse), e -> {
-                    System.out.println("heure terminée");
-                    // incremente une heure et repasse à 1 quand il est est 10 heures
                     this.jeu.getCalendrier().setIncrementHeure();
+                    System.out.println("Heure actuelle : " + jeu.getCalendrier().getHeureActuelle());
+                    // ajoute le nombre de poules necesaires
                     majFerme();
-
-                }, new KeyValue(this.progressionHeure, 1))
+                    System.out.println("Oeuf terminé");
+                }, new KeyValue(progressOeufs.progressProperty(), 1))
         );
-
         timelineHeure.setOnFinished(event -> {
-            if (cycle == 1) {
-                // Lancer la deuxième exécution et remet à 0 la valeur
-                jeu.getCalendrier().setProgressJour(0);
                 // recalcul de la vitesse suivant le niveau de la barre de progression
                 progressBarStartTimelineHeure(cycle - 1, jeu.getParametres().getVitessePonteOeuf());
-            }
         });
 
         if (cycle == 0) {
@@ -499,15 +530,19 @@ public class GestionController {
      * @param vitesse
      */
     public void progressBarStartTimelineHeure(int cycle, double vitesse) {
-        this.progressionHeure.set(0);
+        ProgressBar progressOeufs = getProgressOeufs();
+        // Réinitialise la barre de progression à 0
+        progressOeufs.setProgress(0);
         timelineHeure = new Timeline(
-                new KeyFrame(Duration.ZERO, new KeyValue(progressionHeure, 0)),
+                new KeyFrame(Duration.ZERO, new KeyValue(progressOeufs.progressProperty(), 0)),
                 new KeyFrame(Duration.seconds(vitesse), e -> {
-                    System.out.println("heure terminée");
-                    // incremente un jour et remet l'heure à 1
+                    System.out.println("Ajoute une heure");
+                    this.jeu.getCalendrier().setIncrementHeure();
+                    System.out.println("Heure actuelle : " + jeu.getCalendrier().getHeureActuelle());
+                    // ajoute le nombre de poules necesaires
                     majFerme();
-
-                }, new KeyValue(progressionHeure, 1))
+                    System.out.println("Oeuf terminé");
+                }, new KeyValue(progressOeufs.progressProperty(), 1))
         );
 
         if (cycle == 0) {

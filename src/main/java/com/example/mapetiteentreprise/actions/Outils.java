@@ -15,7 +15,6 @@ public class Outils {
      * Caracteres autorisés : alphabet de a à z + chiffres de 0 à 9
      */
     public static Resultat testPseudo(String chaine, int min, int max){
-        System.out.println("Taille de la chaine : " + chaine.length());
         if(chaine.length()>0){
             String chaineATraiter = miseEnFormePseudo(chaine);
 
