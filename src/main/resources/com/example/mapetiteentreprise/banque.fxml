@@ -19,6 +19,12 @@
             <Pane layoutY="240.0" prefHeight="500.0" prefWidth="1280.0">
                <children>
                   <Button fx:id="retourMenu1" layoutX="520.0" layoutY="10.0" mnemonicParsing="false" onAction="#retourGestion" styleClass="buttonVendre" text="Rembourser Mensualité" />
+                   <Pane layoutX="440.0" layoutY="93.0" prefHeight="407.0" prefWidth="400.0" styleClass="fondsCalendrier">
+                       <children>
+                           <Label alignment="CENTER" layoutY="10.0" prefHeight="29.0" prefWidth="400.0" style="-fx-background-color: transparent;" text="CREDIT" textFill="WHITE" underline="true" />
+                           <Label fx:id="labelCredit" layoutX="10.0" layoutY="50.0" prefWidth="400.0" style="-fx-background-color: transparent;" text="Hello" textFill="WHITE" />
+                       </children>
+                   </Pane>
                </children>
             </Pane>
              <Pane fx:id="paneParentProgressJour" layoutX="185.0" layoutY="820.0" prefHeight="20.0" prefWidth="900.0">

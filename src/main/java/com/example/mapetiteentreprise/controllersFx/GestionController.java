@@ -234,6 +234,35 @@ public class GestionController {
         }
     }
 
+    /**
+     * Gere le bouton pour passer sur la fenetre de la banque
+     * @param event
+     */
+    public void switchToBanque(ActionEvent event) {
+        // sauvegarde des barres de progression
+        this.jeu.getCalendrier().setProgressJour(this.progressJour.getProgress());
+        this.jeu.getJoueur().getFerme().setEtatProgressOeuf(this.progressOeufs.getProgress());
+
+        // on stoppe les barres de progression;
+        this.progressBarStop(timelineCalendrier);
+        this.progressBarStop(timelineHeure);
+
+        try {
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("banque.fxml"));
+            root = loader.load();
+            Banquecontroller banquecontroller = loader.getController();
+            banquecontroller.startFenetre(jeu);
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            // Permet de récupérer le gestionnaire d'événements pour la fermeture de la fenêtre
+            stage.setOnCloseRequest(banquecontroller::onWindowClose);
+            stage.show();
+            stage.centerOnScreen();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
 
     /**
      * Sauvegarde les donnees
