@@ -12,6 +12,7 @@ public class Banquecontroller {
 
 
     public void startFenetre(Jeu jeu) {
+        System.out.println("affichage de la banque");
 
     }
 
