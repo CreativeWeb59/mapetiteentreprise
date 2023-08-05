@@ -137,8 +137,6 @@ public class CreditEnCours {
     }
 
 
-
-
     /**
      * Calcule le jour de la prochaine mensualite
      *
@@ -189,16 +187,6 @@ public class CreditEnCours {
      *
      * @return
      */
-//    public BigDecimal montantEcheance(){
-//        // montant total a rembourser
-//        BigDecimal  aRembourser = this.coutPret.subtract(this.montantRembourse);
-//
-//        // compare si montant du credit restant superieur a la mensualite => remboursement mensualite
-//        // sinon => remboursement restant du credit, et on déclenche le solde du credit
-//
-//        return mensualite;
-//
-//    }
     public void payerMensualite(long jourEnCours) {
         // ajoute le montant rembourse
         BigDecimal ajout = this.getMontantRembourse().add(this.mensualite);
@@ -224,7 +212,7 @@ public class CreditEnCours {
         // alors on modifie les dates
         // sinon on modifie juste la date de paiement d'un remboursement
 
-        if (nbRetardMensualite(jourEnCours) == 0){
+        if (nbRetardMensualite(jourEnCours) == 0) {
             // date de prochaine mensualite
             this.setDateProchaineMensualite(dateProchaineMensualite(jourEnCours)); // paiement normal
             this.setDateDerniereMensualite(jourEnCours);
@@ -238,13 +226,27 @@ public class CreditEnCours {
     }
 
     /**
+     * Rembourse le crédit entierement
+     */
+    public void rembourserCredit(long jourEnCours) {
+        // montant restant a payer
+        this.setMontantRembourse(getCoutPret());
+        // date de prochaine mensualite
+        this.setDateDerniereMensualite(jourEnCours);
+        this.setDateProchaineMensualite(jourEnCours);
+        this.setTermine(1);
+    }
+
+
+    /**
      * Calcule la date de la prochaine mensualite
      * par rapport au nombre d'echeance de crédit obligatoires
      * et au jourEnCours
+     *
      * @param jourEnCours
      * @return
      */
-    public long dateProchaineMensualite(long jourEnCours){
+    public long dateProchaineMensualite(long jourEnCours) {
         // date de prochaine mensualite
         // egale ((debut du pret + mensualites obligtoires) * cycle +1)
         long resultat = ((this.getDateDebutCredit() + this.nombreEcheancesObligatoires(jourEnCours)) * this.getCycleMensualite() + 1);
@@ -274,10 +276,11 @@ public class CreditEnCours {
     /**
      * Renvoi le nombre d'echeance minimum a effectuer au credi suivant la date du jour
      * prends la date du debut du credit
+     *
      * @param jourEnCours
      * @return
      */
-    public long nombreEcheancesObligatoires(long jourEnCours){
+    public long nombreEcheancesObligatoires(long jourEnCours) {
         // prends la date du debut du credit
         // prends le jour en cours - date debut credit et divise par le cyle => trouve le nombre d'echeances obligatoires
 

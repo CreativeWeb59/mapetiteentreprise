@@ -2,7 +2,6 @@ package com.example.mapetiteentreprise.controllersFx;
 
 import com.example.mapetiteentreprise.Main;
 import com.example.mapetiteentreprise.actions.Outils;
-import com.example.mapetiteentreprise.bdd.*;
 import com.example.mapetiteentreprise.jeu.CreditEnCours;
 import com.example.mapetiteentreprise.jeu.Jeu;
 import javafx.animation.Animation;
@@ -282,8 +281,8 @@ public class GestionController {
 
         // sauvegardes
         try {
-            sauvegardejeu();
-            sauvegardeCredit();
+            this.jeu.sauvegardejeu(this.progressOeufs, this.progressJour);
+            this.jeu.sauvegardeCredit();
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -318,8 +317,8 @@ public class GestionController {
         // Sauvegarde de la base de donnees
         System.out.println("fermeture fenetre : Sauvegarde");
         try {
-            sauvegardejeu();
-            sauvegardeCredit();
+            this.jeu.sauvegardejeu(this.progressOeufs, this.progressJour);
+            this.jeu.sauvegardeCredit();
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -335,89 +334,12 @@ public class GestionController {
         this.jeu.getCalendrier().setProgressJour(this.progressJour.getProgress());
         this.jeu.getJoueur().getFerme().setEtatProgressOeuf(this.progressOeufs.getProgress());
 
-        sauvegardejeu();
-        sauvegardeCredit();
+        this.jeu.sauvegardejeu(this.progressOeufs, this.progressJour);
+        this.jeu.sauvegardeCredit();
         // Code pour quitter l'application
         Platform.exit();
     }
 
-    /**
-     * Permet de sauvegarder la partie dans la Bdd
-     */
-    public void sauvegardejeu() {
-        // sauvegarde des barres de progression
-        this.jeu.getCalendrier().setProgressJour(this.progressJour.getProgress());
-        this.jeu.getJoueur().getFerme().setEtatProgressOeuf(this.progressOeufs.getProgress());
-
-        // mise a jour instance sauvegarde
-        jeu.getSauvegarde().setArgent(jeu.getJoueur().getArgent());
-        jeu.getSauvegarde().setNbPoules(jeu.getJoueur().getFerme().getNbPoules());
-        jeu.getSauvegarde().setNbOeufs(jeu.getJoueur().getFerme().getNbOeufs());
-        jeu.getSauvegarde().setEtatProgressOeuf(jeu.getJoueur().getFerme().getEtatProgressOeuf());
-
-        jeu.getSauvegarde().setDateDeco(jeu.getJoueur().getFerme().getDateDeco());
-        jeu.getSauvegarde().setFermeActive(jeu.getJoueur().getFermeActive());
-        jeu.getSauvegarde().setDistributeursActive(jeu.getJoueur().getDistributeursActive());
-        jeu.getSauvegarde().setDistributeurBCActive(jeu.getJoueur().getDistributeurBCActive());
-        jeu.getSauvegarde().setDistributeurBFActive(jeu.getJoueur().getDistributeurBFActive());
-        jeu.getSauvegarde().setDistributeurSaActive(jeu.getJoueur().getDistributeurSaActive());
-        jeu.getSauvegarde().setDistributeurCoActive(jeu.getJoueur().getDistributeurCoActive());
-        jeu.getSauvegarde().setNbDistributeurBC(jeu.getJoueur().getBoissonsChaudes().getNbDistributeurs());
-        jeu.getSauvegarde().setNbDistributeurBF(jeu.getJoueur().getBoissonsFraiches().getNbDistributeurs());
-        jeu.getSauvegarde().setNbDistributeurSa(jeu.getJoueur().getSandwichs().getNbDistributeurs());
-        jeu.getSauvegarde().setNbDistributeurCo(jeu.getJoueur().getConfiseries().getNbDistributeurs());
-        jeu.getSauvegarde().setNbMarchandisesBC(jeu.getJoueur().getBoissonsChaudes().getNbMarchandises());
-        jeu.getSauvegarde().setNbMarchandisesBF(jeu.getJoueur().getBoissonsFraiches().getNbMarchandises());
-        jeu.getSauvegarde().setNbMarchandisesSa(jeu.getJoueur().getSandwichs().getNbMarchandises());
-        jeu.getSauvegarde().setNbMarchandisesCo(jeu.getJoueur().getConfiseries().getNbMarchandises());
-        jeu.getSauvegarde().setEtatProgressBC(jeu.getJoueur().getBoissonsChaudes().getEtatProgressDistributeur());
-        jeu.getSauvegarde().setEtatProgressBF(jeu.getJoueur().getBoissonsFraiches().getEtatProgressDistributeur());
-        jeu.getSauvegarde().setEtatProgressSa(jeu.getJoueur().getSandwichs().getEtatProgressDistributeur());
-        jeu.getSauvegarde().setEtatProgressCo(jeu.getJoueur().getConfiseries().getEtatProgressDistributeur());
-        jeu.getSauvegarde().setNumJourDeco(jeu.getCalendrier().getNumJour());
-        jeu.getSauvegarde().setHeureDeco(jeu.getCalendrier().getHeureActuelle());
-        jeu.getSauvegarde().setProgressJour(jeu.getCalendrier().getProgressJour());
-
-        System.out.println("Nouvelles valeurs a sauvegarder" + jeu.getSauvegarde());
-
-        // sauvegarde dans la bdd
-        ConnectionBdd connectionBdd = new ConnectionBdd();
-        connectionBdd.connect();
-        SauvegardeService sauvegardeService = new SauvegardeService(connectionBdd);
-        try {
-            sauvegardeService.majSauvegarde(jeu.getSauvegarde());
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        connectionBdd.close();
-    }
-
-    /**
-     * Sauvegarde les modifications du credits
-     * desactive si pas de credit en cours
-     */
-    public void sauvegardeCredit() {
-        if (jeu.getJoueur().getCreditEnCours() != null) {
-            ConnectionBdd connectionBdd = new ConnectionBdd();
-            connectionBdd.connect();
-            Credits credits = new Credits();
-            CreditsService creditsService = new CreditsService(connectionBdd);
-            credits.setPseudo(jeu.getJoueur().getPseudo());
-            credits.setMontantRembourse(jeu.getJoueur().getCreditEnCours().getMontantRembourse());
-            credits.setDateDerniereMensualite(jeu.getJoueur().getCreditEnCours().getDateDerniereMensualite());
-            credits.setTermine(jeu.getJoueur().getCreditEnCours().getTermine());
-            credits.setMensualite(jeu.getJoueur().getCreditEnCours().getMensualite());
-            credits.setDateProchaineMensualite(jeu.getJoueur().getCreditEnCours().getDateProchaineMensualite());
-            credits.setDatePreavis(jeu.getJoueur().getCreditEnCours().getDatePreavis());
-            credits.setBlocageDatePreavis(jeu.getJoueur().getCreditEnCours().getBlocageDatePreavis());
-            try {
-                creditsService.majCredit(credits);
-            } catch (Exception e) {
-                System.out.println(e);
-            }
-            connectionBdd.close();
-        }
-    }
 
     public void afficheCalendrier() {
         // met en place la semaine en cours
@@ -425,8 +347,13 @@ public class GestionController {
         this.jourEnCours = jeu.getCalendrier().getNumJour();
         CreditEnCours creditEnCours = jeu.getJoueur().getCreditEnCours();
         if (jeu.getJoueur().getCreditEnCours() != null) {
-            jeu.getCalendrier().createSemaine1Calendrier(paneSemaine1, jeu.getJoueur().getCreditEnCours().getDateProchaineMensualite());
-            jeu.getCalendrier().createSemaine2Calendrier(paneSemaine2, jeu.getJoueur().getCreditEnCours().getDateProchaineMensualite());
+            if(jeu.getJoueur().getCreditEnCours().getTermine()==0){
+                jeu.getCalendrier().createSemaine1Calendrier(paneSemaine1, jeu.getJoueur().getCreditEnCours().getDateProchaineMensualite());
+                jeu.getCalendrier().createSemaine2Calendrier(paneSemaine2, jeu.getJoueur().getCreditEnCours().getDateProchaineMensualite());
+            } else {
+                jeu.getCalendrier().createSemaine1Calendrier(paneSemaine1, 0);
+                jeu.getCalendrier().createSemaine2Calendrier(paneSemaine2, 0);
+            }
         } else {
             jeu.getCalendrier().createSemaine1Calendrier(paneSemaine1, 0);
             jeu.getCalendrier().createSemaine2Calendrier(paneSemaine2, 0);

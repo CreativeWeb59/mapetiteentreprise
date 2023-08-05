@@ -8,23 +8,39 @@
     <children>
         <Pane prefHeight="1024.0" prefWidth="1280.0" styleClass="fondsTableau">
          <children>
-            <Label alignment="CENTER" layoutY="100.0" prefHeight="30.0" prefWidth="1280.0" style="-fx-background-color: transparent;" text="Banque" textFill="WHITE">
+            <Label fx:id="labelAccueil" alignment="CENTER" layoutY="100.0" prefHeight="30.0" prefWidth="1280.0" style="-fx-background-color: transparent;" text="Banque" textFill="WHITE">
                <font>
                   <Font name="Arial" size="30.0" />
                </font>
             </Label>
-             <Pane layoutY="160.0" prefHeight="80.0" prefWidth="1280.0">
-                 <Button fx:id="retourMenu" layoutX="550.0" layoutY="10.0" mnemonicParsing="false" onAction="#retourGestion" styleClass="buttonVendre" text="Retour au menu" />
-             </Pane>
+             <Pane layoutY="160.0" prefHeight="80.0" prefWidth="1280.0" />
             <Pane layoutY="240.0" prefHeight="500.0" prefWidth="1280.0">
                <children>
-                  <Button fx:id="retourMenu1" layoutX="520.0" layoutY="10.0" mnemonicParsing="false" onAction="#retourGestion" styleClass="buttonVendre" text="Rembourser Mensualité" />
-                   <Pane layoutX="440.0" layoutY="93.0" prefHeight="407.0" prefWidth="400.0" styleClass="fondsCalendrier">
+                   <Pane fx:id="paneCreditEnCours" layoutX="384.0" layoutY="36.0" prefHeight="464.0" prefWidth="456.0" styleClass="fondsCalendrier">
                        <children>
-                           <Label alignment="CENTER" layoutY="10.0" prefHeight="29.0" prefWidth="400.0" style="-fx-background-color: transparent;" text="CREDIT" textFill="WHITE" underline="true" />
-                           <Label fx:id="labelCredit" layoutX="10.0" layoutY="50.0" prefWidth="400.0" style="-fx-background-color: transparent;" text="Hello" textFill="WHITE" />
+                           <Label alignment="CENTER" layoutY="10.0" prefHeight="30.0" prefWidth="400.0" style="-fx-background-color: transparent;" text="CREDIT" textFill="WHITE" underline="true" />
+                           <Label layoutX="10.0" layoutY="50.0" prefHeight="30.0" prefWidth="170.0" style="-fx-background-color: transparent;" text="Emprunt :" textFill="WHITE" />
+                        <Label layoutX="10.0" layoutY="90.0" prefHeight="30.0" prefWidth="170.0" style="-fx-background-color: transparent;" text="Interêts :" textFill="WHITE" />
+                        <Label layoutX="10.0" layoutY="130.0" prefHeight="30.0" prefWidth="170.0" style="-fx-background-color: transparent;" text="Cout total du prêt :" textFill="WHITE" />
+                        <Label layoutX="10.0" layoutY="170.0" prefHeight="30.0" prefWidth="170.0" style="-fx-background-color: transparent;" text="Restant dù :" textFill="WHITE" />
+                        <Label layoutX="10.0" layoutY="210.0" prefHeight="30.0" prefWidth="170.0" style="-fx-background-color: transparent;" text="Prélèvement :" textFill="WHITE" />
+                        <Label layoutX="10.0" layoutY="250.0" prefHeight="30.0" prefWidth="170.0" style="-fx-background-color: transparent;" text="A payer le jour :" textFill="WHITE" />
+                        <Label fx:id="labelMontant" alignment="CENTER_RIGHT" layoutX="200.0" layoutY="50.0" prefHeight="30.0" prefWidth="160.0" style="-fx-background-color: transparent;" text="0" textFill="WHITE" />
+                        <Label fx:id="labelInterets" alignment="CENTER_RIGHT" layoutX="200.0" layoutY="90.0" prefHeight="30.0" prefWidth="160.0" style="-fx-background-color: transparent;" text="0" textFill="WHITE" />
+                        <Label fx:id="labelTotal" alignment="CENTER_RIGHT" layoutX="200.0" layoutY="130.0" prefHeight="30.0" prefWidth="160.0" style="-fx-background-color: transparent;" text="0" textFill="WHITE" />
+                        <Label fx:id="labelRestantDu" alignment="CENTER_RIGHT" layoutX="200.0" layoutY="170.0" prefHeight="30.0" prefWidth="160.0" style="-fx-background-color: transparent;" text="0" textFill="WHITE" />
+                        <Label fx:id="labelPrelevement" alignment="CENTER_RIGHT" layoutX="200.0" layoutY="210.0" prefHeight="30.0" prefWidth="160.0" style="-fx-background-color: transparent;" text="0" textFill="WHITE" />
+                        <Label fx:id="labelAPayer" alignment="CENTER_RIGHT" layoutX="200.0" layoutY="250.0" prefHeight="30.0" prefWidth="160.0" style="-fx-background-color: transparent;" text="0" textFill="WHITE" />
+                           <Button fx:id="btnRembourser" layoutX="107.0" layoutY="310.0" mnemonicParsing="false" onAction="#onRembourserMensualite" styleClass="buttonVendre" text="Rembourser Mensualité" />
+                           <Button fx:id="btnRembourserTout" layoutX="118.0" layoutY="380.0" mnemonicParsing="false" onAction="#onRembourserTout" styleClass="buttonVendre" text="Rembourser le Crédit" />
                        </children>
                    </Pane>
+                   <Pane fx:id="paneNouveauCredit" layoutX="384.0" layoutY="36.0" prefHeight="464.0" prefWidth="456.0" styleClass="fondsCalendrier" visible="false">
+                       <children>
+                           <Label alignment="CENTER" layoutY="10.0" prefHeight="30.0" prefWidth="400.0" style="-fx-background-color: transparent;" text="Faire un nouveau prêt" textFill="WHITE" underline="true" />
+                       </children>
+                   </Pane>
+                    <Button fx:id="retourMenu" layoutX="987.0" layoutY="245.0" mnemonicParsing="false" onAction="#retourGestion" styleClass="buttonVendre" text="Retour au menu" />
                </children>
             </Pane>
              <Pane fx:id="paneParentProgressJour" layoutX="185.0" layoutY="820.0" prefHeight="20.0" prefWidth="900.0">

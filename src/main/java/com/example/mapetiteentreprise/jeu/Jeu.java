@@ -1,9 +1,9 @@
 package com.example.mapetiteentreprise.jeu;
 
-import com.example.mapetiteentreprise.bdd.Parametres;
-import com.example.mapetiteentreprise.bdd.Sauvegarde;
+import com.example.mapetiteentreprise.bdd.*;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.scene.control.ProgressBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -108,5 +108,82 @@ public class Jeu {
                 ", calendrier=" + calendrier +
                 ", barresDeProgressions=" + barresDeProgressions +
                 '}';
+    }
+
+    /**
+     * Permet de sauvegarder la partie dans la Bdd
+     */
+    public void sauvegardejeu(ProgressBar progressOeufs, ProgressBar progressJour) {
+        // sauvegarde des barres de progression
+        getCalendrier().setProgressJour(progressJour.getProgress());
+        getJoueur().getFerme().setEtatProgressOeuf(progressOeufs.getProgress());
+
+        // mise a jour instance sauvegarde
+        getSauvegarde().setArgent(getJoueur().getArgent());
+        getSauvegarde().setNbPoules(getJoueur().getFerme().getNbPoules());
+        getSauvegarde().setNbOeufs(getJoueur().getFerme().getNbOeufs());
+        getSauvegarde().setEtatProgressOeuf(getJoueur().getFerme().getEtatProgressOeuf());
+
+        getSauvegarde().setDateDeco(getJoueur().getFerme().getDateDeco());
+        getSauvegarde().setFermeActive(getJoueur().getFermeActive());
+        getSauvegarde().setDistributeursActive(getJoueur().getDistributeursActive());
+        getSauvegarde().setDistributeurBCActive(getJoueur().getDistributeurBCActive());
+        getSauvegarde().setDistributeurBFActive(getJoueur().getDistributeurBFActive());
+        getSauvegarde().setDistributeurSaActive(getJoueur().getDistributeurSaActive());
+        getSauvegarde().setDistributeurCoActive(getJoueur().getDistributeurCoActive());
+        getSauvegarde().setNbDistributeurBC(getJoueur().getBoissonsChaudes().getNbDistributeurs());
+        getSauvegarde().setNbDistributeurBF(getJoueur().getBoissonsFraiches().getNbDistributeurs());
+        getSauvegarde().setNbDistributeurSa(getJoueur().getSandwichs().getNbDistributeurs());
+        getSauvegarde().setNbDistributeurCo(getJoueur().getConfiseries().getNbDistributeurs());
+        getSauvegarde().setNbMarchandisesBC(getJoueur().getBoissonsChaudes().getNbMarchandises());
+        getSauvegarde().setNbMarchandisesBF(getJoueur().getBoissonsFraiches().getNbMarchandises());
+        getSauvegarde().setNbMarchandisesSa(getJoueur().getSandwichs().getNbMarchandises());
+        getSauvegarde().setNbMarchandisesCo(getJoueur().getConfiseries().getNbMarchandises());
+        getSauvegarde().setEtatProgressBC(getJoueur().getBoissonsChaudes().getEtatProgressDistributeur());
+        getSauvegarde().setEtatProgressBF(getJoueur().getBoissonsFraiches().getEtatProgressDistributeur());
+        getSauvegarde().setEtatProgressSa(getJoueur().getSandwichs().getEtatProgressDistributeur());
+        getSauvegarde().setEtatProgressCo(getJoueur().getConfiseries().getEtatProgressDistributeur());
+        getSauvegarde().setNumJourDeco(getCalendrier().getNumJour());
+        getSauvegarde().setHeureDeco(getCalendrier().getHeureActuelle());
+        getSauvegarde().setProgressJour(getCalendrier().getProgressJour());
+
+        System.out.println("Nouvelles valeurs a sauvegarder" + getSauvegarde());
+
+        // sauvegarde dans la bdd
+        ConnectionBdd connectionBdd = new ConnectionBdd();
+        connectionBdd.connect();
+        SauvegardeService sauvegardeService = new SauvegardeService(connectionBdd);
+        try {
+            sauvegardeService.majSauvegarde(getSauvegarde());
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        connectionBdd.close();
+    }
+
+    /**
+     * Sauvegarde les modifications si crédit en cours
+     */
+    public void sauvegardeCredit() {
+        if (getJoueur().getCreditEnCours() != null) {
+            ConnectionBdd connectionBdd = new ConnectionBdd();
+            connectionBdd.connect();
+            Credits credits = new Credits();
+            CreditsService creditsService = new CreditsService(connectionBdd);
+            credits.setPseudo(getJoueur().getPseudo());
+            credits.setMontantRembourse(getJoueur().getCreditEnCours().getMontantRembourse());
+            credits.setDateDerniereMensualite(getJoueur().getCreditEnCours().getDateDerniereMensualite());
+            credits.setTermine(getJoueur().getCreditEnCours().getTermine());
+            credits.setMensualite(getJoueur().getCreditEnCours().getMensualite());
+            credits.setDateProchaineMensualite(getJoueur().getCreditEnCours().getDateProchaineMensualite());
+            credits.setDatePreavis(getJoueur().getCreditEnCours().getDatePreavis());
+            credits.setBlocageDatePreavis(getJoueur().getCreditEnCours().getBlocageDatePreavis());
+            try {
+                creditsService.majCredit(credits);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+            connectionBdd.close();
+        }
     }
 }

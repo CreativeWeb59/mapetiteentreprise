@@ -28,13 +28,13 @@ import java.util.List;
 
 public class MainController {
     @FXML
-    private Label pseudoLabel, labelErreur;
+    private Label labelErreur;
     @FXML
     private TextField pseudoTextField;
     @FXML
     private ChoiceBox<String> choixPartie;
     @FXML
-    private Button btnNew, btnContinuer, btnSupprimer;
+    private Button btnContinuer, btnSupprimer;
     private String pseudo;
     private String partieSauvegardee;
     private Stage stage;
