@@ -62,7 +62,7 @@
                                 <Image url="@images/banquier.png" />
                             </image>
                         </ImageView>
-                        <Button fx:id="btnBanque" alignment="CENTER" disable="true" layoutX="50.0" layoutY="250.0" mnemonicParsing="false" text="Banque" />
+                        <Button fx:id="btnBanque" alignment="CENTER" disable="false" layoutX="50.0" layoutY="250.0" mnemonicParsing="false" onAction="#switchToBanque" text="Banque" />
                     </children>
                 </Pane>
                 <Label alignment="CENTER" contentDisplay="CENTER" layoutX="230.0" layoutY="310.0" style="-fx-background-color: transparent;" styleClass="label2" text="Débloqué à partir de 1.500 €" textFill="WHITE" wrapText="true">
