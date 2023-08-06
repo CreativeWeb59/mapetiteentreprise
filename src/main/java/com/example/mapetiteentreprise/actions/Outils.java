@@ -1,5 +1,9 @@
 package com.example.mapetiteentreprise.actions;
 
+import javafx.animation.PauseTransition;
+import javafx.scene.control.Label;
+import javafx.util.Duration;
+
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.time.LocalDateTime;
@@ -126,5 +130,28 @@ public class Outils {
      */
     public static long differenceEntreDeuxDates(LocalDateTime date1, LocalDateTime date2){
         return ChronoUnit.SECONDS.between(date2, date1);
+    }
+
+    /**
+     * Affichage du message d'erreur pendant un certain laps de temps donnée
+     *
+     * @param labelErreur le label qui doit être affiché temporairement
+     * @param messageErreur le message à inscrire
+     * @param delai délai d'affichage du message
+     */
+    public static void afficherMessageTemporaire(Label labelErreur, String messageErreur, int delai) {
+        // affiche le label pour la gestion des erreurs
+        labelErreur.setVisible(true);
+
+        labelErreur.setText(messageErreur); // Afficher le message dans le label
+
+        // Créer une PauseTransition pour la durée spécifiée
+        PauseTransition pauseTransition = new PauseTransition(Duration.millis(delai));
+        pauseTransition.setOnFinished(event -> {
+            labelErreur.setText(""); // Effacer le contenu du label après le délai
+            labelErreur.setVisible(false); // cache a nouveau le label d'erreur
+        });
+
+        pauseTransition.play(); // Démarrer la temporisation
     }
 }

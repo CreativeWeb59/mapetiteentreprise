@@ -1,12 +1,16 @@
 package com.example.mapetiteentreprise.jeu;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Ferme {
     private int nbPoules;
     private long nbOeufs;
     private double etatProgressOeuf = 0;
     private LocalDateTime dateDeco;
+
 
     public Ferme(int nbPoules, long nbOeufs, double etatProgressOeuf , LocalDateTime dateDeco) {
         this.nbPoules = nbPoules;
@@ -67,4 +71,6 @@ public class Ferme {
         double resultat = (progressJour * 10) - heureActuelle ;
         System.out.println("valeur nouvelle barre : " + resultat);
     }
+
+
 }

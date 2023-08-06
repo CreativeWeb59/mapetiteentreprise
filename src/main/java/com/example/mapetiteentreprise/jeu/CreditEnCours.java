@@ -266,11 +266,21 @@ public class CreditEnCours {
 
     /**
      * Calcule le nombre de mensualites deja payées
+     * renvoi l'operation, si pas null
      */
     public long nombreMensualitesPayees() {
-        // divise montant paye par valeur mensualite => nb de mensualites payées
-        System.out.println("Nombre de mensualites payées : " + getMontantRembourse().divide(getMensualite()).intValue());
-        return (getMontantRembourse().divide(getMensualite()).intValue());
+        // on verifie si l'argent est dispo
+        int comparaison = getMensualite().compareTo(BigDecimal.valueOf(0));
+        System.out.println("Valeur mensualite : " + getMensualite());
+        if (comparaison > 0) {
+            System.out.println("get mensualite superieur à 0 ");
+            // divise montant paye par valeur mensualite => nb de mensualites payées
+            System.out.println("Nombre de mensualites payées : " + getMontantRembourse().divide(getMensualite()).intValue());
+            return (getMontantRembourse().divide(getMensualite()).intValue());
+        } else {
+            System.out.println("get mensualite égal à 0 ");
+            return 0;
+        }
     }
 
     /**

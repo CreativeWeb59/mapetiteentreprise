@@ -18,6 +18,7 @@ public class Joueur {
     private int distributeurCoActive;
     private int distributeurSaActive;
 
+    private int poullaillerEnCours; // correspond a l'index du poullailler attribué dans la liste des poulaillers
 
     public Joueur(String pseudo, BigDecimal argent, Ferme ferme, BoissonsChaudes boissonsChaudes, BoissonsFraiches boissonsFraiches, Sandwichs sandwichs, Confiseries confiseries, CreditEnCours creditEnCours, int fermeActive, int distributeursActive, int distributeurBCActive, int distributeurBFActive, int distributeurCoActive, int distributeurSaActive) {
         this.pseudo = pseudo;
@@ -170,9 +171,10 @@ public class Joueur {
 
     /**
      * renvoi true si le joueur a assez d'argent pour la depense
+     *
      * @return
      */
-    public boolean isArgent(BigDecimal montantAchat){
+    public boolean isArgent(BigDecimal montantAchat) {
         // on verifie si l'argent est dispo
         int comparaison = this.argent.compareTo(montantAchat);
         if (comparaison >= 0) {
@@ -182,7 +184,9 @@ public class Joueur {
         }
     }
 
-    public void depenser(BigDecimal montantDepense){
+    public void depenser(BigDecimal montantDepense) {
         this.setArgent(this.getArgent().subtract(montantDepense));
     }
+
+
 }

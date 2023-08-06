@@ -33,7 +33,7 @@ public class Banquecontroller {
     // pattern des nombre décimaux
     private final DecimalFormat decimalFormat = Outils.getDecimalFormatWithSpaceSeparator();
     @FXML
-    private Label labelAccueil, labelAPayer, labelMontant, labelInterets, labelTotal, labelRestantDu, labelPrelevement;
+    private Label labelAccueil, labelAPayer, labelMontant, labelInterets, labelTotal, labelRestantDu, labelPrelevement, labelMessageFinDuPret;
     @FXML
     Button retourMenu, btnRembourser, btnRembourserTout;
     @FXML
@@ -202,7 +202,11 @@ public class Banquecontroller {
     public boolean isCredit(){
         CreditEnCours creditEnCours = jeu.getJoueur().getCreditEnCours();
         if (creditEnCours != null) {
-            return true;
+            if(jeu.getJoueur().getCreditEnCours().getTermine() == 0){
+                return true;
+            } else {
+                return false;
+            }
         } else {
             return false;
         }
@@ -441,6 +445,7 @@ public class Banquecontroller {
 
             System.out.println("remboursement");
             this.affichageCredit();
+            setLabelAccueil();
         } else {
             System.out.println("Vous n'avez pas assez d'argent pour rembourser le credit");
         }
@@ -476,9 +481,13 @@ public class Banquecontroller {
             jeu.getJoueur().getCreditEnCours().rembourserCredit(jeu.getCalendrier().getNumJour());
             System.out.println("remboursement complet");
 
+            setLabelAccueil();
             // chanqge de panneau d'affichage
             paneCreditEnCours.setVisible(false);
             paneNouveauCredit.setVisible(true);
+
+            // affichage message temporaire dans le label : labelMessageFinDuPret
+            Outils.afficherMessageTemporaire(labelMessageFinDuPret, "Vous venez de rembourser votre prêt", 3000);
             propositionPret();
         } else {
             System.out.println("Vous n'avez pas assez d'argent pour rembourser entierement le credit");

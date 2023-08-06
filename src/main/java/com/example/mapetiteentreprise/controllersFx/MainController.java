@@ -106,7 +106,6 @@ public class MainController {
             }
             connectionBdd.close();
         } else {
-//            this.labelErreur.setText(resultat.getChaine());
             afficherMessageTemporaire(this.labelErreur, resultat.getChaine(), 3000);
         }
     }

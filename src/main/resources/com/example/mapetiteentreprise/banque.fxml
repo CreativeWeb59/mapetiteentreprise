@@ -38,12 +38,16 @@
                    <Pane fx:id="paneNouveauCredit" layoutX="384.0" layoutY="36.0" prefHeight="464.0" prefWidth="456.0" styleClass="fondsCalendrier" visible="false">
                        <children>
                            <Label alignment="CENTER" layoutY="10.0" prefHeight="30.0" prefWidth="400.0" style="-fx-background-color: transparent;" text="Faire un nouveau prêt" textFill="WHITE" underline="true" />
+                           <Label fx:id="labelMessageFinDuPret" alignment="CENTER" layoutY="130.0" prefHeight="130.0" prefWidth="456.0" style="-fx-background-color: transparent;" text="" textFill="#0012f5" underline="true">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font></Label>
                        </children>
                    </Pane>
                     <Button fx:id="retourMenu" layoutX="987.0" layoutY="245.0" mnemonicParsing="false" onAction="#retourGestion" styleClass="buttonVendre" text="Retour au menu" />
                </children>
             </Pane>
-             <Pane fx:id="paneParentProgressJour" layoutX="185.0" layoutY="820.0" prefHeight="20.0" prefWidth="900.0">
+             <Pane fx:id="paneParentProgressJour" layoutX="185.0" layoutY="820.0" prefHeight="20.0" prefWidth="900.0" visible="false">
                  <children>
                      <ProgressBar fx:id="progressJour" prefHeight="20.0" prefWidth="900.0" progress="0.0" />
                      <ProgressBar id="progressOeufs" fx:id="progressOeufs" cache="true" layoutX="0.0" layoutY="30.0" prefHeight="20.0" prefWidth="180.0" progress="0.0" />

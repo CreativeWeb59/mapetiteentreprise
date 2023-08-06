@@ -5,6 +5,7 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.scene.control.ProgressBar;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +19,7 @@ public class Jeu {
     // la 2 est celle de la ferme
     // la 3, 4, 5, 6 celle des distributeurs...
     private List<AnimationsBarresProgress> barresDeProgressions = new ArrayList<>();
+    private List<Poulaillers> poulaillersList = new ArrayList<>(); // liste des poulaillers dispos
 
     public Jeu(Joueur joueur, Sauvegarde sauvegarde, Parametres parametres, Calendrier calendrier) {
         this.joueur = joueur;
@@ -185,5 +187,33 @@ public class Jeu {
             }
             connectionBdd.close();
         }
+    }
+
+    /**
+     * Creation des poulaillers
+     * 4 poulaillers
+     * et affectation dans la liste des poulaillers
+     */
+    public void createPoullaillers(){
+        Poulaillers poulailler = new Poulaillers("Poulailler", 200, BigDecimal.valueOf(1200));
+        this.addPoulailler(poulailler);
+        Poulaillers poulaillerPro = new Poulaillers("Poulailler pro", 1000, BigDecimal.valueOf(5000));
+        this.addPoulailler(poulaillerPro);
+        Poulaillers poulaillerMega = new Poulaillers("Méga poulailler", 5000, BigDecimal.valueOf(25000));
+        this.addPoulailler(poulaillerMega);
+        Poulaillers poulaillerIndustriel = new Poulaillers("Poulailler industriel", 10000, BigDecimal.valueOf(50000));
+        this.addPoulailler(poulaillerIndustriel);
+
+    }
+
+    public List<Poulaillers> getPoulaillersList() {
+        return poulaillersList;
+    }
+
+    public void setPoulaillersList(List<Poulaillers> poulaillersList) {
+        this.poulaillersList = poulaillersList;
+    }
+    public void addPoulailler(Poulaillers poulaillers){
+        this.poulaillersList.add(poulaillers);
     }
 }
