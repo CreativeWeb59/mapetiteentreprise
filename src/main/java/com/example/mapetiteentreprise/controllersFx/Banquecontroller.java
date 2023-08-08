@@ -33,9 +33,10 @@ public class Banquecontroller {
     // pattern des nombre décimaux
     private final DecimalFormat decimalFormat = Outils.getDecimalFormatWithSpaceSeparator();
     @FXML
-    private Label labelAccueil, labelAPayer, labelMontant, labelInterets, labelTotal, labelRestantDu, labelPrelevement, labelMessageFinDuPret;
+    private Label labelAccueil, labelAPayer, labelMontant, labelInterets, labelTotal, labelRestantDu, labelPrelevement, labelMessageFinDuPret,
+            labelCredit1, labelCredit2, labelCredit3;
     @FXML
-    Button retourMenu, btnRembourser, btnRembourserTout;
+    Button retourMenu, btnRembourser, btnRembourserTout, btnPret1, btnPret2, btnPret3;
     @FXML
     Pane paneCreditEnCours, paneNouveauCredit;
     @FXML
@@ -44,6 +45,11 @@ public class Banquecontroller {
     private Stage stage;
     private Scene scene;
     private Parent root;
+
+    // attributs pur le prêt
+    private final BigDecimal pourcentageInterets = BigDecimal.valueOf(0.08);
+    private final int nbMensualites = 30;
+    private final int cycleMensualite = 7;
 
     public void startFenetre(Jeu jeu) {
         // Recuperation du jeu
@@ -508,6 +514,65 @@ public class Banquecontroller {
                 btnRembourserTout.setVisible(true);
                 btnRembourserTout.setDisable(true);
             }
+        }
+    }
+
+    /**
+     * Click sur le bouton de prêt 1
+     * recupere les infos du type de prêt
+     * renvoi sur la méthode de prêt commune
+     */
+    public void onBtnPret1(){
+        this.nouveauPret(BigDecimal.valueOf(1500));
+    }
+
+    /**
+     * Click sur le bouton de prêt 2
+     * recupere les infos du type de prêt
+     * renvoi sur la méthode de prêt commune
+     */
+    public void onBtnPret2(){
+        this.nouveauPret(BigDecimal.valueOf(2000));
+    }
+    /**
+     * Click sur le bouton de prêt 3
+     * recupere les infos du type de prêt
+     * renvoi sur la méthode de prêt commune
+     */
+    public void onBtnPret3(){
+        this.nouveauPret(BigDecimal.valueOf(2500));
+    }
+
+    /**
+     * cree un nouveau prêt en fonction du choix pré-selectionné
+     */
+    public void nouveauPret(BigDecimal montantPret){
+        // calcul des valeurs necessaires
+        BigDecimal coutPret = montantPret.add(montantPret.multiply(BigDecimal.valueOf(0.08)));
+        BigDecimal mensualite = coutPret.divide(BigDecimal.valueOf(nbMensualites));
+        long jourEnCours = jeu.getCalendrier().getNumJour();
+        long dateProchaineMensualite = jourEnCours + cycleMensualite;
+        long datePreavis = jourEnCours + (nbMensualites * cycleMensualite) + 2;
+
+        CreditEnCours creditEnCours = jeu.getJoueur().getCreditEnCours();
+        System.out.println("joueur : " + jeu.getJoueur().getCreditEnCours());
+        System.out.println("Credit : " + creditEnCours);
+        // verifie si un credit existe déja
+        if (creditEnCours == null) {
+            // creation du pret
+            creditEnCours = new CreditEnCours(montantPret, coutPret, BigDecimal.valueOf(0), mensualite, nbMensualites, cycleMensualite, 0,
+                    jourEnCours, jourEnCours, dateProchaineMensualite, datePreavis, 0);
+            // on l'ajoute au joueur
+            jeu.getJoueur().setCreditEnCours(creditEnCours);
+
+            // on ajoute la somme dans la banque du joueur
+            jeu.getJoueur().setArgent(jeu.getJoueur().getArgent().add(montantPret));
+
+            // met a jour l'affichage
+            setLabelAccueil();
+
+        } else {
+            System.out.println("Vous avez déja un crédit en cours, terminez votre crédit avant d'en faire un nouveau");
         }
     }
 }

@@ -146,10 +146,14 @@ public class MainController {
         // creation de la classe joueur
         Joueur joueur = new Joueur(userName, sauvegarde.getArgent(), this.ferme, this.boissonsChaudes, this.boissonsFraiches, this.sandwichs, this.confiseries,
                 this.creditEnCours, this.sauvegarde.getFermeActive(), this.sauvegarde.getDistributeursActive(), this.sauvegarde.getDistributeurBCActive(),
-                this.sauvegarde.getDistributeurBFActive(), this.sauvegarde.getDistributeurCoActive(), this.sauvegarde.getDistributeurSaActive());
+                this.sauvegarde.getDistributeurBFActive(), this.sauvegarde.getDistributeurCoActive(), this.sauvegarde.getDistributeurSaActive(), this.sauvegarde.getPoullaillerEnCours());
 
         // cree le jeu avec tous les parametres
         this.jeu = new Jeu(joueur, sauvegarde, parametres, calendrier);
+
+        // ajout des types de poulaillers
+        this.creationPoulailler();
+
         connectionBdd.close();
         System.out.println("Le jeu complet içi : " + this.jeu);
         this.switchPageGestion(event);
@@ -237,13 +241,13 @@ public class MainController {
      */
     public void creerJoueur() throws SQLException {
         connectionBdd.connect();
-        System.out.println("Creation du joueur");
 
+        System.out.println("Creation du joueur");
         LocalDateTime dateEncours = LocalDateTime.now();
 
         // creation de la sauvegarde en bdd
         this.sauvegarde = new Sauvegarde(this.pseudo, parametres.getArgentDepart(),1, 1, 0, parametres.getNbPoules(), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                dateEncours, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, dateEncours);
+                dateEncours, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, dateEncours, 0);
         sauvegardeService.addJoueur(sauvegarde);
 
         this.creerActivites(true);
@@ -251,12 +255,15 @@ public class MainController {
         // creation de la classe joueur
         Joueur joueur = new Joueur(this.pseudo, parametres.getArgentDepart(), this.ferme, this.boissonsChaudes, this.boissonsFraiches, this.sandwichs, this.confiseries,
                 this.creditEnCours, this.parametres.getFermeActive(), this.parametres.getDistributeursActive(), this.parametres.getDistributeurBCActive(),
-                this.parametres.getDistributeurBFActive(), this.parametres.getDistributeurSaActive(), this.parametres.getDistributeurCoActive());
+                this.parametres.getDistributeurBFActive(), this.parametres.getDistributeurSaActive(), this.parametres.getDistributeurCoActive(), 0);
 
         // creation du calendrier
         Calendrier calendrier = new Calendrier(dateEncours, 1, 0, 0);
         // creation de la partie
         this.jeu = new Jeu(joueur, sauvegarde, parametres, calendrier);
+
+        // creation des poulaillers
+        this.creationPoulailler();
     }
 
     /**
@@ -286,6 +293,10 @@ public class MainController {
             confiseries = new Confiseries(sauvegarde.getNbDistributeurCo(), sauvegarde.getNbMarchandisesCo(), sauvegarde.getEtatProgressCo(), sauvegarde.getDateDeco());
             sandwichs = new Sandwichs(sauvegarde.getNbDistributeurSa(), sauvegarde.getNbMarchandisesSa(), sauvegarde.getEtatProgressSa(), sauvegarde.getDateDeco());
         }
+    }
+
+    public void creationPoulailler(){
+        jeu.createPoulaillers();
     }
 
     /**

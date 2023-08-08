@@ -17,10 +17,9 @@ public class Joueur {
     private int distributeurBFActive;
     private int distributeurCoActive;
     private int distributeurSaActive;
-
     private int poullaillerEnCours; // correspond a l'index du poullailler attribué dans la liste des poulaillers
 
-    public Joueur(String pseudo, BigDecimal argent, Ferme ferme, BoissonsChaudes boissonsChaudes, BoissonsFraiches boissonsFraiches, Sandwichs sandwichs, Confiseries confiseries, CreditEnCours creditEnCours, int fermeActive, int distributeursActive, int distributeurBCActive, int distributeurBFActive, int distributeurCoActive, int distributeurSaActive) {
+    public Joueur(String pseudo, BigDecimal argent, Ferme ferme, BoissonsChaudes boissonsChaudes, BoissonsFraiches boissonsFraiches, Sandwichs sandwichs, Confiseries confiseries, CreditEnCours creditEnCours, int fermeActive, int distributeursActive, int distributeurBCActive, int distributeurBFActive, int distributeurCoActive, int distributeurSaActive, int poullaillerEnCours) {
         this.pseudo = pseudo;
         this.argent = argent;
         this.ferme = ferme;
@@ -35,6 +34,7 @@ public class Joueur {
         this.distributeurBFActive = distributeurBFActive;
         this.distributeurCoActive = distributeurCoActive;
         this.distributeurSaActive = distributeurSaActive;
+        this.poullaillerEnCours = poullaillerEnCours;
     }
 
     public String getPseudo() {
@@ -147,6 +147,14 @@ public class Joueur {
 
     public void setCreditEnCours(CreditEnCours creditEnCours) {
         this.creditEnCours = creditEnCours;
+    }
+
+    public int getPoullaillerEnCours() {
+        return poullaillerEnCours;
+    }
+
+    public void setPoullaillerEnCours(int poullaillerEnCours) {
+        this.poullaillerEnCours = poullaillerEnCours;
     }
 
     @Override

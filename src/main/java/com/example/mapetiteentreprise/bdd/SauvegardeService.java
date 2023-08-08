@@ -80,8 +80,8 @@ public class SauvegardeService {
                 "nbPoules, nbOeufs, fermeActive, distributeursActive, distributeurBCActive, distributeurBFActive, distributeurCoActive, distributeurSaActive, livraisonActive, lavageActive, etatProgressOeuf, dateDeco, " +
                 "nbDistributeurBC, nbDistributeurBF, nbDistributeurSa, nbDistributeurCo," +
                 "nbMarchandisesBC, nbMarchandisesBF, nbMarchandisesSa, nbMarchandisesCo," +
-                "etatProgressBC, etatProgressBF, etatProgressSa, etatProgressCo, dateDebutJeu"+
-                ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                "etatProgressBC, etatProgressBF, etatProgressSa, etatProgressCo, dateDebutJeu, poullaillerEnCours"+
+                ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         PreparedStatement stmt = connectionBdd.prepareStatement(sql);
         stmt.setString(1, sauvegarde.getPseudo());
@@ -118,6 +118,8 @@ public class SauvegardeService {
         stmt.setDouble(29, sauvegarde.getEtatProgressCo());
 
         stmt.setTimestamp(30, timestamp);
+        stmt.setInt(31, sauvegarde.getPoullaillerEnCours());
+
 
         try {
             stmt.executeUpdate();
@@ -191,6 +193,7 @@ public class SauvegardeService {
             double etatProgressCo = resultSet.getDouble("etatProgressCo");
 
             long timestampMillisDebutJeu = resultSet.getLong("dateDebutJeu");
+            int poullaillerEnCours = resultSet.getInt("poullaillerEnCours");
 
             LocalDateTime dateDeco = LocalDateTime.ofInstant(Instant.ofEpochMilli(timestampMillisDeco), ZoneId.systemDefault());
             LocalDateTime dateDebutJeu = LocalDateTime.ofInstant(Instant.ofEpochMilli(timestampMillisDebutJeu), ZoneId.systemDefault());
@@ -200,7 +203,7 @@ public class SauvegardeService {
                     , etatProgressOeuf, dateDeco,
                     nbDistributeurBC, nbDistributeurBF, nbDistributeurSa, nbDistributeurCo,
                     nbMarchandisesBC, nbMarchandisesBF, nbMarchandisesSa, nbMarchandisesCo,
-                    etatProgressBC, etatProgressBF, etatProgressSa, etatProgressCo, dateDebutJeu);
+                    etatProgressBC, etatProgressBF, etatProgressSa, etatProgressCo, dateDebutJeu, poullaillerEnCours);
             sauvegarde.setId(id);
             System.out.println(sauvegarde);
             return sauvegarde;
@@ -218,7 +221,7 @@ public class SauvegardeService {
                 " etatProgressOeuf = ?, dateDeco = ?," +
                 "nbDistributeurBC = ?, nbDistributeurBF = ?, nbDistributeurSa = ?, nbDistributeurCo = ?," +
                 "nbMarchandisesBC = ?, nbMarchandisesBF = ?, nbMarchandisesSa = ?, nbMarchandisesCo = ?," +
-                "etatProgressBC = ?, etatProgressBF = ?, etatProgressSa = ?, etatProgressCo = ?"+
+                "etatProgressBC = ?, etatProgressBF = ?, etatProgressSa = ?, etatProgressCo = ?, poullaillerEnCours = ?"+
                 " WHERE pseudo LIKE ?";
 
         System.out.println("Requete : " + sql);
@@ -261,8 +264,9 @@ public class SauvegardeService {
         stmt.setDouble(26, sauvegarde.getEtatProgressBF());
         stmt.setDouble(27, sauvegarde.getEtatProgressSa());
         stmt.setDouble(28, sauvegarde.getEtatProgressCo());
+        stmt.setInt(29, sauvegarde.getPoullaillerEnCours());
 
-        stmt.setString(29, sauvegarde.getPseudo());
+        stmt.setString(30, sauvegarde.getPseudo());
 
         // Insertion des données
         try {

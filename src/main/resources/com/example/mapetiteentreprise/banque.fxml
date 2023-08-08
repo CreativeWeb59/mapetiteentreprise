@@ -16,7 +16,7 @@
              <Pane layoutY="160.0" prefHeight="80.0" prefWidth="1280.0" />
             <Pane layoutY="240.0" prefHeight="500.0" prefWidth="1280.0">
                <children>
-                   <Pane fx:id="paneCreditEnCours" layoutX="384.0" layoutY="36.0" prefHeight="464.0" prefWidth="456.0" styleClass="fondsCalendrier">
+                   <Pane fx:id="paneCreditEnCours" layoutX="384.0" layoutY="36.0" prefHeight="464.0" prefWidth="456.0" styleClass="fondsCalendrier" visible="false">
                        <children>
                            <Label alignment="CENTER" layoutY="10.0" prefHeight="30.0" prefWidth="400.0" style="-fx-background-color: transparent;" text="CREDIT" textFill="WHITE" underline="true" />
                            <Label layoutX="10.0" layoutY="50.0" prefHeight="30.0" prefWidth="170.0" style="-fx-background-color: transparent;" text="Emprunt :" textFill="WHITE" />
@@ -35,13 +35,19 @@
                            <Button fx:id="btnRembourserTout" layoutX="118.0" layoutY="380.0" mnemonicParsing="false" onAction="#onRembourserTout" styleClass="buttonVendre" text="Rembourser le Crédit" />
                        </children>
                    </Pane>
-                   <Pane fx:id="paneNouveauCredit" layoutX="384.0" layoutY="36.0" prefHeight="464.0" prefWidth="456.0" styleClass="fondsCalendrier" visible="false">
+                   <Pane fx:id="paneNouveauCredit" layoutX="384.0" layoutY="36.0" prefHeight="464.0" prefWidth="456.0" styleClass="fondsCalendrier">
                        <children>
-                           <Label alignment="CENTER" layoutY="10.0" prefHeight="30.0" prefWidth="400.0" style="-fx-background-color: transparent;" text="Faire un nouveau prêt" textFill="WHITE" underline="true" />
+                           <Label alignment="CENTER" layoutY="10.0" prefHeight="30.0" prefWidth="449.0" style="-fx-background-color: transparent;" text="Faire un nouveau prêt" textFill="WHITE" underline="true" />
                            <Label fx:id="labelMessageFinDuPret" alignment="CENTER" layoutY="130.0" prefHeight="130.0" prefWidth="456.0" style="-fx-background-color: transparent;" text="" textFill="#0012f5" underline="true">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font></Label>
+                        <Button fx:id="btnPret1" layoutX="231.0" layoutY="122.0" mnemonicParsing="false" onAction="#onBtnPret1" styleClass="buttonVendre" text="Emprunter 1.500 €" />
+                        <Label fx:id="labelCredit1" alignment="TOP_LEFT" layoutX="30.0" layoutY="122.0" prefHeight="64.0" prefWidth="180.0" style="-fx-background-color: transparent;" text="30 mensualités de 54 €. Coût du crédit : 1.620 €" textFill="WHITE" wrapText="true" />
+                        <Button fx:id="btnPret2" layoutX="231.0" layoutY="226.0" mnemonicParsing="false" onAction="#onBtnPret2" styleClass="buttonVendre" text="Emprunter 2.000 €" />
+                        <Label fx:id="labelCredit2" alignment="TOP_LEFT" layoutX="21.0" layoutY="221.0" prefHeight="56.0" prefWidth="197.0" style="-fx-background-color: transparent;" text="30 mensualités de 72 €. Coût du crédit : 2.160 €" textFill="WHITE" wrapText="true" />
+                        <Button fx:id="btnPret3" layoutX="231.0" layoutY="322.0" mnemonicParsing="false" onAction="#onBtnPret3" styleClass="buttonVendre" text="Emprunter 2.500 €" />
+                        <Label fx:id="labelCredit3" alignment="TOP_LEFT" layoutX="21.0" layoutY="317.0" prefHeight="56.0" prefWidth="180.0" style="-fx-background-color: transparent;" text="30 mensualités de 90 €. Coût du crédit : 2.700 €" textFill="WHITE" wrapText="true" />
                        </children>
                    </Pane>
                     <Button fx:id="retourMenu" layoutX="987.0" layoutY="245.0" mnemonicParsing="false" onAction="#retourGestion" styleClass="buttonVendre" text="Retour au menu" />

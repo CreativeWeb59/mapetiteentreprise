@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.*?>
+<?import javafx.scene.*?>
 <?import javafx.scene.chart.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
@@ -30,7 +32,7 @@
                 </Pane>
                 <Pane layoutX="40.0" layoutY="160.0" prefHeight="800.0" prefWidth="1200.0">
                     <children>
-                        <ImageView id="poulailler" fx:id="poulailler" fitHeight="375.0" fitWidth="330.0" layoutX="71.0" layoutY="260.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView id="poulailler" fx:id="imgPoulailler" fitHeight="180.0" fitWidth="200.0" layoutX="50.0" layoutY="210.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@images/poulailler.png" />
                             </image>
@@ -40,27 +42,43 @@
                             <children>
                                 <Label layoutX="120.0" layoutY="226.0" styleClass="labelText" text="OEUFS (vente : 0.20 €)" />
                                 <Label layoutX="120.0" layoutY="90.0" styleClass="labelText" text="POULES" />
-                                <Label fx:id="labelPoule" layoutX="120.0" layoutY="119.0" styleClass="labelText2" text="" />
+                                <Label fx:id="labelPoule" layoutX="120.0" layoutY="119.0" prefHeight="100.0" styleClass="labelText2" text="" />
                                 <Label fx:id="nbPoules" alignment="CENTER_RIGHT" layoutX="304.0" layoutY="99.0" styleClass="labelChifres" text="0" />
-                                <Button fx:id="btnPPoule" disable="true" layoutX="405.0" layoutY="64.0" mnemonicParsing="false" onAction="#addPoule1" text="+ 1" />
-                                <Button fx:id="btnPPoulePDix" disable="true" layoutX="486.0" layoutY="64.0" mnemonicParsing="false" onAction="#addPoule10" text="+ 10" />
-                                <Button fx:id="btnPPouleMax" disable="true" layoutX="435.0" layoutY="116.0" mnemonicParsing="false" onAction="#addPouleX" text="max" />
+                                <Button fx:id="btnPPoule" disable="true" layoutX="436.0" layoutY="79.0" mnemonicParsing="false" onAction="#addPoule1" text="+ 1" />
+                                <Button fx:id="btnPPoulePDix" disable="true" layoutX="517.0" layoutY="79.0" mnemonicParsing="false" onAction="#addPoule10" text="+ 10" />
+                                <Button fx:id="btnPPouleMax" disable="true" layoutX="466.0" layoutY="131.0" mnemonicParsing="false" onAction="#addPouleX" text="max" />
                                 <Label fx:id="nbOeufs" alignment="TOP_RIGHT" layoutX="304.0" layoutY="226.0" styleClass="labelChifres" text="0" />
                                 <ProgressBar id="progressOeufs" fx:id="progressOeufs" cache="true" layoutX="120.0" layoutY="256.0" prefHeight="20.0" prefWidth="180.0" progress="0.0" />
                                 <Button fx:id="btnVendre" disable="true" layoutX="304.0" layoutY="410.0" onAction="#onVendre" styleClass="buttonVendre" text="Vendre" />
                                 <Label fx:id="gainARecuperer" alignment="CENTER_RIGHT" layoutX="304.0" layoutY="325.0" text="0.00 €" />
                                 <Label layoutX="120.0" layoutY="325.0" styleClass="labelText" text="BENEFICE" />
+                              <ImageView id="poule" fx:id="poule" fitHeight="100.0" fitWidth="72.0" layoutX="480.0" layoutY="300.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
+                                  <image>
+                                      <Image url="@images/pouleOeuf.png" />
+                                  </image>
+                              </ImageView>
 
                             </children>
                         </Pane>
-                        <ImageView id="poule" fx:id="poule" fitHeight="100.0" fitWidth="72.0" layoutX="1000.0" layoutY="350.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@images/pouleOeuf.png" />
-                            </image>
-                        </ImageView>
                         <Label fx:id="labelConsole" alignment="TOP_LEFT" layoutX="50.0" layoutY="680.0" prefHeight="100.0" prefWidth="1100.0" />
                         <Button fx:id="retourMenu" layoutX="550.0" layoutY="70.0" mnemonicParsing="false" onAction="#retourGestion" styleClass="buttonVendre" text="Retour au menu" />
                    <Button fx:id="rembourserCredit" layoutX="71.0" layoutY="110.0" mnemonicParsing="false" onAction="#onRembourserCredit" styleClass="buttonVendre" text="Rembourser" />
+                  <Group fx:id="groupBtnAmeliorer" layoutX="170.0" layoutY="520.0">
+                     <children>
+                        <Button fx:id="btnAmeliorerPoulailler" alignment="BOTTOM_LEFT" mnemonicParsing="false" onAction="#achatPoulailler" prefHeight="47.0" prefWidth="300.0" styleClass="buttonVendre" text="Améliorer pour 50 000 €" />
+                        <ImageView fitHeight="28.0" fitWidth="28.0" layoutX="255.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/marteau.png" />
+                           </image>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <effect>
+                              <SepiaTone />
+                           </effect>
+                        </ImageView>
+                     </children>
+                  </Group>
                     </children>
                 </Pane>
             </children>

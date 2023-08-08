@@ -154,4 +154,16 @@ public class Outils {
 
         pauseTransition.play(); // Démarrer la temporisation
     }
+
+    /**
+     * Donne une position X pour centrer un objet (exemple bouton)
+     * par rapport à un un autre objet (par exemple image)
+     * @param imagePosX
+     * @param imageWidth
+     * @param widthBtn
+     * @return
+     */
+    public static double centragePosX(double imagePosX, double imageWidth, double widthBtn){
+        return (imagePosX + (imageWidth / 2) - (widthBtn / 2));
+    }
 }

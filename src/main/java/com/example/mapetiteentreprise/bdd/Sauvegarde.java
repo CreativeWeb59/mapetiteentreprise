@@ -44,8 +44,9 @@ public class Sauvegarde {
 
     // gestion du calendrier
     private LocalDateTime dateDebutJeu;
+    private int poullaillerEnCours; // correspond au type de poulailler
 
-    public Sauvegarde(int id, String pseudo, BigDecimal argent, long numJourDeco, int heureDeco, double progressJour, int nbPoules, long nbOeufs, int fermeActive, int distributeursActive, int distributeurBCActive, int distributeurBFActive, int distributeurCoActive, int distributeurSaActive, int livraisonActive, int lavageActive, double etatProgressOeuf, LocalDateTime dateDeco, int nbDistributeurBC, int nbDistributeurBF, int nbDistributeurSa, int nbDistributeurCo, long nbMarchandisesBC, long nbMarchandisesBF, long nbMarchandisesSa, long nbMarchandisesCo, double etatProgressBC, double etatProgressBF, double etatProgressSa, double etatProgressCo, LocalDateTime dateDebutJeu) {
+    public Sauvegarde(int id, String pseudo, BigDecimal argent, long numJourDeco, int heureDeco, double progressJour, int nbPoules, long nbOeufs, int fermeActive, int distributeursActive, int distributeurBCActive, int distributeurBFActive, int distributeurCoActive, int distributeurSaActive, int livraisonActive, int lavageActive, double etatProgressOeuf, LocalDateTime dateDeco, int nbDistributeurBC, int nbDistributeurBF, int nbDistributeurSa, int nbDistributeurCo, long nbMarchandisesBC, long nbMarchandisesBF, long nbMarchandisesSa, long nbMarchandisesCo, double etatProgressBC, double etatProgressBF, double etatProgressSa, double etatProgressCo, LocalDateTime dateDebutJeu, int poullaillerEnCours) {
         this.id = id;
         this.pseudo = pseudo;
         this.argent = argent;
@@ -77,9 +78,10 @@ public class Sauvegarde {
         this.etatProgressSa = etatProgressSa;
         this.etatProgressCo = etatProgressCo;
         this.dateDebutJeu = dateDebutJeu;
+        this.poullaillerEnCours = poullaillerEnCours;
     }
 
-    public Sauvegarde(String pseudo, BigDecimal argent, long numJourDeco, int heureDeco, double progressJour, int nbPoules, long nbOeufs, int fermeActive, int distributeursActive, int distributeurBCActive, int distributeurBFActive, int distributeurCoActive, int distributeurSaActive, int livraisonActive, int lavageActive, double etatProgressOeuf, LocalDateTime dateDeco, int nbDistributeurBC, int nbDistributeurBF, int nbDistributeurSa, int nbDistributeurCo, long nbMarchandisesBC, long nbMarchandisesBF, long nbMarchandisesSa, long nbMarchandisesCo, double etatProgressBC, double etatProgressBF, double etatProgressSa, double etatProgressCo, LocalDateTime dateDebutJeu) {
+    public Sauvegarde(String pseudo, BigDecimal argent, long numJourDeco, int heureDeco, double progressJour, int nbPoules, long nbOeufs, int fermeActive, int distributeursActive, int distributeurBCActive, int distributeurBFActive, int distributeurCoActive, int distributeurSaActive, int livraisonActive, int lavageActive, double etatProgressOeuf, LocalDateTime dateDeco, int nbDistributeurBC, int nbDistributeurBF, int nbDistributeurSa, int nbDistributeurCo, long nbMarchandisesBC, long nbMarchandisesBF, long nbMarchandisesSa, long nbMarchandisesCo, double etatProgressBC, double etatProgressBF, double etatProgressSa, double etatProgressCo, LocalDateTime dateDebutJeu, int poullaillerEnCours) {
         this.pseudo = pseudo;
         this.argent = argent;
         this.numJourDeco = numJourDeco;
@@ -110,6 +112,7 @@ public class Sauvegarde {
         this.etatProgressSa = etatProgressSa;
         this.etatProgressCo = etatProgressCo;
         this.dateDebutJeu = dateDebutJeu;
+        this.poullaillerEnCours = poullaillerEnCours;
     }
 
     public int getId() {
@@ -360,6 +363,14 @@ public class Sauvegarde {
         this.progressJour = progressJour;
     }
 
+    public int getPoullaillerEnCours() {
+        return poullaillerEnCours;
+    }
+
+    public void setPoullaillerEnCours(int poullaillerEnCours) {
+        this.poullaillerEnCours = poullaillerEnCours;
+    }
+
     @Override
     public String toString() {
         return "Sauvegarde{" +
@@ -394,6 +405,7 @@ public class Sauvegarde {
                 ", etatProgressSa=" + etatProgressSa +
                 ", etatProgressCo=" + etatProgressCo +
                 ", dateDebutJeu=" + dateDebutJeu +
+                ", poullaillerEnCours=" + poullaillerEnCours +
                 '}';
     }
 }

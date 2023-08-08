@@ -148,6 +148,7 @@ public class Jeu {
         getSauvegarde().setNumJourDeco(getCalendrier().getNumJour());
         getSauvegarde().setHeureDeco(getCalendrier().getHeureActuelle());
         getSauvegarde().setProgressJour(getCalendrier().getProgressJour());
+        getSauvegarde().setPoullaillerEnCours(getJoueur().getPoullaillerEnCours());
 
         System.out.println("Nouvelles valeurs a sauvegarder" + getSauvegarde());
 
@@ -194,14 +195,14 @@ public class Jeu {
      * 4 poulaillers
      * et affectation dans la liste des poulaillers
      */
-    public void createPoullaillers(){
-        Poulaillers poulailler = new Poulaillers("Poulailler", 200, BigDecimal.valueOf(1200));
+    public void createPoulaillers(){
+        Poulaillers poulailler = new Poulaillers("Poulailler", 200, BigDecimal.valueOf(1200), 200, 180, 160, 310, 170, 520);
         this.addPoulailler(poulailler);
-        Poulaillers poulaillerPro = new Poulaillers("Poulailler pro", 1000, BigDecimal.valueOf(5000));
+        Poulaillers poulaillerPro = new Poulaillers("Poulailler pro", 1000, BigDecimal.valueOf(5000), 250, 225, 150, 290, 170, 520);
         this.addPoulailler(poulaillerPro);
-        Poulaillers poulaillerMega = new Poulaillers("Méga poulailler", 5000, BigDecimal.valueOf(25000));
+        Poulaillers poulaillerMega = new Poulaillers("Méga poulailler", 5000, BigDecimal.valueOf(25000), 333, 300, 100, 240, 170, 520);
         this.addPoulailler(poulaillerMega);
-        Poulaillers poulaillerIndustriel = new Poulaillers("Poulailler industriel", 10000, BigDecimal.valueOf(50000));
+        Poulaillers poulaillerIndustriel = new Poulaillers("Poulailler industriel", 10000, BigDecimal.valueOf(50000), 400, 360, 70, 210, 170, 520);
         this.addPoulailler(poulaillerIndustriel);
 
     }
@@ -216,4 +217,5 @@ public class Jeu {
     public void addPoulailler(Poulaillers poulaillers){
         this.poulaillersList.add(poulaillers);
     }
+
 }

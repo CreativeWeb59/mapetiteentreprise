@@ -11,6 +11,7 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -49,9 +50,11 @@ public class FermeController {
     @FXML
     private ProgressBar progressOeufs, progressJour;
     @FXML
-    private Button btnVendre, btnPPoule, btnPPoulePDix, btnPPouleMax, rembourserCredit, retourMenu;
+    private Button btnVendre, btnPPoule, btnPPoulePDix, btnPPouleMax, rembourserCredit, retourMenu, btnAmeliorerPoulailler;
     @FXML
-    private ImageView imgAnimation, evenement;
+    private ImageView imgAnimation, evenement, imgPoulailler;
+    @FXML
+    private Group groupBtnAmeliorer;
     @FXML
     private PieChart pieHorloge;
     private String messageConsole;
@@ -107,9 +110,6 @@ public class FermeController {
         // plus le chiffre est gros plus la vitesse est lente
         // correspond à un nombre de secondes d'un passage de 0 à 100
 
-        this.majBtnAchats();
-        this.majBtnVendre();
-
 //        this.jeu.getCalendrier().setDureeJour(200);
 //        jeu.getParametres().setVitessePonteOeuf(20);
 
@@ -129,6 +129,12 @@ public class FermeController {
 
         // affichage de l'horloge
         setPieHorloge();
+
+        // affichage poulailler
+//        this.affichePoulailler();
+
+        this.majBoutons();
+
     }
 
     public void nouveau(Jeu jeu) {
@@ -161,10 +167,14 @@ public class FermeController {
 
         this.executerAnimation();
         setPieHorloge();
+        // affichage poulailler
+//        this.affichePoulailler();
+
+        this.majBoutons();
     }
 
     /**
-     * Action a executé lors de la fermeture de la fentre avec la croix : sauvegarde
+     * Action a executer lors de la fermeture de la fentre avec la croix : sauvegarde
      *
      * @param event
      */
@@ -262,7 +272,11 @@ public class FermeController {
      * initialise le nombre de poules
      */
     public void setNbPoules() {
-        this.nbPoules.setText(jeu.getJoueur().getFerme().getNbPoules() + "");
+        int typePoulailler = jeu.getJoueur().getPoullaillerEnCours();
+        String formattedString = jeu.getJoueur().getFerme().getNbPoules() + " / ";
+        formattedString += jeu.getPoulaillersList().get(typePoulailler).getNbPoulesMax();
+
+        this.nbPoules.setText(formattedString);
     }
 
     /**
@@ -293,7 +307,17 @@ public class FermeController {
      * indiquant la valeur de l'achat d'une poule
      */
     public void setLabelPoule() {
-        String formattedString = "Ajouter une poule " + decimalFormat.format(jeu.getParametres().getTarifPoule()) + monnaie;
+        int typePoulailler = jeu.getJoueur().getPoullaillerEnCours();
+        String formattedString = "Ajouter une poule " + decimalFormat.format(jeu.getParametres().getTarifPoule()) + monnaie + separationTexte;
+        formattedString += "Votre " + jeu.getPoulaillersList().get(typePoulailler).getNom() + " a une" + separationTexte;
+        formattedString += "capacité de "+ jeu.getPoulaillersList().get(typePoulailler).getNbPoulesMax() + " poules" + separationTexte;
+
+        if(typePoulailler + 1 < jeu.getPoulaillersList().size()){
+            formattedString += "Prochaine amélioration : " + separationTexte + jeu.getPoulaillersList().get(typePoulailler + 1).getPrixPoulailler() + monnaie + separationTexte;
+            formattedString += "pour maximum " + jeu.getPoulaillersList().get(typePoulailler + 1).getNbPoulesMax() + " poules";
+        } else {
+            formattedString += separationTexte + "Amélioration au maximum !";
+        }
         this.labelPoule.setText(formattedString);
     }
 
@@ -334,8 +358,8 @@ public class FermeController {
 //        this.fenetrePrincipale.afficherDansLabel("Vous venez de vendre " + nbOeufsVendre + " oeuf(s), vous avez gagné " + formattedGain + ".");
         System.out.println("Vous venez de vendre " + nbOeufsVendre + " oeuf(s), vous avez gagné " + formattedGain + ".");
         btnVendre.setDisable(true);
-        majLabels();
-        majBtnAchats();
+
+
 //        setMontantTaxe();
 
         // teste si on a assez pour acheter un distributeur
@@ -350,11 +374,11 @@ public class FermeController {
         // calcule le nombre maximum de poules achetables pour mettre à jour le bouton
 //        achatMaxPoules();
 
-        // maj du bouton rembourser credit
-        this.majCredit();
+        // maj du bouton rembourser credit + autres boutons
+        this.majBoutons();
 
         // bloque les boutons d'achat si credit non rembourse a la date prévue
-        blocageAchats();
+        this.blocageAchats();
     }
 
     /**
@@ -445,8 +469,8 @@ public class FermeController {
             BigDecimal nouvBanque = jeu.getJoueur().getArgent().subtract(prixPoule.multiply(BigDecimal.valueOf(nbPoules)));
             jeu.getJoueur().setArgent(nouvBanque);
 
-            // on met a jour le bouton addPoule
-            majBtnAchats();
+            // on met a jour les boutons
+            majBoutons();
 
             // met à jour l'affichage
             this.miseEnPlaceValeurs();
@@ -759,7 +783,7 @@ public class FermeController {
         }
 
         // met a jour les autres boutons si disponibles
-        this.majBtnAchats();
+        this.majBoutons();
     }
 
     /**
@@ -844,10 +868,42 @@ public class FermeController {
         timelinePoule.play();
     }
 
+    /**
+     * Calcule le nombre d'achat max qu'on peut acheter
+     * depend de l'argent dispo et du type de poulailler
+     * @return
+     */
     public int achatMaxPoules() {
         BigDecimal argentEnCours = jeu.getJoueur().getArgent();
         BigDecimal tarifPoule = jeu.getParametres().getTarifPoule();
-        return argentEnCours.divide(tarifPoule).intValue();
+        int nbPoulesMaxAchetables = nbPoulesMax();
+        int maxArgentPoules = argentEnCours.divide(tarifPoule).intValue();
+
+        if(maxArgentPoules > nbPoulesMaxAchetables){
+            return nbPoulesMaxAchetables;
+        } else {
+            return maxArgentPoules;
+        }
+    }
+
+    /**
+     * renvoi la capacite du poulailler en nombre de poules
+     * depend de la capacité du poulailler
+     * @return
+     */
+    public int nbPoulesMax(){
+        int indexPoulailler = jeu.getJoueur().getPoullaillerEnCours();
+        int nbPoulesActuel = jeu.getJoueur().getFerme().getNbPoules();
+        int nbPoulesCapacite = jeu.getPoulaillersList().get(indexPoulailler).getNbPoulesMax();
+
+        // nombre de poules possible
+        int nbPoulesMaxAchetables = nbPoulesCapacite - nbPoulesActuel;
+
+        if(nbPoulesMaxAchetables > 0){
+            return nbPoulesMaxAchetables;
+        } else {
+            return 0;
+        }
     }
 
     public void setLabelJourEncours() {
@@ -902,7 +958,7 @@ public class FermeController {
                 }
 
                 // met à jour le bouton rembourser si assez d'argent
-                this.majCredit();
+                this.majBoutons();
             } else {
                 texte += "Pas de crédits en cours";
                 // on cache et desactive le bouton pour rembourser le credit
@@ -1089,5 +1145,79 @@ public class FermeController {
         BigDecimal prochainsGains = tarifOeufNet.multiply(BigDecimal.valueOf(jeu.getJoueur().getFerme().getNbPoules()));
         String formattedString = decimalFormat.format(prochainsGains) + monnaie;
         labelConsole.setText("Le prochain cycle vous rapportera : " + formattedString);
+    }
+
+    /**
+     * affichage de l'image du poulailler
+     * mise en place de la taille de l'image et sa position
+     * en rapport avec le type de poulailler du joueur
+     *
+     * centrage du bouton d'amelioration
+     */
+    public void affichePoulailler(){
+        int typePoulailler = jeu.getJoueur().getPoullaillerEnCours();
+
+        imgPoulailler.setFitWidth(jeu.getPoulaillersList().get(typePoulailler).getImgWidth());
+        imgPoulailler.setFitHeight(jeu.getPoulaillersList().get(typePoulailler).getImgHeight());
+
+        imgPoulailler.setLayoutX(jeu.getPoulaillersList().get(typePoulailler).getLayoutX());
+        imgPoulailler.setLayoutY(jeu.getPoulaillersList().get(typePoulailler).getLayoutY());
+
+        double posXgroupBtn = Outils.centragePosX(jeu.getPoulaillersList().get(typePoulailler).getLayoutX(), jeu.getPoulaillersList().get(typePoulailler).getImgWidth(), 300);
+        groupBtnAmeliorer.setLayoutX(posXgroupBtn);
+        groupBtnAmeliorer.setLayoutY(jeu.getPoulaillersList().get(typePoulailler).getImgHeight() + jeu.getPoulaillersList().get(typePoulailler).getLayoutY() + 40);
+    }
+
+    /**
+     * Débloque le bouton pour améliorer le poulailler quand on a l'argent
+     * cache quand on est au maxi
+     */
+    public void verifBtnAmeliorer(){
+        int typePoulaillerSuivant = jeu.getJoueur().getPoullaillerEnCours() + 1;
+        if(jeu.getJoueur().getPoullaillerEnCours() >= 3){
+            groupBtnAmeliorer.setVisible(false);
+        } else {
+            groupBtnAmeliorer.setVisible(true);
+            BigDecimal prixPoulailler = jeu.getPoulaillersList().get(typePoulaillerSuivant).getPrixPoulailler();
+            String sMontantAmeliorer = decimalFormat.format(prixPoulailler) + monnaie;
+            btnAmeliorerPoulailler.setText("Améliorer pour " + sMontantAmeliorer);
+            if (jeu.getJoueur().isArgent(prixPoulailler)) {
+                groupBtnAmeliorer.setDisable(false);
+            } else {
+                groupBtnAmeliorer.setDisable(true);
+            }
+        }
+    }
+
+    /**
+     * Gere le bouton qui permet de maj le poulailler
+     * verifie si l'argent est disponible
+     * Incremente la valeur du poulailler
+     * Modifie le bon type de poulailler dans le joueur
+     */
+    public void achatPoulailler(){
+        int typePoulaillerSuivant = jeu.getJoueur().getPoullaillerEnCours() + 1;
+        BigDecimal prixPoulailler = jeu.getPoulaillersList().get(typePoulaillerSuivant).getPrixPoulailler();
+
+        if(jeu.getJoueur().getPoullaillerEnCours() < 3 && jeu.getJoueur().isArgent(prixPoulailler)){
+            jeu.getJoueur().depenser(prixPoulailler);
+            jeu.getJoueur().setPoullaillerEnCours(typePoulaillerSuivant);
+            System.out.println("Vous venez d'acheter le poulailler " + jeu.getPoulaillersList().get(typePoulaillerSuivant).getNom());
+            this.majBoutons();
+            this.setLabelPoule();
+            this.affichePoulailler();
+            this.setNbPoules();
+        }
+    }
+
+    /**
+     * Maj de tous les boutons d'achat
+     */
+    public void majBoutons(){
+        this.majBtnAchats();
+        this.majBtnVendre();
+        this.verifBtnAmeliorer();
+        this.majCredit();
+        this.majLabels(); // a voir si utile
     }
 }
