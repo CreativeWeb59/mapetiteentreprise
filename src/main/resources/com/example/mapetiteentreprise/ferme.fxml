@@ -32,11 +32,15 @@
                 </Pane>
                 <Pane layoutX="40.0" layoutY="160.0" prefHeight="800.0" prefWidth="1200.0">
                     <children>
-                        <ImageView id="poulailler" fx:id="imgPoulailler" fitHeight="180.0" fitWidth="200.0" layoutX="50.0" layoutY="210.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@images/poulailler.png" />
-                            </image>
-                        </ImageView>
+                  <Pane fx:id="panePoulailler1" layoutX="50.0" layoutY="210.0" prefHeight="151.0" prefWidth="167.0">
+                     <children>
+                              <ImageView id="poulailler" fx:id="imgPoulailler" fitHeight="151.0" fitWidth="167.0" pickOnBounds="true" preserveRatio="true">
+                                  <image>
+                                      <Image url="@images/poulailler.png" />
+                                  </image>
+                              </ImageView>
+                     </children>
+                  </Pane>
                         <ImageView fx:id="imgAnimation" fitHeight="100.0" fitWidth="100.0" layoutX="50.0" layoutY="540.0" pickOnBounds="true" preserveRatio="true" />
                         <Pane layoutX="540.0" layoutY="140.0" prefHeight="500.0" prefWidth="700.0" styleClass="fondsPancarte2">
                             <children>
@@ -63,22 +67,19 @@
                         <Label fx:id="labelConsole" alignment="TOP_LEFT" layoutX="50.0" layoutY="680.0" prefHeight="100.0" prefWidth="1100.0" />
                         <Button fx:id="retourMenu" layoutX="550.0" layoutY="70.0" mnemonicParsing="false" onAction="#retourGestion" styleClass="buttonVendre" text="Retour au menu" />
                    <Button fx:id="rembourserCredit" layoutX="71.0" layoutY="110.0" mnemonicParsing="false" onAction="#onRembourserCredit" styleClass="buttonVendre" text="Rembourser" />
-                  <Group fx:id="groupBtnAmeliorer" layoutX="170.0" layoutY="520.0">
-                     <children>
-                        <Button fx:id="btnAmeliorerPoulailler" alignment="BOTTOM_LEFT" mnemonicParsing="false" onAction="#achatPoulailler" prefHeight="47.0" prefWidth="300.0" styleClass="buttonVendre" text="Améliorer pour 50 000 €" />
-                        <ImageView fitHeight="28.0" fitWidth="28.0" layoutX="255.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@images/marteau.png" />
-                           </image>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                           <effect>
-                              <SepiaTone />
-                           </effect>
-                        </ImageView>
-                     </children>
-                  </Group>
+                  <Group fx:id="groupBtnAmeliorer" layoutX="170.0" layoutY="520.0" />
+                  <Button fx:id="btnAmeliorerPoulailler" alignment="BOTTOM_LEFT" layoutX="193.0" layoutY="566.0" mnemonicParsing="false" onAction="#achatPoulailler" prefHeight="47.0" prefWidth="300.0" styleClass="buttonVendre" text="Améliorer pour 50 000 €" />
+                  <ImageView fitHeight="28.0" fitWidth="28.0" layoutX="443.0" layoutY="576.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/marteau.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <effect>
+                        <SepiaTone />
+                     </effect>
+                  </ImageView>
                     </children>
                 </Pane>
             </children>
