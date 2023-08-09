@@ -19,6 +19,7 @@ public class Jeu {
     // la 2 est celle de la ferme
     // la 3, 4, 5, 6 celle des distributeurs...
     private List<AnimationsBarresProgress> barresDeProgressions = new ArrayList<>();
+
     private List<Poulaillers> poulaillersList = new ArrayList<>(); // liste des poulaillers dispos
 
     public Jeu(Joueur joueur, Sauvegarde sauvegarde, Parametres parametres, Calendrier calendrier) {
@@ -148,7 +149,10 @@ public class Jeu {
         getSauvegarde().setNumJourDeco(getCalendrier().getNumJour());
         getSauvegarde().setHeureDeco(getCalendrier().getHeureActuelle());
         getSauvegarde().setProgressJour(getCalendrier().getProgressJour());
-        getSauvegarde().setPoullaillerEnCours(getJoueur().getPoullaillerEnCours());
+        getSauvegarde().setPoulailler1(getJoueur().getPoulailler1());
+        getSauvegarde().setPoulailler2(getJoueur().getPoulailler2());
+        getSauvegarde().setPoulailler3(getJoueur().getPoulailler3());
+        getSauvegarde().setPoulailler4(getJoueur().getPoulailler4());
 
         System.out.println("Nouvelles valeurs a sauvegarder" + getSauvegarde());
 
@@ -192,17 +196,19 @@ public class Jeu {
 
     /**
      * Creation des poulaillers
-     * 4 poulaillers
+     * 4 poulaillers + 1 inactif
      * et affectation dans la liste des poulaillers
      */
     public void createPoulaillers(){
-        Poulaillers poulailler = new Poulaillers("Poulailler", 200, BigDecimal.valueOf(1200), 200, 180, 160, 310, 170, 520);
+        Poulaillers poulaillerInactif = new Poulaillers("Inactif",  BigDecimal.valueOf(0), 0);
+        this.addPoulailler(poulaillerInactif);
+        Poulaillers poulailler = new Poulaillers("Poulailler",  BigDecimal.valueOf(1000), 200);
         this.addPoulailler(poulailler);
-        Poulaillers poulaillerPro = new Poulaillers("Poulailler pro", 1000, BigDecimal.valueOf(5000), 250, 225, 150, 290, 170, 520);
+        Poulaillers poulaillerPro = new Poulaillers("Poulailler pro", BigDecimal.valueOf(5000), 1000);
         this.addPoulailler(poulaillerPro);
-        Poulaillers poulaillerMega = new Poulaillers("Méga poulailler", 5000, BigDecimal.valueOf(25000), 333, 300, 100, 240, 170, 520);
+        Poulaillers poulaillerMega = new Poulaillers("Méga poulailler", BigDecimal.valueOf(25000), 5000);
         this.addPoulailler(poulaillerMega);
-        Poulaillers poulaillerIndustriel = new Poulaillers("Poulailler industriel", 10000, BigDecimal.valueOf(50000), 400, 360, 70, 210, 170, 520);
+        Poulaillers poulaillerIndustriel = new Poulaillers("Poulailler industriel", BigDecimal.valueOf(50000), 10000);
         this.addPoulailler(poulaillerIndustriel);
 
     }

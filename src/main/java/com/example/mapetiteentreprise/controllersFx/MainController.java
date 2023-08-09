@@ -146,7 +146,7 @@ public class MainController {
         // creation de la classe joueur
         Joueur joueur = new Joueur(userName, sauvegarde.getArgent(), this.ferme, this.boissonsChaudes, this.boissonsFraiches, this.sandwichs, this.confiseries,
                 this.creditEnCours, this.sauvegarde.getFermeActive(), this.sauvegarde.getDistributeursActive(), this.sauvegarde.getDistributeurBCActive(),
-                this.sauvegarde.getDistributeurBFActive(), this.sauvegarde.getDistributeurCoActive(), this.sauvegarde.getDistributeurSaActive(), this.sauvegarde.getPoullaillerEnCours());
+                this.sauvegarde.getDistributeurBFActive(), this.sauvegarde.getDistributeurCoActive(), this.sauvegarde.getDistributeurSaActive(), this.sauvegarde.getPoulailler1(), this.sauvegarde.getPoulailler2(), this.sauvegarde.getPoulailler3(), this.sauvegarde.getPoulailler4());
 
         // cree le jeu avec tous les parametres
         this.jeu = new Jeu(joueur, sauvegarde, parametres, calendrier);
@@ -247,7 +247,7 @@ public class MainController {
 
         // creation de la sauvegarde en bdd
         this.sauvegarde = new Sauvegarde(this.pseudo, parametres.getArgentDepart(),1, 1, 0, parametres.getNbPoules(), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                dateEncours, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, dateEncours, 0);
+                dateEncours, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, dateEncours, 1, 0, 0, 0);
         sauvegardeService.addJoueur(sauvegarde);
 
         this.creerActivites(true);
@@ -255,7 +255,7 @@ public class MainController {
         // creation de la classe joueur
         Joueur joueur = new Joueur(this.pseudo, parametres.getArgentDepart(), this.ferme, this.boissonsChaudes, this.boissonsFraiches, this.sandwichs, this.confiseries,
                 this.creditEnCours, this.parametres.getFermeActive(), this.parametres.getDistributeursActive(), this.parametres.getDistributeurBCActive(),
-                this.parametres.getDistributeurBFActive(), this.parametres.getDistributeurSaActive(), this.parametres.getDistributeurCoActive(), 0);
+                this.parametres.getDistributeurBFActive(), this.parametres.getDistributeurSaActive(), this.parametres.getDistributeurCoActive(), 1, 0, 0, 0);
 
         // creation du calendrier
         Calendrier calendrier = new Calendrier(dateEncours, 1, 0, 0);

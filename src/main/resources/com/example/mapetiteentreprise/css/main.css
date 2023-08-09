@@ -28,6 +28,10 @@ Button:hover{
     -fx-background-color: white;
 }
 
+.boutonPoulailler{
+-fx-font-size: 12px;
+}
+
 .boutonSupr{
         -fx-background-color: linear-gradient(#ff5400, #be1d00);
         -fx-background-radius: 30;

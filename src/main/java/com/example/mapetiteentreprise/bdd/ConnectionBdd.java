@@ -75,7 +75,8 @@ public class ConnectionBdd {
                 "nbPoules INTEGER, nbOeufs INTEGER, fermeActive INTEGER, distributeursActive INTEGER, distributeurBCActive INTEGER, distributeurBFActive INTEGER, distributeurCoActive INTEGER, distributeurSaActive INTEGER, livraisonActive INTEGER, lavageActive INTEGER, etatProgressOeuf REAL, dateDeco TEXT," +
                 "nbDistributeurBC INTEGER, nbDistributeurBF INTEGER, nbDistributeurSa INTEGER, nbDistributeurCo INTEGER," +
                 "nbMarchandisesBC INTEGER, nbMarchandisesBF INTEGER, nbMarchandisesSa INTEGER, nbMarchandisesCo INTEGER," +
-                "etatProgressBC REAL, etatProgressBF REAL, etatProgressSa REAL, etatProgressCo REAL, dateDebutJeu TEXT, poullaillerEnCours INTEGER)";
+                "etatProgressBC REAL, etatProgressBF REAL, etatProgressSa REAL, etatProgressCo REAL, dateDebutJeu TEXT," +
+                "poulailler1 INTEGER, poulailler2 INTEGER, poulailler3 INTEGER, poulailler4 INTEGER)";
         Statement stmt = connection.createStatement();
         stmt.execute(sql);
         System.out.println("La table 'sauvegarde' a été créée avec succès.");

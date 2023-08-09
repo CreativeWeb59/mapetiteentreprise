@@ -32,16 +32,127 @@
                 </Pane>
                 <Pane layoutX="40.0" layoutY="160.0" prefHeight="800.0" prefWidth="1200.0">
                     <children>
-                  <Pane fx:id="panePoulailler1" layoutX="50.0" layoutY="210.0" prefHeight="151.0" prefWidth="167.0">
+                  <Pane fx:id="panePoulailler1" layoutX="50.0" layoutY="210.0" prefHeight="200.0" prefWidth="167.0">
                      <children>
-                              <ImageView id="poulailler" fx:id="imgPoulailler" fitHeight="151.0" fitWidth="167.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView id="poulailler" fx:id="imgPoulailler1" fitHeight="151.0" fitWidth="167.0" pickOnBounds="true" preserveRatio="true">
                                   <image>
                                       <Image url="@images/poulailler.png" />
                                   </image>
                               </ImageView>
+                        <Label fx:id="labelNivPoulailler1" alignment="TOP_CENTER" prefHeight="29.0" prefWidth="167.0" style="-fx-background-color: transparent;" text="1" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Group fx:id="groupBtnAmeliorer1" layoutX="10.0" layoutY="151.0">
+                           <children>
+                              <Button fx:id="btnAmeliorerPoulailler1" alignment="CENTER" mnemonicParsing="false" onAction="#achatPoulailler1" prefHeight="47.0" prefWidth="150.0" styleClass="boutonPoulailler" text="Améliorer" />
+                              <ImageView fitHeight="28.0" fitWidth="28.0" layoutX="111.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/marteau.png" />
+                                 </image>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <effect>
+                                    <SepiaTone />
+                                 </effect>
+                              </ImageView>
+                           </children>
+                        </Group>
                      </children>
                   </Pane>
                         <ImageView fx:id="imgAnimation" fitHeight="100.0" fitWidth="100.0" layoutX="50.0" layoutY="540.0" pickOnBounds="true" preserveRatio="true" />
+                  <Pane fx:id="panePoulailler2" layoutX="300.0" layoutY="210.0" prefHeight="200.0" prefWidth="167.0">
+                     <children>
+                        <ImageView id="poulailler" fx:id="imgPoulailler2" fitHeight="151.0" fitWidth="167.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/poulailler.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="labelNivPoulailler2" alignment="TOP_CENTER" prefHeight="29.0" prefWidth="167.0" style="-fx-background-color: transparent;" text="0" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Group fx:id="groupBtnAmeliorer2" layoutX="10.0" layoutY="151.0">
+                           <children>
+                              <Button fx:id="btnAmeliorerPoulailler2" alignment="CENTER" mnemonicParsing="false" onAction="#achatPoulailler2" prefHeight="47.0" prefWidth="150.0" styleClass="boutonPoulailler" text="Acheter" />
+                              <ImageView fitHeight="28.0" fitWidth="28.0" layoutX="111.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/marteau.png" />
+                                 </image>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <effect>
+                                    <SepiaTone />
+                                 </effect>
+                              </ImageView>
+                           </children>
+                        </Group>
+                     </children>
+                  </Pane>
+                  <Pane fx:id="panePoulailler3" layoutX="50.0" layoutY="440.0" prefHeight="200.0" prefWidth="167.0">
+                     <children>
+                        <ImageView id="poulailler" fx:id="imgPoulailler11" fitHeight="151.0" fitWidth="167.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/poulailler.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="labelNivPoulailler3" alignment="TOP_CENTER" prefHeight="29.0" prefWidth="167.0" style="-fx-background-color: transparent;" text="0" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Group fx:id="groupBtnAmeliorer3" layoutX="10.0" layoutY="151.0">
+                           <children>
+                              <Button fx:id="btnAmeliorerPoulailler3" alignment="CENTER" mnemonicParsing="false" onAction="#achatPoulailler3" prefHeight="47.0" prefWidth="150.0" styleClass="boutonPoulailler" text="Améliorer" />
+                              <ImageView fitHeight="28.0" fitWidth="28.0" layoutX="111.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/marteau.png" />
+                                 </image>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <effect>
+                                    <SepiaTone />
+                                 </effect>
+                              </ImageView>
+                           </children>
+                        </Group>
+                     </children>
+                  </Pane>
+                  <Pane fx:id="panePoulailler4" layoutX="300.0" layoutY="440.0" prefHeight="200.0" prefWidth="167.0">
+                     <children>
+                        <ImageView id="poulailler" fx:id="imgPoulailler21" fitHeight="151.0" fitWidth="167.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/poulailler.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="labelNivPoulailler4" alignment="TOP_CENTER" prefHeight="29.0" prefWidth="167.0" style="-fx-background-color: transparent;" text="0" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Group fx:id="groupBtnAmeliorer4" layoutX="10.0" layoutY="151.0">
+                           <children>
+                              <Button fx:id="btnAmeliorerPoulailler4" alignment="CENTER" mnemonicParsing="false" onAction="#achatPoulailler4" prefHeight="47.0" prefWidth="150.0" styleClass="boutonPoulailler" text="Acheter" />
+                              <ImageView fitHeight="28.0" fitWidth="28.0" layoutX="111.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/marteau.png" />
+                                 </image>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <effect>
+                                    <SepiaTone />
+                                 </effect>
+                              </ImageView>
+                           </children>
+                        </Group>
+                     </children>
+                  </Pane>
                         <Pane layoutX="540.0" layoutY="140.0" prefHeight="500.0" prefWidth="700.0" styleClass="fondsPancarte2">
                             <children>
                                 <Label layoutX="120.0" layoutY="226.0" styleClass="labelText" text="OEUFS (vente : 0.20 €)" />
@@ -67,19 +178,20 @@
                         <Label fx:id="labelConsole" alignment="TOP_LEFT" layoutX="50.0" layoutY="680.0" prefHeight="100.0" prefWidth="1100.0" />
                         <Button fx:id="retourMenu" layoutX="550.0" layoutY="70.0" mnemonicParsing="false" onAction="#retourGestion" styleClass="buttonVendre" text="Retour au menu" />
                    <Button fx:id="rembourserCredit" layoutX="71.0" layoutY="110.0" mnemonicParsing="false" onAction="#onRembourserCredit" styleClass="buttonVendre" text="Rembourser" />
-                  <Group fx:id="groupBtnAmeliorer" layoutX="170.0" layoutY="520.0" />
-                  <Button fx:id="btnAmeliorerPoulailler" alignment="BOTTOM_LEFT" layoutX="193.0" layoutY="566.0" mnemonicParsing="false" onAction="#achatPoulailler" prefHeight="47.0" prefWidth="300.0" styleClass="buttonVendre" text="Améliorer pour 50 000 €" />
-                  <ImageView fitHeight="28.0" fitWidth="28.0" layoutX="443.0" layoutY="576.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@images/marteau.png" />
-                     </image>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                     <effect>
-                        <SepiaTone />
-                     </effect>
-                  </ImageView>
+                  <Group fx:id="groupBtnAmeliorer" layoutX="750.0" layoutY="630.0">
+                     <children>
+                        <ImageView fitHeight="28.0" fitWidth="28.0" layoutX="251.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/marteau.png" />
+                           </image>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <effect>
+                              <SepiaTone />
+                           </effect>
+                        </ImageView>
+                     </children></Group>
                     </children>
                 </Pane>
             </children>

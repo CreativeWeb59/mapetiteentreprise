@@ -80,8 +80,8 @@ public class SauvegardeService {
                 "nbPoules, nbOeufs, fermeActive, distributeursActive, distributeurBCActive, distributeurBFActive, distributeurCoActive, distributeurSaActive, livraisonActive, lavageActive, etatProgressOeuf, dateDeco, " +
                 "nbDistributeurBC, nbDistributeurBF, nbDistributeurSa, nbDistributeurCo," +
                 "nbMarchandisesBC, nbMarchandisesBF, nbMarchandisesSa, nbMarchandisesCo," +
-                "etatProgressBC, etatProgressBF, etatProgressSa, etatProgressCo, dateDebutJeu, poullaillerEnCours"+
-                ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                "etatProgressBC, etatProgressBF, etatProgressSa, etatProgressCo, dateDebutJeu, poulailler1, poulailler2, poulailler3, poulailler4"+
+                ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         PreparedStatement stmt = connectionBdd.prepareStatement(sql);
         stmt.setString(1, sauvegarde.getPseudo());
@@ -118,7 +118,10 @@ public class SauvegardeService {
         stmt.setDouble(29, sauvegarde.getEtatProgressCo());
 
         stmt.setTimestamp(30, timestamp);
-        stmt.setInt(31, sauvegarde.getPoullaillerEnCours());
+        stmt.setInt(31, sauvegarde.getPoulailler1());
+        stmt.setInt(32, sauvegarde.getPoulailler2());
+        stmt.setInt(33, sauvegarde.getPoulailler3());
+        stmt.setInt(34, sauvegarde.getPoulailler4());
 
 
         try {
@@ -193,7 +196,10 @@ public class SauvegardeService {
             double etatProgressCo = resultSet.getDouble("etatProgressCo");
 
             long timestampMillisDebutJeu = resultSet.getLong("dateDebutJeu");
-            int poullaillerEnCours = resultSet.getInt("poullaillerEnCours");
+            int poulailler1 = resultSet.getInt("poulailler1");
+            int poulailler2 = resultSet.getInt("poulailler2");
+            int poulailler3 = resultSet.getInt("poulailler3");
+            int poulailler4 = resultSet.getInt("poulailler4");
 
             LocalDateTime dateDeco = LocalDateTime.ofInstant(Instant.ofEpochMilli(timestampMillisDeco), ZoneId.systemDefault());
             LocalDateTime dateDebutJeu = LocalDateTime.ofInstant(Instant.ofEpochMilli(timestampMillisDebutJeu), ZoneId.systemDefault());
@@ -203,7 +209,7 @@ public class SauvegardeService {
                     , etatProgressOeuf, dateDeco,
                     nbDistributeurBC, nbDistributeurBF, nbDistributeurSa, nbDistributeurCo,
                     nbMarchandisesBC, nbMarchandisesBF, nbMarchandisesSa, nbMarchandisesCo,
-                    etatProgressBC, etatProgressBF, etatProgressSa, etatProgressCo, dateDebutJeu, poullaillerEnCours);
+                    etatProgressBC, etatProgressBF, etatProgressSa, etatProgressCo, dateDebutJeu, poulailler1, poulailler2, poulailler3, poulailler4);
             sauvegarde.setId(id);
             System.out.println(sauvegarde);
             return sauvegarde;
@@ -221,7 +227,8 @@ public class SauvegardeService {
                 " etatProgressOeuf = ?, dateDeco = ?," +
                 "nbDistributeurBC = ?, nbDistributeurBF = ?, nbDistributeurSa = ?, nbDistributeurCo = ?," +
                 "nbMarchandisesBC = ?, nbMarchandisesBF = ?, nbMarchandisesSa = ?, nbMarchandisesCo = ?," +
-                "etatProgressBC = ?, etatProgressBF = ?, etatProgressSa = ?, etatProgressCo = ?, poullaillerEnCours = ?"+
+                "etatProgressBC = ?, etatProgressBF = ?, etatProgressSa = ?, etatProgressCo = ?, " +
+                "poulailler1 = ?, poulailler2 = ?, poulailler3 = ?, poulailler4 = ?"+
                 " WHERE pseudo LIKE ?";
 
         System.out.println("Requete : " + sql);
@@ -264,9 +271,12 @@ public class SauvegardeService {
         stmt.setDouble(26, sauvegarde.getEtatProgressBF());
         stmt.setDouble(27, sauvegarde.getEtatProgressSa());
         stmt.setDouble(28, sauvegarde.getEtatProgressCo());
-        stmt.setInt(29, sauvegarde.getPoullaillerEnCours());
+        stmt.setInt(29, sauvegarde.getPoulailler1());
+        stmt.setInt(30, sauvegarde.getPoulailler2());
+        stmt.setInt(31, sauvegarde.getPoulailler3());
+        stmt.setInt(32, sauvegarde.getPoulailler4());
 
-        stmt.setString(30, sauvegarde.getPseudo());
+        stmt.setString(33, sauvegarde.getPseudo());
 
         // Insertion des données
         try {

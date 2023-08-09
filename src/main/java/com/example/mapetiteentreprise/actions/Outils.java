@@ -1,5 +1,6 @@
 package com.example.mapetiteentreprise.actions;
 
+import com.example.mapetiteentreprise.jeu.Poulaillers;
 import javafx.animation.PauseTransition;
 import javafx.scene.control.Label;
 import javafx.util.Duration;
@@ -8,6 +9,7 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.Locale;
 
 public class Outils {
@@ -165,5 +167,18 @@ public class Outils {
      */
     public static double centragePosX(double imagePosX, double imageWidth, double widthBtn){
         return (imagePosX + (imageWidth / 2) - (widthBtn / 2));
+    }
+
+    /**
+     * Recupere la capacite totale en poule de tous les poulaillers
+     * en fonction de leur index
+     * @return
+     */
+    public static int capaciteMaxPoulaillers(List<Poulaillers> poulaillersList, int poulailler1, int poulailler2, int poulailler3, int poulailler4){
+        int capacite1 = poulaillersList.get(poulailler1).getCapacite();
+        int capacite2 = poulaillersList.get(poulailler2).getCapacite();
+        int capacite3 = poulaillersList.get(poulailler3).getCapacite();
+        int capacite4 = poulaillersList.get(poulailler4).getCapacite();
+        return capacite1 + capacite2 + capacite3 + capacite4;
     }
 }

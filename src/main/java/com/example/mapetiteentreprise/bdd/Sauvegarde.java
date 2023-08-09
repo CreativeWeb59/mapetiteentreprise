@@ -44,9 +44,17 @@ public class Sauvegarde {
 
     // gestion du calendrier
     private LocalDateTime dateDebutJeu;
-    private int poullaillerEnCours; // correspond au type de poulailler
+    private int poulailler1; // correspond au type de poulailler
+    private int poulailler2;
+    private int poulailler3;
+    private int poulailler4;
 
-    public Sauvegarde(int id, String pseudo, BigDecimal argent, long numJourDeco, int heureDeco, double progressJour, int nbPoules, long nbOeufs, int fermeActive, int distributeursActive, int distributeurBCActive, int distributeurBFActive, int distributeurCoActive, int distributeurSaActive, int livraisonActive, int lavageActive, double etatProgressOeuf, LocalDateTime dateDeco, int nbDistributeurBC, int nbDistributeurBF, int nbDistributeurSa, int nbDistributeurCo, long nbMarchandisesBC, long nbMarchandisesBF, long nbMarchandisesSa, long nbMarchandisesCo, double etatProgressBC, double etatProgressBF, double etatProgressSa, double etatProgressCo, LocalDateTime dateDebutJeu, int poullaillerEnCours) {
+    public Sauvegarde(int id, String pseudo, BigDecimal argent, long numJourDeco, int heureDeco, double progressJour, int nbPoules, long nbOeufs, int fermeActive,
+                      int distributeursActive, int distributeurBCActive, int distributeurBFActive, int distributeurCoActive, int distributeurSaActive, int livraisonActive,
+                      int lavageActive, double etatProgressOeuf, LocalDateTime dateDeco, int nbDistributeurBC, int nbDistributeurBF, int nbDistributeurSa,
+                      int nbDistributeurCo, long nbMarchandisesBC, long nbMarchandisesBF, long nbMarchandisesSa, long nbMarchandisesCo, double etatProgressBC,
+                      double etatProgressBF, double etatProgressSa, double etatProgressCo, LocalDateTime dateDebutJeu,
+                      int poulailler1, int poulailler2, int poulailler3, int poulailler4) {
         this.id = id;
         this.pseudo = pseudo;
         this.argent = argent;
@@ -78,10 +86,13 @@ public class Sauvegarde {
         this.etatProgressSa = etatProgressSa;
         this.etatProgressCo = etatProgressCo;
         this.dateDebutJeu = dateDebutJeu;
-        this.poullaillerEnCours = poullaillerEnCours;
+        this.poulailler1 = poulailler1;
+        this.poulailler2 = poulailler2;
+        this.poulailler3 = poulailler3;
+        this.poulailler4 = poulailler4;
     }
 
-    public Sauvegarde(String pseudo, BigDecimal argent, long numJourDeco, int heureDeco, double progressJour, int nbPoules, long nbOeufs, int fermeActive, int distributeursActive, int distributeurBCActive, int distributeurBFActive, int distributeurCoActive, int distributeurSaActive, int livraisonActive, int lavageActive, double etatProgressOeuf, LocalDateTime dateDeco, int nbDistributeurBC, int nbDistributeurBF, int nbDistributeurSa, int nbDistributeurCo, long nbMarchandisesBC, long nbMarchandisesBF, long nbMarchandisesSa, long nbMarchandisesCo, double etatProgressBC, double etatProgressBF, double etatProgressSa, double etatProgressCo, LocalDateTime dateDebutJeu, int poullaillerEnCours) {
+    public Sauvegarde(String pseudo, BigDecimal argent, long numJourDeco, int heureDeco, double progressJour, int nbPoules, long nbOeufs, int fermeActive, int distributeursActive, int distributeurBCActive, int distributeurBFActive, int distributeurCoActive, int distributeurSaActive, int livraisonActive, int lavageActive, double etatProgressOeuf, LocalDateTime dateDeco, int nbDistributeurBC, int nbDistributeurBF, int nbDistributeurSa, int nbDistributeurCo, long nbMarchandisesBC, long nbMarchandisesBF, long nbMarchandisesSa, long nbMarchandisesCo, double etatProgressBC, double etatProgressBF, double etatProgressSa, double etatProgressCo, LocalDateTime dateDebutJeu, int poulailler1, int poulailler2, int poulailler3, int poulailler4) {
         this.pseudo = pseudo;
         this.argent = argent;
         this.numJourDeco = numJourDeco;
@@ -112,7 +123,10 @@ public class Sauvegarde {
         this.etatProgressSa = etatProgressSa;
         this.etatProgressCo = etatProgressCo;
         this.dateDebutJeu = dateDebutJeu;
-        this.poullaillerEnCours = poullaillerEnCours;
+        this.poulailler1 = poulailler1;
+        this.poulailler2 = poulailler2;
+        this.poulailler3 = poulailler3;
+        this.poulailler4 = poulailler4;
     }
 
     public int getId() {
@@ -363,12 +377,36 @@ public class Sauvegarde {
         this.progressJour = progressJour;
     }
 
-    public int getPoullaillerEnCours() {
-        return poullaillerEnCours;
+    public int getPoulailler1() {
+        return poulailler1;
     }
 
-    public void setPoullaillerEnCours(int poullaillerEnCours) {
-        this.poullaillerEnCours = poullaillerEnCours;
+    public void setPoulailler1(int poulailler1) {
+        this.poulailler1 = poulailler1;
+    }
+
+    public int getPoulailler2() {
+        return poulailler2;
+    }
+
+    public void setPoulailler2(int poulailler2) {
+        this.poulailler2 = poulailler2;
+    }
+
+    public int getPoulailler3() {
+        return poulailler3;
+    }
+
+    public void setPoulailler3(int poulailler3) {
+        this.poulailler3 = poulailler3;
+    }
+
+    public int getPoulailler4() {
+        return poulailler4;
+    }
+
+    public void setPoulailler4(int poulailler4) {
+        this.poulailler4 = poulailler4;
     }
 
     @Override
@@ -405,7 +443,10 @@ public class Sauvegarde {
                 ", etatProgressSa=" + etatProgressSa +
                 ", etatProgressCo=" + etatProgressCo +
                 ", dateDebutJeu=" + dateDebutJeu +
-                ", poullaillerEnCours=" + poullaillerEnCours +
+                ", poulailler1=" + poulailler1 +
+                ", poulailler2=" + poulailler2 +
+                ", poulailler3=" + poulailler3 +
+                ", poulailler4=" + poulailler4 +
                 '}';
     }
 }

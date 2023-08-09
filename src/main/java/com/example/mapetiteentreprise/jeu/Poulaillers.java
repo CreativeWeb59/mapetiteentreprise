@@ -4,25 +4,65 @@ import java.math.BigDecimal;
 
 public class Poulaillers {
     private String nom;
-    private int nbPoulesMax;
     private BigDecimal prixPoulailler;
-    private double imgWidth;
-    private double imgHeight;
-    private double layoutX;
-    private double layoutY;
-    private double posLayoutBtnX;
-    private double posLayoutBtnY;
+    private int capacite;
 
-    public Poulaillers(String nom, int nbPoulesMax, BigDecimal prixPoulailler, double imgWidth, double imgHeight, double layoutX, double layoutY, double posLayoutBtnX, double posLayoutBtnY) {
+    public Poulaillers(String nom, BigDecimal prixPoulailler, int capacite) {
         this.nom = nom;
-        this.nbPoulesMax = nbPoulesMax;
         this.prixPoulailler = prixPoulailler;
-        this.imgWidth = imgWidth;
-        this.imgHeight = imgHeight;
-        this.layoutX = layoutX;
-        this.layoutY = layoutY;
-        this.posLayoutBtnX = posLayoutBtnX;
-        this.posLayoutBtnY = posLayoutBtnY;
+        this.capacite = capacite;
+    }
+
+    public void createTous(){
+        createPoulaillerInactif();
+        createPoulailler();
+        createPoulaillerPro();
+        createMegaPoulailler();
+        createPoulaillerIndustriel();
+    }
+
+    /**
+     * Creation du poulailler inactif
+     */
+    public void createPoulaillerInactif(){
+        this.nom = "Inactif";
+        this.prixPoulailler = BigDecimal.valueOf(0);
+        this.capacite = 0;
+    }
+
+    /**
+     * Creation du poulailler de base
+     */
+    public void createPoulailler(){
+        this.nom = "poulailler";
+        this.prixPoulailler = BigDecimal.valueOf(1000);
+        this.capacite = 200;
+    }
+
+    /**
+     * Creation du poulailler pro
+     */
+    public void createPoulaillerPro(){
+        this.nom = "poulailler pro";
+        this.prixPoulailler = BigDecimal.valueOf(5000);
+        this.capacite = 1000;
+    }
+
+    /**
+     * Creation du méga poulailler
+     */
+    public void createMegaPoulailler(){
+        this.nom = "méga poulailler";
+        this.prixPoulailler = BigDecimal.valueOf(25000);
+        this.capacite = 5000;
+    }
+    /**
+     * Creation du poulailler industriel
+     */
+    public void createPoulaillerIndustriel(){
+        this.nom = "poulailler industriel";
+        this.prixPoulailler = BigDecimal.valueOf(50000);
+        this.capacite = 10000;
     }
 
     public String getNom() {
@@ -33,14 +73,6 @@ public class Poulaillers {
         this.nom = nom;
     }
 
-    public int getNbPoulesMax() {
-        return nbPoulesMax;
-    }
-
-    public void setNbPoulesMax(int nbPoulesMax) {
-        this.nbPoulesMax = nbPoulesMax;
-    }
-
     public BigDecimal getPrixPoulailler() {
         return prixPoulailler;
     }
@@ -49,66 +81,20 @@ public class Poulaillers {
         this.prixPoulailler = prixPoulailler;
     }
 
-    public double getImgWidth() {
-        return imgWidth;
+    public int getCapacite() {
+        return capacite;
     }
 
-    public void setImgWidth(double imgWidth) {
-        this.imgWidth = imgWidth;
-    }
-
-    public double getImgHeight() {
-        return imgHeight;
-    }
-
-    public void setImgHeight(double imgHeight) {
-        this.imgHeight = imgHeight;
-    }
-
-    public double getLayoutX() {
-        return layoutX;
-    }
-
-    public void setLayoutX(double layoutX) {
-        this.layoutX = layoutX;
-    }
-
-    public double getLayoutY() {
-        return layoutY;
-    }
-
-    public void setLayoutY(double layoutY) {
-        this.layoutY = layoutY;
-    }
-
-    public double getPosLayoutBtnX() {
-        return posLayoutBtnX;
-    }
-
-    public void setPosLayoutBtnX(double posLayoutBtnX) {
-        this.posLayoutBtnX = posLayoutBtnX;
-    }
-
-    public double getPosLayoutBtnY() {
-        return posLayoutBtnY;
-    }
-
-    public void setPosLayoutBtnY(double posLayoutBtnY) {
-        this.posLayoutBtnY = posLayoutBtnY;
+    public void setCapacite(int capacite) {
+        this.capacite = capacite;
     }
 
     @Override
     public String toString() {
         return "Poulaillers{" +
                 "nom='" + nom + '\'' +
-                ", nbPoulesMax=" + nbPoulesMax +
                 ", prixPoulailler=" + prixPoulailler +
-                ", posX=" + imgWidth +
-                ", posY=" + imgHeight +
-                ", layoutX=" + layoutX +
-                ", layoutY=" + layoutY +
-                ", posLayoutBtnX=" + posLayoutBtnX +
-                ", posLayoutBtnY=" + posLayoutBtnY +
+                ", capacite=" + capacite +
                 '}';
     }
 }

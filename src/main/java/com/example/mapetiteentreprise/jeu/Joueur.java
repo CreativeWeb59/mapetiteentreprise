@@ -17,9 +17,12 @@ public class Joueur {
     private int distributeurBFActive;
     private int distributeurCoActive;
     private int distributeurSaActive;
-    private int poullaillerEnCours; // correspond a l'index du poullailler attribué dans la liste des poulaillers
+    private int poulailler1; // correspond a l'index du poullailler attribué dans la liste des poulaillers
+    private int poulailler2;
+    private int poulailler3;
+    private int poulailler4;
 
-    public Joueur(String pseudo, BigDecimal argent, Ferme ferme, BoissonsChaudes boissonsChaudes, BoissonsFraiches boissonsFraiches, Sandwichs sandwichs, Confiseries confiseries, CreditEnCours creditEnCours, int fermeActive, int distributeursActive, int distributeurBCActive, int distributeurBFActive, int distributeurCoActive, int distributeurSaActive, int poullaillerEnCours) {
+    public Joueur(String pseudo, BigDecimal argent, Ferme ferme, BoissonsChaudes boissonsChaudes, BoissonsFraiches boissonsFraiches, Sandwichs sandwichs, Confiseries confiseries, CreditEnCours creditEnCours, int fermeActive, int distributeursActive, int distributeurBCActive, int distributeurBFActive, int distributeurCoActive, int distributeurSaActive, int poulailler1, int poulailler2, int poulailler3, int poulailler4) {
         this.pseudo = pseudo;
         this.argent = argent;
         this.ferme = ferme;
@@ -34,7 +37,10 @@ public class Joueur {
         this.distributeurBFActive = distributeurBFActive;
         this.distributeurCoActive = distributeurCoActive;
         this.distributeurSaActive = distributeurSaActive;
-        this.poullaillerEnCours = poullaillerEnCours;
+        this.poulailler1 = poulailler1;
+        this.poulailler2 = poulailler2;
+        this.poulailler3 = poulailler3;
+        this.poulailler4 = poulailler4;
     }
 
     public String getPseudo() {
@@ -149,12 +155,36 @@ public class Joueur {
         this.creditEnCours = creditEnCours;
     }
 
-    public int getPoullaillerEnCours() {
-        return poullaillerEnCours;
+    public int getPoulailler1() {
+        return poulailler1;
     }
 
-    public void setPoullaillerEnCours(int poullaillerEnCours) {
-        this.poullaillerEnCours = poullaillerEnCours;
+    public void setPoulailler1(int poulailler1) {
+        this.poulailler1 = poulailler1;
+    }
+
+    public int getPoulailler2() {
+        return poulailler2;
+    }
+
+    public void setPoulailler2(int poulailler2) {
+        this.poulailler2 = poulailler2;
+    }
+
+    public int getPoulailler3() {
+        return poulailler3;
+    }
+
+    public void setPoulailler3(int poulailler3) {
+        this.poulailler3 = poulailler3;
+    }
+
+    public int getPoulailler4() {
+        return poulailler4;
+    }
+
+    public void setPoulailler4(int poulailler4) {
+        this.poulailler4 = poulailler4;
     }
 
     @Override
@@ -174,6 +204,10 @@ public class Joueur {
                 ", distributeurBFActive=" + distributeurBFActive +
                 ", distributeurCoActive=" + distributeurCoActive +
                 ", distributeurSaActive=" + distributeurSaActive +
+                ", poulailler1=" + poulailler1 +
+                ", poulailler2=" + poulailler2 +
+                ", poulailler3=" + poulailler3 +
+                ", poulailler4=" + poulailler4 +
                 '}';
     }
 
