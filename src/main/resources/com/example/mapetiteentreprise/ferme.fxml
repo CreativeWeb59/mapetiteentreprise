@@ -30,7 +30,7 @@
                   </Label>
                     </children>
                 </Pane>
-                <Pane layoutX="40.0" layoutY="160.0" prefHeight="800.0" prefWidth="1200.0">
+                <Pane layoutX="40.0" layoutY="160.0" prefHeight="850.0" prefWidth="1200.0">
                     <children>
                   <Pane fx:id="panePoulailler1" layoutX="50.0" layoutY="210.0" prefHeight="200.0" prefWidth="167.0">
                      <children>
@@ -62,7 +62,7 @@
                         </Group>
                      </children>
                   </Pane>
-                        <ImageView fx:id="imgAnimation" fitHeight="100.0" fitWidth="100.0" layoutX="50.0" layoutY="540.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="imgAnimation" fitHeight="100.0" fitWidth="100.0" layoutX="50.0" layoutY="640.0" pickOnBounds="true" preserveRatio="true" />
                   <Pane fx:id="panePoulailler2" layoutX="300.0" layoutY="210.0" prefHeight="200.0" prefWidth="167.0">
                      <children>
                         <ImageView id="poulailler" fx:id="imgPoulailler2" fitHeight="151.0" fitWidth="167.0" pickOnBounds="true" preserveRatio="true">
@@ -175,7 +175,10 @@
 
                             </children>
                         </Pane>
-                        <Label fx:id="labelConsole" alignment="TOP_LEFT" layoutX="50.0" layoutY="680.0" prefHeight="100.0" prefWidth="1100.0" />
+                        <Label fx:id="labelConsole" alignment="TOP_LEFT" layoutX="50.0" layoutY="730.0" prefHeight="100.0" prefWidth="1079.0">
+                     <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                     </padding></Label>
                         <Button fx:id="retourMenu" layoutX="550.0" layoutY="70.0" mnemonicParsing="false" onAction="#retourGestion" styleClass="buttonVendre" text="Retour au menu" />
                    <Button fx:id="rembourserCredit" layoutX="71.0" layoutY="110.0" mnemonicParsing="false" onAction="#onRembourserCredit" styleClass="buttonVendre" text="Rembourser" />
                   <Group fx:id="groupBtnAmeliorer" layoutX="750.0" layoutY="630.0">
@@ -215,7 +218,7 @@
             <PieChart fx:id="pieHorloge" prefHeight="200.0" prefWidth="200.0" title="Horloge" />
          </children>
       </Pane>
-        <Pane fx:id="paneParentProgressJour" layoutX="200.0" layoutY="940.0" prefHeight="20.0" prefWidth="900.0">
+        <Pane fx:id="paneParentProgressJour" layoutX="200.0" layoutY="990.0" prefHeight="20.0" prefWidth="900.0">
             <children>
                 <ProgressBar fx:id="progressJour" prefHeight="20.0" prefWidth="900.0" progress="0.0" visible="false" />
             </children>
