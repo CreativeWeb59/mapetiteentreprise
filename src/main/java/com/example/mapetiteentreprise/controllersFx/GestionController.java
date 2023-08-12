@@ -84,6 +84,8 @@ public class GestionController {
         testFerme();
         testDistributeur();
 
+        jeu.valeurEntreprise();
+
     }
 
 

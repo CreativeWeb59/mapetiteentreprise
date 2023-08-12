@@ -226,6 +226,10 @@ public class Joueur {
         }
     }
 
+    /**
+     * Methode permettant de depenser de l'argent
+     * @param montantDepense
+     */
     public void depenser(BigDecimal montantDepense) {
         this.setArgent(this.getArgent().subtract(montantDepense));
     }

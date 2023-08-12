@@ -67,6 +67,7 @@ public class GestionDistributeursController {
     private Scene scene;
     private Parent root;
     private final String monnaie = " €";
+    private final String separationTexte = System.getProperty("line.separator");
     // pattern des nombre décimaux
     private final DecimalFormat decimalFormat = Outils.getDecimalFormatWithSpaceSeparator();
 
@@ -218,7 +219,7 @@ public class GestionDistributeursController {
     }
 
     /**
-     * Action a executé lors de la fermeture de la fentre avec la croix : sauvegarde
+     * Action a executer lors de la fermeture de la fenetre avec la croix : sauvegarde
      * @param event
      */
 

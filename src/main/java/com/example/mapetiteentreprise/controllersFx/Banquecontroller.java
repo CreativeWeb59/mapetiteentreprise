@@ -2,6 +2,9 @@ package com.example.mapetiteentreprise.controllersFx;
 
 import com.example.mapetiteentreprise.Main;
 import com.example.mapetiteentreprise.actions.Outils;
+import com.example.mapetiteentreprise.bdd.ConnectionBdd;
+import com.example.mapetiteentreprise.bdd.Credits;
+import com.example.mapetiteentreprise.bdd.CreditsService;
 import com.example.mapetiteentreprise.jeu.CreditEnCours;
 import com.example.mapetiteentreprise.jeu.Jeu;
 import javafx.animation.Animation;
@@ -34,9 +37,9 @@ public class Banquecontroller {
     private final DecimalFormat decimalFormat = Outils.getDecimalFormatWithSpaceSeparator();
     @FXML
     private Label labelAccueil, labelAPayer, labelMontant, labelInterets, labelTotal, labelRestantDu, labelPrelevement, labelMessageFinDuPret,
-            labelCredit1, labelCredit2, labelCredit3;
+            labelCredit;
     @FXML
-    Button retourMenu, btnRembourser, btnRembourserTout, btnPret1, btnPret2, btnPret3;
+    Button retourMenu, btnRembourser, btnRembourserTout, btnPret;
     @FXML
     Pane paneCreditEnCours, paneNouveauCredit;
     @FXML
@@ -45,6 +48,9 @@ public class Banquecontroller {
     private Stage stage;
     private Scene scene;
     private Parent root;
+    private ConnectionBdd connectionBdd = new ConnectionBdd();
+    private Credits credits = new Credits();
+    private CreditsService creditsService;
 
     // attributs pur le prêt
     private final BigDecimal pourcentageInterets = BigDecimal.valueOf(0.08);
@@ -56,15 +62,7 @@ public class Banquecontroller {
         this.jeu = jeu;
         setLabelAccueil();
         // affiche le crédit en cours ou la possibilité de prendre un nouveau crédit
-        if(isCredit()){
-            paneCreditEnCours.setVisible(true);
-            paneNouveauCredit.setVisible(false);
-            affichageCredit();
-        } else {
-            paneCreditEnCours.setVisible(false);
-            paneNouveauCredit.setVisible(true);
-            propositionPret();
-        }
+        affichagePanneau();
 
         // barres de progression
         startProgressBars();
@@ -135,6 +133,21 @@ public class Banquecontroller {
         isMensualite();
         isCreditComplet();
         setLabelAccueil();
+    }
+
+    /**
+     * Fait le choix entre afficher le detail du credit ou effectuer un nouveau crédit
+     */
+    public void affichagePanneau(){
+        if(isCredit()){
+            paneCreditEnCours.setVisible(true);
+            paneNouveauCredit.setVisible(false);
+            affichageCredit();
+        } else {
+            paneCreditEnCours.setVisible(false);
+            paneNouveauCredit.setVisible(true);
+            propositionPret();
+        }
     }
 
     /**
@@ -223,7 +236,37 @@ public class Banquecontroller {
      * propose un nouveau avec plusieurs solutions de prêts
      */
     public void propositionPret(){
-        System.out.println("affichage des propositions de prêts");
+        // calcul des valeurs necessaires
+        BigDecimal montantAPreter = montantAPreter();
+        BigDecimal coutPret = montantAPreter.add(montantAPreter.multiply(BigDecimal.valueOf(0.08)));
+        BigDecimal mensualite = coutPret.divide(BigDecimal.valueOf(nbMensualites));
+
+        long jourEnCours = jeu.getCalendrier().getNumJour();
+        long dateProchaineMensualite = jourEnCours + cycleMensualite;
+        long datePreavis = jourEnCours + (nbMensualites * cycleMensualite) + 2;
+
+        String formattedStringMontantAPreter = decimalFormat.format(montantAPreter) + monnaie;
+        String formattedStringCoutPret = decimalFormat.format(coutPret) + monnaie;
+        String formattedStringMensualite = decimalFormat.format(mensualite) + monnaie;
+
+
+        String texte = "Montant du prêt : " + formattedStringMontantAPreter + separationTexte;
+        texte += nbMensualites + " Mensualites de " + formattedStringMensualite + separationTexte;
+        texte += "Cout total du crédit : " + formattedStringCoutPret +  separationTexte;
+        texte += "Première mensualité le jour " + dateProchaineMensualite;
+        setLabelPret(texte);
+    }
+
+    /**
+     * Renvoi le montant du pret à preter
+     * @return
+     */
+    public BigDecimal montantAPreter(){
+        return jeu.valeurEntreprise().divide(BigDecimal.valueOf(2));
+    }
+
+    public void setLabelPret(String texte){
+        labelCredit.setText(texte);
     }
 
     /**
@@ -518,37 +561,16 @@ public class Banquecontroller {
     }
 
     /**
-     * Click sur le bouton de prêt 1
+     * Click sur le bouton de prêt
      * recupere les infos du type de prêt
-     * renvoi sur la méthode de prêt commune
+     * calcule la somme pretable par rapport à la valeur de l'entreprise
      */
-    public void onBtnPret1(){
-        this.nouveauPret(BigDecimal.valueOf(1500));
-    }
+    public void onBtnPret(){
+        // calcul de la somme à preter
+        BigDecimal montantAPreter = montantAPreter();
 
-    /**
-     * Click sur le bouton de prêt 2
-     * recupere les infos du type de prêt
-     * renvoi sur la méthode de prêt commune
-     */
-    public void onBtnPret2(){
-        this.nouveauPret(BigDecimal.valueOf(2000));
-    }
-    /**
-     * Click sur le bouton de prêt 3
-     * recupere les infos du type de prêt
-     * renvoi sur la méthode de prêt commune
-     */
-    public void onBtnPret3(){
-        this.nouveauPret(BigDecimal.valueOf(2500));
-    }
-
-    /**
-     * cree un nouveau prêt en fonction du choix pré-selectionné
-     */
-    public void nouveauPret(BigDecimal montantPret){
         // calcul des valeurs necessaires
-        BigDecimal coutPret = montantPret.add(montantPret.multiply(BigDecimal.valueOf(0.08)));
+        BigDecimal coutPret = montantAPreter.add(montantAPreter.multiply(BigDecimal.valueOf(0.08)));
         BigDecimal mensualite = coutPret.divide(BigDecimal.valueOf(nbMensualites));
         long jourEnCours = jeu.getCalendrier().getNumJour();
         long dateProchaineMensualite = jourEnCours + cycleMensualite;
@@ -560,19 +582,34 @@ public class Banquecontroller {
         // verifie si un credit existe déja
         if (creditEnCours == null) {
             // creation du pret
-            creditEnCours = new CreditEnCours(montantPret, coutPret, BigDecimal.valueOf(0), mensualite, nbMensualites, cycleMensualite, 0,
+            creditEnCours = new CreditEnCours(montantAPreter, coutPret, BigDecimal.valueOf(0), mensualite, nbMensualites, cycleMensualite, 0,
                     jourEnCours, jourEnCours, dateProchaineMensualite, datePreavis, 0);
             // on l'ajoute au joueur
             jeu.getJoueur().setCreditEnCours(creditEnCours);
 
             // on ajoute la somme dans la banque du joueur
-            jeu.getJoueur().setArgent(jeu.getJoueur().getArgent().add(montantPret));
+            jeu.getJoueur().setArgent(jeu.getJoueur().getArgent().add(montantAPreter));
 
-            // met a jour l'affichage
-            setLabelAccueil();
+            // on ajoute dans la table credits
+            connectionBdd.connect();
+
+            creditsService = new CreditsService(connectionBdd);
+            try {
+                credits = new Credits(jeu.getJoueur().getPseudo(), montantAPreter, coutPret, BigDecimal.valueOf(0), mensualite, 30, cycleMensualite, 0, jourEnCours, jourEnCours, dateProchaineMensualite, datePreavis, 0);
+                creditsService.addCredit(credits);
+                System.out.println("Ajout du credit en bdd");
+            } catch (Exception e){
+                System.out.println("Erreur de creation du crédit");
+            }
+            connectionBdd.close();
+
+            // maj des labels
+            affichagePanneau();
 
         } else {
             System.out.println("Vous avez déja un crédit en cours, terminez votre crédit avant d'en faire un nouveau");
         }
     }
+
+
 }

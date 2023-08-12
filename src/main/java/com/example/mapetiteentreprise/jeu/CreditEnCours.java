@@ -308,4 +308,12 @@ public class CreditEnCours {
     public BigDecimal montantRetardMensualite(int nbRetard) {
         return BigDecimal.valueOf(10);
     }
+
+    /**
+     * Calcule le montant du nouveau credit disponible
+     * cumule la valeur de l'entreprise (nombre de fermes, distributeurs) et divise par 2
+     */
+    public void montantNouveauCredit(){
+
+    }
 }

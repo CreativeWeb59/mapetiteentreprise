@@ -223,5 +223,63 @@ public class Jeu {
     public void addPoulailler(Poulaillers poulaillers){
         this.poulaillersList.add(poulaillers);
     }
+    /**
+     * Calcule la valeur de l'entreprise
+     */
+    public BigDecimal valeurEntreprise(){
+        BigDecimal valeurFermes = valeurFermes();
+        System.out.println("Fermes" + valeurFermes);
+        BigDecimal valeurPoules = valeurPoules();
+        System.out.println("Poules" + valeurPoules);
+        BigDecimal valeurDistributeurs = valeurDistributeurs();
+        System.out.println("Distributeurs" + valeurDistributeurs);
+        return valeurFermes.add(valeurDistributeurs.add(valeurPoules));
+    }
 
+    /**
+     * Retourne la valeur de chaque poulailler
+     * @return
+     */
+    public BigDecimal valeurFermes(){
+        // recupere la valeur de chaque poulailler dans un tableau
+        int[] index = new int[]{this.getJoueur().getPoulailler1(), this.getJoueur().getPoulailler2(), this.getJoueur().getPoulailler3(), this.getJoueur().getPoulailler4()};
+
+        BigDecimal valeur = BigDecimal.valueOf(0);
+
+        for (int i = 0; i < index.length; i++) {
+            valeur = valeur.add(getPoulaillersList().get(index[i]).getPrixPoulailler());
+        }
+        return valeur;
+    }
+
+    /**
+     * Renvoi la valeur des poules
+     * @return
+     */
+    public BigDecimal valeurPoules(){
+        int nbPoules = joueur.getFerme().getNbPoules();
+        BigDecimal prixPoule = parametres.getTarifPoule();
+        return prixPoule.multiply(BigDecimal.valueOf(nbPoules));
+    }
+
+    /**
+     * Retourne la valeur de chaque distributeur
+     * @return
+     */
+    public BigDecimal valeurDistributeurs(){
+        BigDecimal valeur = BigDecimal.valueOf(0);
+        if(joueur.getDistributeurBCActive() == 1){
+            valeur = valeur.add(parametres.getPrixDistributeurBC());
+        }
+        if(joueur.getDistributeurBFActive() == 1){
+            valeur = valeur.add(parametres.getPrixDistributeurBF());
+        }
+        if(joueur.getDistributeurCoActive() == 1){
+            valeur = valeur.add(parametres.getPrixDistributeurCo());
+        }
+        if(joueur.getDistributeurSaActive() == 1){
+            valeur = valeur.add(parametres.getPrixDistributeurSa());
+        }
+        return valeur;
+    }
 }
