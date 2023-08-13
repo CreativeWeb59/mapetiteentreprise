@@ -4,6 +4,7 @@ import com.example.mapetiteentreprise.Main;
 import com.example.mapetiteentreprise.actions.Outils;
 import com.example.mapetiteentreprise.bdd.ConnectionBdd;
 import com.example.mapetiteentreprise.bdd.SauvegardeService;
+import com.example.mapetiteentreprise.jeu.Distributeurs;
 import com.example.mapetiteentreprise.jeu.Jeu;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -52,15 +53,12 @@ public class GestionDistributeursController {
     @FXML
     private Pane paneCo, paneGroupCo, paneSa, paneGroupSa;
     @FXML
-    private ProgressBar progressBC, progressBF, progressSa, progressCo;
+    private ProgressBar progressBC, progressBF, progressSa, progressCo, progressJour, progressOeufs;
     private BigDecimal gainEnAttenteBC = new BigDecimal(0);
     private BigDecimal gainEnAttenteBF = new BigDecimal(0);
     private BigDecimal gainEnAttenteSa = new BigDecimal(0);
     private BigDecimal gainEnAttenteCo = new BigDecimal(0);
-    private Timeline timelineBC;
-    private Timeline timelineBF;
-    private Timeline timelineSa;
-    private Timeline timelineCo;
+    private Timeline timelineBC, timelineBF, timelineSa, timelineCo, timelineCalendrier, timelineHeure;
 
     private Jeu jeu;
     private Stage stage;
@@ -178,19 +176,20 @@ public class GestionDistributeursController {
         // on met a jour les marchandises vendues
 
         // Reajustement distributeur Boissons chaudes
-        reajustementBC();
+//        reajustementBC();
 
         // Reajustement distributeur Boissons fraiches
-        reajustementBF();
+//        reajustementBF();
 
         // Reajustement distributeur Confiseries
-        reajustementCo();
+//        reajustementCo();
 
         // Reajustement distributeur Sandwichs
-        reajustementSa();
+//        reajustementSa();
 
         // mise en place des labels
         this.miseEnPlaceValeurs();
+
 
         // Demmarage des distributueurs
         // Boissons chaudes
@@ -216,6 +215,18 @@ public class GestionDistributeursController {
             double vitesse = jeu.getParametres().getVitesseSa() - (jeu.getParametres().getVitesseSa() * jeu.getJoueur().getSandwichs().getEtatProgressDistributeur());
             this.progressBarStartTimelineEncoursSa(1, vitesse);
         }
+
+        // ajustement oeuf par rapport au jour
+        this.jeu.getJoueur().getFerme().ajustementProgressOeuf(jeu.getCalendrier().getProgressJour(), jeu.getCalendrier().getHeureActuelle());
+
+        // recuperation de l'etat de la barre de progression pour les heures / oeufs
+        double vitesseHeure = jeu.getParametres().getVitessePonteOeuf() - (jeu.getParametres().getVitessePonteOeuf() * jeu.getJoueur().getFerme().getEtatProgressOeuf());
+        progressBarStartTimelineHeureEnCours(1, vitesseHeure);
+
+        // recuperation de l'etat de la barre de progression pour la journee
+        double vitesse = jeu.getCalendrier().getDureeJour() - (jeu.getCalendrier().getDureeJour() * jeu.getCalendrier().getProgressJour());
+
+        progressBarStartTimelineJourneeEnCours(1, vitesse);
     }
 
     /**
@@ -224,6 +235,14 @@ public class GestionDistributeursController {
      */
 
     public void onWindowClose(WindowEvent event) {
+        // sauvegarde des barres de progression
+        this.jeu.getCalendrier().setProgressJour(this.progressJour.getProgress());
+        this.jeu.getJoueur().getFerme().setEtatProgressOeuf(this.progressOeufs.getProgress());
+
+        // on stoppe les barres de progression;
+        this.progressBarStop(timelineCalendrier);
+        this.progressBarStop(timelineHeure);
+
         // Sauvegarde de la base de donnees
         System.out.println("fermeture fenetre : Sauvegarde");
         try {
@@ -231,6 +250,16 @@ public class GestionDistributeursController {
         } catch (Exception e){
             System.out.println(e);
         }
+
+        // Sauvegarde de la base de donnees
+        System.out.println("fermeture fenetre : Sauvegarde complete");
+        try {
+            this.jeu.sauvegardejeu(this.progressOeufs, this.progressJour);
+            this.jeu.sauvegardeCredit();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
     }
 
     /**
@@ -251,11 +280,26 @@ public class GestionDistributeursController {
         this.jeu.getJoueur().getConfiseries().setDateDeco(LocalDateTime.now());
         this.jeu.getJoueur().getSandwichs().setDateDeco(LocalDateTime.now());
 
-        // on stoppe la barre de progression;
+        // sauvegarde des barres de progression
+        this.jeu.getCalendrier().setProgressJour(this.progressJour.getProgress());
+        this.jeu.getJoueur().getFerme().setEtatProgressOeuf(this.progressOeufs.getProgress());
+
+        // on stoppe les barres de progression;
+        this.progressBarStop(timelineCalendrier);
+        this.progressBarStop(timelineHeure);
         this.progressBarStopBC();
         this.progressBarStopBF();
         this.progressBarStopCo();
         this.progressBarStopSa();
+
+        // Sauvegarde de la base de donnees
+        System.out.println("switch fenetre : Sauvegarde complete");
+        try {
+            this.jeu.sauvegardejeu(this.progressOeufs, this.progressJour);
+            this.jeu.sauvegardeCredit();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
 
         try {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("gestion.fxml"));
@@ -290,6 +334,10 @@ public class GestionDistributeursController {
         testBoissonsFraiches(); // blocage ou non du distributeur de boissons fraiches
         testConfiseries(); // blocage ou non du distributeur de confiseries
         testSandwichs(); // blocage ou non du distributeur de sandwichs
+
+        // Verification du nombre de distributeurs
+        verifNbDistributeurs();
+
         System.out.println("Mise en place des labels et chiffres");
     }
 
@@ -316,7 +364,6 @@ public class GestionDistributeursController {
      * on compare l'heure et le jour actuel avec la date de deco
      * methode commune à tous les distributeurs
      */
-
     public double reajustementProgressDistributeur(LocalDateTime heureDeco, int vitesseDistributeur, double ancBarreProgress) {
         // calcule l'ecart entre heure deco et maintenant
         long ecartEnSecondes = ecartSwitchFenetre(heureDeco);
@@ -408,25 +455,32 @@ public class GestionDistributeursController {
     }
 
     public void acheterBoissonsChaudes() {
-        BigDecimal montantAchat = this.jeu.getParametres().getPrixDistributeurBC();
-        if (acheter(montantAchat)) {
-            this.jeu.getJoueur().getBoissonsChaudes().ajoutDistributeur();
-            // met a jour le label en haut
-            setLabelMessageHaut();
-            System.out.println("Vous venez d'acheter un distributeur de boissons chaudes");
-            // debloque le distributeur si besoin
-            if (jeu.getJoueur().getBoissonsChaudes().getNbDistributeurs() == 1) {
-                jeu.getJoueur().setDistributeurBCActive(1);
-                debloquerDistributeur(paneBC, btnDebloquerBC, labelTitreDistributeurBC);
-                // demarre la barre de progression du distributeur
-                progressBarStartBC(0, jeu.getParametres().getVitesseBC());
+        // verifie si le nombre maxi de distributeurs n'est pas atteint
+        if(!isMaxiNbDitributeur(this.jeu.getJoueur().getBoissonsChaudes())){
+            BigDecimal montantAchat = this.jeu.getParametres().getPrixDistributeurBC();
+            if (acheter(montantAchat)) {
+                this.jeu.getJoueur().getBoissonsChaudes().ajoutDistributeur();
+                // met a jour le label en haut
+                setLabelMessageHaut();
+                System.out.println("Vous venez d'acheter un distributeur de boissons chaudes");
+                // debloque le distributeur si besoin
+                if (jeu.getJoueur().getBoissonsChaudes().getNbDistributeurs() == 1) {
+                    jeu.getJoueur().setDistributeurBCActive(1);
+                    debloquerDistributeur(paneBC, btnDebloquerBC, labelTitreDistributeurBC);
+                    // demarre la barre de progression du distributeur
+                    progressBarStartBC(0, jeu.getParametres().getVitesseBC());
+                    System.out.println("achat du distributueur :" + jeu.getJoueur());
+                }
+                miseEnPlaceValeurs();
+            } else {
+                System.out.println("Vous n'avez pas assez d'argent pour acheter un distributeur de boissons chaudes");
             }
-            miseEnPlaceValeurs();
         } else {
-            System.out.println("Vous n'avez pas assez d'argent pour acheter un distributeur de boissons chaudes");
+            System.out.println("Vous avez trop de distributeurs");
         }
-        System.out.println("achat du distributueur :" + jeu.getJoueur());
     }
+
+
 
     /**
      * Maj des labels et boutons du distributeur de boissons chaudes
@@ -435,7 +489,8 @@ public class GestionDistributeursController {
         setNbDistributeursBC();
         setNbBC();
         // affichage ou non du bouton pour recuperer l'argent du distributeur
-        setBtnRecupereBC();
+        majGainsEnCoursBC();
+//        setBtnRecupereBC();
         verifAchatDistributeurs();
     }
 
@@ -489,6 +544,40 @@ public class GestionDistributeursController {
     }
 
     /**
+     * verfiie tous les boutons d'achat de distributeur
+     * les rends enable si assez d'argent pour en acheter
+     */
+    public void verifNbDistributeurs() {
+        // verif nombre distributeurs boissons chaudes
+        if(!isMaxiNbDitributeur(jeu.getJoueur().getBoissonsChaudes())){
+            btnDistributeurPlusBC.setDisable(false);
+        } else {
+            btnDistributeurPlusBC.setDisable(true);
+        }
+
+        // verif nombre distributeurs boissons fraiches
+        if(!isMaxiNbDitributeur(jeu.getJoueur().getBoissonsFraiches())){
+            btnDistributeurPlusBF.setDisable(false);
+        } else {
+            btnDistributeurPlusBF.setDisable(true);
+        }
+
+        // verif nombre distributeurs de confiseries
+        if(!isMaxiNbDitributeur(jeu.getJoueur().getConfiseries())){
+            btnDistributeurPlusCo.setDisable(false);
+        } else {
+            btnDistributeurPlusCo.setDisable(true);
+        }
+
+        // verif nombre distributeurs de sandwichs
+        if(!isMaxiNbDitributeur(jeu.getJoueur().getSandwichs())){
+            btnDistributeurPlusSa.setDisable(false);
+        } else {
+            btnDistributeurPlusSa.setDisable(true);
+        }
+    }
+
+    /**
      * Met à jour la barre de progression pour distributeur de boissons chaudes
      *
      * @param cycle
@@ -508,6 +597,7 @@ public class GestionDistributeursController {
                     this.majProgressBc();
                     // met à jour les gains en cours
                     this.majGainsEnCoursBC();
+                    // maj des boutons
                 }, new KeyValue(progressBarBC.progressProperty(), 1))
         );
         timelineBC.setOnFinished(event -> {
@@ -544,6 +634,7 @@ public class GestionDistributeursController {
                     this.majProgressBc();
                     // met à jour les gains en cours
                     this.majGainsEnCoursBC();
+                    // maj des boutons
                 }, new KeyValue(progressBarBC.progressProperty(), 1))
         );
 
@@ -610,6 +701,8 @@ public class GestionDistributeursController {
      * suivant si gainEnAttente > 0
      */
     public void setBtnRecupereBC() {
+        System.out.println("***********************");
+        System.out.println("Gains en attente BC : " + this.gainEnAttenteBC);
         int comparaison = this.gainEnAttenteBC.compareTo(BigDecimal.valueOf(0));
         if (comparaison > 0) {
             this.getBtnRecupereBC().setDisable(false);
@@ -851,8 +944,9 @@ public class GestionDistributeursController {
     public void majDistributeurBF() {
         setNbDistributeursBF();
         setNbBF();
-        // affichage ou non du bouton pour recuperer l'argent du distributeur
-        setBtnRecupereBF();
+        // affichage ou non du bouton pour recuperer l'argent du distributeur avec recuperation des gains
+        majGainsEnCoursBF();
+//        setBtnRecupereBF();
         // verif si assez d'argent pour acheter un distributeur
         if (jeu.getJoueur().isArgent(jeu.getParametres().getPrixDistributeurBF())) {
             btnDistributeurPlusBF.setDisable(false);
@@ -1096,8 +1190,9 @@ public class GestionDistributeursController {
     public void majDistributeurCo() {
         setNbDistributeursCo();
         setNbCo();
-        // affichage ou non du bouton pour recuperer l'argent du distributeur
-        setBtnRecupereCo();
+        // affichage ou non du bouton pour recuperer l'argent du distributeur avec recuperation des gains
+        majGainsEnCoursCo();
+//        setBtnRecupereCo();
         // verif si assez d'argent pour acheter un distributeur
         if (jeu.getJoueur().isArgent(jeu.getParametres().getPrixDistributeurCo())) {
             btnDistributeurPlusCo.setDisable(false);
@@ -1346,8 +1441,9 @@ public class GestionDistributeursController {
     public void majDistributeurSa() {
         setNbDistributeursSa();
         setNbSa();
-        // affichage ou non du bouton pour recuperer l'argent du distributeur
-        setBtnRecupererSa();
+        // affichage ou non du bouton pour recuperer l'argent du distributeur avec recuperation des gains
+        majGainsEnCoursSa();
+//        setBtnRecupererSa();
         // verif si assez d'argent pour acheter un distributeur
         if (jeu.getJoueur().isArgent(jeu.getParametres().getPrixDistributeurSa())) {
             btnDistributeurPlusSa.setDisable(false);
@@ -1475,5 +1571,225 @@ public class GestionDistributeursController {
             System.out.println(e);
         }
         connectionBdd.close();
+    }
+
+    // partie pour les barres de progress Heure et Jour
+    public ProgressBar getProgressJour() {
+        return progressJour;
+    }
+
+    /**
+     * declare la ProgressBar afin de pouvoir l'utiliser
+     * pour l'effet de remplissage
+     *
+     * @return
+     */
+    public ProgressBar getProgressOeufs() {
+        return progressOeufs;
+    }
+
+    /**
+     * Met à jour la barre de progression pour la journee
+     * avec un demarrage de la barre par rapport à la sauvegarde
+     *
+     * @param cycle   : 1 pour on effectue une seule fois
+     * @param vitesse : calculee suivant le temps restant à effectuer
+     */
+    public void progressBarStartTimelineJourneeEnCours(int cycle, double vitesse) {
+        ProgressBar getProgressJour = getProgressJour();
+        // Réinitialise la barre de progression à 0
+        getProgressJour.setProgress(this.jeu.getCalendrier().getProgressJour());
+        timelineCalendrier = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(getProgressJour.progressProperty(), this.jeu.getCalendrier().getProgressJour())),
+                new KeyFrame(Duration.seconds(vitesse), e -> {
+                    System.out.println("jour terminé");
+                    // incremente un jour et remet l'heure à 1
+                    this.jeu.getCalendrier().setJourSuivant();
+                }, new KeyValue(getProgressJour.progressProperty(), 1))
+        );
+        timelineCalendrier.setOnFinished(event -> {
+            if (cycle == 1) {
+                // Lancer la deuxième exécution de la méthode progressBarStartTimeline
+                jeu.getCalendrier().setProgressJour(0);
+                // recalcul de la vitesse suivant le niveau de la barre de progression
+                progressBarStartTimelineJournee(cycle - 1, jeu.getCalendrier().getDureeJour() - jeu.getParametres().getVitessePonteOeuf());
+            }
+        });
+
+        if (cycle == 0) {
+            timelineCalendrier.setCycleCount(Animation.INDEFINITE);
+        } else {
+            timelineCalendrier.setCycleCount(cycle);
+        }
+        timelineCalendrier.play();
+    }
+
+
+    /**
+     * Methode qui affiche la progressbar du calendrier
+     * met a jour le calendrier avec le jour en cours, banquier...
+     *
+     * @param cycle
+     * @param vitesse
+     */
+
+    public void progressBarStartTimelineJournee(int cycle, double vitesse) {
+        ProgressBar getProgressJour = getProgressJour();
+        // Réinitialise la barre de progression à 0
+        getProgressJour.setProgress(0);
+        System.out.println("Progress barre : " + getProgressJour.getProgress());
+        timelineCalendrier = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(getProgressJour.progressProperty(), 0)),
+                new KeyFrame(Duration.seconds(vitesse), e -> {
+                    System.out.println("Jour terminé ");
+                    this.jeu.getCalendrier().setJourSuivant();
+                }, new KeyValue(getProgressJour.progressProperty(), 1))
+        );
+
+        if (cycle == 0) {
+            timelineCalendrier.setCycleCount(Animation.INDEFINITE);
+        } else {
+            timelineCalendrier.setCycleCount(cycle);
+        }
+        timelineCalendrier.play();
+    }
+
+    /**
+     * TimeLine des heures
+     * grosse difference avec celle des jours : on affiche pas la barre de progression : se passe en coulisses
+     * recupere l'etat de la barre de progressOeuf pour l'avancer jusqu'au bout
+     * et commencer une autre timelineHeures classique
+     *
+     * @param cycle
+     * @param vitesse
+     */
+    public void progressBarStartTimelineHeureEnCours(int cycle, double vitesse) {
+        ProgressBar progressOeufs = getProgressOeufs();
+        // Réinitialise la barre de progression à 0
+        progressOeufs.setProgress(this.jeu.getJoueur().getFerme().getEtatProgressOeuf());
+        timelineHeure = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(progressOeufs.progressProperty(), this.jeu.getJoueur().getFerme().getEtatProgressOeuf())),
+                new KeyFrame(Duration.seconds(vitesse), e -> {
+                    this.jeu.getCalendrier().setIncrementHeure();
+                    System.out.println("Heure actuelle : " + jeu.getCalendrier().getHeureActuelle());
+                    // ajoute le nombre de poules necesaires
+                    majFerme();
+                    System.out.println("Oeuf terminé");
+                }, new KeyValue(progressOeufs.progressProperty(), 1))
+        );
+        timelineHeure.setOnFinished(event -> {
+            // recalcul de la vitesse suivant le niveau de la barre de progression
+            progressBarStartTimelineHeure(cycle - 1, jeu.getParametres().getVitessePonteOeuf());
+        });
+
+        if (cycle == 0) {
+            timelineHeure.setCycleCount(Animation.INDEFINITE);
+        } else {
+            timelineHeure.setCycleCount(cycle);
+        }
+        timelineHeure.play();
+    }
+
+    /**
+     * Barre de progression invisible pour compter les heures
+     *
+     * @param cycle
+     * @param vitesse
+     */
+    public void progressBarStartTimelineHeure(int cycle, double vitesse) {
+        ProgressBar progressOeufs = getProgressOeufs();
+        // Réinitialise la barre de progression à 0
+        progressOeufs.setProgress(0);
+        timelineHeure = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(progressOeufs.progressProperty(), 0)),
+                new KeyFrame(Duration.seconds(vitesse), e -> {
+                    System.out.println("Ajoute une heure");
+                    this.jeu.getCalendrier().setIncrementHeure();
+                    System.out.println("Heure actuelle : " + jeu.getCalendrier().getHeureActuelle());
+                    // ajoute le nombre de poules necesaires
+                    majFerme();
+                    System.out.println("Oeuf terminé");
+                }, new KeyValue(progressOeufs.progressProperty(), 1))
+        );
+
+        if (cycle == 0) {
+            timelineHeure.setCycleCount(Animation.INDEFINITE);
+        } else {
+            timelineHeure.setCycleCount(cycle);
+        }
+        timelineHeure.play();
+    }
+
+    /**
+     * Permet de stopper la timeline passée en paramètres
+     *
+     * @param laTimeline
+     */
+    private void progressBarStop(Timeline laTimeline) {
+        if (laTimeline != null) {
+            laTimeline.stop();
+            laTimeline = null;
+            System.out.println("Arret de la barre de progression");
+        }
+    }
+
+    /**
+     * donne l'état de la timeline
+     *
+     * @return
+     */
+    private Boolean isProgressBar(Timeline laTimeline) {
+        if (laTimeline == null) {
+            laTimeline = null;
+            System.out.println("Barre de progression terminee");
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * relance une timeline
+     */
+    // Méthode pour reprendre la Timeline
+    public void progressBarPlay(Timeline laTimeline) {
+        if (laTimeline != null) {
+            laTimeline.play();
+            System.out.println("progress play pas null");
+        }
+        System.out.println("play");
+    }
+
+    /**
+     * Met en pause la timeline
+     */
+    // Méthode pour mettre en pause la Timeline
+    public void progressBarPause(Timeline laTimeline) {
+        if (laTimeline != null) {
+            laTimeline.pause();
+            System.out.println("progress pause pas null");
+        }
+        System.out.println("pause");
+    }
+
+    /**
+     * A effectuer lorsqu'une heure est ecoulee
+     * ajoute un oeuf suivant le nombre de poules dans le poulailler
+     */
+    public void majFerme() {
+        long nbOeufsAAjouter = this.jeu.getJoueur().getFerme().getNbOeufs() + this.jeu.getJoueur().getFerme().getNbPoules();
+        this.jeu.getJoueur().getFerme().setNbOeufs(nbOeufsAAjouter);
+        System.out.println("ajout de " + nbOeufsAAjouter + " oeuf(s)");
+    }
+
+
+    // Methodes communes
+
+
+    /**
+     * renvoi true si le nombre maximum de distributeur est atteint
+     * @return
+     */
+    public boolean isMaxiNbDitributeur(Distributeurs distributeurs){
+        return distributeurs.getNbDistributeurs() >= distributeurs.getNbMaxiDistributeur();
     }
 }

@@ -43,8 +43,8 @@ public class Banquecontroller {
     @FXML
     Pane paneCreditEnCours, paneNouveauCredit;
     @FXML
-    private ProgressBar progressOeufs, progressJour;
-    private Timeline timelineOeufs, timelineJour;
+    private ProgressBar progressOeufs, progressJour, progressBC, progressBF, progressSa, progressCo;
+    private Timeline timelineOeufs, timelineJour, timelineBC, timelineBF, timelineSa, timelineCo;
     private Stage stage;
     private Scene scene;
     private Parent root;
@@ -271,6 +271,7 @@ public class Banquecontroller {
 
     /**
      * start les 2 barres de progression : progress oeuf et progress jour
+     *  + les barres des distributeurs s'ils sont actifs
      */
     public void startProgressBars(){
         double vitesse = jeu.getParametres().getVitessePonteOeuf() - (jeu.getParametres().getVitessePonteOeuf() * jeu.getJoueur().getFerme().getEtatProgressOeuf());
@@ -281,6 +282,8 @@ public class Banquecontroller {
             double vitesseJour = jeu.getCalendrier().getDureeJour() - (jeu.getCalendrier().getDureeJour() * jeu.getCalendrier().getProgressJour());
             progressBarStartTimelineJourneeEnCours(1, vitesseJour);
         }
+        // demarrage des distributeurs
+        demarrageDistributeurs();
     }
 
     /**
@@ -471,9 +474,19 @@ public class Banquecontroller {
         this.jeu.getCalendrier().setProgressJour(this.progressJour.getProgress());
         this.jeu.getJoueur().getFerme().setEtatProgressOeuf(this.progressOeufs.getProgress());
 
+        // on recupere l'etat de la barre de progression des distributeurs
+        this.jeu.getJoueur().getBoissonsChaudes().setEtatProgressDistributeur(this.progressBC.getProgress());
+        this.jeu.getJoueur().getBoissonsFraiches().setEtatProgressDistributeur(this.progressBF.getProgress());
+        this.jeu.getJoueur().getConfiseries().setEtatProgressDistributeur(this.progressCo.getProgress());
+        this.jeu.getJoueur().getSandwichs().setEtatProgressDistributeur(this.progressSa.getProgress());
+
         // on stoppe les barres de progression;
         this.progressBarStop(timelineOeufs);
         this.progressBarStop(timelineJour);
+        this.progressBarStop(timelineBC);
+        this.progressBarStop(timelineBF);
+        this.progressBarStop(timelineCo);
+        this.progressBarStop(timelineSa);
 
         // on enregistre l'heure de switch de fenetre
         this.jeu.getJoueur().getFerme().setDateDeco(LocalDateTime.now());
@@ -610,6 +623,341 @@ public class Banquecontroller {
             System.out.println("Vous avez déja un crédit en cours, terminez votre crédit avant d'en faire un nouveau");
         }
     }
+    /**
+     * Permet d'ajuster les distributeurs et les demarrer s'ils sont actifs
+     */
+    public void demarrageDistributeurs(){
+        // Demmarage des distributueurs
+        // Boissons chaudes
+        if (jeu.getJoueur().getDistributeursActive() == 1 && jeu.getJoueur().getBoissonsChaudes().getNbDistributeurs() > 0) {
+            double vitesse = jeu.getParametres().getVitesseBC() - (jeu.getParametres().getVitesseBC() * jeu.getJoueur().getBoissonsChaudes().getEtatProgressDistributeur());
+            this.progressBarStartTimelineEncoursBC(1, vitesse);
+        }
 
+        // Boissons fraiches
+        if (jeu.getJoueur().getDistributeursActive() == 1 && jeu.getJoueur().getBoissonsFraiches().getNbDistributeurs() > 0) {
+            double vitesse = jeu.getParametres().getVitesseBF() - (jeu.getParametres().getVitesseBF() * jeu.getJoueur().getBoissonsFraiches().getEtatProgressDistributeur());
+            this.progressBarStartTimelineEncoursBF(1, vitesse);
+        }
+
+        // Confiseries
+        if (jeu.getJoueur().getDistributeursActive() == 1 && jeu.getJoueur().getConfiseries().getNbDistributeurs() > 0) {
+            double vitesse = jeu.getParametres().getVitesseCo() - (jeu.getParametres().getVitesseCo() * jeu.getJoueur().getConfiseries().getEtatProgressDistributeur());
+            this.progressBarStartTimelineEncoursCo(1, vitesse);
+        }
+
+        // Sandwichs
+        if (jeu.getJoueur().getDistributeursActive() == 1 && jeu.getJoueur().getSandwichs().getNbDistributeurs() > 0) {
+            double vitesse = jeu.getParametres().getVitesseSa() - (jeu.getParametres().getVitesseSa() * jeu.getJoueur().getSandwichs().getEtatProgressDistributeur());
+            this.progressBarStartTimelineEncoursSa(1, vitesse);
+        }
+        // ajustement oeuf par rapport au jour
+        this.jeu.getJoueur().getFerme().ajustementProgressOeuf(jeu.getCalendrier().getProgressJour(), jeu.getCalendrier().getHeureActuelle());
+    }
+
+    /**
+     * Barres de progression des distributeurs
+     */
+    /**
+     * Met à jour la barre de progression pour distributeur de boissons chaudes
+     *
+     * @param cycle
+     * @param vitesse
+     */
+    public void progressBarStartTimelineEncoursBC(int cycle, double vitesse) {
+        ProgressBar progressBarBC = getProgressBC();
+        // Réinitialise la barre de progression à 0
+        progressBarBC.setProgress(this.jeu.getJoueur().getBoissonsChaudes().getEtatProgressDistributeur());
+        timelineBC = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(progressBarBC.progressProperty(), this.jeu.getJoueur().getBoissonsChaudes().getEtatProgressDistributeur())),
+                new KeyFrame(Duration.seconds(vitesse), e -> {
+                    System.out.println("Boisson chaude terminée");
+                    // ajoute un nombre de marchandises correspondantes au nombre de distributeurs
+                    this.majProgressBc();
+                }, new KeyValue(progressBarBC.progressProperty(), 1))
+        );
+        timelineBC.setOnFinished(event -> {
+            if (cycle == 1) {
+                // Lancer la deuxième exécution de la méthode progressBarStartTimeline
+                jeu.getJoueur().getBoissonsChaudes().setEtatProgressDistributeur(0);
+                // recalcul de la vitesse suivant le niveau de la barre de progression
+                progressBarStartBC(cycle - 1, jeu.getParametres().getVitesseBC());
+            }
+        });
+
+        if (cycle == 0) {
+            timelineBC.setCycleCount(Animation.INDEFINITE);
+        } else {
+            timelineBC.setCycleCount(cycle);
+        }
+        timelineBC.play();
+    }
+
+    /**
+     * Barre de progressions Distributeur Boissons Chaudes
+     */
+    public void progressBarStartBC(int cycle, double vitesse) {
+        ProgressBar progressBarBC = getProgressBC();
+        // Réinitialise la barre de progression à 0
+        progressBarBC.setProgress(0);
+        timelineBC = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(progressBarBC.progressProperty(), 0)),
+                new KeyFrame(Duration.seconds(vitesse), e -> {
+                    System.out.println("Distributeur de boissons chaudes prêt");
+                    // ajoute un nombre de marchandises correspondantes au nombre de distributeurs
+                    this.majProgressBc();
+                }, new KeyValue(progressBarBC.progressProperty(), 1))
+        );
+
+        if (cycle == 0) {
+            timelineBC.setCycleCount(Animation.INDEFINITE);
+        } else {
+            timelineBC.setCycleCount(cycle);
+        }
+        timelineBC.play();
+    }
+    /**
+     * Met à jour la barre de progression pour distributeur de boissons chaudes
+     *
+     * @param cycle
+     * @param vitesse
+     */
+    public void progressBarStartTimelineEncoursBF(int cycle, double vitesse) {
+        ProgressBar progressBarBF = getProgressBF();
+        // Réinitialise la barre de progression à 0
+        progressBarBF.setProgress(this.jeu.getJoueur().getBoissonsFraiches().getEtatProgressDistributeur());
+        timelineBF = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(progressBarBF.progressProperty(), this.jeu.getJoueur().getBoissonsFraiches().getEtatProgressDistributeur())),
+                new KeyFrame(Duration.seconds(vitesse), e -> {
+                    System.out.println("Boisson fraiche terminée");
+                    // ajoute un nombre de marchandises correspondantes au nombre de distributeurs
+                    this.majProgressBF();
+                }, new KeyValue(progressBarBF.progressProperty(), 1))
+        );
+        timelineBF.setOnFinished(event -> {
+            if (cycle == 1) {
+                // Lancer la deuxième exécution de la méthode progressBarStartTimeline
+                jeu.getJoueur().getBoissonsFraiches().setEtatProgressDistributeur(0);
+                // recalcul de la vitesse suivant le niveau de la barre de progression
+                progressBarStartBF(cycle - 1, jeu.getParametres().getVitesseBF());
+            }
+        });
+
+        if (cycle == 0) {
+            timelineBF.setCycleCount(Animation.INDEFINITE);
+        } else {
+            timelineBF.setCycleCount(cycle);
+        }
+        timelineBF.play();
+    }
+
+    /**
+     * Barre de progressions Distributeur Boissons Chaudes
+     */
+    public void progressBarStartBF(int cycle, double vitesse) {
+        ProgressBar progressBarBF = getProgressBF();
+        // Réinitialise la barre de progression à 0
+        progressBarBF.setProgress(0);
+        timelineBF = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(progressBarBF.progressProperty(), 0)),
+                new KeyFrame(Duration.seconds(vitesse), e -> {
+                    System.out.println("Distributeur de boissons fraiches prêt");
+                    // ajoute un nombre de marchandises correspondantes au nombre de distributeurs
+                    this.majProgressBF();
+                }, new KeyValue(progressBarBF.progressProperty(), 1))
+        );
+        if (cycle == 0) {
+            timelineBF.setCycleCount(Animation.INDEFINITE);
+        } else {
+            timelineBF.setCycleCount(cycle);
+        }
+        timelineBF.play();
+    }
+    /**
+     * Met à jour la barre de progression pour distributeur de confiseries
+     *
+     * @param cycle
+     * @param vitesse
+     */
+    public void progressBarStartTimelineEncoursCo(int cycle, double vitesse) {
+        ProgressBar progressBarCo = getProgressCo();
+        // Réinitialise la barre de progression à 0
+        progressBarCo.setProgress(this.jeu.getJoueur().getConfiseries().getEtatProgressDistributeur());
+        timelineCo = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(progressBarCo.progressProperty(), this.jeu.getJoueur().getConfiseries().getEtatProgressDistributeur())),
+                new KeyFrame(Duration.seconds(vitesse), e -> {
+                    System.out.println("Boisson fraiche terminée");
+                    // ajoute un nombre de marchandises correspondantes au nombre de distributeurs
+                    this.majProgressCo();
+                }, new KeyValue(progressBarCo.progressProperty(), 1))
+        );
+        timelineCo.setOnFinished(event -> {
+            if (cycle == 1) {
+                // Lancer la deuxième exécution de la méthode progressBarStartTimeline
+                jeu.getJoueur().getConfiseries().setEtatProgressDistributeur(0);
+                // recalcul de la vitesse suivant le niveau de la barre de progression
+                progressBarStartCo(cycle - 1, jeu.getParametres().getVitesseCo());
+            }
+        });
+
+        if (cycle == 0) {
+            timelineCo.setCycleCount(Animation.INDEFINITE);
+        } else {
+            timelineCo.setCycleCount(cycle);
+        }
+        timelineCo.play();
+    }
+
+    /**
+     * Barre de progressions Distributeur Boissons Chaudes
+     */
+    public void progressBarStartCo(int cycle, double vitesse) {
+        ProgressBar progressBarCo = getProgressCo();
+        // Réinitialise la barre de progression à 0
+        progressBarCo.setProgress(0);
+        timelineCo = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(progressBarCo.progressProperty(), 0)),
+                new KeyFrame(Duration.seconds(vitesse), e -> {
+                    System.out.println("Distributeur de confiseries prêt");
+                    // ajoute un nombre de marchandises correspondantes au nombre de distributeurs
+                    this.majProgressCo();
+                }, new KeyValue(progressBarCo.progressProperty(), 1))
+        );
+
+        if (cycle == 0) {
+            timelineCo.setCycleCount(Animation.INDEFINITE);
+        } else {
+            timelineCo.setCycleCount(cycle);
+        }
+        timelineCo.play();
+    }
+    /**
+     * Met à jour la barre de progression pour distributeur de Sandwichs
+     *
+     * @param cycle
+     * @param vitesse
+     */
+    public void progressBarStartTimelineEncoursSa(int cycle, double vitesse) {
+        ProgressBar progressBarSa = getProgressSa();
+        // Réinitialise la barre de progression à 0
+        progressBarSa.setProgress(this.jeu.getJoueur().getSandwichs().getEtatProgressDistributeur());
+        timelineSa = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(progressBarSa.progressProperty(), this.jeu.getJoueur().getSandwichs().getEtatProgressDistributeur())),
+                new KeyFrame(Duration.seconds(vitesse), e -> {
+                    System.out.println("Sandwichs terminés");
+                    // ajoute un nombre de marchandises correspondantes au nombre de distributeurs
+                    this.majProgressSa();
+                }, new KeyValue(progressBarSa.progressProperty(), 1))
+        );
+        timelineSa.setOnFinished(event -> {
+            if (cycle == 1) {
+                // Lancer la deuxième exécution de la méthode progressBarStartTimeline
+                jeu.getJoueur().getSandwichs().setEtatProgressDistributeur(0);
+                // recalcul de la vitesse suivant le niveau de la barre de progression
+                progressBarStartSa(cycle - 1, jeu.getParametres().getVitesseSa());
+            }
+        });
+
+        if (cycle == 0) {
+            timelineSa.setCycleCount(Animation.INDEFINITE);
+        } else {
+            timelineSa.setCycleCount(cycle);
+        }
+        timelineSa.play();
+    }
+
+    /**
+     * Barre de progressions Distributeur de Sandwichs
+     */
+    public void progressBarStartSa(int cycle, double vitesse) {
+        ProgressBar progressBarSa = getProgressSa();
+        // Réinitialise la barre de progression à 0
+        progressBarSa.setProgress(0);
+        timelineSa = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(progressBarSa.progressProperty(), 0)),
+                new KeyFrame(Duration.seconds(vitesse), e -> {
+                    System.out.println("Distributeur de sandwichs prêt");
+                    // ajoute un nombre de marchandises correspondantes au nombre de distributeurs
+                    this.majProgressSa();
+                }, new KeyValue(progressBarSa.progressProperty(), 1))
+        );
+
+        if (cycle == 0) {
+            timelineSa.setCycleCount(Animation.INDEFINITE);
+        } else {
+            timelineSa.setCycleCount(cycle);
+        }
+        timelineSa.play();
+    }
+
+    /**
+     * Barre distributeurs + maj à la fin du progress
+     */
+    /**
+     * Declaration de la barre de progression Distributeur boissons chaudes
+     */
+    public ProgressBar getProgressBC() {
+        return progressBC;
+    }
+
+    /**
+     * Met a jour le chiffre du nombre de marchandises vendues
+     */
+    public void majProgressBc() {
+        long nbMarchandisesBcEnCours = jeu.getJoueur().getBoissonsChaudes().getNbMarchandises();
+        int nbDistributeursBCEnCours = jeu.getJoueur().getBoissonsChaudes().getNbDistributeurs();
+        long nouvNombre = nbMarchandisesBcEnCours + nbDistributeursBCEnCours;
+        jeu.getJoueur().getBoissonsChaudes().setNbMarchandises(nouvNombre);
+        System.out.println("maj du nombre de marchandises vendues dans les distributeurs de Boissons Chaudes : " + nouvNombre);
+    }
+    /**
+     * Declaration de la barre de progression Distributeur boissons chaudes
+     */
+    public ProgressBar getProgressBF() {
+        return progressBF;
+    }
+
+    /**
+     * Met a jour le chiffre du nombre de marchandises vendues
+     */
+    public void majProgressBF() {
+        long nbMarchandisesBcEnCours = jeu.getJoueur().getBoissonsFraiches().getNbMarchandises();
+        int nbDistributeursBCEnCours = jeu.getJoueur().getBoissonsFraiches().getNbDistributeurs();
+        long nouvNombre = nbMarchandisesBcEnCours + nbDistributeursBCEnCours;
+        jeu.getJoueur().getBoissonsFraiches().setNbMarchandises(nouvNombre);
+    }
+    /**
+     * Declaration de la barre de progression Distributeur boissons chaudes
+     */
+    public ProgressBar getProgressCo() {
+        return progressCo;
+    }
+
+    /**
+     * Met a jour le chiffre du nombre de marchandises vendues
+     */
+    public void majProgressCo() {
+        long nbMarchandisesCoEnCours = jeu.getJoueur().getConfiseries().getNbMarchandises();
+        int nbDistributeursCoEnCours = jeu.getJoueur().getConfiseries().getNbDistributeurs();
+        long nouvNombre = nbMarchandisesCoEnCours + nbDistributeursCoEnCours;
+        jeu.getJoueur().getConfiseries().setNbMarchandises(nouvNombre);
+    }
+    /**
+     * Declaration de la barre de progression Distributeur de sandwichs
+     */
+    public ProgressBar getProgressSa() {
+        return progressSa;
+    }
+
+    /**
+     * Met a jour le chiffre du nombre de marchandises vendues
+     */
+    public void majProgressSa() {
+        long nbMarchandisesSaEnCours = jeu.getJoueur().getSandwichs().getNbMarchandises();
+        int nbDistributeursSaEnCours = jeu.getJoueur().getSandwichs().getNbDistributeurs();
+        long nouvNombre = nbMarchandisesSaEnCours + nbDistributeursSaEnCours;
+        jeu.getJoueur().getSandwichs().setNbMarchandises(nouvNombre);
+        System.out.println("maj du nombre de marchandises vendues dans les distributeurs de sandwichs : " + nouvNombre);
+    }
 
 }

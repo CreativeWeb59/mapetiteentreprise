@@ -1,18 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.text.Font?>
-<AnchorPane prefHeight="1024.0" prefWidth="1280.0" stylesheets="@css/main.css"
-            xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.mapetiteentreprise.controllersFx.GestionDistributeursController">
+<AnchorPane prefHeight="1024.0" prefWidth="1280.0" stylesheets="@css/main.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.mapetiteentreprise.controllersFx.GestionDistributeursController">
     <children>
         <Button fx:id="btnDebloquerBC" layoutX="220.0" layoutY="440.0" mnemonicParsing="false" onAction="#acheterBoissonsChaudes" text="Débloquer pour 1.500 €" />
         <Label fx:id="labelTitreDistributeurBC" layoutX="220.0" layoutY="400.0" text="Distributeur de boissons chaudes" />
@@ -65,7 +58,7 @@
                             </font>
                         </Label>
                         <Button fx:id="btnDistributeurPlusBF" disable="true" layoutX="394.0" layoutY="20.0" mnemonicParsing="false" onAction="#acheterBoissonsFraiches" text="+" />
-                        <Label fx:id="nbDistributeursBF" alignment="TOP_RIGHT" layoutX="310.0" layoutY="30.0" prefHeight="30.0" prefWidth="90.0" styleClass="labelChifres" text="0" />
+                        <Label fx:id="nbDistributeursBF" alignment="TOP_RIGHT" layoutX="310.0" layoutY="30.0" prefHeight="29.0" prefWidth="44.0" styleClass="labelChifres" text="0" />
                         <ProgressBar id="progressOeufs" fx:id="progressBF" cache="true" layoutX="35.0" layoutY="170.0" prefHeight="30.0" prefWidth="430.0" progress="0.0" />
                         <ImageView fitHeight="64.0" fitWidth="68.0" layoutX="130.0" layoutY="88.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -135,6 +128,12 @@
             <children>
                 <Label fx:id="labelTitreDistributeurSa" layoutX="160.0" layoutY="-140.0" text="Distributeur de sandwichs" />
                 <Button fx:id="btnDebloquerSa" layoutX="140.0" layoutY="-100.0" mnemonicParsing="false" onAction="#acheterSandwichs" text="Débloquer pour 4.000 €" />
+            </children>
+        </Pane>
+        <Pane fx:id="paneParentProgressJour" layoutX="185.0" layoutY="940.0" prefHeight="20.0" prefWidth="900.0" visible="true">
+            <children>
+                <ProgressBar fx:id="progressJour" prefHeight="20.0" prefWidth="900.0" progress="0.0" />
+                <ProgressBar id="progressOeufs" fx:id="progressOeufs" cache="true" layoutX="0.0" layoutY="30.0" prefHeight="20.0" prefWidth="180.0" progress="0.0" />
             </children>
         </Pane>
     </children>

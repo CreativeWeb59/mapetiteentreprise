@@ -7,6 +7,7 @@ public abstract class Distributeurs {
     private long nbMarchandises;
     private double etatProgressDistributeur = 0;
     private LocalDateTime dateDeco;
+    private final int nbMaxiDistributeur = 200;
 
     public Distributeurs(int nbDistributeurs, long nbMarchandises, double etatProgressDistributeur, LocalDateTime dateDeco) {
         this.nbDistributeurs = nbDistributeurs;
@@ -62,5 +63,9 @@ public abstract class Distributeurs {
      */
     public void ajoutDistributeur(){
         this.setNbDistributeurs(this.getNbDistributeurs() + 1);
+    }
+
+    public int getNbMaxiDistributeur() {
+        return nbMaxiDistributeur;
     }
 }

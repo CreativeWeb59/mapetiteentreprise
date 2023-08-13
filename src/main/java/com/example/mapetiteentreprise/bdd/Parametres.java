@@ -15,7 +15,6 @@ public class Parametres {
     private int distributeurBFActive = 0;
     private int distributeurCoActive = 0;
     private int distributeurSaActive = 0;
-    private int livraisonActive = 0;
     private int lavageActive = 0;
     private int vitessePonteOeuf = 60;
 
@@ -47,6 +46,14 @@ public class Parametres {
     private int vitesseBF = 60;
     private int vitesseSa = 60;
     private int vitesseCo = 60;
+
+    // partie des livraisons
+    private int livraisonActive01 = 0;
+    private int livraisonActive02 = 0;
+    private int livraisonActive03 = 0;
+    private int livraisonActive04 = 0;
+
+
 
 
     public Parametres() {

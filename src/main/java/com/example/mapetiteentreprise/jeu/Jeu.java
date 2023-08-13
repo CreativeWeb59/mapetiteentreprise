@@ -264,21 +264,34 @@ public class Jeu {
 
     /**
      * Retourne la valeur de chaque distributeur
+     * valeur distributer * nb distributeurs
      * @return
      */
     public BigDecimal valeurDistributeurs(){
         BigDecimal valeur = BigDecimal.valueOf(0);
         if(joueur.getDistributeurBCActive() == 1){
-            valeur = valeur.add(parametres.getPrixDistributeurBC());
+            int nbDistributeur = joueur.getBoissonsChaudes().getNbDistributeurs();
+            BigDecimal prixDistributeur = parametres.getPrixDistributeurBC();
+            BigDecimal valeurDistributeur = prixDistributeur.multiply(BigDecimal.valueOf(nbDistributeur));
+            valeur = valeur.add(valeurDistributeur);
         }
         if(joueur.getDistributeurBFActive() == 1){
-            valeur = valeur.add(parametres.getPrixDistributeurBF());
+            int nbDistributeur = joueur.getBoissonsFraiches().getNbDistributeurs();
+            BigDecimal prixDistributeur = parametres.getPrixDistributeurBF();
+            BigDecimal valeurDistributeur = prixDistributeur.multiply(BigDecimal.valueOf(nbDistributeur));
+            valeur = valeur.add(valeurDistributeur);
         }
         if(joueur.getDistributeurCoActive() == 1){
-            valeur = valeur.add(parametres.getPrixDistributeurCo());
+            int nbDistributeur = joueur.getConfiseries().getNbDistributeurs();
+            BigDecimal prixDistributeur = parametres.getPrixDistributeurCo();
+            BigDecimal valeurDistributeur = prixDistributeur.multiply(BigDecimal.valueOf(nbDistributeur));
+            valeur = valeur.add(valeurDistributeur);
         }
         if(joueur.getDistributeurSaActive() == 1){
-            valeur = valeur.add(parametres.getPrixDistributeurSa());
+            int nbDistributeur = joueur.getSandwichs().getNbDistributeurs();
+            BigDecimal prixDistributeur = parametres.getPrixDistributeurSa();
+            BigDecimal valeurDistributeur = prixDistributeur.multiply(BigDecimal.valueOf(nbDistributeur));
+            valeur = valeur.add(valeurDistributeur);
         }
         return valeur;
     }

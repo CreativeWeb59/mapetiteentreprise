@@ -181,20 +181,7 @@
                      </padding></Label>
                         <Button fx:id="retourMenu" layoutX="550.0" layoutY="70.0" mnemonicParsing="false" onAction="#retourGestion" styleClass="buttonVendre" text="Retour au menu" />
                    <Button fx:id="rembourserCredit" layoutX="71.0" layoutY="110.0" mnemonicParsing="false" onAction="#onRembourserCredit" styleClass="buttonVendre" text="Rembourser" />
-                  <Group fx:id="groupBtnAmeliorer" layoutX="750.0" layoutY="630.0">
-                     <children>
-                        <ImageView fitHeight="28.0" fitWidth="28.0" layoutX="251.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@images/marteau.png" />
-                           </image>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                           <effect>
-                              <SepiaTone />
-                           </effect>
-                        </ImageView>
-                     </children></Group>
+                  <Group fx:id="groupBtnAmeliorer" layoutX="750.0" layoutY="630.0" />
                     </children>
                 </Pane>
             </children>
@@ -221,6 +208,14 @@
         <Pane fx:id="paneParentProgressJour" layoutX="200.0" layoutY="990.0" prefHeight="20.0" prefWidth="900.0">
             <children>
                 <ProgressBar fx:id="progressJour" prefHeight="20.0" prefWidth="900.0" progress="0.0" visible="false" />
+            </children>
+        </Pane>
+        <Pane layoutX="680.0" layoutY="840.0" prefHeight="40.0" prefWidth="500.0" visible="true">
+            <children>
+                <ProgressBar id="progressBC" fx:id="progressBC" cache="true" layoutY="10.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
+                <ProgressBar id="progressBF" fx:id="progressBF" cache="true" layoutX="130.0" layoutY="10.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
+                <ProgressBar id="progressCo" fx:id="progressCo" cache="true" layoutX="260.0" layoutY="10.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
+                <ProgressBar id="progressSa" fx:id="progressSa" cache="true" layoutX="390.0" layoutY="10.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
             </children>
         </Pane>
     </children>
