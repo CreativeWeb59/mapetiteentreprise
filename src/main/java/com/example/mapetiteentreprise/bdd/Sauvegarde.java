@@ -18,7 +18,10 @@ public class Sauvegarde {
     private int distributeurBFActive;
     private int distributeurCoActive;
     private int distributeurSaActive;
-    private int livraisonActive;
+    private int livraison1Active;
+    private int livraison2Active;
+    private int livraison3Active;
+    private int livraison4Active;
     private int lavageActive;
     private double etatProgressOeuf;
     private LocalDateTime dateDeco;
@@ -49,12 +52,23 @@ public class Sauvegarde {
     private int poulailler3;
     private int poulailler4;
 
-    public Sauvegarde(int id, String pseudo, BigDecimal argent, long numJourDeco, int heureDeco, double progressJour, int nbPoules, long nbOeufs, int fermeActive,
-                      int distributeursActive, int distributeurBCActive, int distributeurBFActive, int distributeurCoActive, int distributeurSaActive, int livraisonActive,
-                      int lavageActive, double etatProgressOeuf, LocalDateTime dateDeco, int nbDistributeurBC, int nbDistributeurBF, int nbDistributeurSa,
-                      int nbDistributeurCo, long nbMarchandisesBC, long nbMarchandisesBF, long nbMarchandisesSa, long nbMarchandisesCo, double etatProgressBC,
-                      double etatProgressBF, double etatProgressSa, double etatProgressCo, LocalDateTime dateDebutJeu,
-                      int poulailler1, int poulailler2, int poulailler3, int poulailler4) {
+    // nombre de points de livraison
+    private int nbLivraison1;
+    private int nbLivraison2;
+    private int nbLivraison3;
+    private int nbLivraison4;
+    // nombre de courses de livraisons à récupérer
+    private long nbCourses1;
+    private long nbCourses2;
+    private long nbCourses3;
+    private long nbCourses4;
+    // barres de progressions des Livraisons
+    private double etatProgressLivraison1;
+    private double etatProgressLivraison2;
+    private double etatProgressLivraison3;
+    private double etatProgressLivraison4;
+
+    public Sauvegarde(int id, String pseudo, BigDecimal argent, long numJourDeco, int heureDeco, double progressJour, int nbPoules, long nbOeufs, int fermeActive, int distributeursActive, int distributeurBCActive, int distributeurBFActive, int distributeurCoActive, int distributeurSaActive, int livraison1Active, int livraison2Active, int livraison3Active, int livraison4Active, int lavageActive, double etatProgressOeuf, LocalDateTime dateDeco, int nbDistributeurBC, int nbDistributeurBF, int nbDistributeurSa, int nbDistributeurCo, long nbMarchandisesBC, long nbMarchandisesBF, long nbMarchandisesSa, long nbMarchandisesCo, double etatProgressBC, double etatProgressBF, double etatProgressSa, double etatProgressCo, LocalDateTime dateDebutJeu, int poulailler1, int poulailler2, int poulailler3, int poulailler4, int nbLivraison1, int nbLivraison2, int nbLivraison3, int nbLivraison4, long nbCourses1, long nbCourses2, long nbCourses3, long nbCourses4, double etatProgressLivraison1, double etatProgressLivraison2, double etatProgressLivraison3, double etatProgressLivraison4) {
         this.id = id;
         this.pseudo = pseudo;
         this.argent = argent;
@@ -69,7 +83,10 @@ public class Sauvegarde {
         this.distributeurBFActive = distributeurBFActive;
         this.distributeurCoActive = distributeurCoActive;
         this.distributeurSaActive = distributeurSaActive;
-        this.livraisonActive = livraisonActive;
+        this.livraison1Active = livraison1Active;
+        this.livraison2Active = livraison2Active;
+        this.livraison3Active = livraison3Active;
+        this.livraison4Active = livraison4Active;
         this.lavageActive = lavageActive;
         this.etatProgressOeuf = etatProgressOeuf;
         this.dateDeco = dateDeco;
@@ -90,9 +107,21 @@ public class Sauvegarde {
         this.poulailler2 = poulailler2;
         this.poulailler3 = poulailler3;
         this.poulailler4 = poulailler4;
+        this.nbLivraison1 = nbLivraison1;
+        this.nbLivraison2 = nbLivraison2;
+        this.nbLivraison3 = nbLivraison3;
+        this.nbLivraison4 = nbLivraison4;
+        this.nbCourses1 = nbCourses1;
+        this.nbCourses2 = nbCourses2;
+        this.nbCourses3 = nbCourses3;
+        this.nbCourses4 = nbCourses4;
+        this.etatProgressLivraison1 = etatProgressLivraison1;
+        this.etatProgressLivraison2 = etatProgressLivraison2;
+        this.etatProgressLivraison3 = etatProgressLivraison3;
+        this.etatProgressLivraison4 = etatProgressLivraison4;
     }
 
-    public Sauvegarde(String pseudo, BigDecimal argent, long numJourDeco, int heureDeco, double progressJour, int nbPoules, long nbOeufs, int fermeActive, int distributeursActive, int distributeurBCActive, int distributeurBFActive, int distributeurCoActive, int distributeurSaActive, int livraisonActive, int lavageActive, double etatProgressOeuf, LocalDateTime dateDeco, int nbDistributeurBC, int nbDistributeurBF, int nbDistributeurSa, int nbDistributeurCo, long nbMarchandisesBC, long nbMarchandisesBF, long nbMarchandisesSa, long nbMarchandisesCo, double etatProgressBC, double etatProgressBF, double etatProgressSa, double etatProgressCo, LocalDateTime dateDebutJeu, int poulailler1, int poulailler2, int poulailler3, int poulailler4) {
+    public Sauvegarde(String pseudo, BigDecimal argent, long numJourDeco, int heureDeco, double progressJour, int nbPoules, long nbOeufs, int fermeActive, int distributeursActive, int distributeurBCActive, int distributeurBFActive, int distributeurCoActive, int distributeurSaActive, int livraison1Active, int livraison2Active, int livraison3Active, int livraison4Active, int lavageActive, double etatProgressOeuf, LocalDateTime dateDeco, int nbDistributeurBC, int nbDistributeurBF, int nbDistributeurSa, int nbDistributeurCo, long nbMarchandisesBC, long nbMarchandisesBF, long nbMarchandisesSa, long nbMarchandisesCo, double etatProgressBC, double etatProgressBF, double etatProgressSa, double etatProgressCo, LocalDateTime dateDebutJeu, int poulailler1, int poulailler2, int poulailler3, int poulailler4, int nbLivraison1, int nbLivraison2, int nbLivraison3, int nbLivraison4, long nbCourses1, long nbCourses2, long nbCourses3, long nbCourses4, double etatProgressLivraison1, double etatProgressLivraison2, double etatProgressLivraison3, double etatProgressLivraison4) {
         this.pseudo = pseudo;
         this.argent = argent;
         this.numJourDeco = numJourDeco;
@@ -106,7 +135,10 @@ public class Sauvegarde {
         this.distributeurBFActive = distributeurBFActive;
         this.distributeurCoActive = distributeurCoActive;
         this.distributeurSaActive = distributeurSaActive;
-        this.livraisonActive = livraisonActive;
+        this.livraison1Active = livraison1Active;
+        this.livraison2Active = livraison2Active;
+        this.livraison3Active = livraison3Active;
+        this.livraison4Active = livraison4Active;
         this.lavageActive = lavageActive;
         this.etatProgressOeuf = etatProgressOeuf;
         this.dateDeco = dateDeco;
@@ -127,6 +159,18 @@ public class Sauvegarde {
         this.poulailler2 = poulailler2;
         this.poulailler3 = poulailler3;
         this.poulailler4 = poulailler4;
+        this.nbLivraison1 = nbLivraison1;
+        this.nbLivraison2 = nbLivraison2;
+        this.nbLivraison3 = nbLivraison3;
+        this.nbLivraison4 = nbLivraison4;
+        this.nbCourses1 = nbCourses1;
+        this.nbCourses2 = nbCourses2;
+        this.nbCourses3 = nbCourses3;
+        this.nbCourses4 = nbCourses4;
+        this.etatProgressLivraison1 = etatProgressLivraison1;
+        this.etatProgressLivraison2 = etatProgressLivraison2;
+        this.etatProgressLivraison3 = etatProgressLivraison3;
+        this.etatProgressLivraison4 = etatProgressLivraison4;
     }
 
     public int getId() {
@@ -217,12 +261,36 @@ public class Sauvegarde {
         this.distributeurSaActive = distributeurSaActive;
     }
 
-    public int getLivraisonActive() {
-        return livraisonActive;
+    public int getLivraison1Active() {
+        return livraison1Active;
     }
 
-    public void setLivraisonActive(int livraisonActive) {
-        this.livraisonActive = livraisonActive;
+    public void setLivraison1Active(int livraison1Active) {
+        this.livraison1Active = livraison1Active;
+    }
+
+    public int getLivraison2Active() {
+        return livraison2Active;
+    }
+
+    public void setLivraison2Active(int livraison2Active) {
+        this.livraison2Active = livraison2Active;
+    }
+
+    public int getLivraison3Active() {
+        return livraison3Active;
+    }
+
+    public void setLivraison3Active(int livraison3Active) {
+        this.livraison3Active = livraison3Active;
+    }
+
+    public int getLivraison4Active() {
+        return livraison4Active;
+    }
+
+    public void setLivraison4Active(int livraison4Active) {
+        this.livraison4Active = livraison4Active;
     }
 
     public int getLavageActive() {
@@ -409,6 +477,102 @@ public class Sauvegarde {
         this.poulailler4 = poulailler4;
     }
 
+    public int getNbLivraison1() {
+        return nbLivraison1;
+    }
+
+    public void setNbLivraison1(int nbLivraison1) {
+        this.nbLivraison1 = nbLivraison1;
+    }
+
+    public int getNbLivraison2() {
+        return nbLivraison2;
+    }
+
+    public void setNbLivraison2(int nbLivraison2) {
+        this.nbLivraison2 = nbLivraison2;
+    }
+
+    public int getNbLivraison3() {
+        return nbLivraison3;
+    }
+
+    public void setNbLivraison3(int nbLivraison3) {
+        this.nbLivraison3 = nbLivraison3;
+    }
+
+    public int getNbLivraison4() {
+        return nbLivraison4;
+    }
+
+    public void setNbLivraison4(int nbLivraison4) {
+        this.nbLivraison4 = nbLivraison4;
+    }
+
+    public long getNbCourses1() {
+        return nbCourses1;
+    }
+
+    public void setNbCourses1(long nbCourses1) {
+        this.nbCourses1 = nbCourses1;
+    }
+
+    public long getNbCourses2() {
+        return nbCourses2;
+    }
+
+    public void setNbCourses2(long nbCourses2) {
+        this.nbCourses2 = nbCourses2;
+    }
+
+    public long getNbCourses3() {
+        return nbCourses3;
+    }
+
+    public void setNbCourses3(long nbCourses3) {
+        this.nbCourses3 = nbCourses3;
+    }
+
+    public long getNbCourses4() {
+        return nbCourses4;
+    }
+
+    public void setNbCourses4(long nbCourses4) {
+        this.nbCourses4 = nbCourses4;
+    }
+
+    public double getEtatProgressLivraison1() {
+        return etatProgressLivraison1;
+    }
+
+    public void setEtatProgressLivraison1(double etatProgressLivraison1) {
+        this.etatProgressLivraison1 = etatProgressLivraison1;
+    }
+
+    public double getEtatProgressLivraison2() {
+        return etatProgressLivraison2;
+    }
+
+    public void setEtatProgressLivraison2(double etatProgressLivraison2) {
+        this.etatProgressLivraison2 = etatProgressLivraison2;
+    }
+
+    public double getEtatProgressLivraison3() {
+        return etatProgressLivraison3;
+    }
+
+    public void setEtatProgressLivraison3(double etatProgressLivraison3) {
+        this.etatProgressLivraison3 = etatProgressLivraison3;
+    }
+
+    public double getEtatProgressLivraison4() {
+        return etatProgressLivraison4;
+    }
+
+    public void setEtatProgressLivraison4(double etatProgressLivraison4) {
+        this.etatProgressLivraison4 = etatProgressLivraison4;
+    }
+
     @Override
     public String toString() {
         return "Sauvegarde{" +
@@ -426,7 +590,10 @@ public class Sauvegarde {
                 ", distributeurBFActive=" + distributeurBFActive +
                 ", distributeurCoActive=" + distributeurCoActive +
                 ", distributeurSaActive=" + distributeurSaActive +
-                ", livraisonActive=" + livraisonActive +
+                ", livraison1Active=" + livraison1Active +
+                ", livraison2Active=" + livraison2Active +
+                ", livraison3Active=" + livraison3Active +
+                ", livraison4Active=" + livraison4Active +
                 ", lavageActive=" + lavageActive +
                 ", etatProgressOeuf=" + etatProgressOeuf +
                 ", dateDeco=" + dateDeco +
@@ -447,6 +614,18 @@ public class Sauvegarde {
                 ", poulailler2=" + poulailler2 +
                 ", poulailler3=" + poulailler3 +
                 ", poulailler4=" + poulailler4 +
+                ", nbLivraison1=" + nbLivraison1 +
+                ", nbLivraison2=" + nbLivraison2 +
+                ", nbLivraison3=" + nbLivraison3 +
+                ", nbLivraison4=" + nbLivraison4 +
+                ", nbCourses1=" + nbCourses1 +
+                ", nbCourses2=" + nbCourses2 +
+                ", nbCourses3=" + nbCourses3 +
+                ", nbCourses4=" + nbCourses4 +
+                ", etatProgressLivraison1=" + etatProgressLivraison1 +
+                ", etatProgressLivraison2=" + etatProgressLivraison2 +
+                ", etatProgressLivraison3=" + etatProgressLivraison3 +
+                ", etatProgressLivraison4=" + etatProgressLivraison4 +
                 '}';
     }
 }

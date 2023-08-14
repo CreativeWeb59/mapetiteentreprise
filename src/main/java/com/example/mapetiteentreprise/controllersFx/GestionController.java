@@ -4,6 +4,7 @@ import com.example.mapetiteentreprise.Main;
 import com.example.mapetiteentreprise.actions.Outils;
 import com.example.mapetiteentreprise.jeu.CreditEnCours;
 import com.example.mapetiteentreprise.jeu.Jeu;
+import com.example.mapetiteentreprise.jeu.LivraisonScooter;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -21,13 +22,14 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 
 public class GestionController {
     @FXML
-    private Label pseudoLabel;
+    private Label pseudoLabel, labelBlocageDistributeur, labelBlocageLivraison;
     @FXML
-    private Button btnNew, btnContinuer, btnFerme, btnAchatFerme, btnDistributeurs;
+    private Button btnNew, btnContinuer, btnFerme, btnAchatFerme, btnDistributeurs, btnLivraison;
 
     private String pseudo;
     private Stage stage;
@@ -54,7 +56,7 @@ public class GestionController {
     public void debutJeu(Jeu jeu) {
         // Recuperation du jeu
         this.jeu = jeu;
-        this.pseudoLabel.setText("Bonjour " + jeu.getJoueur().getPseudo() + System.getProperty("line.separator") + "Montant en banque : " + decimalFormat.format(jeu.getJoueur().getArgent()) + monnaie+ System.getProperty("line.separator"));
+        this.pseudoLabel.setText("Bonjour " + jeu.getJoueur().getPseudo() + System.getProperty("line.separator") + "Montant en banque : " + decimalFormat.format(jeu.getJoueur().getArgent()) + monnaie + System.getProperty("line.separator"));
 
         // Affichage du calendrier
         this.afficheCalendrier();
@@ -82,10 +84,14 @@ public class GestionController {
         // demarrage des distributeurs
         demarrageDistributeurs();
 
+        // demarrage des livraisons
+        demarrageLivraisons();
+
         // desactivation des activites non acquises
         // test activation ferme
         testFerme();
         testDistributeur();
+        testLivraison();
 
         jeu.valeurEntreprise();
 
@@ -117,14 +123,38 @@ public class GestionController {
     public void testDistributeur() {
         // on verifie si le distributeur commun est débloqué
         // si débloqué => bouton visible
+        BigDecimal tarifDistributeurBC = jeu.getParametres().getPrixDistributeurBC();
 
-        if (jeu.getJoueur().getDistributeursActive() == 0) {
-            btnDistributeurs.setDisable(true);
-        } else {
+        if (jeu.getJoueur().getDistributeurBCActive() == 1 || jeu.getJoueur().isArgent(tarifDistributeurBC)) {
             btnDistributeurs.setDisable(false);
+            labelBlocageDistributeur.setVisible(false);
+        } else {
+            btnDistributeurs.setDisable(true);
+            labelBlocageDistributeur.setVisible(true);
+            String formattedString = "Débloqué à partir de " + decimalFormat.format(tarifDistributeurBC) + monnaie;
+            labelBlocageDistributeur.setText(formattedString);
         }
     }
-
+    /**
+     * On verifie si le joueur a assez d'argent pour acheter le premier service de livraison
+     * ou s'il est actif
+     */
+    public void testLivraison() {
+        // recuperation du prix de la livraison en scooter
+        BigDecimal tarifScooter = jeu.getJoueur().getLivraisonScooter().getPrixVehicule();
+        System.out.println("Prix du scooter : " + tarifScooter);
+        // active le bouton si livraison 1 active
+        // verifie si l'argent en banque permet d'acheter la livraison en scooter
+        if (jeu.getJoueur().getLivraison1Active() == 1 || jeu.getJoueur().isArgent(tarifScooter)) {
+            btnLivraison.setDisable(false);
+            labelBlocageLivraison.setVisible(false);
+        } else {
+            btnLivraison.setDisable(true);
+            labelBlocageLivraison.setVisible(true);
+            String formattedString = "Débloqué à partir de " + decimalFormat.format(tarifScooter) + monnaie;
+            labelBlocageLivraison.setText(formattedString);
+        }
+    }
 
     /**
      * Arrivee dans le jeu
@@ -258,6 +288,7 @@ public class GestionController {
 
     /**
      * Gere le bouton pour passer sur la fenetre de la banque
+     *
      * @param event
      */
     public void switchToBanque(ActionEvent event) {
@@ -399,7 +430,7 @@ public class GestionController {
         this.jourEnCours = jeu.getCalendrier().getNumJour();
         CreditEnCours creditEnCours = jeu.getJoueur().getCreditEnCours();
         if (jeu.getJoueur().getCreditEnCours() != null) {
-            if(jeu.getJoueur().getCreditEnCours().getTermine()==0){
+            if (jeu.getJoueur().getCreditEnCours().getTermine() == 0) {
                 jeu.getCalendrier().createSemaine1Calendrier(paneSemaine1, jeu.getJoueur().getCreditEnCours().getDateProchaineMensualite());
                 jeu.getCalendrier().createSemaine2Calendrier(paneSemaine2, jeu.getJoueur().getCreditEnCours().getDateProchaineMensualite());
             } else {
@@ -627,7 +658,7 @@ public class GestionController {
     /**
      * Permet d'ajuster les distributeurs et les demarrer s'ils sont actifs
      */
-    public void demarrageDistributeurs(){
+    public void demarrageDistributeurs() {
         // Demmarage des distributueurs
         // Boissons chaudes
         if (jeu.getJoueur().getDistributeursActive() == 1 && jeu.getJoueur().getBoissonsChaudes().getNbDistributeurs() > 0) {
@@ -654,6 +685,13 @@ public class GestionController {
         }
         // ajustement oeuf par rapport au jour
         this.jeu.getJoueur().getFerme().ajustementProgressOeuf(jeu.getCalendrier().getProgressJour(), jeu.getCalendrier().getHeureActuelle());
+    }
+
+    /**
+     *
+     */
+    public void demarrageLivraisons() {
+
     }
 
     /**
@@ -717,6 +755,7 @@ public class GestionController {
         }
         timelineBC.play();
     }
+
     /**
      * Met à jour la barre de progression pour distributeur de boissons chaudes
      *
@@ -774,6 +813,7 @@ public class GestionController {
         }
         timelineBF.play();
     }
+
     /**
      * Met à jour la barre de progression pour distributeur de confiseries
      *
@@ -832,6 +872,7 @@ public class GestionController {
         }
         timelineCo.play();
     }
+
     /**
      * Met à jour la barre de progression pour distributeur de Sandwichs
      *
@@ -911,6 +952,7 @@ public class GestionController {
         jeu.getJoueur().getBoissonsChaudes().setNbMarchandises(nouvNombre);
         System.out.println("maj du nombre de marchandises vendues dans les distributeurs de Boissons Chaudes : " + nouvNombre);
     }
+
     /**
      * Declaration de la barre de progression Distributeur boissons chaudes
      */
@@ -927,6 +969,7 @@ public class GestionController {
         long nouvNombre = nbMarchandisesBcEnCours + nbDistributeursBCEnCours;
         jeu.getJoueur().getBoissonsFraiches().setNbMarchandises(nouvNombre);
     }
+
     /**
      * Declaration de la barre de progression Distributeur boissons chaudes
      */
@@ -943,6 +986,7 @@ public class GestionController {
         long nouvNombre = nbMarchandisesCoEnCours + nbDistributeursCoEnCours;
         jeu.getJoueur().getConfiseries().setNbMarchandises(nouvNombre);
     }
+
     /**
      * Declaration de la barre de progression Distributeur de sandwichs
      */

@@ -124,7 +124,11 @@ Label{
     -fx-background-repeat: no-repeat;
     -fx-background-size: cover;
 }
-
+.fondsVille{
+    -fx-background-image: url("../images/fondsVille.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
 #titre{
     -fx-font-size: 40px;
 }

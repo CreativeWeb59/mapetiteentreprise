@@ -72,11 +72,16 @@ public class ConnectionBdd {
     public void createModelSauvegarde() throws SQLException {
         String sql = "CREATE TABLE sauvegarde (id INTEGER PRIMARY KEY, pseudo TEXT, argent REAL," +
                 "numJourDeco INTEGER, heureDeco INTEGER, progressJour REAL," +
-                "nbPoules INTEGER, nbOeufs INTEGER, fermeActive INTEGER, distributeursActive INTEGER, distributeurBCActive INTEGER, distributeurBFActive INTEGER, distributeurCoActive INTEGER, distributeurSaActive INTEGER, livraisonActive INTEGER, lavageActive INTEGER, etatProgressOeuf REAL, dateDeco TEXT," +
+                "nbPoules INTEGER, nbOeufs INTEGER, fermeActive INTEGER, distributeursActive INTEGER, distributeurBCActive INTEGER, distributeurBFActive INTEGER, distributeurCoActive INTEGER, distributeurSaActive INTEGER," +
+                "livraison1Active INTEGER, livraison2Active INTEGER, livraison3Active INTEGER, livraison4Active INTEGER," +
+                "lavageActive INTEGER, etatProgressOeuf REAL, dateDeco TEXT," +
                 "nbDistributeurBC INTEGER, nbDistributeurBF INTEGER, nbDistributeurSa INTEGER, nbDistributeurCo INTEGER," +
                 "nbMarchandisesBC INTEGER, nbMarchandisesBF INTEGER, nbMarchandisesSa INTEGER, nbMarchandisesCo INTEGER," +
                 "etatProgressBC REAL, etatProgressBF REAL, etatProgressSa REAL, etatProgressCo REAL, dateDebutJeu TEXT," +
-                "poulailler1 INTEGER, poulailler2 INTEGER, poulailler3 INTEGER, poulailler4 INTEGER)";
+                "poulailler1 INTEGER, poulailler2 INTEGER, poulailler3 INTEGER, poulailler4 INTEGER," +
+                "nbLivraison1 INTEGER, nbLivraison2 INTEGER, nbLivraison3 INTEGER, nbLivraison4 INTEGER," +
+                "nbCourses1 INTEGER, nbCourses2 INTEGER, nbCourses3 INTEGER, nbCourses4 INTEGER," +
+                "etatProgressLivraison1 REAL, etatProgressLivraison2 REAL, etatProgressLivraison3 REAL, etatProgressLivraison4 REAL)";
         Statement stmt = connection.createStatement();
         stmt.execute(sql);
         System.out.println("La table 'sauvegarde' a été créée avec succès.");

@@ -65,7 +65,12 @@
                         <Button fx:id="btnBanque" alignment="CENTER" disable="false" layoutX="50.0" layoutY="250.0" mnemonicParsing="false" onAction="#switchToBanque" text="Banque" />
                     </children>
                 </Pane>
-                <Label alignment="CENTER" contentDisplay="CENTER" layoutX="230.0" layoutY="310.0" style="-fx-background-color: transparent;" styleClass="label2" text="Débloqué à partir de 1.500 €" textFill="WHITE" wrapText="true">
+                <Label fx:id="labelBlocageDistributeur" alignment="CENTER" contentDisplay="CENTER" layoutX="230.0" layoutY="310.0" style="-fx-background-color: transparent;" styleClass="label2" text="Débloqué à partir de 1.500 €" textFill="WHITE" wrapText="true">
+                    <font>
+                        <Font size="3.0" />
+                    </font>
+                </Label>
+                <Label fx:id="labelBlocageLivraison" alignment="CENTER" contentDisplay="CENTER" layoutX="430.0" layoutY="310.0" style="-fx-background-color: transparent;" styleClass="label2" text="Débloqué à partir de 1.500 €" textFill="WHITE" wrapText="true">
                     <font>
                         <Font size="3.0" />
                     </font>
@@ -81,7 +86,7 @@
       <Pane fx:id="paneParentProgressJour" layoutX="185.0" layoutY="820.0" prefHeight="20.0" prefWidth="900.0">
          <children>
             <ProgressBar fx:id="progressJour" prefHeight="20.0" prefWidth="900.0" progress="0.0" />
-             <ProgressBar id="progressOeufs" fx:id="progressOeufs" cache="true" layoutX="0.0" layoutY="30.0" prefHeight="20.0" prefWidth="180.0" progress="0.0" visible="false" />
+             <ProgressBar id="progressOeufs" fx:id="progressOeufs" cache="true" layoutX="0.0" layoutY="30.0" prefHeight="20.0" prefWidth="180.0" progress="0.0" visible="true" />
          </children>
       </Pane>
         <Pane layoutX="240.0" layoutY="880.0" prefHeight="40.0" prefWidth="800.0">
@@ -95,7 +100,7 @@
                 <Label fx:id="labelConsole" alignment="TOP_LEFT" layoutX="50.0" prefHeight="60.0" prefWidth="700.0" style="-fx-background-color: transparent;" />
             </children>
         </Pane>
-        <Pane layoutX="185.0" layoutY="845.0" prefHeight="40.0" prefWidth="800.0" visible="true">
+        <Pane layoutX="400.0" layoutY="845.0" prefHeight="40.0" prefWidth="800.0" visible="true">
             <children>
                 <ProgressBar id="progressBC" fx:id="progressBC" cache="true" layoutY="10.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
                 <ProgressBar id="progressBF" fx:id="progressBF" cache="true" layoutX="130.0" layoutY="10.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />

@@ -77,11 +77,16 @@ public class SauvegardeService {
         // Insertion des données
         String sql = "INSERT INTO sauvegarde (pseudo, argent," +
                 "numJourDeco, heureDeco, progressJour," +
-                "nbPoules, nbOeufs, fermeActive, distributeursActive, distributeurBCActive, distributeurBFActive, distributeurCoActive, distributeurSaActive, livraisonActive, lavageActive, etatProgressOeuf, dateDeco, " +
+                "nbPoules, nbOeufs, fermeActive, distributeursActive, distributeurBCActive, distributeurBFActive, distributeurCoActive, distributeurSaActive," +
+                "livraison1Active, livraison2Active, livraison3Active, livraison4Active," +
+                "lavageActive, etatProgressOeuf, dateDeco, " +
                 "nbDistributeurBC, nbDistributeurBF, nbDistributeurSa, nbDistributeurCo," +
                 "nbMarchandisesBC, nbMarchandisesBF, nbMarchandisesSa, nbMarchandisesCo," +
-                "etatProgressBC, etatProgressBF, etatProgressSa, etatProgressCo, dateDebutJeu, poulailler1, poulailler2, poulailler3, poulailler4"+
-                ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                "etatProgressBC, etatProgressBF, etatProgressSa, etatProgressCo, dateDebutJeu, poulailler1, poulailler2, poulailler3, poulailler4," +
+                "nbLivraison1, nbLivraison2, nbLivraison3, nbLivraison4," +
+                "nbCourses1, nbCourses2, nbCourses3, nbCourses4," +
+                "etatProgressLivraison1, etatProgressLivraison2, etatProgressLivraison3, etatProgressLivraison4"+
+                ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         PreparedStatement stmt = connectionBdd.prepareStatement(sql);
         stmt.setString(1, sauvegarde.getPseudo());
@@ -97,32 +102,50 @@ public class SauvegardeService {
         stmt.setInt(11, sauvegarde.getDistributeurBFActive());
         stmt.setInt(12, sauvegarde.getDistributeurCoActive());
         stmt.setInt(13, sauvegarde.getDistributeurSaActive());
-        stmt.setInt(14, sauvegarde.getLivraisonActive());
-        stmt.setInt(15, sauvegarde.getLavageActive());
-        stmt.setDouble(16, sauvegarde.getEtatProgressOeuf());
-        stmt.setTimestamp(17, timestamp);
+        stmt.setInt(14, sauvegarde.getLivraison1Active());
+        stmt.setInt(15, sauvegarde.getLivraison2Active());
+        stmt.setInt(16, sauvegarde.getLivraison3Active());
+        stmt.setInt(17, sauvegarde.getLivraison4Active());
+        stmt.setInt(18, sauvegarde.getLavageActive());
+        stmt.setDouble(19, sauvegarde.getEtatProgressOeuf());
+        stmt.setTimestamp(20, timestamp);
 
-        stmt.setInt(18, sauvegarde.getNbDistributeurBC());
-        stmt.setInt(19, sauvegarde.getNbDistributeurBF());
-        stmt.setInt(20, sauvegarde.getNbDistributeurSa());
-        stmt.setInt(21, sauvegarde.getNbDistributeurCo());
+        stmt.setInt(21, sauvegarde.getNbDistributeurBC());
+        stmt.setInt(22, sauvegarde.getNbDistributeurBF());
+        stmt.setInt(23, sauvegarde.getNbDistributeurSa());
+        stmt.setInt(24, sauvegarde.getNbDistributeurCo());
 
-        stmt.setLong(22, sauvegarde.getNbMarchandisesBC());
-        stmt.setLong(23, sauvegarde.getNbMarchandisesBF());
-        stmt.setLong(24, sauvegarde.getNbMarchandisesSa());
-        stmt.setLong(25, sauvegarde.getNbMarchandisesCo());
+        stmt.setLong(25, sauvegarde.getNbMarchandisesBC());
+        stmt.setLong(26, sauvegarde.getNbMarchandisesBF());
+        stmt.setLong(27, sauvegarde.getNbMarchandisesSa());
+        stmt.setLong(28, sauvegarde.getNbMarchandisesCo());
 
-        stmt.setDouble(26, sauvegarde.getEtatProgressBC());
-        stmt.setDouble(27, sauvegarde.getEtatProgressBF());
-        stmt.setDouble(28, sauvegarde.getEtatProgressSa());
-        stmt.setDouble(29, sauvegarde.getEtatProgressCo());
+        stmt.setDouble(29, sauvegarde.getEtatProgressBC());
+        stmt.setDouble(30, sauvegarde.getEtatProgressBF());
+        stmt.setDouble(31, sauvegarde.getEtatProgressSa());
+        stmt.setDouble(32, sauvegarde.getEtatProgressCo());
 
-        stmt.setTimestamp(30, timestamp);
-        stmt.setInt(31, sauvegarde.getPoulailler1());
-        stmt.setInt(32, sauvegarde.getPoulailler2());
-        stmt.setInt(33, sauvegarde.getPoulailler3());
-        stmt.setInt(34, sauvegarde.getPoulailler4());
+        stmt.setTimestamp(33, timestamp);
 
+        stmt.setInt(34, sauvegarde.getPoulailler1());
+        stmt.setInt(35, sauvegarde.getPoulailler2());
+        stmt.setInt(36, sauvegarde.getPoulailler3());
+        stmt.setInt(37, sauvegarde.getPoulailler4());
+
+        stmt.setInt(38, sauvegarde.getNbLivraison1());
+        stmt.setInt(39, sauvegarde.getNbLivraison2());
+        stmt.setInt(40, sauvegarde.getNbLivraison3());
+        stmt.setInt(41, sauvegarde.getNbLivraison4());
+
+        stmt.setLong(42, sauvegarde.getNbCourses1());
+        stmt.setLong(43, sauvegarde.getNbCourses2());
+        stmt.setLong(44, sauvegarde.getNbCourses3());
+        stmt.setLong(45, sauvegarde.getNbCourses4());
+
+        stmt.setDouble(46, sauvegarde.getEtatProgressLivraison1());
+        stmt.setDouble(47, sauvegarde.getEtatProgressLivraison2());
+        stmt.setDouble(48, sauvegarde.getEtatProgressLivraison3());
+        stmt.setDouble(49, sauvegarde.getEtatProgressLivraison4());
 
         try {
             stmt.executeUpdate();
@@ -173,7 +196,10 @@ public class SauvegardeService {
             int distributeurBFActive = resultSet.getInt("distributeurBFActive");
             int distributeurCoActive = resultSet.getInt("distributeurCoActive");
             int distributeurSaActive = resultSet.getInt("distributeurSaActive");
-            int livraisonActive = resultSet.getInt("livraisonActive");
+            int livraison1Active = resultSet.getInt("livraison1Active");
+            int livraison2Active = resultSet.getInt("livraison2Active");
+            int livraison3Active = resultSet.getInt("livraison3Active");
+            int livraison4Active = resultSet.getInt("livraison4Active");
             int lavageActive = resultSet.getInt("lavageActive");
             double etatProgressOeuf = resultSet.getDouble("etatProgressOeuf");
 //            Timestamp timestamp = resultSet.getTimestamp("dateDeco");
@@ -201,15 +227,35 @@ public class SauvegardeService {
             int poulailler3 = resultSet.getInt("poulailler3");
             int poulailler4 = resultSet.getInt("poulailler4");
 
+            int nbLivraison1 = resultSet.getInt("nbLivraison1");
+            int nbLivraison2 = resultSet.getInt("nbLivraison2");
+            int nbLivraison3 = resultSet.getInt("nbLivraison3");
+            int nbLivraison4 = resultSet.getInt("nbLivraison4");
+
+            long nbCourses1 = resultSet.getLong("nbCourses1");
+            long nbCourses2 = resultSet.getLong("nbCourses2");
+            long nbCourses3 = resultSet.getLong("nbCourses3");
+            long nbCourses4 = resultSet.getLong("nbCourses4");
+
+            double etatProgressLivraison1 = resultSet.getDouble("etatProgressLivraison1");
+            double etatProgressLivraison2 = resultSet.getDouble("etatProgressLivraison2");
+            double etatProgressLivraison3 = resultSet.getDouble("etatProgressLivraison3");
+            double etatProgressLivraison4 = resultSet.getDouble("etatProgressLivraison4");
+
             LocalDateTime dateDeco = LocalDateTime.ofInstant(Instant.ofEpochMilli(timestampMillisDeco), ZoneId.systemDefault());
             LocalDateTime dateDebutJeu = LocalDateTime.ofInstant(Instant.ofEpochMilli(timestampMillisDebutJeu), ZoneId.systemDefault());
 
             Sauvegarde sauvegarde = new Sauvegarde(pseudo, argent, numJourDeco, heureDeco, progressJour, nbPoules, nbOeufs, fermeActive, distributeursActive, distributeurBCActive,
-                    distributeurBFActive, distributeurCoActive, distributeurSaActive, livraisonActive, livraisonActive
-                    , etatProgressOeuf, dateDeco,
+                    distributeurBFActive, distributeurCoActive, distributeurSaActive,
+                    livraison1Active, livraison2Active, livraison3Active, livraison4Active,
+                    lavageActive,
+                    etatProgressOeuf, dateDeco,
                     nbDistributeurBC, nbDistributeurBF, nbDistributeurSa, nbDistributeurCo,
                     nbMarchandisesBC, nbMarchandisesBF, nbMarchandisesSa, nbMarchandisesCo,
-                    etatProgressBC, etatProgressBF, etatProgressSa, etatProgressCo, dateDebutJeu, poulailler1, poulailler2, poulailler3, poulailler4);
+                    etatProgressBC, etatProgressBF, etatProgressSa, etatProgressCo, dateDebutJeu, poulailler1, poulailler2, poulailler3, poulailler4,
+                    nbLivraison1, nbLivraison2, nbLivraison3, nbLivraison4,
+                    nbCourses1, nbCourses2, nbCourses3, nbCourses4,
+                    etatProgressLivraison1, etatProgressLivraison2, etatProgressLivraison3, etatProgressLivraison4);
             sauvegarde.setId(id);
             System.out.println(sauvegarde);
             return sauvegarde;
@@ -223,12 +269,17 @@ public class SauvegardeService {
         // Requête de mise à jour
         String sql = "UPDATE sauvegarde SET argent = ?, numJourDeco = ?, heureDeco = ?, progressJour = ?, nbPoules = ?, nbOeufs = ?, "
                 + "fermeActive = ?, distributeursActive = ?, distributeurBCActive = ?,distributeurBFActive = ?," +
-                "distributeurCoActive = ?,distributeurSaActive = ?,livraisonActive = ?,lavageActive = ?," +
+                "distributeurCoActive = ?,distributeurSaActive = ?," +
+                "livraison1Active = ?, livraison2Active = ?, livraison3Active = ?, livraison4Active = ?," +
+                "lavageActive = ?," +
                 " etatProgressOeuf = ?, dateDeco = ?," +
                 "nbDistributeurBC = ?, nbDistributeurBF = ?, nbDistributeurSa = ?, nbDistributeurCo = ?," +
                 "nbMarchandisesBC = ?, nbMarchandisesBF = ?, nbMarchandisesSa = ?, nbMarchandisesCo = ?," +
                 "etatProgressBC = ?, etatProgressBF = ?, etatProgressSa = ?, etatProgressCo = ?, " +
-                "poulailler1 = ?, poulailler2 = ?, poulailler3 = ?, poulailler4 = ?"+
+                "poulailler1 = ?, poulailler2 = ?, poulailler3 = ?, poulailler4 = ?," +
+                "nbLivraison1 = ?, nbLivraison2 = ?, nbLivraison3 = ?, nbLivraison4 = ?," +
+                "nbCourses1 = ?, nbCourses2 = ?, nbCourses3 = ?, nbCourses4 = ?," +
+                "etatProgressLivraison1 = ?, etatProgressLivraison2 = ?, etatProgressLivraison3 = ?, etatProgressLivraison4 = ?"+
                 " WHERE pseudo LIKE ?";
 
         System.out.println("Requete : " + sql);
@@ -252,31 +303,49 @@ public class SauvegardeService {
         stmt.setInt(10, sauvegarde.getDistributeurBFActive());
         stmt.setInt(11, sauvegarde.getDistributeurCoActive());
         stmt.setInt(12, sauvegarde.getDistributeurSaActive());
-        stmt.setInt(13, sauvegarde.getLivraisonActive());
-        stmt.setInt(14, sauvegarde.getLavageActive());
-        stmt.setDouble(15, sauvegarde.getEtatProgressOeuf());
-        stmt.setTimestamp(16, timestamp);
+        stmt.setInt(13, sauvegarde.getLivraison1Active());
+        stmt.setInt(14, sauvegarde.getLivraison2Active());
+        stmt.setInt(15, sauvegarde.getLivraison3Active());
+        stmt.setInt(16, sauvegarde.getLivraison4Active());
+        stmt.setInt(17, sauvegarde.getLavageActive());
+        stmt.setDouble(18, sauvegarde.getEtatProgressOeuf());
+        stmt.setTimestamp(19, timestamp);
 
-        stmt.setInt(17, sauvegarde.getNbDistributeurBC());
-        stmt.setInt(18, sauvegarde.getNbDistributeurBF());
-        stmt.setInt(19, sauvegarde.getNbDistributeurSa());
-        stmt.setInt(20, sauvegarde.getNbDistributeurCo());
+        stmt.setInt(20, sauvegarde.getNbDistributeurBC());
+        stmt.setInt(21, sauvegarde.getNbDistributeurBF());
+        stmt.setInt(22, sauvegarde.getNbDistributeurSa());
+        stmt.setInt(23, sauvegarde.getNbDistributeurCo());
 
-        stmt.setLong(21, sauvegarde.getNbMarchandisesBC());
-        stmt.setLong(22, sauvegarde.getNbMarchandisesBF());
-        stmt.setLong(23, sauvegarde.getNbMarchandisesSa());
-        stmt.setLong(24, sauvegarde.getNbMarchandisesCo());
+        stmt.setLong(24, sauvegarde.getNbMarchandisesBC());
+        stmt.setLong(25, sauvegarde.getNbMarchandisesBF());
+        stmt.setLong(26, sauvegarde.getNbMarchandisesSa());
+        stmt.setLong(27, sauvegarde.getNbMarchandisesCo());
 
-        stmt.setDouble(25, sauvegarde.getEtatProgressBC());
-        stmt.setDouble(26, sauvegarde.getEtatProgressBF());
-        stmt.setDouble(27, sauvegarde.getEtatProgressSa());
-        stmt.setDouble(28, sauvegarde.getEtatProgressCo());
-        stmt.setInt(29, sauvegarde.getPoulailler1());
-        stmt.setInt(30, sauvegarde.getPoulailler2());
-        stmt.setInt(31, sauvegarde.getPoulailler3());
-        stmt.setInt(32, sauvegarde.getPoulailler4());
+        stmt.setDouble(28, sauvegarde.getEtatProgressBC());
+        stmt.setDouble(29, sauvegarde.getEtatProgressBF());
+        stmt.setDouble(30, sauvegarde.getEtatProgressSa());
+        stmt.setDouble(31, sauvegarde.getEtatProgressCo());
+        stmt.setInt(32, sauvegarde.getPoulailler1());
+        stmt.setInt(33, sauvegarde.getPoulailler2());
+        stmt.setInt(34, sauvegarde.getPoulailler3());
+        stmt.setInt(35, sauvegarde.getPoulailler4());
 
-        stmt.setString(33, sauvegarde.getPseudo());
+        stmt.setInt(36, sauvegarde.getNbLivraison1());
+        stmt.setInt(37, sauvegarde.getNbLivraison2());
+        stmt.setInt(38, sauvegarde.getNbLivraison3());
+        stmt.setInt(39, sauvegarde.getNbLivraison4());
+
+        stmt.setLong(40, sauvegarde.getNbCourses1());
+        stmt.setLong(41, sauvegarde.getNbCourses2());
+        stmt.setLong(42, sauvegarde.getNbCourses3());
+        stmt.setLong(43, sauvegarde.getNbCourses4());
+
+        stmt.setDouble(44, sauvegarde.getEtatProgressLivraison1());
+        stmt.setDouble(45, sauvegarde.getEtatProgressLivraison2());
+        stmt.setDouble(46, sauvegarde.getEtatProgressLivraison3());
+        stmt.setDouble(47, sauvegarde.getEtatProgressLivraison4());
+
+        stmt.setString(48, sauvegarde.getPseudo());
 
         // Insertion des données
         try {

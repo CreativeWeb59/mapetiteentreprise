@@ -21,8 +21,17 @@ public class Joueur {
     private int poulailler2;
     private int poulailler3;
     private int poulailler4;
+    private LivraisonScooter livraisonScooter;
+    private LivraisonCamionette livraisonCamionette;
+    private LivraisonPetitCamion livraisonPetitCamion;
+    private LivraisonPoidsLourd livraisonPoidsLourd;
+    private int livraison1Active;
+    private int livraison2Active;
+    private int livraison3Active;
+    private int livraison4Active;
 
-    public Joueur(String pseudo, BigDecimal argent, Ferme ferme, BoissonsChaudes boissonsChaudes, BoissonsFraiches boissonsFraiches, Sandwichs sandwichs, Confiseries confiseries, CreditEnCours creditEnCours, int fermeActive, int distributeursActive, int distributeurBCActive, int distributeurBFActive, int distributeurCoActive, int distributeurSaActive, int poulailler1, int poulailler2, int poulailler3, int poulailler4) {
+    public Joueur(String pseudo, BigDecimal argent, Ferme ferme, BoissonsChaudes boissonsChaudes, BoissonsFraiches boissonsFraiches, Sandwichs sandwichs, Confiseries confiseries, CreditEnCours creditEnCours, int fermeActive, int distributeursActive, int distributeurBCActive, int distributeurBFActive, int distributeurCoActive, int distributeurSaActive, int poulailler1, int poulailler2, int poulailler3, int poulailler4, int livraison1Active, int livraison2Active, int livraison3Active, int livraison4Active,
+                  LivraisonScooter livraisonScooter, LivraisonCamionette livraisonCamionette, LivraisonPetitCamion livraisonPetitCamion, LivraisonPoidsLourd livraisonPoidsLourd ) {
         this.pseudo = pseudo;
         this.argent = argent;
         this.ferme = ferme;
@@ -41,6 +50,14 @@ public class Joueur {
         this.poulailler2 = poulailler2;
         this.poulailler3 = poulailler3;
         this.poulailler4 = poulailler4;
+        this.livraison1Active = livraison1Active;
+        this.livraison2Active = livraison2Active;
+        this.livraison3Active = livraison3Active;
+        this.livraison4Active = livraison4Active;
+        this.livraisonScooter = livraisonScooter;
+        this.livraisonPetitCamion = livraisonPetitCamion;
+        this.livraisonCamionette = livraisonCamionette;
+        this.livraisonPoidsLourd = livraisonPoidsLourd;
     }
 
     public String getPseudo() {
@@ -187,6 +204,70 @@ public class Joueur {
         this.poulailler4 = poulailler4;
     }
 
+    public int getLivraison1Active() {
+        return livraison1Active;
+    }
+
+    public void setLivraison1Active(int livraison1Active) {
+        this.livraison1Active = livraison1Active;
+    }
+
+    public int getLivraison2Active() {
+        return livraison2Active;
+    }
+
+    public void setLivraison2Active(int livraison2Active) {
+        this.livraison2Active = livraison2Active;
+    }
+
+    public int getLivraison3Active() {
+        return livraison3Active;
+    }
+
+    public void setLivraison3Active(int livraison3Active) {
+        this.livraison3Active = livraison3Active;
+    }
+
+    public int getLivraison4Active() {
+        return livraison4Active;
+    }
+
+    public void setLivraison4Active(int livraison4Active) {
+        this.livraison4Active = livraison4Active;
+    }
+
+    public LivraisonScooter getLivraisonScooter() {
+        return livraisonScooter;
+    }
+
+    public void setLivraisonScooter(LivraisonScooter livraisonScooter) {
+        this.livraisonScooter = livraisonScooter;
+    }
+
+    public LivraisonPetitCamion getLivraisonPetitCamion() {
+        return livraisonPetitCamion;
+    }
+
+    public void setLivraisonPetitCamion(LivraisonPetitCamion livraisonPetitCamion) {
+        this.livraisonPetitCamion = livraisonPetitCamion;
+    }
+
+    public LivraisonCamionette getLivraisonCamionette() {
+        return livraisonCamionette;
+    }
+
+    public void setLivraisonCamionette(LivraisonCamionette livraisonCamionette) {
+        this.livraisonCamionette = livraisonCamionette;
+    }
+
+    public LivraisonPoidsLourd getLivraisonPoidsLourd() {
+        return livraisonPoidsLourd;
+    }
+
+    public void setLivraisonPoidsLourd(LivraisonPoidsLourd livraisonPoidsLourd) {
+        this.livraisonPoidsLourd = livraisonPoidsLourd;
+    }
+
     @Override
     public String toString() {
         return "Joueur{" +
@@ -208,6 +289,14 @@ public class Joueur {
                 ", poulailler2=" + poulailler2 +
                 ", poulailler3=" + poulailler3 +
                 ", poulailler4=" + poulailler4 +
+                ", livraisonScooter=" + livraisonScooter +
+                ", livraisonPetitCamion=" + livraisonPetitCamion +
+                ", livraisonCamionette=" + livraisonCamionette +
+                ", livraisonPoidsLourd=" + livraisonPoidsLourd +
+                ", livraison1Active=" + livraison1Active +
+                ", livraison2Active=" + livraison2Active +
+                ", livraison3Active=" + livraison3Active +
+                ", livraison4Active=" + livraison4Active +
                 '}';
     }
 

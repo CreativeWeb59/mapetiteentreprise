@@ -55,6 +55,10 @@ public class MainController {
     private BoissonsFraiches boissonsFraiches;
     private Sandwichs sandwichs;
     private Confiseries confiseries;
+    private LivraisonScooter livraisonScooter;
+    private LivraisonCamionette livraisonCamionette;
+    private LivraisonPetitCamion livraisonPetitCamion;
+    private LivraisonPoidsLourd livraisonPoidsLourd;
     private CreditEnCours creditEnCours;
 
     /**
@@ -146,7 +150,8 @@ public class MainController {
         // creation de la classe joueur
         Joueur joueur = new Joueur(userName, sauvegarde.getArgent(), this.ferme, this.boissonsChaudes, this.boissonsFraiches, this.sandwichs, this.confiseries,
                 this.creditEnCours, this.sauvegarde.getFermeActive(), this.sauvegarde.getDistributeursActive(), this.sauvegarde.getDistributeurBCActive(),
-                this.sauvegarde.getDistributeurBFActive(), this.sauvegarde.getDistributeurCoActive(), this.sauvegarde.getDistributeurSaActive(), this.sauvegarde.getPoulailler1(), this.sauvegarde.getPoulailler2(), this.sauvegarde.getPoulailler3(), this.sauvegarde.getPoulailler4());
+                this.sauvegarde.getDistributeurBFActive(), this.sauvegarde.getDistributeurCoActive(), this.sauvegarde.getDistributeurSaActive(), this.sauvegarde.getPoulailler1(), this.sauvegarde.getPoulailler2(), this.sauvegarde.getPoulailler3(), this.sauvegarde.getPoulailler4(), this.sauvegarde.getLivraison1Active(), this.sauvegarde.getLivraison2Active(), this.sauvegarde.getLivraison3Active(), this.sauvegarde.getLivraison4Active(),
+                this.livraisonScooter, this.livraisonCamionette, this.livraisonPetitCamion, livraisonPoidsLourd);
 
         // cree le jeu avec tous les parametres
         this.jeu = new Jeu(joueur, sauvegarde, parametres, calendrier);
@@ -246,8 +251,8 @@ public class MainController {
         LocalDateTime dateEncours = LocalDateTime.now();
 
         // creation de la sauvegarde en bdd
-        this.sauvegarde = new Sauvegarde(this.pseudo, parametres.getArgentDepart(),1, 1, 0, parametres.getNbPoules(), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                dateEncours, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, dateEncours, 1, 0, 0, 0);
+        this.sauvegarde = new Sauvegarde(this.pseudo, parametres.getArgentDepart(),1, 1, 0, parametres.getNbPoules(), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                dateEncours, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, dateEncours, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
         sauvegardeService.addJoueur(sauvegarde);
 
         this.creerActivites(true);
@@ -255,7 +260,8 @@ public class MainController {
         // creation de la classe joueur
         Joueur joueur = new Joueur(this.pseudo, parametres.getArgentDepart(), this.ferme, this.boissonsChaudes, this.boissonsFraiches, this.sandwichs, this.confiseries,
                 this.creditEnCours, this.parametres.getFermeActive(), this.parametres.getDistributeursActive(), this.parametres.getDistributeurBCActive(),
-                this.parametres.getDistributeurBFActive(), this.parametres.getDistributeurSaActive(), this.parametres.getDistributeurCoActive(), 1, 0, 0, 0);
+                this.parametres.getDistributeurBFActive(), this.parametres.getDistributeurSaActive(), this.parametres.getDistributeurCoActive(), 1, 0, 0, 0, 0, 0, 0, 0,
+                this.livraisonScooter, this.livraisonCamionette, this.livraisonPetitCamion, livraisonPoidsLourd);
 
         // creation du calendrier
         Calendrier calendrier = new Calendrier(dateEncours, 1, 0, 0);
@@ -284,6 +290,11 @@ public class MainController {
             boissonsFraiches = new BoissonsFraiches(parametres.getNbDistributeurBF(), 0, 0, LocalDateTime.now());
             confiseries = new Confiseries(parametres.getNbDistributeurCo(), 0, 0, LocalDateTime.now());
             sandwichs = new Sandwichs(parametres.getNbDistributeurSa(), 0, 0, LocalDateTime.now());
+            // creation des livrraisons
+            livraisonScooter = new LivraisonScooter("Livraisons en scooter", 0, 0, 0);
+            livraisonCamionette = new LivraisonCamionette("Livraisons en camionette", 0, 0, 0);
+            livraisonPetitCamion = new LivraisonPetitCamion("Livraisons en petit camion", 0, 0, 0);
+            livraisonPoidsLourd = new LivraisonPoidsLourd("Livraisons en poids lourd", 0, 0, 0);
         } else {
             // recuperation des donnees de la ferme dont dateDeco
             ferme = new Ferme(sauvegarde.getNbPoules(), sauvegarde.getNbOeufs(), sauvegarde.getEtatProgressOeuf(), sauvegarde.getDateDeco());
@@ -292,6 +303,11 @@ public class MainController {
             boissonsFraiches = new BoissonsFraiches(sauvegarde.getNbDistributeurBF(), sauvegarde.getNbMarchandisesBF(), sauvegarde.getEtatProgressBF(), sauvegarde.getDateDeco());
             confiseries = new Confiseries(sauvegarde.getNbDistributeurCo(), sauvegarde.getNbMarchandisesCo(), sauvegarde.getEtatProgressCo(), sauvegarde.getDateDeco());
             sandwichs = new Sandwichs(sauvegarde.getNbDistributeurSa(), sauvegarde.getNbMarchandisesSa(), sauvegarde.getEtatProgressSa(), sauvegarde.getDateDeco());
+            // creation des livrraisons
+            livraisonScooter = new LivraisonScooter("Livraisons en scooter", sauvegarde.getNbLivraison1(), sauvegarde.getNbCourses1(), sauvegarde.getEtatProgressLivraison1());
+            livraisonCamionette = new LivraisonCamionette("Livraisons en camionette", sauvegarde.getNbLivraison2(), sauvegarde.getNbCourses2(), sauvegarde.getEtatProgressLivraison2());
+            livraisonPetitCamion = new LivraisonPetitCamion("Livraisons en petit camion", sauvegarde.getNbLivraison3(), sauvegarde.getNbCourses3(), sauvegarde.getEtatProgressLivraison3());
+            livraisonPoidsLourd = new LivraisonPoidsLourd("Livraisons en poids lourd", sauvegarde.getNbLivraison4(), sauvegarde.getNbCourses4(), sauvegarde.getEtatProgressLivraison4());
         }
     }
 
