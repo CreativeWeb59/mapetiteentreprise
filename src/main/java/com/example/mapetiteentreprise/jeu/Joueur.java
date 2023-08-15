@@ -323,5 +323,21 @@ public class Joueur {
         this.setArgent(this.getArgent().subtract(montantDepense));
     }
 
+    /**
+     * methode generale pour acheter un service de livraison
+     *
+     * @param montantAchat
+     * @return true si ok, false si pas assez d'argent
+     */
+    public Boolean acheter(BigDecimal montantAchat) {
+        // on verifie l'argent dispo
+        // si c'est le cas on retire l'argent
+        if (this.isArgent(montantAchat)) {
+            this.depenser(montantAchat);
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 }

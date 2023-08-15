@@ -74,4 +74,29 @@ public abstract class Livraisons {
     public void setEtatProgressLivraison(double etatProgressLivraison) {
         this.etatProgressLivraison = etatProgressLivraison;
     }
+
+    @Override
+    public String toString() {
+        return "Livraisons{" +
+                "prixVehicule=" + prixVehicule +
+                ", prixCourse=" + prixCourse +
+                ", nbMaxiVehicules=" + nbMaxiVehicules +
+                ", vitesseLivraion=" + vitesseLivraion +
+                ", nom='" + nom + '\'' +
+                ", nbVehicules=" + nbVehicules +
+                ", nbCourses=" + nbCourses +
+                ", etatProgressLivraison=" + etatProgressLivraison +
+                '}';
+    }
+
+    /**
+     * Methode pour ajouter un distributeur
+     */
+    public void ajoutServiceDeLivraison(){
+        this.setNbVehicules(this.getNbVehicules() + 1);
+    }
+
+    public int getNbMaxiServiceDeLivraison() {
+        return nbMaxiVehicules;
+    }
 }

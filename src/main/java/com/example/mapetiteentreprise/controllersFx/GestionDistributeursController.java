@@ -70,7 +70,7 @@ public class GestionDistributeursController {
     private final DecimalFormat decimalFormat = Outils.getDecimalFormatWithSpaceSeparator();
 
     /**
-     *  Declaraation des boutons, labels, progressBar necessaires
+     *  Declaration des boutons, labels, progressBar necessaires
      */
     /**
      * /**

@@ -1198,7 +1198,7 @@ public class FermeController {
     public void verifBtnAmeliorer(Group groupBtnAmeliorer, Button btnAmeliorer , int typePoulailler) {
 //        int typePoulaillerSuivant = jeu.getJoueur().getPoulailler1() + 1;
         int typePoulaillerSuivant = typePoulailler + 1;
-        if (typePoulailler >= 3) {
+        if (typePoulailler > 3) {
             groupBtnAmeliorer.setVisible(false);
         } else {
             groupBtnAmeliorer.setVisible(true);

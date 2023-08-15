@@ -4,7 +4,6 @@ import com.example.mapetiteentreprise.Main;
 import com.example.mapetiteentreprise.actions.Outils;
 import com.example.mapetiteentreprise.jeu.CreditEnCours;
 import com.example.mapetiteentreprise.jeu.Jeu;
-import com.example.mapetiteentreprise.jeu.LivraisonScooter;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -279,6 +278,42 @@ public class GestionController {
             stage.setScene(scene);
             // Permet de récupérer le gestionnaire d'événements pour la fermeture de la fenêtre
             stage.setOnCloseRequest(gestionDistributeursController::onWindowClose);
+            stage.show();
+            stage.centerOnScreen();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    /**
+     * Arrivee dans le jeu
+     * desactivation de la ferme
+     */
+    public void switchToLivraisons(ActionEvent event) {
+        // achat des livraisons
+
+        // sauvegarde des barres de progression
+        this.jeu.getCalendrier().setProgressJour(this.progressJour.getProgress());
+        this.jeu.getJoueur().getFerme().setEtatProgressOeuf(this.progressOeufs.getProgress());
+
+        // on stoppe les barres de progression;
+        this.progressBarStop(timelineCalendrier);
+        this.progressBarStop(timelineHeure);
+        this.progressBarStop(timelineBC);
+        this.progressBarStop(timelineBF);
+        this.progressBarStop(timelineCo);
+        this.progressBarStop(timelineSa);
+
+        try {
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("livraisons.fxml"));
+            root = loader.load();
+            GestionLivraisonsController gestionLivraisonsController = loader.getController();
+            gestionLivraisonsController.demarrer(jeu);
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            // Permet de récupérer le gestionnaire d'événements pour la fermeture de la fenêtre
+            stage.setOnCloseRequest(gestionLivraisonsController::onWindowClose);
             stage.show();
             stage.centerOnScreen();
         } catch (Exception e) {

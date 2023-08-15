@@ -291,10 +291,10 @@ public class MainController {
             confiseries = new Confiseries(parametres.getNbDistributeurCo(), 0, 0, LocalDateTime.now());
             sandwichs = new Sandwichs(parametres.getNbDistributeurSa(), 0, 0, LocalDateTime.now());
             // creation des livrraisons
-            livraisonScooter = new LivraisonScooter("Livraisons en scooter", 0, 0, 0);
-            livraisonCamionette = new LivraisonCamionette("Livraisons en camionette", 0, 0, 0);
-            livraisonPetitCamion = new LivraisonPetitCamion("Livraisons en petit camion", 0, 0, 0);
-            livraisonPoidsLourd = new LivraisonPoidsLourd("Livraisons en poids lourd", 0, 0, 0);
+            livraisonScooter = new LivraisonScooter("un scooter", 0, 0, 0);
+            livraisonCamionette = new LivraisonCamionette("une camionette", 0, 0, 0);
+            livraisonPetitCamion = new LivraisonPetitCamion("un petit camion", 0, 0, 0);
+            livraisonPoidsLourd = new LivraisonPoidsLourd("un poids lourd", 0, 0, 0);
         } else {
             // recuperation des donnees de la ferme dont dateDeco
             ferme = new Ferme(sauvegarde.getNbPoules(), sauvegarde.getNbOeufs(), sauvegarde.getEtatProgressOeuf(), sauvegarde.getDateDeco());
@@ -304,10 +304,10 @@ public class MainController {
             confiseries = new Confiseries(sauvegarde.getNbDistributeurCo(), sauvegarde.getNbMarchandisesCo(), sauvegarde.getEtatProgressCo(), sauvegarde.getDateDeco());
             sandwichs = new Sandwichs(sauvegarde.getNbDistributeurSa(), sauvegarde.getNbMarchandisesSa(), sauvegarde.getEtatProgressSa(), sauvegarde.getDateDeco());
             // creation des livrraisons
-            livraisonScooter = new LivraisonScooter("Livraisons en scooter", sauvegarde.getNbLivraison1(), sauvegarde.getNbCourses1(), sauvegarde.getEtatProgressLivraison1());
-            livraisonCamionette = new LivraisonCamionette("Livraisons en camionette", sauvegarde.getNbLivraison2(), sauvegarde.getNbCourses2(), sauvegarde.getEtatProgressLivraison2());
-            livraisonPetitCamion = new LivraisonPetitCamion("Livraisons en petit camion", sauvegarde.getNbLivraison3(), sauvegarde.getNbCourses3(), sauvegarde.getEtatProgressLivraison3());
-            livraisonPoidsLourd = new LivraisonPoidsLourd("Livraisons en poids lourd", sauvegarde.getNbLivraison4(), sauvegarde.getNbCourses4(), sauvegarde.getEtatProgressLivraison4());
+            livraisonScooter = new LivraisonScooter("un scooter", sauvegarde.getNbLivraison1(), sauvegarde.getNbCourses1(), sauvegarde.getEtatProgressLivraison1());
+            livraisonCamionette = new LivraisonCamionette("une camionette", sauvegarde.getNbLivraison2(), sauvegarde.getNbCourses2(), sauvegarde.getEtatProgressLivraison2());
+            livraisonPetitCamion = new LivraisonPetitCamion("un petit camion", sauvegarde.getNbLivraison3(), sauvegarde.getNbCourses3(), sauvegarde.getEtatProgressLivraison3());
+            livraisonPoidsLourd = new LivraisonPoidsLourd("un poids lourd", sauvegarde.getNbLivraison4(), sauvegarde.getNbCourses4(), sauvegarde.getEtatProgressLivraison4());
         }
     }
 

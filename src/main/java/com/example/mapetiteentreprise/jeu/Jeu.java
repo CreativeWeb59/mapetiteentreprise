@@ -153,6 +153,18 @@ public class Jeu {
         getSauvegarde().setPoulailler2(getJoueur().getPoulailler2());
         getSauvegarde().setPoulailler3(getJoueur().getPoulailler3());
         getSauvegarde().setPoulailler4(getJoueur().getPoulailler4());
+        getSauvegarde().setLivraison1Active(getJoueur().getLivraison1Active());
+        getSauvegarde().setLivraison2Active(getJoueur().getLivraison2Active());
+        getSauvegarde().setLivraison3Active(getJoueur().getLivraison3Active());
+        getSauvegarde().setLivraison4Active(getJoueur().getLivraison4Active());
+        getSauvegarde().setNbLivraison1(getJoueur().getLivraisonScooter().getNbVehicules());
+        getSauvegarde().setNbLivraison2(getJoueur().getLivraisonCamionette().getNbVehicules());
+        getSauvegarde().setNbLivraison3(getJoueur().getLivraisonPetitCamion().getNbVehicules());
+        getSauvegarde().setNbLivraison4(getJoueur().getLivraisonPoidsLourd().getNbVehicules());
+        getSauvegarde().setNbCourses1(getSauvegarde().getNbCourses1());
+        getSauvegarde().setNbCourses2(getSauvegarde().getNbCourses2());
+        getSauvegarde().setNbCourses3(getSauvegarde().getNbCourses3());
+        getSauvegarde().setNbCourses4(getSauvegarde().getNbCourses4());
 
         System.out.println("Nouvelles valeurs a sauvegarder" + getSauvegarde());
 

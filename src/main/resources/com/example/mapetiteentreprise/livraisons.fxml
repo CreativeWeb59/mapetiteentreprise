@@ -1,14 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
 <AnchorPane prefHeight="1024.0" prefWidth="1280.0" styleClass="fondsVille" stylesheets="@css/main.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.mapetiteentreprise.controllersFx.GestionLivraisonsController">
-   <Pane layoutX="240.0" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: white;" />
-    <children>
-        <Button fx:id="retourMenu" layoutX="550.0" layoutY="70.0" mnemonicParsing="false" onAction="#retourGestion" styleClass="buttonVendre" text="Retour au menu" />
-    </children>
-    <Pane layoutX="200.0" layoutY="1280.0" prefHeight="100.0" prefWidth="900.0" visible="true">
+   <Pane layoutX="240.0" layoutY="50.0" prefHeight="100.0" prefWidth="800.0" style="-fx-background-color: white;">
+      <children>
+         <Label fx:id="labelHaut" text="Montant en banque" />
+      </children></Pane>
+        <Button fx:id="retourMenu" layoutX="1083.0" layoutY="77.0" mnemonicParsing="false" onAction="#retourGestion" styleClass="buttonVendre" text="Retour au menu" />
+   <Pane layoutX="100.0" layoutY="200.0" prefHeight="650.0" prefWidth="540.0">
+      <children>
+         <Pane fx:id="paneScooter" opacity="0.5" prefHeight="140.0" prefWidth="540.0" style="-fx-background-color: white;" styleClass="fondsPaysage1">
+            <children>
+               <Label alignment="CENTER" prefHeight="29.0" prefWidth="540.0" style="-fx-background-color: transparent;" text="Livraisons en scooter" />
+               <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="20.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@images/imgLivreur.png" />
+                  </image>
+               </ImageView>
+               <ProgressBar fx:id="progressScooter" layoutX="20.0" layoutY="110.0" prefHeight="20.0" prefWidth="400.0" progress="0.0" />
+               <Label fx:id="labelNbCoursesScooter" alignment="CENTER_RIGHT" layoutX="434.0" layoutY="74.0" prefHeight="60.0" prefWidth="86.0" style="-fx-background-color: transparent;" styleClass="grosChiffre" text="0" />
+            </children>
+         </Pane>
+         <Pane fx:id="paneCamionette" disable="true" layoutY="160.0" opacity="0.5" prefHeight="140.0" prefWidth="540.0" style="-fx-background-color: white;" styleClass="fondsPaysage2" />
+         <Pane fx:id="panePetitCamion" disable="true" layoutY="320.0" opacity="0.5" prefHeight="140.0" prefWidth="540.0" style="-fx-background-color: white;" />
+         <Pane fx:id="panePoidsLourd" disable="true" layoutY="480.0" opacity="0.5" prefHeight="140.0" prefWidth="540.0" style="-fx-background-color: white;" />
+      </children>
+   </Pane>
+   <Pane layoutX="700.0" layoutY="200.0" prefHeight="650.0" prefWidth="540.0">
+      <children>
+         <Pane fx:id="paneScooterD" opacity="0.5" prefHeight="140.0" prefWidth="540.0" style="-fx-background-color: white;" styleClass="fondsPaysage1">
+            <children>
+               <Label fx:id="labelTarifScooter" layoutX="38.0" layoutY="25.0" style="-fx-background-color: transparent;" text="prix scooter" />
+               <Button fx:id="btnAchatScooter" layoutX="461.0" layoutY="16.0" mnemonicParsing="false" onAction="#acheterScooter" text="+" />
+               <Label fx:id="labelNbScooter" layoutX="354.0" layoutY="27.0" style="-fx-background-color: transparent;" text="1/200" />
+               <Button fx:id="btnEncaisserCourseScooter" layoutX="210.0" layoutY="80.0" mnemonicParsing="false" onAction="#onBtnEncaisserCourse1" styleClass="buttonVendre" text="Encaisser" visible="false" />
+               <Button fx:id="btnAchatLivraisonScooter" layoutX="120.0" layoutY="80.0" mnemonicParsing="false" onAction="#onAchatLivraisonScooter" styleClass="buttonVendre" text="Acheter Livraison en scooter" visible="false" />
+            </children>
+         </Pane>
+         <Pane fx:id="paneCamionetteD" disable="true" layoutY="160.0" opacity="0.5" prefHeight="140.0" prefWidth="540.0" style="-fx-background-color: white;" styleClass="fondsPaysage2" />
+         <Pane fx:id="panePetitCamionD" disable="true" layoutY="320.0" opacity="0.5" prefHeight="140.0" prefWidth="540.0" style="-fx-background-color: white;" />
+         <Pane fx:id="panePoidsLourdD" disable="true" layoutY="480.0" opacity="0.5" prefHeight="140.0" prefWidth="540.0" style="-fx-background-color: white;" />
+      </children>
+   </Pane>
+    <Pane layoutX="200.0" layoutY="900.0" prefHeight="100.0" prefWidth="900.0" visible="true">
         <children>
             <ProgressBar fx:id="progressJour" prefHeight="20.0" prefWidth="900.0" progress="0.0" />
             <ProgressBar id="progressOeufs" fx:id="progressOeufs" cache="true" layoutX="0.0" layoutY="25.0" prefHeight="20.0" prefWidth="180.0" progress="0.0" visible="true" />
