@@ -130,10 +130,11 @@
                 <Button fx:id="btnDebloquerSa" layoutX="140.0" layoutY="-100.0" mnemonicParsing="false" onAction="#acheterSandwichs" text="Débloquer pour 4.000 €" />
             </children>
         </Pane>
-        <Pane fx:id="paneParentProgressJour" layoutX="185.0" layoutY="940.0" prefHeight="20.0" prefWidth="900.0" visible="true">
+        <Pane fx:id="paneProgress" layoutX="185.0" layoutY="910.0" prefHeight="20.0" prefWidth="900.0" visible="true">
             <children>
-                <ProgressBar fx:id="progressJour" prefHeight="20.0" prefWidth="900.0" progress="0.0" />
-                <ProgressBar id="progressOeufs" fx:id="progressOeufs" cache="true" layoutX="0.0" layoutY="30.0" prefHeight="20.0" prefWidth="180.0" progress="0.0" />
+                <ProgressBar fx:id="progressOeufs" cache="true" layoutX="0.0" layoutY="0.0" prefHeight="15.0" prefWidth="180.0" progress="0.0" />
+                <ProgressBar fx:id="progressJour" layoutY="25.0" prefHeight="20.0" prefWidth="900.0" progress="0.0" />
+                <ProgressBar fx:id="progressScooter" cache="true" layoutX="450.0" layoutY="50.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
             </children>
         </Pane>
     </children>

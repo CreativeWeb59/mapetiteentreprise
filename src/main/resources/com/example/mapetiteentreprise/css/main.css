@@ -139,7 +139,26 @@ Label{
     -fx-background-repeat: no-repeat;
     -fx-background-size: cover;
 }
-
+.fondsPaysage3{
+    -fx-background-image: url("../images/fondsPaysage3.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
+.fondsPaysage4{
+    -fx-background-image: url("../images/fondsPaysage4.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
+.fondsPaysage5{
+    -fx-background-image: url("../images/fondsPaysage5.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
+.fondsPaysage6{
+    -fx-background-image: url("../images/fondsPaysage6.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
 #titre{
     -fx-font-size: 40px;
 }

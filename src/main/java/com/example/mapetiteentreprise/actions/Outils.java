@@ -181,4 +181,12 @@ public class Outils {
         int capacite4 = poulaillersList.get(poulailler4).getCapacite();
         return capacite1 + capacite2 + capacite3 + capacite4;
     }
+
+    /**
+     * Permet modifier le texte du label donné en paramètre
+     * @param label
+     */
+    public static void setLabel(Label label, String texte){
+        label.setText(texte);
+    }
 }

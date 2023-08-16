@@ -99,4 +99,11 @@ public abstract class Livraisons {
     public int getNbMaxiServiceDeLivraison() {
         return nbMaxiVehicules;
     }
+
+    /**
+     * initialise le nombre de vehicules en cours ainsi que le nombre de vehicules maximum
+     */
+    public String setNbVehicule() {
+        return this.getNbVehicules() + " / " + this.getNbMaxiVehicules();
+    }
 }

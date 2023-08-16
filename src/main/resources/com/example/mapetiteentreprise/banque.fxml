@@ -49,18 +49,15 @@
                     <Button fx:id="retourMenu" layoutX="987.0" layoutY="245.0" mnemonicParsing="false" onAction="#retourGestion" styleClass="buttonVendre" text="Retour au menu" />
                </children>
             </Pane>
-             <Pane fx:id="paneParentProgressJour" layoutX="185.0" layoutY="820.0" prefHeight="20.0" prefWidth="900.0" visible="false">
+             <Pane fx:id="paneProgress" layoutX="185.0" layoutY="820.0" prefHeight="20.0" prefWidth="900.0" visible="true">
                  <children>
-                     <ProgressBar fx:id="progressJour" prefHeight="20.0" prefWidth="900.0" progress="0.0" />
-                     <ProgressBar id="progressOeufs" fx:id="progressOeufs" cache="true" layoutX="0.0" layoutY="30.0" prefHeight="20.0" prefWidth="180.0" progress="0.0" />
-                 </children>
-             </Pane>
-             <Pane layoutX="185.0" layoutY="845.0" prefHeight="40.0" prefWidth="800.0" visible="true">
-                 <children>
-                     <ProgressBar id="progressBC" fx:id="progressBC" cache="true" layoutY="10.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
-                     <ProgressBar id="progressBF" fx:id="progressBF" cache="true" layoutX="130.0" layoutY="10.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
-                     <ProgressBar id="progressCo" fx:id="progressCo" cache="true" layoutX="260.0" layoutY="10.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
-                     <ProgressBar id="progressSa" fx:id="progressSa" cache="true" layoutX="390.0" layoutY="10.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
+                     <ProgressBar fx:id="progressOeufs" cache="true" layoutX="0.0" layoutY="0.0" prefHeight="15.0" prefWidth="180.0" progress="0.0" />
+                     <ProgressBar fx:id="progressJour" prefHeight="20.0" layoutY="25.0" prefWidth="900.0" progress="0.0" />
+                     <ProgressBar fx:id="progressBC" cache="true" layoutX="0.0" layoutY="50.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
+                     <ProgressBar fx:id="progressBF" cache="true" layoutX="105.0" layoutY="50.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
+                     <ProgressBar fx:id="progressCo" cache="true" layoutX="210.0" layoutY="50.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
+                     <ProgressBar fx:id="progressSa" cache="true" layoutX="315.0" layoutY="50.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
+                     <ProgressBar fx:id="progressScooter" cache="true" layoutX="450.0" layoutY="50.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
                  </children>
              </Pane>
          </children>

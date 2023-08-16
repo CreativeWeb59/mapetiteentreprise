@@ -4,12 +4,14 @@ import com.example.mapetiteentreprise.bdd.*;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.layout.Pane;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Jeu {
+    private final boolean dev = true;
     private Joueur joueur;
     private Sauvegarde sauvegarde;
     private Parametres parametres;
@@ -102,6 +104,10 @@ public class Jeu {
         }
     }
 
+    public boolean isDev() {
+        return dev;
+    }
+
     @Override
     public String toString() {
         return "Jeu{" +
@@ -161,10 +167,14 @@ public class Jeu {
         getSauvegarde().setNbLivraison2(getJoueur().getLivraisonCamionette().getNbVehicules());
         getSauvegarde().setNbLivraison3(getJoueur().getLivraisonPetitCamion().getNbVehicules());
         getSauvegarde().setNbLivraison4(getJoueur().getLivraisonPoidsLourd().getNbVehicules());
-        getSauvegarde().setNbCourses1(getSauvegarde().getNbCourses1());
-        getSauvegarde().setNbCourses2(getSauvegarde().getNbCourses2());
-        getSauvegarde().setNbCourses3(getSauvegarde().getNbCourses3());
-        getSauvegarde().setNbCourses4(getSauvegarde().getNbCourses4());
+        getSauvegarde().setNbCourses1(getJoueur().getLivraisonScooter().getNbCourses());
+        getSauvegarde().setNbCourses2(getJoueur().getLivraisonCamionette().getNbCourses());
+        getSauvegarde().setNbCourses3(getJoueur().getLivraisonPetitCamion().getNbCourses());
+        getSauvegarde().setNbCourses4(getJoueur().getLivraisonPoidsLourd().getNbCourses());
+        getSauvegarde().setEtatProgressLivraison1(getJoueur().getLivraisonScooter().getEtatProgressLivraison());
+        getSauvegarde().setEtatProgressLivraison2(getJoueur().getLivraisonCamionette().getEtatProgressLivraison());
+        getSauvegarde().setEtatProgressLivraison3(getJoueur().getLivraisonPetitCamion().getEtatProgressLivraison());
+        getSauvegarde().setEtatProgressLivraison4(getJoueur().getLivraisonPoidsLourd().getEtatProgressLivraison());
 
         System.out.println("Nouvelles valeurs a sauvegarder" + getSauvegarde());
 
@@ -306,5 +316,16 @@ public class Jeu {
             valeur = valeur.add(valeurDistributeur);
         }
         return valeur;
+    }
+
+    /**
+     * Affiche les barres de progression en mode dev
+     */
+    public void afficheProgression(Pane paneProgress){
+        if(this.isDev()){
+            paneProgress.setVisible(true);
+        } else {
+            paneProgress.setVisible(false);
+        }
     }
 }
