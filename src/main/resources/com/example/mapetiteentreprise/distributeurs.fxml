@@ -135,6 +135,7 @@
                 <ProgressBar fx:id="progressOeufs" cache="true" layoutX="0.0" layoutY="0.0" prefHeight="15.0" prefWidth="180.0" progress="0.0" />
                 <ProgressBar fx:id="progressJour" layoutY="25.0" prefHeight="20.0" prefWidth="900.0" progress="0.0" />
                 <ProgressBar fx:id="progressScooter" cache="true" layoutX="450.0" layoutY="50.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
+                <ProgressBar fx:id="progressCamionette" cache="true" layoutX="555.0" layoutY="50.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
             </children>
         </Pane>
     </children>

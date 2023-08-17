@@ -23,13 +23,13 @@ import javafx.util.Duration;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.time.LocalDateTime;
 
 public class GestionController {
     @FXML
     private Label pseudoLabel, labelBlocageDistributeur, labelBlocageLivraison;
     @FXML
-    private Button btnNew, btnContinuer, btnFerme, btnAchatFerme, btnDistributeurs, btnLivraison;
-    private String pseudo;
+    private Button btnFerme, btnAchatFerme, btnDistributeurs, btnLivraison;
     private Stage stage;
     private Scene scene;
     private Parent root;
@@ -42,8 +42,8 @@ public class GestionController {
     @FXML
     private Pane paneSemaine1, paneSemaine2, paneParentProgressJour, paneProgress;
     @FXML
-    private ProgressBar progressJour, progressOeufs, progressBC, progressBF, progressSa, progressCo, progressScooter;
-    private Timeline timelineCalendrier, timelineHeure, timelineBC, timelineBF, timelineSa, timelineCo, timelineScooter;
+    private ProgressBar progressJour, progressOeufs, progressBC, progressBF, progressSa, progressCo, progressScooter, progressCamionette;
+    private Timeline timelineCalendrier, timelineHeure, timelineBC, timelineBF, timelineSa, timelineCo, timelineScooter, timelineCamionette;
 
     /**
      * Recupere le nom de la sauvegarde
@@ -166,22 +166,8 @@ public class GestionController {
         // Test nombre de caractères
         // Test si non vide
         System.out.println("Lancement du jeu, déblocage de la ferme");
-
-        // sauvegarde des barres de progression
-        this.jeu.getCalendrier().setProgressJour(this.progressJour.getProgress());
-        this.jeu.getJoueur().getFerme().setEtatProgressOeuf(this.progressOeufs.getProgress());
-
-        // on recupere les barres de progression des livraisons
-        this.jeu.getJoueur().getLivraisonScooter().setEtatProgressLivraison(this.progressScooter.getProgress());
-
-        // on stoppe les barres de progression;
-        this.progressBarStop(timelineCalendrier);
-        this.progressBarStop(timelineHeure);
-        this.progressBarStop(timelineBC);
-        this.progressBarStop(timelineBF);
-        this.progressBarStop(timelineCo);
-        this.progressBarStop(timelineSa);
-        this.progressBarStop(timelineScooter);
+        // fermeture des barres, enregistrement + stop et sauvegarde date deco
+        fermetureProgress();
 
         try {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("ferme.fxml"));
@@ -211,21 +197,8 @@ public class GestionController {
         // Test nombre de caractères
         // Test si non vide
 
-        // sauvegarde des barres de progression
-        this.jeu.getCalendrier().setProgressJour(this.progressJour.getProgress());
-        this.jeu.getJoueur().getFerme().setEtatProgressOeuf(this.progressOeufs.getProgress());
-
-        // on recupere les barres de progression des livraisons
-        this.jeu.getJoueur().getLivraisonScooter().setEtatProgressLivraison(this.progressScooter.getProgress());
-
-        // on stoppe les barres de progression;
-        this.progressBarStop(timelineCalendrier);
-        this.progressBarStop(timelineHeure);
-        this.progressBarStop(timelineBC);
-        this.progressBarStop(timelineBF);
-        this.progressBarStop(timelineCo);
-        this.progressBarStop(timelineSa);
-        this.progressBarStop(timelineScooter);
+        // fermeture des barres, enregistrement + stop et sauvegarde date deco
+        fermetureProgress();
 
         try {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("ferme.fxml"));
@@ -257,27 +230,8 @@ public class GestionController {
         // Test si non vide
         System.out.println("Menu de gestion des distributeurs");
 
-        // sauvegarde des barres de progression
-        this.jeu.getCalendrier().setProgressJour(this.progressJour.getProgress());
-        this.jeu.getJoueur().getFerme().setEtatProgressOeuf(this.progressOeufs.getProgress());
-
-        // on recupere l'etat de la barre de progression des distributeurs
-        this.jeu.getJoueur().getBoissonsChaudes().setEtatProgressDistributeur(this.progressBC.getProgress());
-        this.jeu.getJoueur().getBoissonsFraiches().setEtatProgressDistributeur(this.progressBF.getProgress());
-        this.jeu.getJoueur().getConfiseries().setEtatProgressDistributeur(this.progressCo.getProgress());
-        this.jeu.getJoueur().getSandwichs().setEtatProgressDistributeur(this.progressSa.getProgress());
-
-        // on recupere les barres de progression des livraisons
-        this.jeu.getJoueur().getLivraisonScooter().setEtatProgressLivraison(this.progressScooter.getProgress());
-
-        // on stoppe les barres de progression;
-        this.progressBarStop(timelineCalendrier);
-        this.progressBarStop(timelineHeure);
-        this.progressBarStop(timelineBC);
-        this.progressBarStop(timelineBF);
-        this.progressBarStop(timelineCo);
-        this.progressBarStop(timelineSa);
-        this.progressBarStop(timelineScooter);
+        // fermeture des barres, enregistrement + stop et sauvegarde date deco
+        fermetureProgress();
 
         try {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("distributeurs.fxml"));
@@ -304,21 +258,8 @@ public class GestionController {
     public void switchToLivraisons(ActionEvent event) {
         // achat des livraisons
 
-        // sauvegarde des barres de progression
-        this.jeu.getCalendrier().setProgressJour(this.progressJour.getProgress());
-        this.jeu.getJoueur().getFerme().setEtatProgressOeuf(this.progressOeufs.getProgress());
-
-        // on recupere les barres de progression des livraisons
-        this.jeu.getJoueur().getLivraisonScooter().setEtatProgressLivraison(this.progressScooter.getProgress());
-
-        // on stoppe les barres de progression;
-        this.progressBarStop(timelineCalendrier);
-        this.progressBarStop(timelineHeure);
-        this.progressBarStop(timelineBC);
-        this.progressBarStop(timelineBF);
-        this.progressBarStop(timelineCo);
-        this.progressBarStop(timelineSa);
-        this.progressBarStop(timelineScooter);
+        // fermeture des barres, enregistrement + stop et sauvegarde date deco
+        fermetureProgress();
 
         try {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("livraisons.fxml"));
@@ -343,25 +284,8 @@ public class GestionController {
      * @param event
      */
     public void switchToBanque(ActionEvent event) {
-        // sauvegarde des barres de progression
-        this.jeu.getCalendrier().setProgressJour(this.progressJour.getProgress());
-        this.jeu.getJoueur().getFerme().setEtatProgressOeuf(this.progressOeufs.getProgress());
-        // on recupere l'etat de la barre de progression des distributeurs
-        this.jeu.getJoueur().getBoissonsChaudes().setEtatProgressDistributeur(this.progressBC.getProgress());
-        this.jeu.getJoueur().getBoissonsFraiches().setEtatProgressDistributeur(this.progressBF.getProgress());
-        this.jeu.getJoueur().getConfiseries().setEtatProgressDistributeur(this.progressCo.getProgress());
-        this.jeu.getJoueur().getSandwichs().setEtatProgressDistributeur(this.progressSa.getProgress());
-        // on recupere les barres de progression des livraisons
-        this.jeu.getJoueur().getLivraisonScooter().setEtatProgressLivraison(this.progressScooter.getProgress());
-
-        // on stoppe les barres de progression;
-        this.progressBarStop(timelineCalendrier);
-        this.progressBarStop(timelineHeure);
-        this.progressBarStop(timelineBC);
-        this.progressBarStop(timelineBF);
-        this.progressBarStop(timelineCo);
-        this.progressBarStop(timelineSa);
-        this.progressBarStop(timelineScooter);
+        // fermeture des barres, enregistrement + stop et sauvegarde date deco
+        fermetureProgress();
 
         try {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("banque.fxml"));
@@ -388,25 +312,8 @@ public class GestionController {
      * @param event
      */
     public void retourMenu(ActionEvent event) {
-        // sauvegarde des barres de progression
-        this.jeu.getCalendrier().setProgressJour(this.progressJour.getProgress());
-        this.jeu.getJoueur().getFerme().setEtatProgressOeuf(this.progressOeufs.getProgress());
-        // on recupere l'etat de la barre de progression des distributeurs
-        this.jeu.getJoueur().getBoissonsChaudes().setEtatProgressDistributeur(this.progressBC.getProgress());
-        this.jeu.getJoueur().getBoissonsFraiches().setEtatProgressDistributeur(this.progressBF.getProgress());
-        this.jeu.getJoueur().getConfiseries().setEtatProgressDistributeur(this.progressCo.getProgress());
-        this.jeu.getJoueur().getSandwichs().setEtatProgressDistributeur(this.progressSa.getProgress());
-        // on recupere les barres de progression des livraisons
-        this.jeu.getJoueur().getLivraisonScooter().setEtatProgressLivraison(this.progressScooter.getProgress());
-
-        // on stoppe les barres de progression;
-        this.progressBarStop(timelineCalendrier);
-        this.progressBarStop(timelineHeure);
-        this.progressBarStop(timelineBC);
-        this.progressBarStop(timelineBF);
-        this.progressBarStop(timelineCo);
-        this.progressBarStop(timelineSa);
-        this.progressBarStop(timelineScooter);
+        // fermeture des barres, enregistrement + stop et sauvegarde date deco
+        fermetureProgress();
 
         // sauvegardes
         try {
@@ -440,16 +347,8 @@ public class GestionController {
      */
 
     public void onWindowClose(WindowEvent event) {
-        // sauvegarde des barres de progression
-        this.jeu.getCalendrier().setProgressJour(this.progressJour.getProgress());
-        this.jeu.getJoueur().getFerme().setEtatProgressOeuf(this.progressOeufs.getProgress());
-        // on recupere l'etat de la barre de progression des distributeurs
-        this.jeu.getJoueur().getBoissonsChaudes().setEtatProgressDistributeur(this.progressBC.getProgress());
-        this.jeu.getJoueur().getBoissonsFraiches().setEtatProgressDistributeur(this.progressBF.getProgress());
-        this.jeu.getJoueur().getConfiseries().setEtatProgressDistributeur(this.progressCo.getProgress());
-        this.jeu.getJoueur().getSandwichs().setEtatProgressDistributeur(this.progressSa.getProgress());
-        // on recupere les barres de progression des livraisons
-        this.jeu.getJoueur().getLivraisonScooter().setEtatProgressLivraison(this.progressScooter.getProgress());
+        // fermeture des barres, enregistrement + stop et sauvegarde date deco
+        fermetureProgress();
 
         // Sauvegarde de la base de donnees
         System.out.println("fermeture fenetre : Sauvegarde");
@@ -467,16 +366,8 @@ public class GestionController {
      * @param event
      */
     public void exitJeu(ActionEvent event) {
-        // sauvegarde des barres de progression
-        this.jeu.getCalendrier().setProgressJour(this.progressJour.getProgress());
-        this.jeu.getJoueur().getFerme().setEtatProgressOeuf(this.progressOeufs.getProgress());
-        // on recupere l'etat de la barre de progression des distributeurs
-        this.jeu.getJoueur().getBoissonsChaudes().setEtatProgressDistributeur(this.progressBC.getProgress());
-        this.jeu.getJoueur().getBoissonsFraiches().setEtatProgressDistributeur(this.progressBF.getProgress());
-        this.jeu.getJoueur().getConfiseries().setEtatProgressDistributeur(this.progressCo.getProgress());
-        this.jeu.getJoueur().getSandwichs().setEtatProgressDistributeur(this.progressSa.getProgress());
-        // on recupere les barres de progression des livraisons
-        this.jeu.getJoueur().getLivraisonScooter().setEtatProgressLivraison(this.progressScooter.getProgress());
+        // fermeture des barres, enregistrement + stop et sauvegarde date deco
+        fermetureProgress();
 
         this.jeu.sauvegardejeu(this.progressOeufs, this.progressJour);
         this.jeu.sauvegardeCredit();
@@ -502,7 +393,6 @@ public class GestionController {
             jeu.getCalendrier().createSemaine1Calendrier(paneSemaine1, 0);
             jeu.getCalendrier().createSemaine2Calendrier(paneSemaine2, 0);
         }
-
     }
 
     public ProgressBar getProgressJour() {
@@ -556,7 +446,6 @@ public class GestionController {
         }
         timelineCalendrier.play();
     }
-
 
     /**
      * Methode qui affiche la progressbar du calendrier
@@ -755,7 +644,14 @@ public class GestionController {
         if(jeu.getJoueur().getLivraison1Active() == 1){
             // recuperation de l'etat de la barre de progression pour la livraison en scooter
             double vitesseScooter = jeu.getJoueur().getLivraisonScooter().getVitesseLivraion() - (jeu.getJoueur().getLivraisonScooter().getVitesseLivraion() * jeu.getJoueur().getLivraisonScooter().getEtatProgressLivraison());
+            System.out.println("Vitesse scooter : " + vitesseScooter);
             progressBarStartScooterEnCours(1, vitesseScooter);
+        }
+        if(jeu.getJoueur().getLivraison2Active() == 1){
+            // recuperation de l'etat de la barre de progression pour la livraison en camionette
+            double vitesseCamionette = jeu.getJoueur().getLivraisonCamionette().getVitesseLivraion() - (jeu.getJoueur().getLivraisonCamionette().getVitesseLivraion() * jeu.getJoueur().getLivraisonCamionette().getEtatProgressLivraison());
+            System.out.println("Vitesse camionette : " + vitesseCamionette);
+            progressBarStartCamionetteEnCours(1, vitesseCamionette);
         }
     }
 
@@ -1087,6 +983,7 @@ public class GestionController {
                     System.out.println("Course en scooter terminée");
                     // ajoute une course au service de livraison
                     this.majProgressScooter();
+                    System.out.println("ajout d'un scooter");
                 }, new KeyValue(progressScooter.progressProperty(), 1))
         );
         timelineScooter.setOnFinished(event -> {
@@ -1105,7 +1002,6 @@ public class GestionController {
         }
         timelineScooter.play();
     }
-
     /**
      * Barre de progressions Distributeur Boissons Chaudes
      */
@@ -1149,6 +1045,119 @@ public class GestionController {
         return progressScooter;
     }
 
+    // progress camionettes
+    /**
+     * Met à jour la barre de progression pour le service de livraison de camionettes
+     *
+     * @param cycle
+     * @param vitesse
+     */
+
+    public void progressBarStartCamionetteEnCours(int cycle, double vitesse) {
+        ProgressBar progressCamionette = getProgressCamionette();
+        // Réinitialise la barre de progression à 0
+        progressCamionette.setProgress(this.jeu.getJoueur().getLivraisonCamionette().getEtatProgressLivraison());
+        timelineCamionette = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(progressCamionette.progressProperty(), this.jeu.getJoueur().getLivraisonCamionette().getEtatProgressLivraison())),
+                new KeyFrame(Duration.seconds(vitesse), e -> {
+                    System.out.println("Course en camionette terminée");
+                    // ajoute une course au service de livraison en camionette
+                    this.majProgressCamionette();
+                }, new KeyValue(progressCamionette.progressProperty(), 1))
+        );
+        timelineCamionette.setOnFinished(event -> {
+            if (cycle == 1) {
+                // Lancer la deuxième exécution de la méthode progressBarStartTimeline
+                jeu.getJoueur().getLivraisonCamionette().setEtatProgressLivraison(0);
+                System.out.println("fin course camionette");
+                // recalcul de la vitesse suivant le niveau de la barre de progression
+                progressBarStartCamionette(cycle - 1, this.jeu.getJoueur().getLivraisonCamionette().getVitesseLivraion());
+            }
+        });
+        if (cycle == 0) {
+            timelineCamionette.setCycleCount(Animation.INDEFINITE);
+        } else {
+            timelineCamionette.setCycleCount(cycle);
+        }
+        timelineCamionette.play();
+    }
+
+    /**
+     * Barre de progressions Distributeur Boissons Chaudes
+     */
+    public void progressBarStartCamionette(int cycle, double vitesse) {
+        ProgressBar progressCamionette = getProgressCamionette();
+        // Réinitialise la barre de progression à 0
+        progressCamionette.setProgress(0);
+        timelineCamionette = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(progressCamionette.progressProperty(), 0)),
+                new KeyFrame(Duration.seconds(vitesse), e -> {
+                    System.out.println("fin course camionette");
+                    // ajoute d'une course au service de livraion en camionette
+                    this.majProgressCamionette();
+                }, new KeyValue(progressCamionette.progressProperty(), 1))
+        );
+
+        if (cycle == 0) {
+            timelineCamionette.setCycleCount(Animation.INDEFINITE);
+        } else {
+            timelineCamionette.setCycleCount(cycle);
+        }
+        timelineCamionette.play();
+    }
+
+    /**
+     * Met a jour le chiffre du nombre de livraisons effectuées
+     */
+    public void majProgressCamionette() {
+        long nbLivraisonsEncours = jeu.getJoueur().getLivraisonCamionette().getNbCourses();
+        int nbLivraisonsCamionetteEnCours = jeu.getJoueur().getLivraisonCamionette().getNbVehicules();
+        long nouvNombre = nbLivraisonsEncours + nbLivraisonsCamionetteEnCours;
+        jeu.getJoueur().getLivraisonCamionette().setNbCourses(nouvNombre);
+        System.out.println("maj du nombre de livraisons effectuées en camionette : " + nouvNombre);
+    }
+
+    /**
+     * Permet de gerer la barre de progression du scooter
+     * @return
+     */
+    public ProgressBar getProgressCamionette() {
+        return progressCamionette;
+    }
+
+    // sauvegardes
+    /**
+     * Fermeture des barres de progression : enregistrement de l'état + stop des barres de progress
+     * Sauvegarde date deco
+     */
+    public void fermetureProgress(){
+        // sauvegarde des barres de progression
+        this.jeu.getCalendrier().setProgressJour(this.progressJour.getProgress());
+        this.jeu.getJoueur().getFerme().setEtatProgressOeuf(this.progressOeufs.getProgress());
+
+        // on recupere l'etat de la barre de progression des distributeurs
+        this.jeu.getJoueur().getBoissonsChaudes().setEtatProgressDistributeur(this.progressBC.getProgress());
+        this.jeu.getJoueur().getBoissonsFraiches().setEtatProgressDistributeur(this.progressBF.getProgress());
+        this.jeu.getJoueur().getConfiseries().setEtatProgressDistributeur(this.progressCo.getProgress());
+        this.jeu.getJoueur().getSandwichs().setEtatProgressDistributeur(this.progressSa.getProgress());
+
+        // on recupere les barres de progression des livraisons
+        this.jeu.getJoueur().getLivraisonScooter().setEtatProgressLivraison(this.progressScooter.getProgress());
+        this.jeu.getJoueur().getLivraisonCamionette().setEtatProgressLivraison(this.progressCamionette.getProgress());
+
+        // on stoppe les barres de progression;
+        this.progressBarStop(timelineHeure);
+        this.progressBarStop(timelineCalendrier);
+        this.progressBarStop(timelineBC);
+        this.progressBarStop(timelineBF);
+        this.progressBarStop(timelineCo);
+        this.progressBarStop(timelineSa);
+        this.progressBarStop(timelineScooter);
+        this.progressBarStop(timelineCamionette);
+
+        // on enregistre l'heure de switch de fenetre
+        this.jeu.getJoueur().getFerme().setDateDeco(LocalDateTime.now());
+    }
 }
 
 //    /**

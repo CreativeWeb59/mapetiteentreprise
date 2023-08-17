@@ -4,14 +4,6 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public abstract class Livraisons {
-    // prix des vehicules
-    private final BigDecimal prixVehicule = BigDecimal.valueOf(5000);
-    // tarif de chaque course
-    private final BigDecimal prixCourse = BigDecimal.valueOf(50.00);
-    private final int nbMaxiVehicules = 200;
-    // vitesse des livraisons
-    private final int vitesseLivraion = 60;
-
     private String nom;
     private int nbVehicules = 0; // nb vehicules achetes
     private long nbCourses = 0; // nb de courses effectuees
@@ -25,22 +17,6 @@ public abstract class Livraisons {
         this.nbVehicules = nbVehicules;
         this.nbCourses = nbCourses;
         this.etatProgressLivraison = etatProgressLivraison;
-    }
-
-    public BigDecimal getPrixVehicule() {
-        return prixVehicule;
-    }
-
-    public BigDecimal getPrixCourse() {
-        return prixCourse;
-    }
-
-    public int getNbMaxiVehicules() {
-        return nbMaxiVehicules;
-    }
-
-    public int getVitesseLivraion() {
-        return vitesseLivraion;
     }
 
     public String getNom() {
@@ -78,32 +54,10 @@ public abstract class Livraisons {
     @Override
     public String toString() {
         return "Livraisons{" +
-                "prixVehicule=" + prixVehicule +
-                ", prixCourse=" + prixCourse +
-                ", nbMaxiVehicules=" + nbMaxiVehicules +
-                ", vitesseLivraion=" + vitesseLivraion +
                 ", nom='" + nom + '\'' +
                 ", nbVehicules=" + nbVehicules +
                 ", nbCourses=" + nbCourses +
                 ", etatProgressLivraison=" + etatProgressLivraison +
                 '}';
-    }
-
-    /**
-     * Methode pour ajouter un distributeur
-     */
-    public void ajoutServiceDeLivraison(){
-        this.setNbVehicules(this.getNbVehicules() + 1);
-    }
-
-    public int getNbMaxiServiceDeLivraison() {
-        return nbMaxiVehicules;
-    }
-
-    /**
-     * initialise le nombre de vehicules en cours ainsi que le nombre de vehicules maximum
-     */
-    public String setNbVehicule() {
-        return this.getNbVehicules() + " / " + this.getNbMaxiVehicules();
     }
 }

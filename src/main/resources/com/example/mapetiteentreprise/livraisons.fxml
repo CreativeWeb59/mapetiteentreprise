@@ -27,7 +27,7 @@
          <Pane fx:id="paneCamionette" disable="true" layoutY="160.0" opacity="0.5" prefHeight="140.0" prefWidth="540.0" style="-fx-background-color: white;" styleClass="fondsPaysage2">
               <children>
                   <Label alignment="CENTER" prefHeight="29.0" prefWidth="540.0" style="-fx-background-color: transparent;" text="Livraisons en camionette" />
-                  <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="20.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="20.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true">
                       <image>
                           <Image url="@images/camionette.png" />
                       </image>
@@ -40,7 +40,7 @@
          <Pane fx:id="panePetitCamion" disable="true" layoutY="320.0" opacity="0.5" prefHeight="140.0" prefWidth="540.0" style="-fx-background-color: white;" styleClass="fondsPaysage6">
        <children>
            <Label alignment="CENTER" prefHeight="29.0" prefWidth="540.0" style="-fx-background-color: transparent;" text="Livraisons en petit camion" />
-           <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="20.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true">
+           <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="20.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true">
                <image>
                    <Image url="@images/petitCamion.png" />
                </image>
@@ -52,7 +52,7 @@
           <Pane fx:id="panePoidsLourd" disable="true" layoutY="480.0" opacity="0.5" prefHeight="140.0" prefWidth="540.0" style="-fx-background-color: white;" styleClass="fondsPaysage3">
               <children>
                   <Label alignment="CENTER" prefHeight="29.0" prefWidth="540.0" style="-fx-background-color: transparent;" text="Livraisons en poids lourd" />
-                  <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="20.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="20.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true">
                       <image>
                           <Image url="@images/poidsLourd.png" />
                       </image>
@@ -83,7 +83,7 @@
               <Button fx:id="btnAchatLivraisonCamionette" layoutX="120.0" layoutY="80.0" mnemonicParsing="false" onAction="#onAchatLivraisonCamionette" styleClass="buttonVendre" text="Acheter Livraison en scooter" visible="false" />
           </children>
          </Pane>
-         <Pane fx:id="panePetitCamionD" disable="true" layoutY="320.0" opacity="0.5" prefHeight="140.0" prefWidth="540.0" style="-fx-background-color: white;" styleClass="fondsPaysage6" >
+         <Pane fx:id="panePetitCamionD" disable="true" layoutY="320.0" opacity="0.5" prefHeight="140.0" prefWidth="540.0" style="-fx-background-color: white;" styleClass="fondsPaysage6">
              <children>
                  <Label fx:id="labelTarifPetitCamion" layoutX="38.0" layoutY="25.0" style="-fx-background-color: transparent;" text="prix scooter" />
                  <Button fx:id="btnAchatPetitCamion" layoutX="461.0" layoutY="16.0" mnemonicParsing="false" onAction="#acheterScooter" text="+" />
@@ -106,7 +106,7 @@
     <Pane fx:id="paneProgress" layoutX="185.0" layoutY="900.0" prefHeight="20.0" prefWidth="900.0" visible="true">
         <children>
             <ProgressBar fx:id="progressOeufs" cache="true" layoutX="0.0" layoutY="0.0" prefHeight="15.0" prefWidth="180.0" progress="0.0" />
-            <ProgressBar fx:id="progressJour" prefHeight="20.0" layoutY="25.0" prefWidth="900.0" progress="0.0" />
+            <ProgressBar fx:id="progressJour" layoutY="25.0" prefHeight="20.0" prefWidth="900.0" progress="0.0" />
             <ProgressBar fx:id="progressBC" cache="true" layoutX="0.0" layoutY="50.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
             <ProgressBar fx:id="progressBF" cache="true" layoutX="105.0" layoutY="50.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
             <ProgressBar fx:id="progressCo" cache="true" layoutX="210.0" layoutY="50.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />

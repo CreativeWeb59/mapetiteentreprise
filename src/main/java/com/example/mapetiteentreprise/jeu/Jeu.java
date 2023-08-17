@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Jeu {
-    private final boolean dev = true;
+    private final boolean dev = false;
     private Joueur joueur;
     private Sauvegarde sauvegarde;
     private Parametres parametres;
@@ -250,12 +250,14 @@ public class Jeu {
      */
     public BigDecimal valeurEntreprise(){
         BigDecimal valeurFermes = valeurFermes();
-        System.out.println("Fermes" + valeurFermes);
+        System.out.println("Fermes : " + valeurFermes);
         BigDecimal valeurPoules = valeurPoules();
-        System.out.println("Poules" + valeurPoules);
+        System.out.println("Poules : " + valeurPoules);
         BigDecimal valeurDistributeurs = valeurDistributeurs();
-        System.out.println("Distributeurs" + valeurDistributeurs);
-        return valeurFermes.add(valeurDistributeurs.add(valeurPoules));
+        System.out.println("Distributeurs : " + valeurDistributeurs);
+        BigDecimal valeurLivraisons = ValeurLivraisons();
+        System.out.println("Livraisons : " + ValeurLivraisons());
+        return valeurFermes.add(valeurDistributeurs.add(valeurPoules.add(valeurLivraisons)));
     }
 
     /**
@@ -269,7 +271,9 @@ public class Jeu {
         BigDecimal valeur = BigDecimal.valueOf(0);
 
         for (int i = 0; i < index.length; i++) {
-            valeur = valeur.add(getPoulaillersList().get(index[i]).getPrixPoulailler());
+            if(i <= this.getJoueur().getPoulailler1()){
+                valeur = valeur.add(getPoulaillersList().get(index[i]).getPrixPoulailler());
+            }
         }
         return valeur;
     }
@@ -314,6 +318,40 @@ public class Jeu {
             BigDecimal prixDistributeur = parametres.getPrixDistributeurSa();
             BigDecimal valeurDistributeur = prixDistributeur.multiply(BigDecimal.valueOf(nbDistributeur));
             valeur = valeur.add(valeurDistributeur);
+        }
+        return valeur;
+    }
+
+    /**
+     * Retourne la valeur de chaque distributeur
+     * valeur distributer * nb distributeurs
+     * @return
+     */
+    public BigDecimal ValeurLivraisons(){
+        BigDecimal valeur = BigDecimal.valueOf(0);
+        if(joueur.getLivraison1Active() == 1){
+            int nbVehicules = joueur.getLivraisonScooter().getNbVehicules();
+            BigDecimal prixVehicule = joueur.getLivraisonScooter().getPrixVehicule();
+            BigDecimal valeurLivraison = prixVehicule.multiply(BigDecimal.valueOf(nbVehicules));
+            valeur = valeur.add(valeurLivraison);
+        }
+        if(joueur.getLivraison2Active() == 1){
+            int nbVehicules = joueur.getLivraisonCamionette().getNbVehicules();
+            BigDecimal prixVehicule = joueur.getLivraisonCamionette().getPrixVehicule();
+            BigDecimal valeurLivraison = prixVehicule.multiply(BigDecimal.valueOf(nbVehicules));
+            valeur = valeur.add(valeurLivraison);
+        }
+        if(joueur.getLivraison3Active() == 1){
+            int nbVehicules = joueur.getLivraisonPetitCamion().getNbVehicules();
+            BigDecimal prixVehicule = joueur.getLivraisonPetitCamion().getPrixVehicule();
+            BigDecimal valeurLivraison = prixVehicule.multiply(BigDecimal.valueOf(nbVehicules));
+            valeur = valeur.add(valeurLivraison);
+        }
+        if(joueur.getLivraison4Active() == 1){
+            int nbVehicules = joueur.getLivraisonPoidsLourd().getNbVehicules();
+            BigDecimal prixVehicule = joueur.getLivraisonPoidsLourd().getPrixVehicule();
+            BigDecimal valeurLivraison = prixVehicule.multiply(BigDecimal.valueOf(nbVehicules));
+            valeur = valeur.add(valeurLivraison);
         }
         return valeur;
     }
