@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Jeu {
-    private final boolean dev = false;
+    private final boolean dev = true;
     private Joueur joueur;
     private Sauvegarde sauvegarde;
     private Parametres parametres;
@@ -69,6 +69,7 @@ public class Jeu {
 
     /**
      * Ajoute une barre de progression
+     *
      * @param barresDeProgressions
      */
     public void setUneBarreDeProgression(AnimationsBarresProgress barresDeProgressions) {
@@ -77,6 +78,7 @@ public class Jeu {
 
     /**
      * fait appel a une methode de la classe AnimationBarreProgress
+     *
      * @return
      */
     public void creerTimelineJournee(int cycle, double vitesse) {
@@ -221,10 +223,10 @@ public class Jeu {
      * 4 poulaillers + 1 inactif
      * et affectation dans la liste des poulaillers
      */
-    public void createPoulaillers(){
-        Poulaillers poulaillerInactif = new Poulaillers("Inactif",  BigDecimal.valueOf(0), 0);
+    public void createPoulaillers() {
+        Poulaillers poulaillerInactif = new Poulaillers("Inactif", BigDecimal.valueOf(0), 0);
         this.addPoulailler(poulaillerInactif);
-        Poulaillers poulailler = new Poulaillers("Poulailler",  BigDecimal.valueOf(1000), 200);
+        Poulaillers poulailler = new Poulaillers("Poulailler", BigDecimal.valueOf(1000), 200);
         this.addPoulailler(poulailler);
         Poulaillers poulaillerPro = new Poulaillers("Poulailler pro", BigDecimal.valueOf(5000), 1000);
         this.addPoulailler(poulaillerPro);
@@ -242,13 +244,15 @@ public class Jeu {
     public void setPoulaillersList(List<Poulaillers> poulaillersList) {
         this.poulaillersList = poulaillersList;
     }
-    public void addPoulailler(Poulaillers poulaillers){
+
+    public void addPoulailler(Poulaillers poulaillers) {
         this.poulaillersList.add(poulaillers);
     }
+
     /**
      * Calcule la valeur de l'entreprise
      */
-    public BigDecimal valeurEntreprise(){
+    public BigDecimal valeurEntreprise() {
         BigDecimal valeurFermes = valeurFermes();
         System.out.println("Fermes : " + valeurFermes);
         BigDecimal valeurPoules = valeurPoules();
@@ -262,27 +266,37 @@ public class Jeu {
 
     /**
      * Retourne la valeur de chaque poulailler
+     *
      * @return
      */
-    public BigDecimal valeurFermes(){
+    public BigDecimal valeurFermes() {
         // recupere la valeur de chaque poulailler dans un tableau
         int[] index = new int[]{this.getJoueur().getPoulailler1(), this.getJoueur().getPoulailler2(), this.getJoueur().getPoulailler3(), this.getJoueur().getPoulailler4()};
+        // index[0] = 2 => prix poulailler[2]
+        // index[1] = 0 => prix poulailler[0]
+        // index[2] = 0 => prix poulailler[0]
+        // index[3] = 0 => prix poulailler[0]
 
         BigDecimal valeur = BigDecimal.valueOf(0);
 
         for (int i = 0; i < index.length; i++) {
-            if(i <= this.getJoueur().getPoulailler1()){
-                valeur = valeur.add(getPoulaillersList().get(index[i]).getPrixPoulailler());
+            for (int j = 0; j < index.length; j++) {
+                if (index[i] >= j) {
+                    System.out.println("Valeur de j : " + getPoulaillersList().get(j).getPrixPoulailler());
+                    valeur = valeur.add(getPoulaillersList().get(j).getPrixPoulailler());
+                }
             }
         }
+        System.out.println("La valeur : " + valeur);
         return valeur;
     }
 
     /**
      * Renvoi la valeur des poules
+     *
      * @return
      */
-    public BigDecimal valeurPoules(){
+    public BigDecimal valeurPoules() {
         int nbPoules = joueur.getFerme().getNbPoules();
         BigDecimal prixPoule = parametres.getTarifPoule();
         return prixPoule.multiply(BigDecimal.valueOf(nbPoules));
@@ -291,29 +305,30 @@ public class Jeu {
     /**
      * Retourne la valeur de chaque distributeur
      * valeur distributer * nb distributeurs
+     *
      * @return
      */
-    public BigDecimal valeurDistributeurs(){
+    public BigDecimal valeurDistributeurs() {
         BigDecimal valeur = BigDecimal.valueOf(0);
-        if(joueur.getDistributeurBCActive() == 1){
+        if (joueur.getDistributeurBCActive() == 1) {
             int nbDistributeur = joueur.getBoissonsChaudes().getNbDistributeurs();
             BigDecimal prixDistributeur = parametres.getPrixDistributeurBC();
             BigDecimal valeurDistributeur = prixDistributeur.multiply(BigDecimal.valueOf(nbDistributeur));
             valeur = valeur.add(valeurDistributeur);
         }
-        if(joueur.getDistributeurBFActive() == 1){
+        if (joueur.getDistributeurBFActive() == 1) {
             int nbDistributeur = joueur.getBoissonsFraiches().getNbDistributeurs();
             BigDecimal prixDistributeur = parametres.getPrixDistributeurBF();
             BigDecimal valeurDistributeur = prixDistributeur.multiply(BigDecimal.valueOf(nbDistributeur));
             valeur = valeur.add(valeurDistributeur);
         }
-        if(joueur.getDistributeurCoActive() == 1){
+        if (joueur.getDistributeurCoActive() == 1) {
             int nbDistributeur = joueur.getConfiseries().getNbDistributeurs();
             BigDecimal prixDistributeur = parametres.getPrixDistributeurCo();
             BigDecimal valeurDistributeur = prixDistributeur.multiply(BigDecimal.valueOf(nbDistributeur));
             valeur = valeur.add(valeurDistributeur);
         }
-        if(joueur.getDistributeurSaActive() == 1){
+        if (joueur.getDistributeurSaActive() == 1) {
             int nbDistributeur = joueur.getSandwichs().getNbDistributeurs();
             BigDecimal prixDistributeur = parametres.getPrixDistributeurSa();
             BigDecimal valeurDistributeur = prixDistributeur.multiply(BigDecimal.valueOf(nbDistributeur));
@@ -325,29 +340,30 @@ public class Jeu {
     /**
      * Retourne la valeur de chaque distributeur
      * valeur distributer * nb distributeurs
+     *
      * @return
      */
-    public BigDecimal ValeurLivraisons(){
+    public BigDecimal ValeurLivraisons() {
         BigDecimal valeur = BigDecimal.valueOf(0);
-        if(joueur.getLivraison1Active() == 1){
+        if (joueur.getLivraison1Active() == 1) {
             int nbVehicules = joueur.getLivraisonScooter().getNbVehicules();
             BigDecimal prixVehicule = joueur.getLivraisonScooter().getPrixVehicule();
             BigDecimal valeurLivraison = prixVehicule.multiply(BigDecimal.valueOf(nbVehicules));
             valeur = valeur.add(valeurLivraison);
         }
-        if(joueur.getLivraison2Active() == 1){
+        if (joueur.getLivraison2Active() == 1) {
             int nbVehicules = joueur.getLivraisonCamionette().getNbVehicules();
             BigDecimal prixVehicule = joueur.getLivraisonCamionette().getPrixVehicule();
             BigDecimal valeurLivraison = prixVehicule.multiply(BigDecimal.valueOf(nbVehicules));
             valeur = valeur.add(valeurLivraison);
         }
-        if(joueur.getLivraison3Active() == 1){
+        if (joueur.getLivraison3Active() == 1) {
             int nbVehicules = joueur.getLivraisonPetitCamion().getNbVehicules();
             BigDecimal prixVehicule = joueur.getLivraisonPetitCamion().getPrixVehicule();
             BigDecimal valeurLivraison = prixVehicule.multiply(BigDecimal.valueOf(nbVehicules));
             valeur = valeur.add(valeurLivraison);
         }
-        if(joueur.getLivraison4Active() == 1){
+        if (joueur.getLivraison4Active() == 1) {
             int nbVehicules = joueur.getLivraisonPoidsLourd().getNbVehicules();
             BigDecimal prixVehicule = joueur.getLivraisonPoidsLourd().getPrixVehicule();
             BigDecimal valeurLivraison = prixVehicule.multiply(BigDecimal.valueOf(nbVehicules));
@@ -359,8 +375,8 @@ public class Jeu {
     /**
      * Affiche les barres de progression en mode dev
      */
-    public void afficheProgression(Pane paneProgress){
-        if(this.isDev()){
+    public void afficheProgression(Pane paneProgress) {
+        if (this.isDev()) {
             paneProgress.setVisible(true);
         } else {
             paneProgress.setVisible(false);

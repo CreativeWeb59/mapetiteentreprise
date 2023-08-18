@@ -32,10 +32,12 @@ public class GestionLivraisonsController {
     private final DecimalFormat decimalFormat = Outils.getDecimalFormatWithSpaceSeparator();
     @FXML
     private Label labelHaut, labelNbCoursesScooter, labelNbScooter, labelTarifScooter,
-            labelTarifCamionette, labelNbCamionette, labelNbCoursesCamionette;
+            labelTarifCamionette, labelNbCamionette, labelNbCoursesCamionette, labelNbPoidsLourd;
     @FXML
     private Button retourMenu, btnAchatLivraisonScooter, btnAchatScooter, btnEncaisserCourseScooter,
-            onBtnEncaisserCourse2, onAchatLivraisonCamionette, btnAchatCamionette, btnEncaisserCourseCamionette, btnAchatLivraisonCamionette;
+            onBtnEncaisserCourse2, onAchatLivraisonCamionette, btnAchatCamionette, btnEncaisserCourseCamionette, btnAchatLivraisonCamionette,
+            onBtnEncaisserCourse3, onAchatLivraisonPetitCamion, btnAchatPetitCamion, btnEncaisserCoursePetitCamion, btnAchatLivraisonPetitCamion,
+            onBtnEncaisserCourse4, onAchatLivraisonPoidsLourd, btnAchatPoidsLourd, btnEncaisserPoidsLourd, btnAchatLivraisonPoidsLourd;
     @FXML
     private Pane paneScooter, paneScooterD, paneCamionette, paneCamionetteD, panePetitCamion, panePetitCamionD, panePoidsLourd, panePoidsLourdD, paneProgress;
     private Stage stage;
@@ -43,8 +45,8 @@ public class GestionLivraisonsController {
     private Parent root;
     private Jeu jeu;
     @FXML
-    private ProgressBar progressJour, progressOeufs, progressBC, progressBF, progressSa, progressCo, progressScooter, progressCamionette;
-    private Timeline timelineOeufs, timelineJour, timelineBC, timelineBF, timelineSa, timelineCo, timelineScooter, timelineCamionette;
+    private ProgressBar progressJour, progressOeufs, progressBC, progressBF, progressSa, progressCo, progressScooter, progressCamionette, progressPetitCamion, progressPoidsLourd;
+    private Timeline timelineOeufs, timelineJour, timelineBC, timelineBF, timelineSa, timelineCo, timelineScooter, timelineCamionette, timelinePetitCamion, timelinePoidsLourd;
     private ConnectionBdd connectionBdd = new ConnectionBdd();
     private BigDecimal gainEnAttenteScooter = new BigDecimal(0);
     private BigDecimal gainEnAttenteCamionette = new BigDecimal(0);
@@ -365,7 +367,7 @@ public class GestionLivraisonsController {
             // enable pane de la livraison
             this.debloquerLivraison(panePetitCamion, panePetitCamionD);
         }
-        if(isActif(jeu.getJoueur().getLivraison2Active())){
+        if(isActif(jeu.getJoueur().getLivraison4Active())){
             System.out.println("Demarrage livraison en poids lourd");
             // enable pane de la livraison
             this.debloquerLivraison(panePoidsLourd, panePoidsLourdD);
