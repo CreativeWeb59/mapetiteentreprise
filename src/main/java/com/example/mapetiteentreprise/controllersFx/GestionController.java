@@ -42,8 +42,8 @@ public class GestionController {
     @FXML
     private Pane paneSemaine1, paneSemaine2, paneParentProgressJour, paneProgress;
     @FXML
-    private ProgressBar progressJour, progressOeufs, progressBC, progressBF, progressSa, progressCo, progressScooter, progressCamionette;
-    private Timeline timelineCalendrier, timelineHeure, timelineBC, timelineBF, timelineSa, timelineCo, timelineScooter, timelineCamionette;
+    private ProgressBar progressJour, progressOeufs, progressBC, progressBF, progressSa, progressCo, progressScooter, progressCamionette, progressPoidsLourd;
+    private Timeline timelineCalendrier, timelineHeure, timelineBC, timelineBF, timelineSa, timelineCo, timelineScooter, timelineCamionette, timelinePoidsLourd;
 
     /**
      * Recupere le nom de la sauvegarde

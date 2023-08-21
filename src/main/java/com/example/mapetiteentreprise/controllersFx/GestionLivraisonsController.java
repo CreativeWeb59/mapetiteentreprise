@@ -444,7 +444,7 @@ public class GestionLivraisonsController {
      */
     public void setNbPetitCamion() {
         String formattedString = this.jeu.getJoueur().getLivraisonPetitCamion().setNbVehicule();
-        this.labelNbCamionette.setText(formattedString);
+        this.labelNbPetitCamion.setText(formattedString);
     }
 
     /**
