@@ -6,7 +6,7 @@ public class LivraisonCamionette  extends Livraisons{
     private final BigDecimal prixVehicule = BigDecimal.valueOf(20000); // prix du scooter
     private final BigDecimal prixCourse = BigDecimal.valueOf(200.00); // tarif de chaque course
     // prix des vehicules
-    private final int nbMaxiVehicules = 200;
+    private final int nbMaxiVehicules = 300;
     // vitesse des livraisons
     private final int vitesseLivraion = 60;
 
@@ -45,5 +45,13 @@ public class LivraisonCamionette  extends Livraisons{
      */
     public String setNbVehicule() {
         return this.getNbVehicules() + " / " + this.getNbMaxiVehicules();
+    }
+
+    /**
+     * renvoi true si le nombre maximum de camionette est atteint
+     * @return
+     */
+    public boolean isMaxiNbVehicules(){
+        return this.getNbVehicules() >= this.getNbMaxiVehicules();
     }
 }

@@ -21,7 +21,6 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
-
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
@@ -34,12 +33,12 @@ public class GestionLivraisonsController {
     private Label labelHaut, labelNbCoursesScooter, labelNbScooter, labelTarifScooter,
             labelTarifCamionette, labelNbCamionette, labelNbCoursesCamionette,
             labelTarifPetitCamion, labelNbPetitCamion, labelNbCoursesPetitCamion,
-            labelTarifPoidsLour, labelNbPoidsLourd, labelNbCoursesPoidsLourd;
+            labelTarifPoidsLourd, labelNbPoidsLourd, labelNbCoursesPoidsLourd;
     @FXML
     private Button retourMenu, btnAchatLivraisonScooter, btnAchatScooter, btnEncaisserCourseScooter,
             onBtnEncaisserCourse2, onAchatLivraisonCamionette, btnAchatCamionette, btnEncaisserCourseCamionette, btnAchatLivraisonCamionette,
             onBtnEncaisserCourse3, onAchatLivraisonPetitCamion, btnAchatPetitCamion, btnEncaisserCoursePetitCamion, btnAchatLivraisonPetitCamion,
-            onBtnEncaisserCourse4, onAchatLivraisonPoidsLourd, btnAchatPoidsLourd, btnEncaisserPoidsLourd, btnAchatLivraisonPoidsLourd;
+            onBtnEncaisserCourse4, onAchatLivraisonPoidsLourd, btnAchatPoidsLourd, btnEncaisserCoursePoidsLourd, btnAchatLivraisonPoidsLourd;
     @FXML
     private Pane paneScooter, paneScooterD, paneCamionette, paneCamionetteD, panePetitCamion, panePetitCamionD, panePoidsLourd, panePoidsLourdD, paneProgress;
     private Stage stage;
@@ -140,47 +139,107 @@ public class GestionLivraisonsController {
      * Ajout d'un scooter
      */
     public void acheterScooter() {
-        BigDecimal montantAchat = this.jeu.getJoueur().getLivraisonScooter().getPrixVehicule();
-        if (jeu.getJoueur().acheter(montantAchat)) {
-            this.jeu.getJoueur().getLivraisonScooter().ajoutServiceDeLivraison();
-            System.out.println("Achat d'un scooter : " + jeu.getJoueur().getLivraisonScooter().getNbVehicules());
-            // debloque le scooter si besoin
-            if (jeu.getJoueur().getLivraisonScooter().getNbVehicules() == 1) {
-                jeu.getJoueur().setLivraison1Active(1);
+        if(!this.jeu.getJoueur().getLivraisonScooter().isMaxiNbVehicules()){
+            BigDecimal montantAchat = this.jeu.getJoueur().getLivraisonScooter().getPrixVehicule();
+            if (jeu.getJoueur().acheter(montantAchat)) {
+                this.jeu.getJoueur().getLivraisonScooter().ajoutServiceDeLivraison();
+                System.out.println("Achat d'un scooter : " + jeu.getJoueur().getLivraisonScooter().getNbVehicules());
+                // debloque le scooter si besoin
+                if (jeu.getJoueur().getLivraisonScooter().getNbVehicules() == 1) {
+                    jeu.getJoueur().setLivraison1Active(1);
 //                debloquerDistributeur(paneBF, btnDebloquerBF, labelTitreDistributeurBF);
-                // demarre la barre de progression du distributeur
-                progressBarStartScooter(0, jeu.getJoueur().getLivraisonScooter().getVitesseLivraion());
+                    // demarre la barre de progression du distributeur
+                    progressBarStartScooter(0, jeu.getJoueur().getLivraisonScooter().getVitesseLivraion());
+                }
+                // mise a jour des valeurs
+                miseEnPlace();
+            } else {
+                System.out.println("Vous n'avez pas assez d'argent pour acheter un service de livraison en scooter");
             }
-            // mise a jour des valeurs
-            miseEnPlace();
         } else {
-            System.out.println("Vous n'avez pas assez d'argent pour acheter un service de livraison en scooter");
+            System.out.println("Vous avez trop de scooters");
         }
+
     }
+
 
     /**
      * Ajout d'une camionnette
      */
     public void acheterCamionette() {
-        BigDecimal montantAchat = this.jeu.getJoueur().getLivraisonCamionette().getPrixVehicule();
-        if (jeu.getJoueur().acheter(montantAchat)) {
-            this.jeu.getJoueur().getLivraisonCamionette().ajoutServiceDeLivraison();
-            System.out.println("Achat d'une camionette : " + jeu.getJoueur().getLivraisonCamionette().getNbVehicules());
-            // debloque le scooter si besoin
-            if (jeu.getJoueur().getLivraisonCamionette().getNbVehicules() == 1) {
-                jeu.getJoueur().setLivraison2Active(1);
+        if(!this.jeu.getJoueur().getLivraisonCamionette().isMaxiNbVehicules()){
+            BigDecimal montantAchat = this.jeu.getJoueur().getLivraisonCamionette().getPrixVehicule();
+            if (jeu.getJoueur().acheter(montantAchat)) {
+                this.jeu.getJoueur().getLivraisonCamionette().ajoutServiceDeLivraison();
+                System.out.println("Achat d'une camionette : " + jeu.getJoueur().getLivraisonCamionette().getNbVehicules());
+                // debloque le scooter si besoin
+                if (jeu.getJoueur().getLivraisonCamionette().getNbVehicules() == 1) {
+                    jeu.getJoueur().setLivraison2Active(1);
 //                debloquerDistributeur(paneBF, btnDebloquerBF, labelTitreDistributeurBF);
-                // demarre la barre de progression du distributeur
-                progressBarStartScooter(0, jeu.getJoueur().getLivraisonCamionette().getVitesseLivraion());
+                    // demarre la barre de progression du distributeur
+                    progressBarStartScooter(0, jeu.getJoueur().getLivraisonCamionette().getVitesseLivraion());
+                }
+                // mise a jour des valeurs
+                miseEnPlace();
+            } else {
+                System.out.println("Vous n'avez pas assez d'argent pour acheter un service de livraison en scooter");
             }
-            // mise a jour des valeurs
-            miseEnPlace();
         } else {
-            System.out.println("Vous n'avez pas assez d'argent pour acheter un service de livraison en scooter");
+            System.out.println("Vous avez trop de camionettes");
         }
     }
 
 
+    /**
+     * Ajout d'un petit camion
+     */
+    public void acheterPetitCamion() {
+        if(!this.jeu.getJoueur().getLivraisonPetitCamion().isMaxiNbVehicules()){
+            BigDecimal montantAchat = this.jeu.getJoueur().getLivraisonPetitCamion().getPrixVehicule();
+            if (jeu.getJoueur().acheter(montantAchat)) {
+                this.jeu.getJoueur().getLivraisonPetitCamion().ajoutServiceDeLivraison();
+                System.out.println("Achat d'un petit camion : " + jeu.getJoueur().getLivraisonPetitCamion().getNbVehicules());
+                // debloque le scooter si besoin
+                if (jeu.getJoueur().getLivraisonPetitCamion().getNbVehicules() == 1) {
+                    jeu.getJoueur().setLivraison3Active(1);
+//                debloquerDistributeur(paneBF, btnDebloquerBF, labelTitreDistributeurBF);
+                    // demarre la barre de progression du distributeur
+                    progressBarStartPetitCamion(0, jeu.getJoueur().getLivraisonPetitCamion().getVitesseLivraion());
+                }
+                // mise a jour des valeurs
+                miseEnPlace();
+            } else {
+                System.out.println("Vous n'avez pas assez d'argent pour acheter un service de livraison en petit camion");
+            }
+        } else {
+            System.out.println("Vous avez trop de petits camions");
+        }
+    }
+    /**
+     * Ajout d'un camion poids lourd
+     */
+    public void acheterPoidsLourd() {
+        if(!this.jeu.getJoueur().getLivraisonPoidsLourd().isMaxiNbVehicules()){
+            BigDecimal montantAchat = this.jeu.getJoueur().getLivraisonPoidsLourd().getPrixVehicule();
+            if (jeu.getJoueur().acheter(montantAchat)) {
+                this.jeu.getJoueur().getLivraisonPoidsLourd().ajoutServiceDeLivraison();
+                System.out.println("Achat d'une camionette : " + jeu.getJoueur().getLivraisonPoidsLourd().getNbVehicules());
+                // debloque le poids lourd si besoin
+                if (jeu.getJoueur().getLivraisonPoidsLourd().getNbVehicules() == 1) {
+                    jeu.getJoueur().setLivraison4Active(1);
+//                debloquerDistributeur(paneBF, btnDebloquerBF, labelTitreDistributeurBF);
+                    // demarre la barre de progression du distributeur
+                    progressBarStartPoidsLourd(0, jeu.getJoueur().getLivraisonPoidsLourd().getVitesseLivraion());
+                }
+                // mise a jour des valeurs
+                miseEnPlace();
+            } else {
+                System.out.println("Vous n'avez pas assez d'argent pour acheter un service de livraison en poids lourd");
+            }
+        } else {
+            System.out.println("Vous avez trop de poids lourd");
+        }
+    }
 
     /**
      * Mise en place des labels et boutons
@@ -230,6 +289,42 @@ public class GestionLivraisonsController {
             }
             System.out.println("non actif");
         }
+        // boutons petit camion
+        if (isActif(jeu.getJoueur().getLivraison3Active())) {
+            getBtnEncaisserCoursePetitCamion().setVisible(true);
+            getBtnAchatLivraisonPetitCamion().setVisible(false);
+            System.out.println("Actif");
+            setBtnEncaisserCoursePetitCamion();
+        } else {
+            getBtnEncaisserCoursePetitCamion().setVisible(false);
+            getBtnAchatLivraisonPetitCamion().setVisible(true);
+            if (jeu.getJoueur().isArgent(jeu.getJoueur().getLivraisonPetitCamion().getPrixVehicule())) {
+                panePetitCamionD.setOpacity(1);
+                panePetitCamionD.setDisable(false);
+                getBtnAchatLivraisonPetitCamion().setDisable(false);
+            } else {
+                getBtnAchatLivraisonPetitCamion().setDisable(true);
+            }
+            System.out.println("non actif");
+        }
+        // boutons poids lourd
+        if (isActif(jeu.getJoueur().getLivraison4Active())) {
+            getBtnEncaisserCoursePoidsLourd().setVisible(true);
+            getBtnAchatLivraisonPoidsLourd().setVisible(false);
+            System.out.println("Actif");
+            setBtnEncaisserCoursePoidsLourd();
+        } else {
+            getBtnEncaisserCoursePoidsLourd().setVisible(false);
+            getBtnAchatLivraisonPoidsLourd().setVisible(true);
+            if (jeu.getJoueur().isArgent(jeu.getJoueur().getLivraisonPoidsLourd().getPrixVehicule())) {
+                panePoidsLourdD.setOpacity(1);
+                panePoidsLourdD.setDisable(false);
+                getBtnAchatLivraisonPoidsLourd().setDisable(false);
+            } else {
+                getBtnAchatLivraisonPoidsLourd().setDisable(true);
+            }
+            System.out.println("non actif");
+        }
         testBtnAchats();
     }
 
@@ -246,20 +341,37 @@ public class GestionLivraisonsController {
     public void testBtnAchats(){
         // scooter
         BigDecimal prixScooter = jeu.getJoueur().getLivraisonScooter().getPrixVehicule();
-        if(jeu.getJoueur().isArgent(prixScooter)){
+        if(jeu.getJoueur().isArgent(prixScooter) && !this.jeu.getJoueur().getLivraisonScooter().isMaxiNbVehicules()){
             btnAchatScooter.setDisable(false);
-        } else{
+        } else {
             btnAchatScooter.setDisable(true);
         }
 
         // camionette
         BigDecimal camionette = jeu.getJoueur().getLivraisonCamionette().getPrixVehicule();
-        if(jeu.getJoueur().isArgent(camionette)){
-            btnAchatScooter.setDisable(false);
-        } else{
-            btnAchatScooter.setDisable(true);
+        if(jeu.getJoueur().isArgent(camionette) && !this.jeu.getJoueur().getLivraisonCamionette().isMaxiNbVehicules()){
+            btnAchatCamionette.setDisable(false);
+        } else {
+            btnAchatCamionette.setDisable(true);
+        }
+
+        // petit camion
+        BigDecimal petitCamion = jeu.getJoueur().getLivraisonPetitCamion().getPrixVehicule();
+        if(jeu.getJoueur().isArgent(petitCamion) && !this.jeu.getJoueur().getLivraisonPetitCamion().isMaxiNbVehicules()){
+            btnAchatPetitCamion.setDisable(false);
+        } else {
+            btnAchatPetitCamion.setDisable(true);
+        }
+
+        // petit poids lourd
+        BigDecimal poidsLourd = jeu.getJoueur().getLivraisonPoidsLourd().getPrixVehicule();
+        if(jeu.getJoueur().isArgent(poidsLourd) && !this.jeu.getJoueur().getLivraisonPoidsLourd().isMaxiNbVehicules()){
+            btnAchatPoidsLourd.setDisable(false);
+        } else {
+            btnAchatPoidsLourd.setDisable(true);
         }
     }
+
 
     /**
      * Gere le bouton d'achat du premier service de livraison
@@ -278,6 +390,7 @@ public class GestionLivraisonsController {
 
         // opacite du pane
         paneScooter.setOpacity(1);
+        paneScooter.setDisable(false);
         paneScooterD.setOpacity(1);
 
         // demarrage barre de progression
@@ -319,6 +432,7 @@ public class GestionLivraisonsController {
 
         // opacite du pane
         paneCamionette.setOpacity(1);
+        paneCamionette.setDisable(false);
         paneCamionetteD.setOpacity(1);
         System.out.println("opacite pane");
 
@@ -346,6 +460,90 @@ public class GestionLivraisonsController {
     }
 
     /**
+     * Gere le bouton d'achat du premier service de livraison petits camions
+     */
+    public void onAchatLivraisonPetitCamion() {
+        // activation de la livraison
+        jeu.getJoueur().setLivraison3Active(1);
+
+        // ajout du scooter
+        jeu.getJoueur().getLivraisonPetitCamion().setNbVehicules(1);
+        // dépense du montant
+        jeu.getJoueur().depenser(jeu.getJoueur().getLivraisonPetitCamion().getPrixVehicule());
+
+        // maj des labels et boutons
+        miseEnPlace();
+
+        // opacite du pane
+        panePetitCamion.setOpacity(1);
+        panePetitCamion.setDisable(false);
+        paneCamionetteD.setOpacity(1);
+
+        // demarrage barre de progression
+        progressBarStartPetitCamion(0, jeu.getJoueur().getLivraisonPetitCamion().getVitesseLivraion());
+    }
+
+    /**
+     * Bouton qui permet d'encaisser l'argent du service de livraison des petits camions
+     */
+    public void onBtnEncaisserCourse3(){
+        long nbCoursesPetitCamion = jeu.getJoueur().getLivraisonPetitCamion().getNbCourses();
+
+        jeu.getJoueur().getLivraisonPetitCamion().setNbCourses(0); // raz le nombre de marchandises
+        jeu.getJoueur().setArgent(this.gainEnAttentePetitCamion.add(jeu.getJoueur().getArgent())); // met a jour les nouveaux gains
+
+        String formattedGain = decimalFormat.format(this.gainEnAttentePetitCamion) + monnaie;
+        // raz des gains en attente
+        this.gainEnAttentePetitCamion = BigDecimal.valueOf(0.00);
+
+        System.out.println("Vous venez de récupérer le prix de " + nbCoursesPetitCamion + " courses en petit camion, vous avez gagné " + formattedGain + ".");
+
+        getBtnEncaisserCoursePetitCamion().setDisable(true);
+        this.miseEnPlace();
+    }
+    /**
+     * Gere le bouton d'achat du premier service de livraison en poids lourd
+     */
+    public void onAchatLivraisonPoidsLourd() {
+        // activation de la livraison
+        jeu.getJoueur().setLivraison4Active(1);
+
+        // ajout du scooter
+        jeu.getJoueur().getLivraisonPoidsLourd().setNbVehicules(1);
+        // dépense du montant
+        jeu.getJoueur().depenser(jeu.getJoueur().getLivraisonPoidsLourd().getPrixVehicule());
+
+        // maj des labels et boutons
+        miseEnPlace();
+
+        // opacite du pane
+        panePoidsLourd.setOpacity(1);
+        panePoidsLourd.setDisable(false);
+        panePoidsLourdD.setOpacity(1);
+
+        // demarrage barre de progression
+        progressBarStartPoidsLourd(0, jeu.getJoueur().getLivraisonPoidsLourd().getVitesseLivraion());
+    }
+
+    /**
+     * Bouton qui permet d'encaisser l'argent du service de livraison en poids lourd
+     */
+    public void onBtnEncaisserCourse4(){
+        long nbCoursesPoidsLourd = jeu.getJoueur().getLivraisonPoidsLourd().getNbCourses();
+
+        jeu.getJoueur().getLivraisonPoidsLourd().setNbCourses(0); // raz le nombre de marchandises
+        jeu.getJoueur().setArgent(this.gainEnAttentePoidsLourd.add(jeu.getJoueur().getArgent())); // met a jour les nouveaux gains
+
+        String formattedGain = decimalFormat.format(this.gainEnAttentePoidsLourd) + monnaie;
+        // raz des gains en attente
+        this.gainEnAttentePoidsLourd = BigDecimal.valueOf(0.00);
+
+        System.out.println("Vous venez de récupérer le prix de " + nbCoursesPoidsLourd + " courses en poids lourd, vous avez gagné " + formattedGain + ".");
+
+        getBtnEncaisserCoursePoidsLourd().setDisable(true);
+        this.miseEnPlace();
+    }
+    /**
      * Demarre les services de livraison s'ils sont actifs
      */
     public void demarrageLivraisons() {
@@ -368,11 +566,17 @@ public class GestionLivraisonsController {
             System.out.println("Demarrage livraison en petit camion");
             // enable pane de la livraison
             this.debloquerLivraison(panePetitCamion, panePetitCamionD);
+            // recuperation de l'etat de la barre de progression pour la livraison en scooter
+            double vitessePetitCamion = jeu.getJoueur().getLivraisonPetitCamion().getVitesseLivraion() - (jeu.getJoueur().getLivraisonPetitCamion().getVitesseLivraion() * jeu.getJoueur().getLivraisonPetitCamion().getEtatProgressLivraison());
+            progressBarStartPetitCamionEnCours(1, vitessePetitCamion);
         }
         if(isActif(jeu.getJoueur().getLivraison4Active())){
             System.out.println("Demarrage livraison en poids lourd");
             // enable pane de la livraison
             this.debloquerLivraison(panePoidsLourd, panePoidsLourdD);
+            // recuperation de l'etat de la barre de progression pour la livraison en poids lourd
+            double vitessePoidsLourd = jeu.getJoueur().getLivraisonPoidsLourd().getVitesseLivraion() - (jeu.getJoueur().getLivraisonPoidsLourd().getVitesseLivraion() * jeu.getJoueur().getLivraisonPoidsLourd().getEtatProgressLivraison());
+            progressBarStartPoidsLourdEnCours(1, vitessePoidsLourd);
         }
     }
 
@@ -402,11 +606,20 @@ public class GestionLivraisonsController {
         // petit camion
         long nbCoursesEnCours3 = jeu.getJoueur().getLivraisonPetitCamion().getNbCourses();
         tarifCourse = jeu.getJoueur().getLivraisonPetitCamion().getPrixCourse();
-        if(nbCoursesEnCours2 > 0){
+        if(nbCoursesEnCours3 > 0){
             btnEncaisserCoursePetitCamion.setDisable(false);
-            majGainsEnCoursCamionette();
+            majGainsEnCoursPetitCamion();
         } else {
             btnEncaisserCoursePetitCamion.setDisable(true);
+        }
+        // poids lourd
+        long nbCoursesEnCours4 = jeu.getJoueur().getLivraisonPoidsLourd().getNbCourses();
+        tarifCourse = jeu.getJoueur().getLivraisonPoidsLourd().getPrixCourse();
+        if(nbCoursesEnCours3 > 0){
+            btnEncaisserCoursePoidsLourd.setDisable(false);
+            majGainsEnCoursPoidsLourd();
+        } else {
+            btnEncaisserCoursePoidsLourd.setDisable(true);
         }
     }
 
@@ -446,7 +659,13 @@ public class GestionLivraisonsController {
         String formattedString = this.jeu.getJoueur().getLivraisonPetitCamion().setNbVehicule();
         this.labelNbPetitCamion.setText(formattedString);
     }
-
+    /**
+     * initialise le nombre de poids lourd en cours ainsi que le nombre de poids lourd  maximum
+     */
+    public void setNbPoidsLourd() {
+        String formattedString = this.jeu.getJoueur().getLivraisonPoidsLourd().setNbVehicule();
+        this.labelNbPoidsLourd.setText(formattedString);
+    }
     /**
      * Recuperation du bouton pour encaisser les courses du scooter
      *
@@ -563,6 +782,7 @@ public class GestionLivraisonsController {
         labelsScooter();
         labelsCamionette();
         labelsPetitCamion();
+        labelsPoidsLourd();
     }
     /**
      * Labels du scooter
@@ -590,6 +810,11 @@ public class GestionLivraisonsController {
         setLabelTarifPetitCamion();
     }
 
+    public void labelsPoidsLourd(){
+        setNbPoidsLourd();
+        setNbCoursesPoidsLourd();
+        setLabelTarifPoidsLourd();
+    }
     public void majGainsEnCoursScooter() {
         System.out.println("maj des gains courses des livraisons en scooter");
         // tant que non vendu, on cumule les gains en attente
@@ -812,7 +1037,6 @@ public class GestionLivraisonsController {
 
 
     // livraison en petit camion
-// Livraisons en camionette
 
     /**
      * Inscrit le prix d'achat d'un petit camion
@@ -821,7 +1045,7 @@ public class GestionLivraisonsController {
         BigDecimal prixPetitCamion = jeu.getJoueur().getLivraisonPetitCamion().getPrixVehicule();
         String nomVehicule = jeu.getJoueur().getLivraisonPetitCamion().getNom();
         String formattedString = "Acheter " + nomVehicule + " : " + decimalFormat.format(prixPetitCamion) + monnaie;
-        labelTarifCamionette.setText(formattedString);
+        labelTarifPetitCamion.setText(formattedString);
     }
 
     /**
@@ -843,8 +1067,7 @@ public class GestionLivraisonsController {
     }
 
     /**
-     * Debut barre progress livraisons
-     */
+     * Debut barre progress livraisons     */
 
     public ProgressBar getProgressPetitCamion() {
         return progressPetitCamion;
@@ -897,9 +1120,9 @@ public class GestionLivraisonsController {
         ProgressBar progressPetitCamion = getProgressPetitCamion();
         Button btnEncaisserCoursePetitCamion = getBtnEncaisserCoursePetitCamion();
         // Réinitialise la barre de progression à 0
-        progressCamionette.setProgress(0);
+        progressPetitCamion.setProgress(0);
         timelinePetitCamion = new Timeline(
-                new KeyFrame(Duration.ZERO, new KeyValue(progressCamionette.progressProperty(), 0)),
+                new KeyFrame(Duration.ZERO, new KeyValue(progressPetitCamion.progressProperty(), 0)),
                 new KeyFrame(Duration.seconds(vitesse), e -> {
                     System.out.println("Course en petit camion terminée");
                     btnEncaisserCoursePetitCamion.setDisable(false);
@@ -926,7 +1149,7 @@ public class GestionLivraisonsController {
         long nbLivraisonsEncours = jeu.getJoueur().getLivraisonPetitCamion().getNbCourses();
         int nbLivraisonsPetitCamionEnCours = jeu.getJoueur().getLivraisonPetitCamion().getNbVehicules();
         System.out.println("nombre livraison en cours : " + nbLivraisonsEncours);
-        System.out.println("nombre livraison camionette : " + nbLivraisonsPetitCamionEnCours);
+        System.out.println("nombre livraison petit camion : " + nbLivraisonsPetitCamionEnCours);
         long nouvNombre = nbLivraisonsEncours + nbLivraisonsPetitCamionEnCours;
         jeu.getJoueur().getLivraisonPetitCamion().setNbCourses(nouvNombre);
         this.setNbCoursesPetitCamion();
@@ -940,11 +1163,11 @@ public class GestionLivraisonsController {
         System.out.println("maj des gains courses des livraisons en petit camion");
         // tant que non vendu, on cumule les gains en attente
         long nbLivraisonsEncours = jeu.getJoueur().getLivraisonPetitCamion().getNbCourses();
-        BigDecimal tarifCoursepetitCamion = jeu.getJoueur().getLivraisonPetitCamion().getPrixCourse();
-        System.out.println("prix de la course : " + tarifCoursepetitCamion);
+        BigDecimal tarifCoursePetitCamion = jeu.getJoueur().getLivraisonPetitCamion().getPrixCourse();
+        System.out.println("prix de la course : " + tarifCoursePetitCamion);
 
         // calcul des gains attente
-        this.gainEnAttentePetitCamion = tarifCoursepetitCamion.multiply(BigDecimal.valueOf(nbLivraisonsEncours));
+        this.gainEnAttentePetitCamion = tarifCoursePetitCamion.multiply(BigDecimal.valueOf(nbLivraisonsEncours));
 
         // maj le montant sur le bouton Encaisser
         this.setBtnEncaisserCoursePetitCamion();
@@ -967,8 +1190,158 @@ public class GestionLivraisonsController {
     }
 
     // Livraison en poids lourd
+    /**
+     * Inscrit le prix d'achat d'un poids lourd
+     */
+    public void setLabelTarifPoidsLourd(){
+        BigDecimal prixPoidsLourd = jeu.getJoueur().getLivraisonPoidsLourd().getPrixVehicule();
+        String nomVehicule = jeu.getJoueur().getLivraisonPoidsLourd().getNom();
+        String formattedString = "Acheter " + nomVehicule + " : " + decimalFormat.format(prixPoidsLourd) + monnaie;
+        labelTarifPoidsLourd.setText(formattedString);
+    }
+    /**
+     * Recuperation du bouton pour encaisser les courses du poids lourd
+     *
+     * @return
+     */
+    public Button getBtnEncaisserCoursePoidsLourd() {
+        return btnEncaisserCoursePoidsLourd;
+    }
+
+    /**
+     * Recuperation du bouton pour acheter le service de livraison en poids lourd
+     *
+     * @return
+     */
+    public Button getBtnAchatLivraisonPoidsLourd() {
+        return btnAchatLivraisonPoidsLourd;
+    }
+
+    /**
+     * Debut barre progress livraisons
+     */
+
+    public ProgressBar getProgressPoidsLourd() {
+        return progressPoidsLourd;
+    }
+
+    /**
+     * Met à jour la barre de progression pour livraison poids lourd
+     *
+     * @param cycle
+     * @param vitesse
+     */
+    public void progressBarStartPoidsLourdEnCours(int cycle, double vitesse) {
+        ProgressBar progressPoidsLourd = getProgressPoidsLourd();
+        Button btnEncaisserCoursePoidsLourd = getBtnEncaisserCoursePoidsLourd();
+        // Réinitialise la barre de progression à 0
+        progressPoidsLourd.setProgress(this.jeu.getJoueur().getLivraisonPoidsLourd().getEtatProgressLivraison());
+        timelinePoidsLourd = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(progressPoidsLourd.progressProperty(), this.jeu.getJoueur().getLivraisonPoidsLourd().getEtatProgressLivraison())),
+                new KeyFrame(Duration.seconds(vitesse), e -> {
+                    System.out.println("Course en poids lourd terminée");
+                    btnEncaisserCoursePoidsLourd.setDisable(false);
+                    // ajoute une course au service de livraison
+                    this.majProgressPoidsLourd();
+                    // met à jour les gains en cours
+                    this.majGainsEnCoursPoidsLourd();
+                    // maj des boutons
+                }, new KeyValue(progressPoidsLourd.progressProperty(), 1))
+        );
+        timelinePoidsLourd.setOnFinished(event -> {
+            if (cycle == 1) {
+                // Lancer la deuxième exécution de la méthode progressBarStartTimeline
+                jeu.getJoueur().getLivraisonPoidsLourd().setEtatProgressLivraison(0);
+                System.out.println("fin premiere barre");
+                // recalcul de la vitesse suivant le niveau de la barre de progression
+                progressBarStartPoidsLourd(cycle - 1, this.jeu.getJoueur().getLivraisonPoidsLourd().getVitesseLivraion());
+            }
+        });
+        if (cycle == 0) {
+            timelinePoidsLourd.setCycleCount(Animation.INDEFINITE);
+        } else {
+            timelinePoidsLourd.setCycleCount(cycle);
+        }
+        timelinePoidsLourd.play();
+    }
+
+    /**
+     * Barre de progressions Livraison en poids lourd
+     */
+    public void progressBarStartPoidsLourd(int cycle, double vitesse) {
+        ProgressBar progressPoidsLourd = getProgressPoidsLourd();
+        Button btnEncaisserCoursePoidsLourd = getBtnEncaisserCoursePoidsLourd();
+        // Réinitialise la barre de progression à 0
+        progressPoidsLourd.setProgress(0);
+        timelinePoidsLourd = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(progressPoidsLourd.progressProperty(), 0)),
+                new KeyFrame(Duration.seconds(vitesse), e -> {
+                    System.out.println("Livraison en poids lourd terminée");
+                    btnEncaisserCoursePoidsLourd.setDisable(false);
+                    // ajoute un nombre de courses au service de livraison en poids lourd
+                    this.majProgressPoidsLourd();
+                    // met à jour les gains en cours
+                    this.majGainsEnCoursPoidsLourd();
+                    // maj des boutons
+                }, new KeyValue(progressPoidsLourd.progressProperty(), 1))
+        );
+
+        if (cycle == 0) {
+            timelinePoidsLourd.setCycleCount(Animation.INDEFINITE);
+        } else {
+            timelinePoidsLourd.setCycleCount(cycle);
+        }
+        timelinePoidsLourd.play();
+    }
+
+    /**
+     * Met a jour le chiffre du nombre de livraisons effectuées
+     */
+    public void majProgressPoidsLourd() {
+        long nbLivraisonsEncours = jeu.getJoueur().getLivraisonPoidsLourd().getNbCourses();
+        int nbLivraisonsPoidsLourdEnCours = jeu.getJoueur().getLivraisonPoidsLourd().getNbVehicules();
+        long nouvNombre = nbLivraisonsEncours + nbLivraisonsPoidsLourdEnCours;
+        jeu.getJoueur().getLivraisonPoidsLourd().setNbCourses(nouvNombre);
+        this.setNbCoursesScooter();
+        System.out.println("maj du nombre de livraisons effectuées en poids lourd : " + nouvNombre);
+    }
+
+    public void setNbCoursesPoidsLourd() {
+        this.labelNbCoursesPoidsLourd.setText(jeu.getJoueur().getLivraisonPoidsLourd().getNbCourses() + "");
+    }
+
+    public void majGainsEnCoursPoidsLourd() {
+        System.out.println("maj des gains courses des livraisons en poids lourd");
+        // tant que non vendu, on cumule les gains en attente
+        long nbLivraisonsEncours = jeu.getJoueur().getLivraisonPoidsLourd().getNbCourses();
+        BigDecimal tarifCoursePoidsLourd = jeu.getJoueur().getLivraisonPoidsLourd().getPrixCourse();
+        System.out.println("prix de la course : " + tarifCoursePoidsLourd);
+
+        // calcul des gains attente
+        this.gainEnAttentePoidsLourd = tarifCoursePoidsLourd.multiply(BigDecimal.valueOf(nbLivraisonsEncours));
+
+        // maj le montant sur le bouton Encaisser
+        this.setBtnEncaisserCoursePoidsLourd();
+
+    }
+
+    /**
+     * Affiche ou non le bouton recuperer marchandises
+     * suivant si gainEnAttente > 0
+     */
+    public void setBtnEncaisserCoursePoidsLourd() {
+        int comparaison = this.gainEnAttentePoidsLourd.compareTo(BigDecimal.valueOf(0));
+        if (comparaison > 0) {
+            this.getBtnEncaisserCoursePoidsLourd().setDisable(false);
+        } else {
+            this.getBtnEncaisserCoursePoidsLourd().setDisable(true);
+        }
+        String formattedString = "Encaisser " + decimalFormat.format(gainEnAttentePoidsLourd) + monnaie;
+        this.getBtnEncaisserCoursePoidsLourd().setText(formattedString);
+    }
 
 
+    // fin livraison poids lourd
 
 
 
@@ -1189,6 +1562,8 @@ public class GestionLivraisonsController {
         // on recupere les barres de progression des livraisons
         this.jeu.getJoueur().getLivraisonScooter().setEtatProgressLivraison(this.progressScooter.getProgress());
         this.jeu.getJoueur().getLivraisonCamionette().setEtatProgressLivraison(this.progressCamionette.getProgress());
+        this.jeu.getJoueur().getLivraisonPetitCamion().setEtatProgressLivraison(this.progressPetitCamion.getProgress());
+        this.jeu.getJoueur().getLivraisonPoidsLourd().setEtatProgressLivraison(this.progressPoidsLourd.getProgress());
 
         // on stoppe les barres de progression;
         this.progressBarStop(timelineOeufs);
@@ -1199,6 +1574,8 @@ public class GestionLivraisonsController {
         this.progressBarStop(timelineSa);
         this.progressBarStop(timelineScooter);
         this.progressBarStop(timelineCamionette);
+        this.progressBarStop(timelinePetitCamion);
+        this.progressBarStop(timelinePoidsLourd);
     }
 
     /**
@@ -1543,4 +1920,8 @@ public class GestionLivraisonsController {
         jeu.getJoueur().getSandwichs().setNbMarchandises(nouvNombre);
         System.out.println("maj du nombre de marchandises vendues dans les distributeurs de sandwichs : " + nouvNombre);
     }
+
+
+
+
 }

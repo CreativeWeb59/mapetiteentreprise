@@ -14,7 +14,7 @@
                </font>
             </Label>
              <Pane layoutY="160.0" prefHeight="80.0" prefWidth="1280.0" />
-            <Pane layoutY="240.0" prefHeight="500.0" prefWidth="1280.0">
+            <Pane layoutY="244.0" prefHeight="500.0" prefWidth="1280.0">
                <children>
                    <Pane fx:id="paneCreditEnCours" layoutX="384.0" layoutY="36.0" prefHeight="464.0" prefWidth="456.0" styleClass="fondsCalendrier" visible="false">
                        <children>
@@ -52,13 +52,15 @@
              <Pane fx:id="paneProgress" layoutX="185.0" layoutY="820.0" prefHeight="20.0" prefWidth="900.0" visible="true">
                  <children>
                      <ProgressBar fx:id="progressOeufs" cache="true" layoutX="0.0" layoutY="0.0" prefHeight="15.0" prefWidth="180.0" progress="0.0" />
-                     <ProgressBar fx:id="progressJour" prefHeight="20.0" layoutY="25.0" prefWidth="900.0" progress="0.0" />
+                     <ProgressBar fx:id="progressJour" layoutY="25.0" prefHeight="20.0" prefWidth="900.0" progress="0.0" />
                      <ProgressBar fx:id="progressBC" cache="true" layoutX="0.0" layoutY="50.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
                      <ProgressBar fx:id="progressBF" cache="true" layoutX="105.0" layoutY="50.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
                      <ProgressBar fx:id="progressCo" cache="true" layoutX="210.0" layoutY="50.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
                      <ProgressBar fx:id="progressSa" cache="true" layoutX="315.0" layoutY="50.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
                      <ProgressBar fx:id="progressScooter" cache="true" layoutX="450.0" layoutY="50.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
                      <ProgressBar fx:id="progressCamionette" cache="true" layoutX="555.0" layoutY="50.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
+                     <ProgressBar fx:id="progressPetitCamion" cache="true" layoutX="660.0" layoutY="50.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
+                     <ProgressBar fx:id="progressPoidsLourd" cache="true" layoutX="765.0" layoutY="50.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
                  </children>
              </Pane>
          </children>

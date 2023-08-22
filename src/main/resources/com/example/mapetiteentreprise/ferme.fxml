@@ -152,18 +152,18 @@
                   </Pane>
                         <Pane layoutX="540.0" layoutY="140.0" prefHeight="500.0" prefWidth="700.0" styleClass="fondsPancarte2">
                             <children>
-                                <Label layoutX="120.0" layoutY="226.0" styleClass="labelText" text="OEUFS (vente : 0.20 €)" />
+                                <Label layoutX="120.0" layoutY="256.0" styleClass="labelText" text="OEUFS (vente : 0.20 €)" />
                                 <Label layoutX="120.0" layoutY="90.0" styleClass="labelText" text="POULES" />
-                                <Label fx:id="labelPoule" layoutX="120.0" layoutY="119.0" prefHeight="100.0" styleClass="labelText2" text="" />
+                                <Label fx:id="labelPoule" layoutX="120.0" layoutY="119.0" prefHeight="133.0" styleClass="labelText2" text="" />
                                 <Label fx:id="nbPoules" alignment="CENTER_RIGHT" layoutX="304.0" layoutY="99.0" styleClass="labelChifres" text="0" />
                                 <Button fx:id="btnPPoule" disable="true" layoutX="436.0" layoutY="79.0" mnemonicParsing="false" onAction="#addPoule1" text="+ 1" />
                                 <Button fx:id="btnPPoulePDix" disable="true" layoutX="517.0" layoutY="79.0" mnemonicParsing="false" onAction="#addPoule10" text="+ 10" />
                                 <Button fx:id="btnPPouleMax" disable="true" layoutX="466.0" layoutY="131.0" mnemonicParsing="false" onAction="#addPouleX" text="max" />
-                                <Label fx:id="nbOeufs" alignment="TOP_RIGHT" layoutX="304.0" layoutY="226.0" styleClass="labelChifres" text="0" />
-                                <ProgressBar id="progressOeufs" fx:id="progressOeufs" cache="true" layoutX="120.0" layoutY="256.0" prefHeight="20.0" prefWidth="180.0" progress="0.0" />
+                                <Label fx:id="nbOeufs" alignment="TOP_RIGHT" layoutX="304.0" layoutY="256.0" styleClass="labelChifres" text="0" />
+                                <ProgressBar id="progressOeufs" fx:id="progressOeufs" cache="true" layoutX="120.0" layoutY="286.0" prefHeight="20.0" prefWidth="180.0" progress="0.0" />
                                 <Button fx:id="btnVendre" disable="true" layoutX="304.0" layoutY="410.0" onAction="#onVendre" styleClass="buttonVendre" text="Vendre" />
-                                <Label fx:id="gainARecuperer" alignment="CENTER_RIGHT" layoutX="304.0" layoutY="325.0" text="0.00 €" />
-                                <Label layoutX="120.0" layoutY="325.0" styleClass="labelText" text="BENEFICE" />
+                                <Label fx:id="gainARecuperer" alignment="CENTER_RIGHT" layoutX="304.0" layoutY="345.0" text="0.00 €" />
+                                <Label layoutX="120.0" layoutY="345.0" styleClass="labelText" text="BENEFICE" />
                               <ImageView id="poule" fx:id="poule" fitHeight="100.0" fitWidth="72.0" layoutX="480.0" layoutY="300.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                                   <image>
                                       <Image url="@images/pouleOeuf.png" />
@@ -211,6 +211,8 @@
                 <ProgressBar fx:id="progressSa" cache="true" layoutX="315.0" layoutY="50.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
                 <ProgressBar fx:id="progressScooter" cache="true" layoutX="450.0" layoutY="50.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
                 <ProgressBar fx:id="progressCamionette" cache="true" layoutX="555.0" layoutY="50.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
+                <ProgressBar fx:id="progressPetitCamion" cache="true" layoutX="660.0" layoutY="50.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
+                <ProgressBar fx:id="progressPoidsLourd" cache="true" layoutX="765.0" layoutY="50.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
             </children>
         </Pane>
     </children>

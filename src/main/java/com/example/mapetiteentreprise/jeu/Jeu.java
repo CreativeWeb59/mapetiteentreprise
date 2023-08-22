@@ -1,3 +1,23 @@
+// usine textile :  petite usine : 500.000 €, maxi 50
+//                  usine moyenne : 750.000 €
+//                  grande usine : 1.000.000 €
+//                  énorme usine : 1.500.000 €
+
+// usine composants informatiques
+
+
+// presse, journaux
+// petite imprimerie
+// moyenne imprimerie
+// grande imprimerie
+// imprimerie industrielle, imprimerie commerciale de grande envergure, maison d'édition ou imprimerie de presse
+
+// fabrication voitures
+
+
+// poulailler geant : 100.000 €, capacite : 20.000 poules
+
+
 package com.example.mapetiteentreprise.jeu;
 
 import com.example.mapetiteentreprise.bdd.*;
@@ -11,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Jeu {
-    private final boolean dev = true;
+    private final boolean dev = false;
     private Joueur joueur;
     private Sauvegarde sauvegarde;
     private Parametres parametres;
@@ -220,7 +240,7 @@ public class Jeu {
 
     /**
      * Creation des poulaillers
-     * 4 poulaillers + 1 inactif
+     * 5 poulaillers + 1 inactif
      * et affectation dans la liste des poulaillers
      */
     public void createPoulaillers() {
@@ -234,7 +254,8 @@ public class Jeu {
         this.addPoulailler(poulaillerMega);
         Poulaillers poulaillerIndustriel = new Poulaillers("Poulailler industriel", BigDecimal.valueOf(50000), 10000);
         this.addPoulailler(poulaillerIndustriel);
-
+        Poulaillers poulaillerGeant = new Poulaillers("Poulailler géant", BigDecimal.valueOf(100000), 20000);
+        this.addPoulailler(poulaillerGeant);
     }
 
     public List<Poulaillers> getPoulaillersList() {

@@ -34,7 +34,7 @@
                             </font>
                         </Label>
                         <Button fx:id="btnDistributeurPlusBC" layoutX="394.0" layoutY="20.0" mnemonicParsing="false" onAction="#acheterBoissonsChaudes" text="+" />
-                        <Label fx:id="nbDistributeursBC" alignment="TOP_RIGHT" layoutX="310.0" layoutY="30.0" styleClass="labelChifres" text="0" />
+                        <Label fx:id="nbDistributeursBC" alignment="TOP_RIGHT" layoutX="310.0" layoutY="30.0" prefWidth="70.0" styleClass="labelChifres" text="0" />
                         <ProgressBar id="progressBC" fx:id="progressBC" cache="true" layoutX="35.0" layoutY="170.0" prefHeight="30.0" prefWidth="430.0" progress="0.0" />
                         <ImageView fitHeight="64.0" fitWidth="68.0" layoutX="130.0" layoutY="88.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -58,7 +58,7 @@
                             </font>
                         </Label>
                         <Button fx:id="btnDistributeurPlusBF" disable="true" layoutX="394.0" layoutY="20.0" mnemonicParsing="false" onAction="#acheterBoissonsFraiches" text="+" />
-                        <Label fx:id="nbDistributeursBF" alignment="TOP_RIGHT" layoutX="310.0" layoutY="30.0" prefHeight="29.0" prefWidth="44.0" styleClass="labelChifres" text="0" />
+                        <Label fx:id="nbDistributeursBF" alignment="TOP_RIGHT" layoutX="310.0" layoutY="30.0" prefHeight="29.0" prefWidth="70.0" styleClass="labelChifres" text="0" />
                         <ProgressBar id="progressOeufs" fx:id="progressBF" cache="true" layoutX="35.0" layoutY="170.0" prefHeight="30.0" prefWidth="430.0" progress="0.0" />
                         <ImageView fitHeight="64.0" fitWidth="68.0" layoutX="130.0" layoutY="88.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -82,7 +82,7 @@
                             </font>
                         </Label>
                         <Button fx:id="btnDistributeurPlusCo" layoutX="394.0" layoutY="20.0" mnemonicParsing="false" onAction="#acheterConfiseries" text="+" />
-                        <Label fx:id="nbDistributeursCo" alignment="TOP_RIGHT" layoutX="310.0" layoutY="30.0" styleClass="labelChifres" text="0" />
+                        <Label fx:id="nbDistributeursCo" alignment="TOP_RIGHT" layoutX="310.0" layoutY="30.0" prefWidth="70.0" styleClass="labelChifres" text="0" />
                         <ProgressBar id="progressBC" fx:id="progressCo" cache="true" layoutX="35.0" layoutY="170.0" prefHeight="30.0" prefWidth="430.0" progress="0.0" />
                         <ImageView fitHeight="64.0" fitWidth="68.0" layoutX="130.0" layoutY="88.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -106,7 +106,7 @@
                             </font>
                         </Label>
                         <Button fx:id="btnDistributeurPlusSa" disable="true" layoutX="394.0" layoutY="20.0" mnemonicParsing="false" onAction="#acheterSandwichs" text="+" />
-                        <Label fx:id="nbDistributeursSa" alignment="TOP_RIGHT" layoutX="310.0" layoutY="30.0" prefHeight="30.0" prefWidth="90.0" styleClass="labelChifres" text="0" />
+                        <Label fx:id="nbDistributeursSa" alignment="TOP_RIGHT" layoutX="310.0" layoutY="30.0" prefHeight="30.0" prefWidth="70.0" styleClass="labelChifres" text="0" />
                         <ProgressBar id="progressSa" fx:id="progressSa" cache="true" layoutX="35.0" layoutY="170.0" prefHeight="30.0" prefWidth="430.0" progress="0.0" />
                         <ImageView fitHeight="64.0" fitWidth="68.0" layoutX="130.0" layoutY="88.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -136,6 +136,8 @@
                 <ProgressBar fx:id="progressJour" layoutY="25.0" prefHeight="20.0" prefWidth="900.0" progress="0.0" />
                 <ProgressBar fx:id="progressScooter" cache="true" layoutX="450.0" layoutY="50.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
                 <ProgressBar fx:id="progressCamionette" cache="true" layoutX="555.0" layoutY="50.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
+                <ProgressBar fx:id="progressPetitCamion" cache="true" layoutX="660.0" layoutY="50.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
+                <ProgressBar fx:id="progressPoidsLourd" cache="true" layoutX="765.0" layoutY="50.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
             </children>
         </Pane>
     </children>

@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 public class LivraisonScooter extends Livraisons{
     private final BigDecimal prixVehicule = BigDecimal.valueOf(5000); // prix du scooter
     private final BigDecimal prixCourse = BigDecimal.valueOf(50.00); // tarif de chaque course
-    private final int nbMaxiVehicules = 200;
+    private final int nbMaxiVehicules = 300;
     // vitesse des livraisons
     private final int vitesseLivraion = 60;
     public LivraisonScooter(String nom, int nbVehicules, long nbCourses, double etatProgressLivraison) {
@@ -44,5 +44,13 @@ public class LivraisonScooter extends Livraisons{
      */
     public String setNbVehicule() {
         return this.getNbVehicules() + " / " + this.getNbMaxiVehicules();
+    }
+
+    /**
+     * renvoi true si le nombre maximum de scooter est atteint
+     * @return
+     */
+    public boolean isMaxiNbVehicules(){
+        return this.getNbVehicules() >= this.getNbMaxiVehicules();
     }
 }

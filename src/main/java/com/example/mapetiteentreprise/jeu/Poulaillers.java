@@ -19,6 +19,7 @@ public class Poulaillers {
         createPoulaillerPro();
         createMegaPoulailler();
         createPoulaillerIndustriel();
+        createPoulaillerGéant();
     }
 
     /**
@@ -65,6 +66,14 @@ public class Poulaillers {
         this.capacite = 10000;
     }
 
+    /**
+     * Creation du poulailler industriel
+     */
+    public void createPoulaillerGéant(){
+        this.nom = "poulailler géant";
+        this.prixPoulailler = BigDecimal.valueOf(100000);
+        this.capacite = 20000;
+    }
     public String getNom() {
         return nom;
     }

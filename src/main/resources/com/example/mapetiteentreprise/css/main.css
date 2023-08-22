@@ -213,3 +213,10 @@ Label{
     -fx-text-fill: white;
     -fx-background-color: transparent;
 }
+
+.grosChiffre2{
+    -fx-font-weight: bold;
+    -fx-font-size: 50px;
+    -fx-text-fill: #2E86C1;
+    -fx-background-color: transparent;
+}

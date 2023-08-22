@@ -2,8 +2,6 @@ package com.example.mapetiteentreprise.controllersFx;
 
 import com.example.mapetiteentreprise.Main;
 import com.example.mapetiteentreprise.actions.Outils;
-import com.example.mapetiteentreprise.bdd.ConnectionBdd;
-import com.example.mapetiteentreprise.bdd.SauvegardeService;
 import com.example.mapetiteentreprise.jeu.Distributeurs;
 import com.example.mapetiteentreprise.jeu.Jeu;
 import javafx.animation.Animation;
@@ -53,8 +51,8 @@ public class GestionDistributeursController {
     @FXML
     private Pane paneCo, paneGroupCo, paneSa, paneGroupSa, paneProgress;
     @FXML
-    private ProgressBar progressBC, progressBF, progressSa, progressCo, progressJour, progressOeufs, progressScooter, progressCamionette;
-    private Timeline timelineBC, timelineBF, timelineSa, timelineCo, timelineCalendrier, timelineHeure, timelineScooter, timelineCamionette;
+    private ProgressBar progressBC, progressBF, progressSa, progressCo, progressJour, progressOeufs, progressScooter, progressCamionette, progressPetitCamion, progressPoidsLourd;
+    private Timeline timelineBC, timelineBF, timelineSa, timelineCo, timelineCalendrier, timelineHeure, timelineScooter, timelineCamionette, timelinePetitCamion, timelinePoidsLourd;
     private BigDecimal gainEnAttenteBC = new BigDecimal(0);
     private BigDecimal gainEnAttenteBF = new BigDecimal(0);
     private BigDecimal gainEnAttenteSa = new BigDecimal(0);
@@ -1735,6 +1733,18 @@ public class GestionDistributeursController {
             System.out.println("Vitesse camionette : " + vitesseCamionette);
             progressBarStartCamionetteEnCours(1, vitesseCamionette);
         }
+        if(jeu.getJoueur().getLivraison3Active() == 1){
+            // recuperation de l'etat de la barre de progression pour la livraison en petit camion
+            double vitessePetitCamion = jeu.getJoueur().getLivraisonPetitCamion().getVitesseLivraion() - (jeu.getJoueur().getLivraisonPetitCamion().getVitesseLivraion() * jeu.getJoueur().getLivraisonPetitCamion().getEtatProgressLivraison());
+            System.out.println("Vitesse petit camion : " + vitessePetitCamion);
+            progressBarStartPetitCamionEnCours(1, vitessePetitCamion);
+        }
+        if(jeu.getJoueur().getLivraison4Active() == 1){
+            // recuperation de l'etat de la barre de progression pour la livraison en poids lours
+            double vitessePoidsLourd = jeu.getJoueur().getLivraisonPoidsLourd().getVitesseLivraion() - (jeu.getJoueur().getLivraisonPoidsLourd().getVitesseLivraion() * jeu.getJoueur().getLivraisonPoidsLourd().getEtatProgressLivraison());
+            System.out.println("Vitesse petit camion : " + vitessePoidsLourd);
+            progressBarStartPodisLourdEnCours(1, vitessePoidsLourd);
+        }
     }
     /**
      * Met à jour la barre de progression pour distributeur de boissons chaudes
@@ -1894,6 +1904,166 @@ public class GestionDistributeursController {
         return progressCamionette;
     }
 
+    // progress petit camion
+    /**
+     * Met à jour la barre de progression pour le service de livraison en petit camion
+     *
+     * @param cycle
+     * @param vitesse
+     */
+
+    public void progressBarStartPetitCamionEnCours(int cycle, double vitesse) {
+        ProgressBar progressPetitCamion = getProgressPetitCamion();
+        // Réinitialise la barre de progression à 0
+        progressPetitCamion.setProgress(this.jeu.getJoueur().getLivraisonPetitCamion().getEtatProgressLivraison());
+        timelinePetitCamion = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(progressPetitCamion.progressProperty(), this.jeu.getJoueur().getLivraisonPetitCamion().getEtatProgressLivraison())),
+                new KeyFrame(Duration.seconds(vitesse), e -> {
+                    System.out.println("Course en petit camion terminée");
+                    // ajoute une course au service de livraison en petit camion
+                    this.majProgressPetitCamion();
+                }, new KeyValue(progressPetitCamion.progressProperty(), 1))
+        );
+        timelinePetitCamion.setOnFinished(event -> {
+            if (cycle == 1) {
+                // Lancer la deuxième exécution de la méthode progressBarStartTimeline
+                jeu.getJoueur().getLivraisonPetitCamion().setEtatProgressLivraison(0);
+                System.out.println("fin course camionette");
+                // recalcul de la vitesse suivant le niveau de la barre de progression
+                progressBarStartPetitCamion(cycle - 1, this.jeu.getJoueur().getLivraisonPetitCamion().getVitesseLivraion());
+            }
+        });
+        if (cycle == 0) {
+            timelinePetitCamion.setCycleCount(Animation.INDEFINITE);
+        } else {
+            timelinePetitCamion.setCycleCount(cycle);
+        }
+        timelinePetitCamion.play();
+    }
+
+    /**
+     * Barre de progressions service de livraison en petit camion
+     */
+    public void progressBarStartPetitCamion(int cycle, double vitesse) {
+        ProgressBar progressPetitCamion = getProgressPetitCamion();
+        // Réinitialise la barre de progression à 0
+        progressPetitCamion.setProgress(0);
+        timelinePetitCamion = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(progressPetitCamion.progressProperty(), 0)),
+                new KeyFrame(Duration.seconds(vitesse), e -> {
+                    System.out.println("fin course petit camion");
+                    // ajoute d'une course au service de livraion en petit camion
+                    this.majProgressPetitCamion();
+                }, new KeyValue(progressPetitCamion.progressProperty(), 1))
+        );
+
+        if (cycle == 0) {
+            timelinePetitCamion.setCycleCount(Animation.INDEFINITE);
+        } else {
+            timelinePetitCamion.setCycleCount(cycle);
+        }
+        timelinePetitCamion.play();
+    }
+
+    /**
+     * Met a jour le chiffre du nombre de livraisons effectuées
+     */
+    public void majProgressPetitCamion() {
+        long nbLivraisonsEncours = jeu.getJoueur().getLivraisonPetitCamion().getNbCourses();
+        int nbLivraisonsPetitCamionEnCours = jeu.getJoueur().getLivraisonPetitCamion().getNbVehicules();
+        long nouvNombre = nbLivraisonsEncours + nbLivraisonsPetitCamionEnCours;
+        jeu.getJoueur().getLivraisonPetitCamion().setNbCourses(nouvNombre);
+        System.out.println("maj du nombre de livraisons effectuées en petit camion : " + nouvNombre);
+    }
+
+    /**
+     * Permet de gerer la barre de progression du petit camion
+     * @return
+     */
+    public ProgressBar getProgressPetitCamion() {
+        return progressPetitCamion;
+    }
+
+    // progress poids lourd
+    /**
+     * Met à jour la barre de progression pour le service de livraison en poids lourd
+     *
+     * @param cycle
+     * @param vitesse
+     */
+
+    public void progressBarStartPodisLourdEnCours(int cycle, double vitesse) {
+        ProgressBar progressPoidsLourd = getProgressPoidsLourd();
+        // Réinitialise la barre de progression à 0
+        progressPoidsLourd.setProgress(this.jeu.getJoueur().getLivraisonPoidsLourd().getEtatProgressLivraison());
+        timelinePoidsLourd = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(progressPoidsLourd.progressProperty(), this.jeu.getJoueur().getLivraisonPoidsLourd().getEtatProgressLivraison())),
+                new KeyFrame(Duration.seconds(vitesse), e -> {
+                    System.out.println("Course en poids lourd terminée");
+                    // ajoute une course au service de livraison en poids lourd
+                    this.majProgressPoidsLourd();
+                }, new KeyValue(progressPoidsLourd.progressProperty(), 1))
+        );
+        timelinePoidsLourd.setOnFinished(event -> {
+            if (cycle == 1) {
+                // Lancer la deuxième exécution de la méthode progressBarStartTimeline
+                jeu.getJoueur().getLivraisonPoidsLourd().setEtatProgressLivraison(0);
+                System.out.println("fin course poids lourd");
+                // recalcul de la vitesse suivant le niveau de la barre de progression
+                progressBarStartPoidsLourd(cycle - 1, this.jeu.getJoueur().getLivraisonPoidsLourd().getVitesseLivraion());
+            }
+        });
+        if (cycle == 0) {
+            timelinePoidsLourd.setCycleCount(Animation.INDEFINITE);
+        } else {
+            timelinePoidsLourd.setCycleCount(cycle);
+        }
+        timelinePoidsLourd.play();
+    }
+
+    /**
+     * Barre de progressions service de livraison en petit camion
+     */
+    public void progressBarStartPoidsLourd(int cycle, double vitesse) {
+        ProgressBar progressPoidsLourd = getProgressPoidsLourd();
+        // Réinitialise la barre de progression à 0
+        progressPoidsLourd.setProgress(0);
+        timelinePoidsLourd = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(progressPoidsLourd.progressProperty(), 0)),
+                new KeyFrame(Duration.seconds(vitesse), e -> {
+                    System.out.println("fin course petit camion");
+                    // ajoute d'une course au service de livraion en poids lourd
+                    this.majProgressPoidsLourd();
+                }, new KeyValue(progressPoidsLourd.progressProperty(), 1))
+        );
+
+        if (cycle == 0) {
+            timelinePoidsLourd.setCycleCount(Animation.INDEFINITE);
+        } else {
+            timelinePoidsLourd.setCycleCount(cycle);
+        }
+        timelinePoidsLourd.play();
+    }
+
+    /**
+     * Met a jour le chiffre du nombre de livraisons effectuées
+     */
+    public void majProgressPoidsLourd() {
+        long nbLivraisonsEncours = jeu.getJoueur().getLivraisonPoidsLourd().getNbCourses();
+        int nbLivraisonsPoidsLourdEnCours = jeu.getJoueur().getLivraisonPoidsLourd().getNbVehicules();
+        long nouvNombre = nbLivraisonsEncours + nbLivraisonsPoidsLourdEnCours;
+        jeu.getJoueur().getLivraisonPoidsLourd().setNbCourses(nouvNombre);
+        System.out.println("maj du nombre de livraisons effectuées en poids lourd : " + nouvNombre);
+    }
+
+    /**
+     * Permet de gerer la barre de progression du petit camion
+     * @return
+     */
+    public ProgressBar getProgressPoidsLourd() {
+        return progressPoidsLourd;
+    }
+
     // sauvegardes
 
     /**
@@ -1914,6 +2084,8 @@ public class GestionDistributeursController {
         // on recupere les barres de progression des livraisons
         this.jeu.getJoueur().getLivraisonScooter().setEtatProgressLivraison(this.progressScooter.getProgress());
         this.jeu.getJoueur().getLivraisonCamionette().setEtatProgressLivraison(this.progressCamionette.getProgress());
+        this.jeu.getJoueur().getLivraisonPetitCamion().setEtatProgressLivraison(this.progressPetitCamion.getProgress());
+        this.jeu.getJoueur().getLivraisonPoidsLourd().setEtatProgressLivraison(this.progressPoidsLourd.getProgress());
 
         // on stoppe les barres de progression;
         this.progressBarStop(timelineHeure);
@@ -1924,6 +2096,8 @@ public class GestionDistributeursController {
         this.progressBarStop(timelineSa);
         this.progressBarStop(timelineScooter);
         this.progressBarStop(timelineCamionette);
+        this.progressBarStop(timelinePetitCamion);
+        this.progressBarStop(timelinePoidsLourd);
 
         // on enregistre l'heure de switch de fenetre
         this.jeu.getJoueur().getFerme().setDateDeco(LocalDateTime.now());
