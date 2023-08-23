@@ -37,7 +37,7 @@
                 </Pane>
                 <Pane layoutX="400.0" prefHeight="300.0" prefWidth="200.0">
                     <children>
-                        <ImageView fitHeight="100.0" fitWidth="110.0" layoutX="49.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="100.0" fitWidth="110.0" layoutX="49.0" layoutY="100.0" pickOnBounds="true">
                             <image>
                                 <Image url="@images/livreur.png" />
                             </image>
