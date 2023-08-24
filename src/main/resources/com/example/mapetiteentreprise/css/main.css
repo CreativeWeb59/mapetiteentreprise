@@ -159,6 +159,11 @@ Label{
     -fx-background-repeat: no-repeat;
     -fx-background-size: cover;
 }
+.fondsNuage{
+    -fx-background-image: url("../images/fondsNuage.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
 #titre{
     -fx-font-size: 40px;
 }

@@ -10,7 +10,7 @@
          <Label fx:id="labelHaut" text="Montant en banque" />
       </children></Pane>
         <Button fx:id="retourMenu" layoutX="1083.0" layoutY="77.0" mnemonicParsing="false" onAction="#retourGestion" styleClass="buttonVendre" text="Retour au menu" />
-   <Pane layoutX="100.0" layoutY="200.0" prefHeight="650.0" prefWidth="540.0">
+   <Pane layoutX="100.0" layoutY="180.0" prefHeight="780.0" prefWidth="540.0">
       <children>
          <Pane fx:id="paneScooter" opacity="0.5" prefHeight="140.0" prefWidth="540.0" style="-fx-background-color: white;" styleClass="fondsPaysage1">
             <children>
@@ -61,9 +61,22 @@
                   <Label fx:id="labelNbCoursesPoidsLourd" alignment="CENTER_RIGHT" layoutX="330.0" layoutY="30.0" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: transparent;" styleClass="grosChiffre" text="0" />
               </children>
           </Pane>
+         <Pane fx:id="paneAvion" disable="true" layoutY="640.0" opacity="0.5" prefHeight="140.0" prefWidth="540.0" style="-fx-background-color: white;" styleClass="fondsNuage">
+            <children>
+               <Label alignment="CENTER" prefHeight="29.0" prefWidth="540.0" style="-fx-background-color: transparent;" text="Livraisons en avion" />
+               <ImageView fitHeight="60.0" fitWidth="94.0" layoutX="24.0" layoutY="46.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@images/avion.png" />
+                  </image>
+               </ImageView>
+               <ProgressBar fx:id="progressAvion" layoutX="20.0" layoutY="110.0" prefHeight="20.0" prefWidth="400.0" progress="0.0" />
+               <Label fx:id="labelNbCoursesAvion" alignment="CENTER_RIGHT" layoutX="330.0" layoutY="30.0" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: transparent;" styleClass="grosChiffre" text="0" />
+            </children>
+         </Pane>
       </children>
    </Pane>
-   <Pane layoutX="700.0" layoutY="200.0" prefHeight="650.0" prefWidth="540.0">
+
+   <Pane layoutX="700.0" layoutY="180.0" prefHeight="780.0" prefWidth="540.0">
       <children>
          <Pane fx:id="paneScooterD" opacity="0.5" prefHeight="140.0" prefWidth="540.0" style="-fx-background-color: white;" styleClass="fondsPaysage1">
             <children>
@@ -101,9 +114,18 @@
                  <Button fx:id="btnAchatLivraisonPoidsLourd" layoutX="120.0" layoutY="80.0" mnemonicParsing="false" onAction="#onAchatLivraisonPoidsLourd" styleClass="buttonVendre" text="Acheter Livraison en poids Lourd" visible="false" />
              </children>
          </Pane>
+         <Pane fx:id="paneAvionD" disable="true" layoutY="640.0" opacity="0.5" prefHeight="140.0" prefWidth="540.0" style="-fx-background-color: white;" styleClass="fondsNuage">
+            <children>
+               <Label fx:id="labelTarifAvion" layoutX="38.0" layoutY="25.0" style="-fx-background-color: transparent;" text="prix scooter" />
+               <Button fx:id="btnAchatAvion" layoutX="461.0" layoutY="16.0" mnemonicParsing="false" onAction="#acheterPoidsLourd" text="+" />
+               <Label fx:id="labelNbAvion" layoutX="354.0" layoutY="27.0" style="-fx-background-color: transparent;" text="1/200" />
+               <Button fx:id="btnEncaisserCourseAvion" layoutX="210.0" layoutY="80.0" mnemonicParsing="false" onAction="#onBtnEncaisserCourse4" styleClass="buttonVendre" text="Encaisser" visible="false" />
+               <Button fx:id="btnAchatLivraisonAvion" layoutX="120.0" layoutY="80.0" mnemonicParsing="false" onAction="#onAchatLivraisonPoidsLourd" styleClass="buttonVendre" text="Acheter Livraison en poids Lourd" visible="false" />
+            </children>
+         </Pane>
       </children>
    </Pane>
-    <Pane fx:id="paneProgress" layoutX="185.0" layoutY="900.0" prefHeight="20.0" prefWidth="900.0" visible="true">
+    <Pane fx:id="paneProgress" layoutX="185.0" layoutY="940.0" prefHeight="20.0" prefWidth="900.0" visible="true">
         <children>
             <ProgressBar fx:id="progressOeufs" cache="true" layoutX="0.0" layoutY="0.0" prefHeight="15.0" prefWidth="180.0" progress="0.0" />
             <ProgressBar fx:id="progressJour" layoutY="25.0" prefHeight="20.0" prefWidth="900.0" progress="0.0" />

@@ -2,14 +2,15 @@ package com.example.mapetiteentreprise.jeu;
 
 import java.math.BigDecimal;
 
-public class LivraisonPoidsLourd extends Livraisons{
-    private final BigDecimal prixVehicule = BigDecimal.valueOf(110000); // prix du scooter
-    private final BigDecimal prixCourse = BigDecimal.valueOf(1100.00); // tarif de chaque course
+public class LivraisonAvion extends Livraisons{
+    private final BigDecimal prixVehicule = BigDecimal.valueOf(200000); // prix du scooter
+    private final BigDecimal prixCourse = BigDecimal.valueOf(2000.00); // tarif de chaque course
+    // prix des vehicules
     private final int nbMaxiVehicules = 300;
     // vitesse des livraisons
     private final int vitesseLivraion = 60;
 
-    public LivraisonPoidsLourd(String nom, int nbVehicules, long nbCourses, double etatProgressLivraison) {
+    public LivraisonAvion(String nom, int nbVehicules, long nbCourses, double etatProgressLivraison) {
         super(nom, nbVehicules, nbCourses, etatProgressLivraison);
     }
 
@@ -28,7 +29,6 @@ public class LivraisonPoidsLourd extends Livraisons{
     public int getVitesseLivraion() {
         return vitesseLivraion;
     }
-
     /**
      * Methode pour ajouter un service de livraison
      */
@@ -36,6 +36,10 @@ public class LivraisonPoidsLourd extends Livraisons{
         this.setNbVehicules(this.getNbVehicules() + 1);
     }
 
+    /**
+     *
+     * @return le nombre maximum de vehicules
+     */
     public int getNbMaxiServiceDeLivraison() {
         return nbMaxiVehicules;
     }
@@ -47,7 +51,7 @@ public class LivraisonPoidsLourd extends Livraisons{
         return this.getNbVehicules() + " / " + this.getNbMaxiVehicules();
     }
     /**
-     * renvoi true si le nombre maximum de poids lourd est atteint
+     * renvoi true si le nombre maximum d'avions est atteint
      * @return
      */
     public boolean isMaxiNbVehicules(){
