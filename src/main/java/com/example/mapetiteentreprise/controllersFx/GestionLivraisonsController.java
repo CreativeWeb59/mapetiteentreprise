@@ -33,26 +33,32 @@ public class GestionLivraisonsController {
     private Label labelHaut, labelNbCoursesScooter, labelNbScooter, labelTarifScooter,
             labelTarifCamionette, labelNbCamionette, labelNbCoursesCamionette,
             labelTarifPetitCamion, labelNbPetitCamion, labelNbCoursesPetitCamion,
-            labelTarifPoidsLourd, labelNbPoidsLourd, labelNbCoursesPoidsLourd;
+            labelTarifPoidsLourd, labelNbPoidsLourd, labelNbCoursesPoidsLourd,
+            labelTarifAvion, labelNbAvion, labelNbCoursesAvion;
     @FXML
     private Button retourMenu, btnAchatLivraisonScooter, btnAchatScooter, btnEncaisserCourseScooter,
             onBtnEncaisserCourse2, onAchatLivraisonCamionette, btnAchatCamionette, btnEncaisserCourseCamionette, btnAchatLivraisonCamionette,
             onBtnEncaisserCourse3, onAchatLivraisonPetitCamion, btnAchatPetitCamion, btnEncaisserCoursePetitCamion, btnAchatLivraisonPetitCamion,
-            onBtnEncaisserCourse4, onAchatLivraisonPoidsLourd, btnAchatPoidsLourd, btnEncaisserCoursePoidsLourd, btnAchatLivraisonPoidsLourd;
+            onBtnEncaisserCourse4, onAchatLivraisonPoidsLourd, btnAchatPoidsLourd, btnEncaisserCoursePoidsLourd, btnAchatLivraisonPoidsLourd,
+            onBtnEncaisserCourse5, onAchatLivraisonAvion, btnAchatAvion, btnEncaisserCourseAvion, btnAchatLivraisonAvion;
     @FXML
-    private Pane paneScooter, paneScooterD, paneCamionette, paneCamionetteD, panePetitCamion, panePetitCamionD, panePoidsLourd, panePoidsLourdD, paneProgress;
+    private Pane paneScooter, paneScooterD, paneCamionette, paneCamionetteD, panePetitCamion, panePetitCamionD, panePoidsLourd, panePoidsLourdD,
+            paneAvion, paneAvionD, paneProgress;
     private Stage stage;
     private Scene scene;
     private Parent root;
     private Jeu jeu;
     @FXML
-    private ProgressBar progressJour, progressOeufs, progressBC, progressBF, progressSa, progressCo, progressScooter, progressCamionette, progressPetitCamion, progressPoidsLourd;
-    private Timeline timelineOeufs, timelineJour, timelineBC, timelineBF, timelineSa, timelineCo, timelineScooter, timelineCamionette, timelinePetitCamion, timelinePoidsLourd;
+    private ProgressBar progressJour, progressOeufs, progressBC, progressBF, progressSa, progressCo,
+            progressScooter, progressCamionette, progressPetitCamion, progressPoidsLourd, progressAvion;
+    private Timeline timelineOeufs, timelineJour, timelineBC, timelineBF, timelineSa, timelineCo,
+            timelineScooter, timelineCamionette, timelinePetitCamion, timelinePoidsLourd, timelineAvion;
     private ConnectionBdd connectionBdd = new ConnectionBdd();
     private BigDecimal gainEnAttenteScooter = new BigDecimal(0);
     private BigDecimal gainEnAttenteCamionette = new BigDecimal(0);
     private BigDecimal gainEnAttentePetitCamion = new BigDecimal(0);
     private BigDecimal gainEnAttentePoidsLourd = new BigDecimal(0);
+    private BigDecimal gainEnAttenteAvion = new BigDecimal(0);
 
     /**
      * Execute la fenetre ferme.xml
@@ -240,7 +246,30 @@ public class GestionLivraisonsController {
             System.out.println("Vous avez trop de poids lourd");
         }
     }
-
+    /**
+     * Ajout d'un avion
+     */
+    public void acheterAvion() {
+        if(!this.jeu.getJoueur().getLivraisonAvion().isMaxiNbVehicules()){
+            BigDecimal montantAchat = this.jeu.getJoueur().getLivraisonAvion().getPrixVehicule();
+            if (jeu.getJoueur().acheter(montantAchat)) {
+                this.jeu.getJoueur().getLivraisonAvion().ajoutServiceDeLivraison();
+                System.out.println("Achat d'une avion : " + jeu.getJoueur().getLivraisonAvion().getNbVehicules());
+                // debloque la livraions en avion si besoin
+                if (jeu.getJoueur().getLivraisonAvion().getNbVehicules() == 1) {
+                    jeu.getJoueur().setLivraison5Active(1);
+                    // demarre la barre de progression du service en avion
+                    progressBarStartAvion(0, jeu.getJoueur().getLivraisonAvion().getVitesseLivraion());
+                }
+                // mise a jour des valeurs
+                miseEnPlace();
+            } else {
+                System.out.println("Vous n'avez pas assez d'argent pour acheter un service de livraison en avion");
+            }
+        } else {
+            System.out.println("Vous avez trop d'avions");
+        }
+    }
     /**
      * Mise en place des labels et boutons
      */
@@ -325,6 +354,24 @@ public class GestionLivraisonsController {
             }
             System.out.println("non actif");
         }
+        // boutons avion
+        if (isActif(jeu.getJoueur().getLivraison5Active())) {
+            getBtnEncaisserCourseAvion().setVisible(true);
+            getBtnAchatLivraisonAvion().setVisible(false);
+            System.out.println("Actif");
+            setBtnEncaisserCourseAvion();
+        } else {
+            getBtnEncaisserCourseAvion().setVisible(false);
+            getBtnAchatLivraisonAvion().setVisible(true);
+            if (jeu.getJoueur().isArgent(jeu.getJoueur().getLivraisonAvion().getPrixVehicule())) {
+                paneAvionD.setOpacity(1);
+                paneAvionD.setDisable(false);
+                getBtnAchatLivraisonAvion().setDisable(false);
+            } else {
+                getBtnAchatLivraisonAvion().setDisable(true);
+            }
+            System.out.println("non actif");
+        }
         testBtnAchats();
     }
 
@@ -363,15 +410,22 @@ public class GestionLivraisonsController {
             btnAchatPetitCamion.setDisable(true);
         }
 
-        // petit poids lourd
+        // poids lourd
         BigDecimal poidsLourd = jeu.getJoueur().getLivraisonPoidsLourd().getPrixVehicule();
         if(jeu.getJoueur().isArgent(poidsLourd) && !this.jeu.getJoueur().getLivraisonPoidsLourd().isMaxiNbVehicules()){
             btnAchatPoidsLourd.setDisable(false);
         } else {
             btnAchatPoidsLourd.setDisable(true);
         }
-    }
 
+        // Avion
+        BigDecimal avion = jeu.getJoueur().getLivraisonAvion().getPrixVehicule();
+        if(jeu.getJoueur().isArgent(avion) && !this.jeu.getJoueur().getLivraisonAvion().isMaxiNbVehicules()){
+            btnAchatAvion.setDisable(false);
+        } else {
+            btnAchatAvion.setDisable(true);
+        }
+    }
 
     /**
      * Gere le bouton d'achat du premier service de livraison
@@ -544,6 +598,49 @@ public class GestionLivraisonsController {
         this.miseEnPlace();
     }
     /**
+     * Gere le bouton d'achat du service de livraison en avion
+     */
+    public void onAchatLivraisonAvion() {
+        // activation de la livraison
+        jeu.getJoueur().setLivraison5Active(1);
+
+        // ajout du scooter
+        jeu.getJoueur().getLivraisonAvion().setNbVehicules(1);
+        // dépense du montant
+        jeu.getJoueur().depenser(jeu.getJoueur().getLivraisonAvion().getPrixVehicule());
+
+        // maj des labels et boutons
+        miseEnPlace();
+
+        // opacite du pane
+        paneAvion.setOpacity(1);
+        paneAvion.setDisable(false);
+        paneAvionD.setOpacity(1);
+
+        // demarrage barre de progression
+        progressBarStartAvion(0, jeu.getJoueur().getLivraisonAvion().getVitesseLivraion());
+    }
+
+    /**
+     * Bouton qui permet d'encaisser l'argent du service de livraison
+     */
+    public void onBtnEncaisserCourse5(){
+        long nbCoursesAvion = jeu.getJoueur().getLivraisonAvion().getNbCourses();
+
+        jeu.getJoueur().getLivraisonAvion().setNbCourses(0); // raz le nombre de marchandises
+        jeu.getJoueur().setArgent(this.gainEnAttenteAvion.add(jeu.getJoueur().getArgent())); // met a jour les nouveaux gains
+
+        String formattedGain = decimalFormat.format(this.gainEnAttenteAvion) + monnaie;
+        // raz des gains en attente
+        this.gainEnAttenteAvion = BigDecimal.valueOf(0.00);
+
+        System.out.println("Vous venez de récupérer le prix de " + nbCoursesAvion + " courses en avion, vous avez gagné " + formattedGain + ".");
+
+        getBtnEncaisserCourseAvion().setDisable(true);
+        this.miseEnPlace();
+    }
+
+    /**
      * Demarre les services de livraison s'ils sont actifs
      */
     public void demarrageLivraisons() {
@@ -577,6 +674,14 @@ public class GestionLivraisonsController {
             // recuperation de l'etat de la barre de progression pour la livraison en poids lourd
             double vitessePoidsLourd = jeu.getJoueur().getLivraisonPoidsLourd().getVitesseLivraion() - (jeu.getJoueur().getLivraisonPoidsLourd().getVitesseLivraion() * jeu.getJoueur().getLivraisonPoidsLourd().getEtatProgressLivraison());
             progressBarStartPoidsLourdEnCours(1, vitessePoidsLourd);
+        }
+        if(isActif(jeu.getJoueur().getLivraison5Active())){
+            System.out.println("Demarrage livraison en avion");
+            // enable pane de la livraison
+            this.debloquerLivraison(paneAvion, paneAvionD);
+            // recuperation de l'etat de la barre de progression pour la livraison en poids lourd
+            double vitesseAvion = jeu.getJoueur().getLivraisonAvion().getVitesseLivraion() - (jeu.getJoueur().getLivraisonAvion().getVitesseLivraion() * jeu.getJoueur().getLivraisonAvion().getEtatProgressLivraison());
+            progressBarStartAvionEnCours(1, vitesseAvion);
         }
     }
 
@@ -615,11 +720,20 @@ public class GestionLivraisonsController {
         // poids lourd
         long nbCoursesEnCours4 = jeu.getJoueur().getLivraisonPoidsLourd().getNbCourses();
         tarifCourse = jeu.getJoueur().getLivraisonPoidsLourd().getPrixCourse();
-        if(nbCoursesEnCours3 > 0){
+        if(nbCoursesEnCours4 > 0){
             btnEncaisserCoursePoidsLourd.setDisable(false);
             majGainsEnCoursPoidsLourd();
         } else {
             btnEncaisserCoursePoidsLourd.setDisable(true);
+        }
+        // Avion
+        long nbCoursesEnCours5 = jeu.getJoueur().getLivraisonAvion().getNbCourses();
+        tarifCourse = jeu.getJoueur().getLivraisonAvion().getPrixCourse();
+        if(nbCoursesEnCours5 > 0){
+            btnEncaisserCourseAvion.setDisable(false);
+            majGainsEnCoursAvion();
+        } else {
+            btnEncaisserCourseAvion.setDisable(true);
         }
     }
 
@@ -665,6 +779,13 @@ public class GestionLivraisonsController {
     public void setNbPoidsLourd() {
         String formattedString = this.jeu.getJoueur().getLivraisonPoidsLourd().setNbVehicule();
         this.labelNbPoidsLourd.setText(formattedString);
+    }
+    /**
+     * initialise le nombre d'avions en cours ainsi que le nombre d'avions maximum
+     */
+    public void setNbAvion() {
+        String formattedString = this.jeu.getJoueur().getLivraisonAvion().setNbVehicule();
+        this.labelNbAvion.setText(formattedString);
     }
     /**
      * Recuperation du bouton pour encaisser les courses du scooter
@@ -783,6 +904,7 @@ public class GestionLivraisonsController {
         labelsCamionette();
         labelsPetitCamion();
         labelsPoidsLourd();
+        labelsAvion();
     }
     /**
      * Labels du scooter
@@ -814,6 +936,11 @@ public class GestionLivraisonsController {
         setNbPoidsLourd();
         setNbCoursesPoidsLourd();
         setLabelTarifPoidsLourd();
+    }
+    public void labelsAvion(){
+        setNbAvion();
+        setNbCoursesAvion();
+        setLabelTarifAvion();
     }
     public void majGainsEnCoursScooter() {
         System.out.println("maj des gains courses des livraisons en scooter");
@@ -1033,8 +1160,6 @@ public class GestionLivraisonsController {
         String formattedString = "Encaisser " + decimalFormat.format(gainEnAttenteCamionette) + monnaie;
         this.getBtnEncaisserCourseCamionette().setText(formattedString);
     }
-
-
 
     // livraison en petit camion
 
@@ -1302,7 +1427,7 @@ public class GestionLivraisonsController {
         int nbLivraisonsPoidsLourdEnCours = jeu.getJoueur().getLivraisonPoidsLourd().getNbVehicules();
         long nouvNombre = nbLivraisonsEncours + nbLivraisonsPoidsLourdEnCours;
         jeu.getJoueur().getLivraisonPoidsLourd().setNbCourses(nouvNombre);
-        this.setNbCoursesScooter();
+        this.setNbCoursesPoidsLourd();
         System.out.println("maj du nombre de livraisons effectuées en poids lourd : " + nouvNombre);
     }
 
@@ -1343,8 +1468,159 @@ public class GestionLivraisonsController {
 
     // fin livraison poids lourd
 
+    // Debut Livraison en avion
+    /**
+     * Inscrit le prix d'achat d'un avion
+     */
+    public void setLabelTarifAvion(){
+        BigDecimal prixAvion = jeu.getJoueur().getLivraisonAvion().getPrixVehicule();
+        String nomVehicule = jeu.getJoueur().getLivraisonAvion().getNom();
+        String formattedString = "Acheter " + nomVehicule + " : " + decimalFormat.format(prixAvion) + monnaie;
+        labelTarifAvion.setText(formattedString);
+    }
+    /**
+     * Recuperation du bouton pour encaisser les courses en avion
+     *
+     * @return
+     */
+    public Button getBtnEncaisserCourseAvion() {
+        return btnEncaisserCourseAvion;
+    }
+
+    /**
+     * Recuperation du bouton pour acheter le service de livraison en avion
+     *
+     * @return
+     */
+    public Button getBtnAchatLivraisonAvion() {
+        return btnAchatLivraisonAvion;
+    }
+
+    /**
+     * Debut barre progress livraisons en avion
+     */
+
+    public ProgressBar getProgressAvion() {
+        return progressAvion;
+    }
+
+    /**
+     * Met à jour la barre de progression pour livraison en avion
+     *
+     * @param cycle
+     * @param vitesse
+     */
+    public void progressBarStartAvionEnCours(int cycle, double vitesse) {
+        ProgressBar progressAvion = getProgressAvion();
+        Button btnEncaisserCourseAvion = getBtnEncaisserCourseAvion();
+        // Réinitialise la barre de progression à 0
+        progressAvion.setProgress(this.jeu.getJoueur().getLivraisonAvion().getEtatProgressLivraison());
+        timelineAvion = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(progressAvion.progressProperty(), this.jeu.getJoueur().getLivraisonAvion().getEtatProgressLivraison())),
+                new KeyFrame(Duration.seconds(vitesse), e -> {
+                    System.out.println("Course en avion terminée");
+                    btnEncaisserCourseAvion.setDisable(false);
+                    // ajoute une course au service de livraison
+                    this.majProgressAvion();
+                    // met à jour les gains en cours
+                    this.majGainsEnCoursAvion();
+                    // maj des boutons
+                }, new KeyValue(progressAvion.progressProperty(), 1))
+        );
+        timelineAvion.setOnFinished(event -> {
+            if (cycle == 1) {
+                // Lancer la deuxième exécution de la méthode progressBarStartTimeline
+                jeu.getJoueur().getLivraisonAvion().setEtatProgressLivraison(0);
+                System.out.println("fin premiere barre");
+                // recalcul de la vitesse suivant le niveau de la barre de progression
+                progressBarStartAvion(cycle - 1, this.jeu.getJoueur().getLivraisonAvion().getVitesseLivraion());
+            }
+        });
+        if (cycle == 0) {
+            timelineAvion.setCycleCount(Animation.INDEFINITE);
+        } else {
+            timelineAvion.setCycleCount(cycle);
+        }
+        timelineAvion.play();
+    }
+
+    /**
+     * Barre de progressions Livraison en poids lourd
+     */
+    public void progressBarStartAvion(int cycle, double vitesse) {
+        ProgressBar progressAvion = getProgressAvion();
+        Button btnEncaisserCourseAvion = getBtnEncaisserCourseAvion();
+        // Réinitialise la barre de progression à 0
+        progressAvion.setProgress(0);
+        timelineAvion = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(progressAvion.progressProperty(), 0)),
+                new KeyFrame(Duration.seconds(vitesse), e -> {
+                    System.out.println("Livraison en avion terminée");
+                    btnEncaisserCourseAvion.setDisable(false);
+                    // ajoute un nombre de courses au service de livraison en avion
+                    this.majProgressAvion();
+                    // met à jour les gains en cours
+                    this.majGainsEnCoursAvion();
+                    // maj des boutons
+                }, new KeyValue(progressAvion.progressProperty(), 1))
+        );
+
+        if (cycle == 0) {
+            timelineAvion.setCycleCount(Animation.INDEFINITE);
+        } else {
+            timelineAvion.setCycleCount(cycle);
+        }
+        timelineAvion.play();
+    }
+
+    /**
+     * Met a jour le chiffre du nombre de livraisons effectuées en avion
+     */
+    public void majProgressAvion() {
+        long nbLivraisonsEncours = jeu.getJoueur().getLivraisonAvion().getNbCourses();
+        int nbLivraisonsAvionEnCours = jeu.getJoueur().getLivraisonAvion().getNbVehicules();
+        long nouvNombre = nbLivraisonsEncours + nbLivraisonsAvionEnCours;
+        jeu.getJoueur().getLivraisonAvion().setNbCourses(nouvNombre);
+        this.setNbCoursesAvion();
+        System.out.println("maj du nombre de livraisons effectuées en avion : " + nouvNombre);
+    }
+
+    public void setNbCoursesAvion() {
+        this.labelNbCoursesAvion.setText(jeu.getJoueur().getLivraisonAvion().getNbCourses() + "");
+    }
+
+    public void majGainsEnCoursAvion() {
+        System.out.println("maj des gains courses des livraisons en avion");
+        // tant que non vendu, on cumule les gains en attente
+        long nbLivraisonsEncours = jeu.getJoueur().getLivraisonAvion().getNbCourses();
+        BigDecimal tarifCourseAvion = jeu.getJoueur().getLivraisonAvion().getPrixCourse();
+        System.out.println("prix de la course : " + tarifCourseAvion);
+
+        // calcul des gains attente
+        this.gainEnAttenteAvion = tarifCourseAvion.multiply(BigDecimal.valueOf(nbLivraisonsEncours));
+
+        // maj le montant sur le bouton Encaisser
+        this.setBtnEncaisserCourseAvion();
+
+    }
+
+    /**
+     * Affiche ou non le bouton recuperer courses
+     * suivant si gainEnAttente > 0
+     */
+    public void setBtnEncaisserCourseAvion() {
+        int comparaison = this.gainEnAttenteAvion.compareTo(BigDecimal.valueOf(0));
+        if (comparaison > 0) {
+            this.getBtnEncaisserCourseAvion().setDisable(false);
+        } else {
+            this.getBtnEncaisserCourseAvion().setDisable(true);
+        }
+        String formattedString = "Encaisser " + decimalFormat.format(gainEnAttenteAvion) + monnaie;
+        this.getBtnEncaisserCourseAvion().setText(formattedString);
+    }
 
 
+    // fin livraison en avion
 
     /**
      * start les 2 barres de progression : progress oeuf et progress jour
@@ -1564,6 +1840,7 @@ public class GestionLivraisonsController {
         this.jeu.getJoueur().getLivraisonCamionette().setEtatProgressLivraison(this.progressCamionette.getProgress());
         this.jeu.getJoueur().getLivraisonPetitCamion().setEtatProgressLivraison(this.progressPetitCamion.getProgress());
         this.jeu.getJoueur().getLivraisonPoidsLourd().setEtatProgressLivraison(this.progressPoidsLourd.getProgress());
+        this.jeu.getJoueur().getLivraisonAvion().setEtatProgressLivraison(this.progressAvion.getProgress());
 
         // on stoppe les barres de progression;
         this.progressBarStop(timelineOeufs);
@@ -1576,6 +1853,7 @@ public class GestionLivraisonsController {
         this.progressBarStop(timelineCamionette);
         this.progressBarStop(timelinePetitCamion);
         this.progressBarStop(timelinePoidsLourd);
+        this.progressBarStop(timelineAvion);
     }
 
     /**

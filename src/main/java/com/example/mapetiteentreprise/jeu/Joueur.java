@@ -21,18 +21,18 @@ public class Joueur {
     private int poulailler2;
     private int poulailler3;
     private int poulailler4;
-    private LivraisonScooter livraisonScooter;
-    private LivraisonCamionette livraisonCamionette;
-    private LivraisonPetitCamion livraisonPetitCamion;
-    private LivraisonPoidsLourd livraisonPoidsLourd;
-    private LivraisonAvion livraisonAvion;
     private int livraison1Active;
     private int livraison2Active;
     private int livraison3Active;
     private int livraison4Active;
     private int livraison5Active;
+    private LivraisonScooter livraisonScooter;
+    private LivraisonCamionette livraisonCamionette;
+    private LivraisonPetitCamion livraisonPetitCamion;
+    private LivraisonPoidsLourd livraisonPoidsLourd;
+    private LivraisonAvion livraisonAvion;
 
-    public Joueur(String pseudo, BigDecimal argent, Ferme ferme, BoissonsChaudes boissonsChaudes, BoissonsFraiches boissonsFraiches, Sandwichs sandwichs, Confiseries confiseries, CreditEnCours creditEnCours, int fermeActive, int distributeursActive, int distributeurBCActive, int distributeurBFActive, int distributeurCoActive, int distributeurSaActive, int poulailler1, int poulailler2, int poulailler3, int poulailler4, LivraisonScooter livraisonScooter, LivraisonCamionette livraisonCamionette, LivraisonPetitCamion livraisonPetitCamion, LivraisonPoidsLourd livraisonPoidsLourd, LivraisonAvion livraisonAvion, int livraison1Active, int livraison2Active, int livraison3Active, int livraison4Active, int livraison5Active) {
+    public Joueur(String pseudo, BigDecimal argent, Ferme ferme, BoissonsChaudes boissonsChaudes, BoissonsFraiches boissonsFraiches, Sandwichs sandwichs, Confiseries confiseries, CreditEnCours creditEnCours, int fermeActive, int distributeursActive, int distributeurBCActive, int distributeurBFActive, int distributeurCoActive, int distributeurSaActive, int poulailler1, int poulailler2, int poulailler3, int poulailler4, int livraison1Active, int livraison2Active, int livraison3Active, int livraison4Active, int livraison5Active, LivraisonScooter livraisonScooter, LivraisonCamionette livraisonCamionette, LivraisonPetitCamion livraisonPetitCamion, LivraisonPoidsLourd livraisonPoidsLourd, LivraisonAvion livraisonAvion) {
         this.pseudo = pseudo;
         this.argent = argent;
         this.ferme = ferme;
@@ -51,16 +51,16 @@ public class Joueur {
         this.poulailler2 = poulailler2;
         this.poulailler3 = poulailler3;
         this.poulailler4 = poulailler4;
-        this.livraisonScooter = livraisonScooter;
-        this.livraisonCamionette = livraisonCamionette;
-        this.livraisonPetitCamion = livraisonPetitCamion;
-        this.livraisonPoidsLourd = livraisonPoidsLourd;
-        this.livraisonAvion = livraisonAvion;
         this.livraison1Active = livraison1Active;
         this.livraison2Active = livraison2Active;
         this.livraison3Active = livraison3Active;
         this.livraison4Active = livraison4Active;
         this.livraison5Active = livraison5Active;
+        this.livraisonScooter = livraisonScooter;
+        this.livraisonCamionette = livraisonCamionette;
+        this.livraisonPetitCamion = livraisonPetitCamion;
+        this.livraisonPoidsLourd = livraisonPoidsLourd;
+        this.livraisonAvion = livraisonAvion;
     }
 
     public String getPseudo() {

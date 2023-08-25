@@ -15,7 +15,6 @@
 // fabrication voitures
 
 
-// poulailler geant : 100.000 €, capacite : 20.000 poules
 
 
 package com.example.mapetiteentreprise.jeu;
@@ -185,18 +184,22 @@ public class Jeu {
         getSauvegarde().setLivraison2Active(getJoueur().getLivraison2Active());
         getSauvegarde().setLivraison3Active(getJoueur().getLivraison3Active());
         getSauvegarde().setLivraison4Active(getJoueur().getLivraison4Active());
+        getSauvegarde().setLivraison5Active(getJoueur().getLivraison5Active());
         getSauvegarde().setNbLivraison1(getJoueur().getLivraisonScooter().getNbVehicules());
         getSauvegarde().setNbLivraison2(getJoueur().getLivraisonCamionette().getNbVehicules());
         getSauvegarde().setNbLivraison3(getJoueur().getLivraisonPetitCamion().getNbVehicules());
         getSauvegarde().setNbLivraison4(getJoueur().getLivraisonPoidsLourd().getNbVehicules());
+        getSauvegarde().setNbLivraison5(getJoueur().getLivraisonAvion().getNbVehicules());
         getSauvegarde().setNbCourses1(getJoueur().getLivraisonScooter().getNbCourses());
         getSauvegarde().setNbCourses2(getJoueur().getLivraisonCamionette().getNbCourses());
         getSauvegarde().setNbCourses3(getJoueur().getLivraisonPetitCamion().getNbCourses());
         getSauvegarde().setNbCourses4(getJoueur().getLivraisonPoidsLourd().getNbCourses());
+        getSauvegarde().setNbCourses5(getJoueur().getLivraisonAvion().getNbCourses());
         getSauvegarde().setEtatProgressLivraison1(getJoueur().getLivraisonScooter().getEtatProgressLivraison());
         getSauvegarde().setEtatProgressLivraison2(getJoueur().getLivraisonCamionette().getEtatProgressLivraison());
         getSauvegarde().setEtatProgressLivraison3(getJoueur().getLivraisonPetitCamion().getEtatProgressLivraison());
         getSauvegarde().setEtatProgressLivraison4(getJoueur().getLivraisonPoidsLourd().getEtatProgressLivraison());
+        getSauvegarde().setEtatProgressLivraison5(getJoueur().getLivraisonAvion().getEtatProgressLivraison());
 
         System.out.println("Nouvelles valeurs a sauvegarder" + getSauvegarde());
 
@@ -387,6 +390,12 @@ public class Jeu {
         if (joueur.getLivraison4Active() == 1) {
             int nbVehicules = joueur.getLivraisonPoidsLourd().getNbVehicules();
             BigDecimal prixVehicule = joueur.getLivraisonPoidsLourd().getPrixVehicule();
+            BigDecimal valeurLivraison = prixVehicule.multiply(BigDecimal.valueOf(nbVehicules));
+            valeur = valeur.add(valeurLivraison);
+        }
+        if (joueur.getLivraison5Active() == 1) {
+            int nbVehicules = joueur.getLivraisonAvion().getNbVehicules();
+            BigDecimal prixVehicule = joueur.getLivraisonAvion().getPrixVehicule();
             BigDecimal valeurLivraison = prixVehicule.multiply(BigDecimal.valueOf(nbVehicules));
             valeur = valeur.add(valeurLivraison);
         }

@@ -197,6 +197,12 @@ Label{
     -fx-background-size: cover;
 }
 
+.fondsUsine{
+    -fx-background-image: url("../images/skyline2.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
+
 .labelCalendrier{
     -fx-font-size: 20px;
     -fx-text-fill: white;

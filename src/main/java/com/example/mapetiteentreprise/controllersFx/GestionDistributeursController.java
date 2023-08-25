@@ -51,8 +51,10 @@ public class GestionDistributeursController {
     @FXML
     private Pane paneCo, paneGroupCo, paneSa, paneGroupSa, paneProgress;
     @FXML
-    private ProgressBar progressBC, progressBF, progressSa, progressCo, progressJour, progressOeufs, progressScooter, progressCamionette, progressPetitCamion, progressPoidsLourd;
-    private Timeline timelineBC, timelineBF, timelineSa, timelineCo, timelineCalendrier, timelineHeure, timelineScooter, timelineCamionette, timelinePetitCamion, timelinePoidsLourd;
+    private ProgressBar progressBC, progressBF, progressSa, progressCo, progressJour, progressOeufs,
+            progressScooter, progressCamionette, progressPetitCamion, progressPoidsLourd, progressAvion;
+    private Timeline timelineBC, timelineBF, timelineSa, timelineCo, timelineCalendrier, timelineHeure,
+            timelineScooter, timelineCamionette, timelinePetitCamion, timelinePoidsLourd, timelineAvion;
     private BigDecimal gainEnAttenteBC = new BigDecimal(0);
     private BigDecimal gainEnAttenteBF = new BigDecimal(0);
     private BigDecimal gainEnAttenteSa = new BigDecimal(0);
@@ -1745,6 +1747,12 @@ public class GestionDistributeursController {
             System.out.println("Vitesse petit camion : " + vitessePoidsLourd);
             progressBarStartPodisLourdEnCours(1, vitessePoidsLourd);
         }
+        if(jeu.getJoueur().getLivraison5Active() == 1){
+            // recuperation de l'etat de la barre de progression pour la livraison en avion
+            double vitesseAvion = jeu.getJoueur().getLivraisonAvion().getVitesseLivraion() - (jeu.getJoueur().getLivraisonAvion().getVitesseLivraion() * jeu.getJoueur().getLivraisonAvion().getEtatProgressLivraison());
+            System.out.println("Vitesse avion : " + vitesseAvion);
+            progressBarStartAvionEnCours(1, vitesseAvion);
+        }
     }
     /**
      * Met à jour la barre de progression pour distributeur de boissons chaudes
@@ -2063,7 +2071,85 @@ public class GestionDistributeursController {
     public ProgressBar getProgressPoidsLourd() {
         return progressPoidsLourd;
     }
+// progress Avion
+    /**
+     * Met à jour la barre de progression pour le service de livraison en avion
+     *
+     * @param cycle
+     * @param vitesse
+     */
 
+    public void progressBarStartAvionEnCours(int cycle, double vitesse) {
+        ProgressBar progressAvion = getProgressAvion();
+        // Réinitialise la barre de progression à 0
+        progressAvion.setProgress(this.jeu.getJoueur().getLivraisonAvion().getEtatProgressLivraison());
+        timelineAvion = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(progressAvion.progressProperty(), this.jeu.getJoueur().getLivraisonAvion().getEtatProgressLivraison())),
+                new KeyFrame(Duration.seconds(vitesse), e -> {
+                    System.out.println("Course en avion terminée");
+                    // ajoute une course au service de livraison en avion
+                    this.majProgressAvion();
+                }, new KeyValue(progressAvion.progressProperty(), 1))
+        );
+        timelineAvion.setOnFinished(event -> {
+            if (cycle == 1) {
+                // Lancer la deuxième exécution de la méthode progressBarStartTimeline
+                jeu.getJoueur().getLivraisonAvion().setEtatProgressLivraison(0);
+                System.out.println("fin course avion");
+                // recalcul de la vitesse suivant le niveau de la barre de progression
+                progressBarStartAvion(cycle - 1, this.jeu.getJoueur().getLivraisonAvion().getVitesseLivraion());
+            }
+        });
+        if (cycle == 0) {
+            timelineAvion.setCycleCount(Animation.INDEFINITE);
+        } else {
+            timelineAvion.setCycleCount(cycle);
+        }
+        timelineAvion.play();
+    }
+
+    /**
+     * Barre de progressions service de livraison en petit camion
+     */
+    public void progressBarStartAvion(int cycle, double vitesse) {
+        ProgressBar progressAvion = getProgressAvion();
+        // Réinitialise la barre de progression à 0
+        progressAvion.setProgress(0);
+        timelineAvion = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(progressAvion.progressProperty(), 0)),
+                new KeyFrame(Duration.seconds(vitesse), e -> {
+                    System.out.println("fin course en avion");
+                    // ajoute d'une course au service de livraion en avion
+                    this.majProgressAvion();
+                }, new KeyValue(progressAvion.progressProperty(), 1))
+        );
+
+        if (cycle == 0) {
+            timelineAvion.setCycleCount(Animation.INDEFINITE);
+        } else {
+            timelineAvion.setCycleCount(cycle);
+        }
+        timelineAvion.play();
+    }
+
+    /**
+     * Met a jour le chiffre du nombre de livraisons effectuées en avion
+     */
+    public void majProgressAvion() {
+        long nbLivraisonsEncours = jeu.getJoueur().getLivraisonAvion().getNbCourses();
+        int nbLivraisonsAvionEnCours = jeu.getJoueur().getLivraisonAvion().getNbVehicules();
+        long nouvNombre = nbLivraisonsEncours + nbLivraisonsAvionEnCours;
+        jeu.getJoueur().getLivraisonAvion().setNbCourses(nouvNombre);
+        System.out.println("maj du nombre de livraisons effectuées en avion : " + nouvNombre);
+    }
+
+    /**
+     * Permet de gerer la barre de progression du petit camion
+     * @return
+     */
+    public ProgressBar getProgressAvion() {
+        return progressAvion;
+    }
     // sauvegardes
 
     /**
@@ -2086,6 +2172,7 @@ public class GestionDistributeursController {
         this.jeu.getJoueur().getLivraisonCamionette().setEtatProgressLivraison(this.progressCamionette.getProgress());
         this.jeu.getJoueur().getLivraisonPetitCamion().setEtatProgressLivraison(this.progressPetitCamion.getProgress());
         this.jeu.getJoueur().getLivraisonPoidsLourd().setEtatProgressLivraison(this.progressPoidsLourd.getProgress());
+        this.jeu.getJoueur().getLivraisonAvion().setEtatProgressLivraison(this.progressAvion.getProgress());
 
         // on stoppe les barres de progression;
         this.progressBarStop(timelineHeure);
@@ -2098,6 +2185,7 @@ public class GestionDistributeursController {
         this.progressBarStop(timelineCamionette);
         this.progressBarStop(timelinePetitCamion);
         this.progressBarStop(timelinePoidsLourd);
+        this.progressBarStop(timelineAvion);
 
         // on enregistre l'heure de switch de fenetre
         this.jeu.getJoueur().getFerme().setDateDeco(LocalDateTime.now());

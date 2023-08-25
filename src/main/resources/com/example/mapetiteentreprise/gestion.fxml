@@ -57,12 +57,7 @@
                 </Pane>
                 <Pane layoutX="800.0" prefHeight="300.0" prefWidth="200.0">
                     <children>
-                        <ImageView fitHeight="130.0" fitWidth="76.0" layoutX="60.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@images/banquier.png" />
-                            </image>
-                        </ImageView>
-                        <Button fx:id="btnBanque" alignment="CENTER" disable="false" layoutX="50.0" layoutY="250.0" mnemonicParsing="false" onAction="#switchToBanque" text="Banque" />
+                        <Button fx:id="btnBanque" alignment="CENTER" disable="false" layoutX="50.0" layoutY="250.0" mnemonicParsing="false" onAction="#switchToBanque" text="Autre" />
                     </children>
                 </Pane>
                 <Label fx:id="labelBlocageDistributeur" alignment="CENTER" contentDisplay="CENTER" layoutX="230.0" layoutY="310.0" style="-fx-background-color: transparent;" styleClass="label2" text="Débloqué à partir de 1.500 €" textFill="WHITE" wrapText="true">
@@ -77,23 +72,28 @@
                 </Label>
             </children>
         </Pane>
-      <Pane fx:id="paneSemaine1" layoutX="185.0" layoutY="562.0" prefHeight="120.0" prefWidth="910.0">
+      <Pane fx:id="paneSemaine1" layoutX="140.0" layoutY="562.0" prefHeight="120.0" prefWidth="910.0">
 
       </Pane>
-      <Pane fx:id="paneSemaine2" layoutX="185.0" layoutY="690.0" prefHeight="120.0" prefWidth="910.0">
+      <Pane fx:id="paneSemaine2" layoutX="140.0" layoutY="690.0" prefHeight="120.0" prefWidth="910.0">
 
       </Pane>
-        <Pane layoutX="240.0" layoutY="752.0" prefHeight="60.0" prefWidth="800.0">
-            <children>
-                <Label fx:id="labelConsole" alignment="TOP_LEFT" layoutX="50.0" prefHeight="60.0" prefWidth="700.0" style="-fx-background-color: transparent;" />
-            </children>
-        </Pane>
-      <Pane fx:id="paneParentProgressJour" layoutX="185.0" layoutY="815.0" prefHeight="20.0" prefWidth="900.0">
+      <Pane layoutX="1060.0" layoutY="560.0" prefHeight="232.0" prefWidth="140.0">
+         <children>
+            <ImageView fitHeight="130.0" fitWidth="76.0" layoutX="32.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/banquier.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="btnBanque1" alignment="CENTER" disable="false" layoutX="18.0" layoutY="169.0" mnemonicParsing="false" onAction="#switchToBanque" text="Banque" />
+         </children>
+      </Pane>
+      <Pane fx:id="paneParentProgressJour" layoutX="140.0" layoutY="815.0" prefHeight="20.0" prefWidth="900.0">
          <children>
             <ProgressBar fx:id="progressJour" prefHeight="20.0" prefWidth="900.0" progress="0.0" />
          </children>
       </Pane>
-        <Pane fx:id="paneProgress" layoutX="185.0" layoutY="840.0" prefHeight="60.0" prefWidth="900.0">
+        <Pane fx:id="paneProgress" layoutX="140.0" layoutY="840.0" prefHeight="60.0" prefWidth="900.0">
             <children>
              <ProgressBar id="progressOeufs" fx:id="progressOeufs" cache="true" layoutY="-45.0" prefHeight="20.0" prefWidth="120.0" progress="0.0" visible="true" />
                 <ProgressBar id="progressBC" fx:id="progressBC" cache="true" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
@@ -104,6 +104,7 @@
                 <ProgressBar fx:id="progressCamionette" cache="true" layoutX="545.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
                 <ProgressBar fx:id="progressPetitCamion" cache="true" layoutX="650.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
                 <ProgressBar fx:id="progressPoidsLourd" cache="true" layoutX="755.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
+                <ProgressBar fx:id="progressAvion" cache="true" layoutX="860.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
             </children>
         </Pane>
         <Pane layoutX="240.0" layoutY="880.0" prefHeight="40.0" prefWidth="800.0">

@@ -61,6 +61,7 @@
                      <ProgressBar fx:id="progressCamionette" cache="true" layoutX="555.0" layoutY="50.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
                      <ProgressBar fx:id="progressPetitCamion" cache="true" layoutX="660.0" layoutY="50.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
                      <ProgressBar fx:id="progressPoidsLourd" cache="true" layoutX="765.0" layoutY="50.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
+                     <ProgressBar fx:id="progressAvion" cache="true" layoutX="870.0" layoutY="50.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
                  </children>
              </Pane>
          </children>
