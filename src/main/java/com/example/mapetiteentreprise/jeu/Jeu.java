@@ -3,8 +3,19 @@
 //                  grande usine : 1.000.000 €
 //                  énorme usine : 1.500.000 €
 
+// usine jouets
+
+// usine agroalimentaire
+
+// usine pharmaceutique
+
+// => Petite, moyennne, grande, enorme
+
+
 // usine composants informatiques
 
+// page de gestion avec selection de chaque usine
+// une page par usine
 
 // presse, journaux
 // petite imprimerie
@@ -15,7 +26,10 @@
 // fabrication voitures
 
 
+// modifier le blocage par le banquier pour qu'il apparaisse sur toute les pages
+// voir quand la date est dépassé de renvoyer vers la page gestion
 
+// creer un fichier des timelines pour chaque progress bar de façon à intégrer le fichier et non copier toutes les timelines
 
 package com.example.mapetiteentreprise.jeu;
 
