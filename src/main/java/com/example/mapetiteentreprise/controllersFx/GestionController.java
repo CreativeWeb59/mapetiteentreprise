@@ -281,6 +281,31 @@ public class GestionController {
     }
 
     /**
+     * Envoi vers le menu gestion des usines
+     */
+    public void switchToUsines(ActionEvent event) {
+
+        // fermeture des barres, enregistrement + stop et sauvegarde date deco
+        fermetureProgress();
+
+        try {
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("gestionUsines.fxml"));
+            root = loader.load();
+            GestionUsinesController gestionUsinesController = loader.getController();
+            gestionUsinesController.demarrer(jeu);
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            // Permet de récupérer le gestionnaire d'événements pour la fermeture de la fenêtre
+            stage.setOnCloseRequest(gestionUsinesController::onWindowClose);
+            stage.show();
+            stage.centerOnScreen();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    /**
      * Gere le bouton pour passer sur la fenetre de la banque
      *
      * @param event

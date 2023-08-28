@@ -13,20 +13,19 @@ import javafx.scene.control.ProgressBar;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
-import java.time.LocalDateTime;
-
-public class GestionUsines {
+public class GestionUsinesController {
     @FXML
     private ProgressBar progressOeufs, progressJour, progressBC, progressBF, progressSa, progressCo,
             progressScooter, progressCamionette, progressPetitCamion, progressPoidsLourd, progressAvion;
     private Timeline timelineOeufs, timelineJour, timelineBC, timelineBF, timelineSa, timelineCo,
             timelineScooter, timelineCamionette, timelinePetitCamion, timelinePoidsLourd, timelineAvion;
+
     private Stage stage;
     private Scene scene;
     private Parent root;
     private Jeu jeu;
 
-    public void demarrerMenuUsines(Jeu jeu){
+    public void demarrer(Jeu jeu){
         // Recuperation du jeu
         this.jeu = jeu;
     }
