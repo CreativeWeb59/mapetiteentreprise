@@ -245,7 +245,7 @@ public class GestionDistributeursController {
 
         // sauvegardes
         try {
-            this.jeu.sauvegardejeu(this.progressOeufs, this.progressJour);
+            this.jeu.sauvegardejeu();
             this.jeu.sauvegardeCredit();
         } catch (Exception e) {
             System.out.println(e);
@@ -264,7 +264,7 @@ public class GestionDistributeursController {
         // Sauvegarde de la base de donnees
         System.out.println("switch fenetre : Sauvegarde complete");
         try {
-            this.jeu.sauvegardejeu(this.progressOeufs, this.progressJour);
+            this.jeu.sauvegardejeu();
             this.jeu.sauvegardeCredit();
         } catch (Exception e) {
             System.out.println(e);

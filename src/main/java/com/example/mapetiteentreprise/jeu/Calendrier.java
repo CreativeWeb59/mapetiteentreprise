@@ -1,12 +1,14 @@
 package com.example.mapetiteentreprise.jeu;
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.geometry.Pos;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
-
+import javafx.util.Duration;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 
 /**
  * Classe qui gere l'affichage du calendrier et la gestion des journées du jeu
@@ -27,10 +29,11 @@ public class Calendrier {
     private long semaine1EnCours[] = new long[]{1, 2, 3, 4, 5, 6, 7}; // contiendra les jours de la premiere semaine semaine à afficher sur le calendrier
     private long semaine2EnCours[] = new long[]{8, 9, 10, 11, 12, 13, 14}; // contiendra les jours de la premiere deuxieme semaine à afficher sur le calendrier
     private long numJour;
-    private int heureActuelle ; // chiffre de 1 à 10 => 1 jour = 10 fois 60s ou 10 fois un progressOeuf
+    private int heureActuelle; // chiffre de 1 à 10 => 1 jour = 10 fois 60s ou 10 fois un progressOeuf
     private double progressJour;
     private PieChart pieHorloge;
     private final int nbHeures = 10;
+    private Timeline timelineHeure;
 
 
     public Calendrier(LocalDateTime dateDebutJeu, long numJour, int heureActuelle, double progressJour) {
@@ -152,9 +155,7 @@ public class Calendrier {
      * divise par 60 (ou le nombre de secondes dans une journée)
      * pour recuperer un entier correspondant au numero de jour actuel
      *
-     * @return
-     *
-     * N'est plus utilise depuis la version : pas de jeu en mode deco
+     * @return N'est plus utilise depuis la version : pas de jeu en mode deco
      */
 //    public long getJourEnCours() {
 //        LocalDateTime dateDuJours = LocalDateTime.now();
@@ -162,8 +163,6 @@ public class Calendrier {
 //        long jourEnCours = (ecartEnSecondes / this.dureeJour) + 1;
 //        return jourEnCours;
 //    }
-
-
     public void createSemaine1Calendrier(Pane paneParent, long jourBanquier) {
         double valeurX = 0;
 
@@ -232,7 +231,7 @@ public class Calendrier {
         }
     }
 
-    public void createHorloge(PieChart pieHorlogeController){
+    public void createHorloge(PieChart pieHorlogeController) {
         this.pieHorloge = pieHorlogeController;
         // Masque les libellés
         this.pieHorloge.setLabelsVisible(false);
@@ -256,6 +255,7 @@ public class Calendrier {
         // rend le titre transparent
         pieHorloge.lookup(".chart-title").setStyle("-fx-background-color: transparent;");
     }
+
     public void setCouleurTranchesHorloge(PieChart.Data[] heures) {
         String[] customColors = couleursTranchesHoraires();
         for (int i = 0; i < heures.length; i++) {
@@ -266,16 +266,17 @@ public class Calendrier {
     /**
      * Permet de remplir le tableau des couleurs de l'horloge
      * suivant l'heure actuelle
+     *
      * @return
      */
-    public String[] couleursTranchesHoraires(){
+    public String[] couleursTranchesHoraires() {
         // tableau par defaut qui correspond à 1 heure
         String ecoulee = "#0F9DE8";
         String pasEcoulee = "white";
 
         String[] resultatCouleurs = {pasEcoulee, pasEcoulee, pasEcoulee, pasEcoulee, pasEcoulee, pasEcoulee, pasEcoulee, pasEcoulee, pasEcoulee, pasEcoulee, pasEcoulee};
         for (int i = 0; i < resultatCouleurs.length; i++) {
-            if (this.heureActuelle > i){
+            if (this.heureActuelle > i) {
                 resultatCouleurs[i] = ecoulee;
             } else {
                 resultatCouleurs[i] = pasEcoulee;
@@ -286,6 +287,7 @@ public class Calendrier {
 
     /**
      * permet de modifier les couleurs au changement d'heure
+     *
      * @param pieChart
      */
     public void modifyPieChartColors(PieChart pieChart) {
@@ -299,8 +301,8 @@ public class Calendrier {
      * Incremente le numero de jour
      * Remet le compteur des heures à 1
      */
-    public void setJourSuivant(){
-        this.setNumJour(this.getNumJour()+1);
+    public void setJourSuivant() {
+        this.setNumJour(this.getNumJour() + 1);
     }
 
     /**
@@ -308,10 +310,103 @@ public class Calendrier {
      * au dessus de 10 passe à 1 heure
      * et incremente un jour
      */
-    public void setIncrementHeure(){
-        if(this.getHeureActuelle() >= this.nbHeures){
+    public void setIncrementHeure() {
+        if (this.getHeureActuelle() >= this.nbHeures) {
             this.setHeureActuelle(0);
         }
-        this.setHeureActuelle(this.getHeureActuelle()+1);
+        this.setHeureActuelle(this.getHeureActuelle() + 1);
+    }
+
+    /**
+     * Barre de progression pour ajouter les heures et ensuite afficher le calendrier
+     * ici pas de barre de progression : l'heure est basée sur la production de la ferme
+     *
+     * @param cycle                   : 0 pour cycle infini
+     * @param vitesse                 : vitesse en secondes
+     * @param paneSemaine1            : pane de la semaine 1 pour l'afficher
+     * @param paneSemaine2            : pane de la semaine 2 pour l'afficher
+     * @param prochaineDateMensualite : permet d'afficher la date de venue du banquier pour le paiement de la mensualité du crédit
+     */
+    public void progressHeureCalendrier(int cycle, double vitesse, Pane paneSemaine1, Pane paneSemaine2, int prochaineDateMensualite) {
+        timelineHeure = new Timeline(
+                new KeyFrame(Duration.seconds(vitesse), e -> {
+                    System.out.println("jour terminé");
+                    // incremente un jour et remet l'heure à 1
+                    this.setJourSuivant();
+                    // mise à jour du calendrier
+                    this.afficheCalendrier(paneSemaine1, paneSemaine2, prochaineDateMensualite); // uniquement sur la page gestionController
+                })
+        );
+
+        if (cycle == 0) {
+            timelineHeure.setCycleCount(Animation.INDEFINITE);
+        } else {
+            timelineHeure.setCycleCount(cycle);
+        }
+        timelineHeure.play();
+    }
+
+    /**
+     * Barre de progression pour ajouter les heures
+     * N'affiche pas le calendrier
+     * ici pas de barre de progression : l'heure est basée sur la production de la ferme
+     *
+     * @param cycle   : 0 pour cycle infini
+     * @param vitesse : vitesse en secondes
+     */
+    public void progressHeure(int cycle, double vitesse, double vitesseAjustement) {
+        timelineHeure = new Timeline(
+                new KeyFrame(Duration.seconds(vitesseAjustement), e -> {
+                    System.out.println("heure terminée");
+                    // incremente un jour et remet l'heure à 1
+                    this.setIncrementHeure();
+                })
+        );
+        timelineHeure.setOnFinished(event -> {
+            if (cycle == 1) {
+                // recalcul de la vitesse suivant le niveau de la barre de progression
+                System.out.println("suite");
+                progressHeure(cycle - 1, vitesse, vitesse);
+            }
+        });
+        if (cycle == 0) {
+            timelineHeure.setCycleCount(Animation.INDEFINITE);
+        } else {
+            timelineHeure.setCycleCount(cycle);
+        }
+        timelineHeure.play();
+    }
+
+    /**
+     * Permet d'afficher le calendrier sur la page Gestion
+     *
+     * @param paneSemaine1            : affiche la semaine 1
+     * @param paneSemaine2            : affiche la semaine 2
+     * @param prochaineDateMensualite si date prochaine mensualite superieure au jour en cours, affiche le banquier
+     */
+    public void afficheCalendrier(Pane paneSemaine1, Pane paneSemaine2, int prochaineDateMensualite) {
+        // met en place la semaine en cours
+        this.setSemainesEnCours();
+        if (prochaineDateMensualite >= this.getNumJour()) {
+            this.createSemaine1Calendrier(paneSemaine1, prochaineDateMensualite);
+            this.createSemaine2Calendrier(paneSemaine2, prochaineDateMensualite);
+
+        } else {
+            this.createSemaine1Calendrier(paneSemaine1, 0);
+            this.createSemaine2Calendrier(paneSemaine2, 0);
+        }
+    }
+
+    /**
+     * Permet de stopper la timeline passée en paramètres
+     *
+     * @param
+     */
+    public void progressBarStop() {
+        if (timelineHeure != null) {
+            System.out.println("Arret de la barre de progression " + this.timelineHeure);
+            timelineHeure.stop();
+            timelineHeure = null;
+        }
     }
 }

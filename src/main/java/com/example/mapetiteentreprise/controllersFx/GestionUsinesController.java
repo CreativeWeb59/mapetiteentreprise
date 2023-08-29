@@ -1,6 +1,7 @@
 package com.example.mapetiteentreprise.controllersFx;
 
 import com.example.mapetiteentreprise.Main;
+import com.example.mapetiteentreprise.actions.Outils;
 import com.example.mapetiteentreprise.jeu.Jeu;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -17,7 +18,7 @@ public class GestionUsinesController {
     @FXML
     private ProgressBar progressOeufs, progressJour, progressBC, progressBF, progressSa, progressCo,
             progressScooter, progressCamionette, progressPetitCamion, progressPoidsLourd, progressAvion;
-    private Timeline timelineOeufs, timelineJour, timelineBC, timelineBF, timelineSa, timelineCo,
+    private Timeline timelineHeure, timelineJour, timelineBC, timelineBF, timelineSa, timelineCo, timelineOeufs,
             timelineScooter, timelineCamionette, timelinePetitCamion, timelinePoidsLourd, timelineAvion;
 
     private Stage stage;
@@ -28,28 +29,14 @@ public class GestionUsinesController {
     public void demarrer(Jeu jeu){
         // Recuperation du jeu
         this.jeu = jeu;
+        demarrageProgress();
     }
     public void retourGestion(ActionEvent event) {
-    // on recupere l'etat de la barre de progression des oeufs
-//        this.jeu.getJoueur().getFerme().setEtatProgressOeuf(this.progressOeufs.getProgress());
-//        this.jeu.getCalendrier().setProgressJour(this.progressJour.getProgress());
+        // fermeture des barres, enregistrement + stop et sauvegarde date deco
+        fermetureProgress();
 
-    // fermeture des barres, enregistrement + stop et sauvegarde date deco
-    // fermetureProgress();
-
-    // on enregistre l'heure de switch de fenetre
-        // this.jeu.getJoueur().getFerme().setDateDeco(LocalDateTime.now());
-
-    // on stoppe les barres de progression;
-//        this.progressBarStop(timelineOeufs);
-//        this.progressBarStop(timelineJour);
-//
-//        try {
-//        this.jeu.sauvegardejeu(this.progressOeufs, this.progressJour);
-//        this.jeu.sauvegardeCredit();
-//    } catch (Exception e) {
-//        System.out.println(e);
-//    }
+        // sauvegarde bdd
+       sauveBdd();
 
         try {
         FXMLLoader loader = new FXMLLoader(Main.class.getResource("gestion.fxml"));
@@ -75,17 +62,53 @@ public class GestionUsinesController {
      * @param event
      */
     public void onWindowClose(WindowEvent event) {
-        // sauvegarde des barres de progression
-//        this.jeu.getCalendrier().setProgressJour(this.progressJour.getProgress());
-//        this.jeu.getJoueur().getFerme().setEtatProgressOeuf(this.progressOeufs.getProgress());
-
         // fermeture des barres, enregistrement + stop et sauvegarde date deco
-        // fermetureProgress();
+        fermetureProgress();
 
-        // Sauvegarde de la base de donnees
+        // sauvegarde bdd
+        sauveBdd();
+    }
+
+    /**
+     * Bouton qui ouvre les usines de textile
+     */
+    public void switchTextile(ActionEvent event){
+        // fermeture des barres, enregistrement + stop et sauvegarde date deco
+        fermetureProgress();
+
+        // sauvegarde bdd
+        sauveBdd();
+    }
+
+    /**
+     * Demarrage des barres de progression, dans l'ordre
+     * la ferme avec les oeufs => incrémente les oeufs
+     * les heures => incrément les heures
+     */
+    public void demarrageProgress(){
+        // recuperation de l'etat des barres de progression
+        double vitesseOeuf = jeu.getParametres().getVitessePonteOeuf() - (jeu.getParametres().getVitessePonteOeuf() * jeu.getJoueur().getFerme().getEtatProgressOeuf());
+
+        jeu.getJoueur().getFerme().progressBarStartOeuf(1, jeu.getParametres().getVitessePonteOeuf(), vitesseOeuf, progressOeufs);
+        jeu.getCalendrier().progressHeure(1, jeu.getParametres().getVitessePonteOeuf(), vitesseOeuf);
+    }
+
+    public void fermetureProgress(){
+        // sauvegarde des barres de progression
+        this.jeu.getJoueur().getFerme().setEtatProgressOeuf(this.progressOeufs.getProgress());
+
+        // on stoppe les barres de progression;
+        jeu.getJoueur().getFerme().progressBarStop();
+        jeu.getCalendrier().progressBarStop();
+    }
+
+    /**
+     * Sauvegarde de la base de donnees
+     */
+    public void sauveBdd(){
         System.out.println("fermeture fenetre : Sauvegarde");
         try {
-            this.jeu.sauvegardejeu(this.progressOeufs, this.progressJour);
+            this.jeu.sauvegardejeu();
             this.jeu.sauvegardeCredit();
         } catch (Exception e) {
             System.out.println(e);

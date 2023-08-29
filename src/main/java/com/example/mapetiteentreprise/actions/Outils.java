@@ -2,6 +2,7 @@ package com.example.mapetiteentreprise.actions;
 
 import com.example.mapetiteentreprise.jeu.Poulaillers;
 import javafx.animation.PauseTransition;
+import javafx.animation.Timeline;
 import javafx.scene.control.Label;
 import javafx.util.Duration;
 
@@ -189,4 +190,6 @@ public class Outils {
     public static void setLabel(Label label, String texte){
         label.setText(texte);
     }
+
+
 }

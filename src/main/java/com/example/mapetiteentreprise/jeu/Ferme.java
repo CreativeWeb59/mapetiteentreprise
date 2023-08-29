@@ -1,5 +1,12 @@
 package com.example.mapetiteentreprise.jeu;
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.scene.control.ProgressBar;
+import javafx.util.Duration;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -10,9 +17,10 @@ public class Ferme {
     private long nbOeufs;
     private double etatProgressOeuf = 0;
     private LocalDateTime dateDeco;
+    private Timeline timelineOeufs;
 
 
-    public Ferme(int nbPoules, long nbOeufs, double etatProgressOeuf , LocalDateTime dateDeco) {
+    public Ferme(int nbPoules, long nbOeufs, double etatProgressOeuf, LocalDateTime dateDeco) {
         this.nbPoules = nbPoules;
         this.nbOeufs = nbOeufs;
         this.etatProgressOeuf = etatProgressOeuf;
@@ -64,13 +72,109 @@ public class Ferme {
 
     /**
      * ajuste la barre de progress oeuf en fonction de la barre de progress jour et de l'heure actuelle
+     *
      * @param progressJour
      * @param heureActuelle
      */
-    public void ajustementProgressOeuf(double progressJour, int heureActuelle){
-        double resultat = (progressJour * 10) - heureActuelle ;
+    public void ajustementProgressOeuf(double progressJour, int heureActuelle) {
+        double resultat = (progressJour * 10) - heureActuelle;
         System.out.println("valeur nouvelle barre : " + resultat);
     }
 
 
+    /**
+     * TimeLine des heures
+     * grosse difference avec celle des jours : on affiche pas la barre de progression : se passe en coulisses
+     * recupere l'etat de la barre de progressOeuf pour l'avancer jusqu'au bout
+     * et commencer une autre timelineHeures classique
+     *
+     * @param cycle
+     * @param vitesse
+     */
+//    public void progressBarStartTimelineHeureEnCours(int cycle, double vitesse) {
+//        ProgressBar progressOeufs = getProgressOeufs();
+//        // Réinitialise la barre de progression à 0
+//        progressOeufs.setProgress(this.jeu.getJoueur().getFerme().getEtatProgressOeuf());
+//        timelineHeure = new Timeline(
+//                new KeyFrame(Duration.ZERO, new KeyValue(progressOeufs.progressProperty(), this.jeu.getJoueur().getFerme().getEtatProgressOeuf())),
+//                new KeyFrame(Duration.seconds(vitesse), e -> {
+//                    this.jeu.getCalendrier().setIncrementHeure();
+//                    System.out.println("Heure actuelle : " + jeu.getCalendrier().getHeureActuelle());
+//                    // ajoute le nombre de poules necesaires
+//                    majFerme();
+//                    System.out.println("Oeuf terminé");
+//                }, new KeyValue(progressOeufs.progressProperty(), 1))
+//        );
+//        timelineHeure.setOnFinished(event -> {
+//            // recalcul de la vitesse suivant le niveau de la barre de progression
+//            progressBarStartTimelineHeure(cycle - 1, jeu.getParametres().getVitessePonteOeuf());
+//        });
+//
+//        if (cycle == 0) {
+//            timelineHeure.setCycleCount(Animation.INDEFINITE);
+//        } else {
+//            timelineHeure.setCycleCount(cycle);
+//        }
+//        timelineHeure.play();
+//    }
+
+    /**
+     * Barre de progression pour compter les oeufs
+     * Ajoute un nombre d'oeufs équivalent au nombre de poules à chaque fin de cycle
+     *
+     * @param cycle         : 0 pour cycle infini
+     * @param vitesse       : vitesse de ponte en secondes
+     * @param progressOeufs : barre de progress des oeufs
+     */
+    public void progressBarStartOeuf(int cycle, double vitesse, double vitesseAjustement, ProgressBar progressOeufs) {
+        // determine le debut de la barre de progress
+        double etatBarreProgressOeuf;
+        if (cycle == 1) {
+            progressOeufs.setProgress(this.getEtatProgressOeuf());
+            etatBarreProgressOeuf = this.getEtatProgressOeuf();
+        } else {
+            progressOeufs.setProgress(0);
+            etatBarreProgressOeuf = 0;
+        }
+        timelineOeufs = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(progressOeufs.progressProperty(), etatBarreProgressOeuf)),
+                new KeyFrame(Duration.seconds(vitesseAjustement), e -> {
+                    // ajoute le nombre de poules necesaires
+                    majOeufsJournalier();
+                    System.out.println("Oeuf terminé");
+                }, new KeyValue(progressOeufs.progressProperty(), 1))
+        );
+        timelineOeufs.setOnFinished(event -> {
+            if (cycle == 1) {
+                // recalcul de la vitesse suivant le niveau de la barre de progression
+                progressBarStartOeuf(cycle - 1, vitesse, vitesse, progressOeufs);
+            }
+        });
+        if (cycle == 0) {
+            timelineOeufs.setCycleCount(Animation.INDEFINITE);
+        } else {
+            timelineOeufs.setCycleCount(cycle);
+        }
+        timelineOeufs.play();
+    }
+
+    /**
+     * A effectuer lorsqu'une heure est ecoulee
+     * ajoute un oeuf suivant le nombre de poules dans le poulailler
+     */
+    public void majOeufsJournalier() {
+        long nbOeufsAAjouter = this.getNbOeufs() + this.getNbPoules();
+        this.setNbOeufs(nbOeufsAAjouter);
+        System.out.println("ajout de " + nbOeufsAAjouter + " oeuf(s)");
+    }
+    /**
+     * Permet de stopper la timeline passée en paramètres
+     */
+    public void progressBarStop() {
+        if (this.timelineOeufs != null) {
+            System.out.println("Arret de la barre de progression " + this.timelineOeufs);
+            this.timelineOeufs.stop();
+            this.timelineOeufs = null;
+        }
+    }
 }

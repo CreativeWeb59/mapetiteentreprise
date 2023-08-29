@@ -344,7 +344,7 @@ public class GestionController {
 
         // sauvegardes
         try {
-            this.jeu.sauvegardejeu(this.progressOeufs, this.progressJour);
+            this.jeu.sauvegardejeu();
             this.jeu.sauvegardeCredit();
         } catch (Exception e) {
             System.out.println(e);
@@ -380,7 +380,7 @@ public class GestionController {
         // Sauvegarde de la base de donnees
         System.out.println("fermeture fenetre : Sauvegarde");
         try {
-            this.jeu.sauvegardejeu(this.progressOeufs, this.progressJour);
+            this.jeu.sauvegardejeu();
             this.jeu.sauvegardeCredit();
         } catch (Exception e) {
             System.out.println(e);
@@ -396,7 +396,7 @@ public class GestionController {
         // fermeture des barres, enregistrement + stop et sauvegarde date deco
         fermetureProgress();
 
-        this.jeu.sauvegardejeu(this.progressOeufs, this.progressJour);
+        this.jeu.sauvegardejeu();
         this.jeu.sauvegardeCredit();
         // Code pour quitter l'application
         Platform.exit();

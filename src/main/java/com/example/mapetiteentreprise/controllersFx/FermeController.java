@@ -188,7 +188,7 @@ public class FermeController {
         // Sauvegarde de la base de donnees
         System.out.println("fermeture fenetre : Sauvegarde");
         try {
-            this.jeu.sauvegardejeu(this.progressOeufs, this.progressJour);
+            this.jeu.sauvegardejeu();
             this.jeu.sauvegardeCredit();
         } catch (Exception e) {
             System.out.println(e);
@@ -211,7 +211,7 @@ public class FermeController {
         this.progressBarStop(timelineJour);
 
         try {
-            this.jeu.sauvegardejeu(this.progressOeufs, this.progressJour);
+            this.jeu.sauvegardejeu();
             this.jeu.sauvegardeCredit();
         } catch (Exception e) {
             System.out.println(e);

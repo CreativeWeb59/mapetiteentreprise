@@ -52,7 +52,7 @@
                                 <Image url="@images/usine.png" />
                             </image>
                         </ImageView>
-                        <Button fx:id="btnLavage" disable="true" layoutX="38.0" layoutY="250.0" mnemonicParsing="false" onAction="#switchToUsines" text="Usines" />
+                        <Button fx:id="btnLavage" layoutX="38.0" layoutY="250.0" mnemonicParsing="false" onAction="#switchToUsines" text="Usines" />
                     </children>
                 </Pane>
                 <Pane layoutX="800.0" prefHeight="300.0" prefWidth="200.0">

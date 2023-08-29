@@ -157,11 +157,7 @@ public class Jeu {
     /**
      * Permet de sauvegarder la partie dans la Bdd
      */
-    public void sauvegardejeu(ProgressBar progressOeufs, ProgressBar progressJour) {
-        // sauvegarde des barres de progression
-        getCalendrier().setProgressJour(progressJour.getProgress());
-        getJoueur().getFerme().setEtatProgressOeuf(progressOeufs.getProgress());
-
+    public void sauvegardejeu() {
         // mise a jour instance sauvegarde
         getSauvegarde().setArgent(getJoueur().getArgent());
         getSauvegarde().setNbPoules(getJoueur().getFerme().getNbPoules());

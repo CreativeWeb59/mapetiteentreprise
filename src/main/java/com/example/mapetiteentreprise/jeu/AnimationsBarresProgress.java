@@ -18,6 +18,38 @@ public class AnimationsBarresProgress {
         this.timeline = timeline;
         this.progressBar = progressBar;
     }
+
+    /**
+     * creation timeline
+     * @param cycle
+     * @param vitesse
+     */
+    public void createTimeline(int cycle, double vitesse){
+//        ProgressBar getProgressJour = getProgressJour();
+//        Button btnVendre = getBtnVendre();
+        // Réinitialise la barre de progression à 0
+        progressBar.setProgress(0);
+        System.out.println("Progress barre : " + progressBar.getProgress());
+        timeline = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(progressBar.progressProperty(), 0)),
+                new KeyFrame(Duration.seconds(vitesse), e -> {
+                    System.out.println("Jour terminé " + vitesse);
+                    // incremente un jour et remet l'heure à 1
+//                    this.jeu.getCalendrier().setJourSuivant();
+                    // mise à jour du calendrier
+//                    afficheCalendrier();
+                    System.out.println("coucou");
+                }, new KeyValue(progressBar.progressProperty(), 1))
+        );
+
+        if (cycle == 0) {
+            timeline.setCycleCount(Animation.INDEFINITE);
+        } else {
+            timeline.setCycleCount(cycle);
+        }
+        timeline.play();
+    }
+
     public void createProgressJournee(int cycle, double vitesse){
 //        ProgressBar getProgressJour = getProgressJour();
 //        Button btnVendre = getBtnVendre();

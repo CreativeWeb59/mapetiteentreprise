@@ -80,7 +80,7 @@ public class Banquecontroller {
 
         // sauvegardes
         try {
-            this.jeu.sauvegardejeu(this.progressOeufs, this.progressJour);
+            this.jeu.sauvegardejeu();
             this.jeu.sauvegardeCredit();
         } catch (Exception e) {
             System.out.println(e);
@@ -115,7 +115,7 @@ public class Banquecontroller {
 
         // sauvegardes
         try {
-            this.jeu.sauvegardejeu(this.progressOeufs, this.progressJour);
+            this.jeu.sauvegardejeu();
             this.jeu.sauvegardeCredit();
         } catch (Exception e) {
             System.out.println(e);
