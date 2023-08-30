@@ -51,10 +51,10 @@ public class GestionDistributeursController {
     @FXML
     private Pane paneCo, paneGroupCo, paneSa, paneGroupSa, paneProgress;
     @FXML
-    private ProgressBar progressBC, progressBF, progressSa, progressCo, progressJour, progressOeufs,
+    private ProgressBar progressBC, progressBF, progressSa, progressCo, progressOeufs,
             progressScooter, progressCamionette, progressPetitCamion, progressPoidsLourd, progressAvion;
-    private Timeline timelineBC, timelineBF, timelineSa, timelineCo, timelineCalendrier, timelineHeure,
-            timelineScooter, timelineCamionette, timelinePetitCamion, timelinePoidsLourd, timelineAvion;
+    private Timeline timelineBC, timelineBF, timelineSa, timelineCo;
+
     private BigDecimal gainEnAttenteBC = new BigDecimal(0);
     private BigDecimal gainEnAttenteBF = new BigDecimal(0);
     private BigDecimal gainEnAttenteSa = new BigDecimal(0);
@@ -170,25 +170,8 @@ public class GestionDistributeursController {
         // recuperation du jeu, paramètres + sauvegarde
         this.jeu = jeu;
 
-        // ajustement de la barre de progression et des distributeurs
-        // on compare l'heure et le jour actuel avec la date deco
-        // on met a jour les marchandises vendues
-
-        // Reajustement distributeur Boissons chaudes
-//        reajustementBC();
-
-        // Reajustement distributeur Boissons fraiches
-//        reajustementBF();
-
-        // Reajustement distributeur Confiseries
-//        reajustementCo();
-
-        // Reajustement distributeur Sandwichs
-//        reajustementSa();
-
         // mise en place des labels
         this.miseEnPlaceValeurs();
-
 
         // Demmarage des distributueurs
         // Boissons chaudes
@@ -216,19 +199,10 @@ public class GestionDistributeursController {
         }
 
         // ajustement oeuf par rapport au jour
-        this.jeu.getJoueur().getFerme().ajustementProgressOeuf(jeu.getCalendrier().getProgressJour(), jeu.getCalendrier().getHeureActuelle());
+//        this.jeu.getJoueur().getFerme().ajustementProgressOeuf(jeu.getCalendrier().getProgressJour(), jeu.getCalendrier().getHeureActuelle());
 
-        // recuperation de l'etat de la barre de progression pour les heures / oeufs
-        double vitesseHeure = jeu.getParametres().getVitessePonteOeuf() - (jeu.getParametres().getVitessePonteOeuf() * jeu.getJoueur().getFerme().getEtatProgressOeuf());
-        progressBarStartTimelineHeureEnCours(1, vitesseHeure);
-
-        // recuperation de l'etat de la barre de progression pour la journee
-        double vitesse = jeu.getCalendrier().getDureeJour() - (jeu.getCalendrier().getDureeJour() * jeu.getCalendrier().getProgressJour());
-
-        progressBarStartTimelineJourneeEnCours(1, vitesse);
-
-        // demarrage des livraisons
-        demarrageLivraisons();
+        // demarre toutes les barres de progression externes (hors distributeurs)
+        demarrageProgress();
 
         // affichage des barres de progression (mode dev)
         jeu.afficheProgression(paneProgress);
@@ -243,14 +217,8 @@ public class GestionDistributeursController {
         // fermeture des barres, enregistrement + stop et sauvegarde date deco
         fermetureProgress();
 
-        // sauvegardes
-        try {
-            this.jeu.sauvegardejeu();
-            this.jeu.sauvegardeCredit();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-
+        // sauvegarde bdd
+        sauveBdd();
     }
 
     /**
@@ -261,14 +229,8 @@ public class GestionDistributeursController {
     public void retourMenuGestion(ActionEvent event) {
         fermetureProgress();
 
-        // Sauvegarde de la base de donnees
-        System.out.println("switch fenetre : Sauvegarde complete");
-        try {
-            this.jeu.sauvegardejeu();
-            this.jeu.sauvegardeCredit();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+        // sauvegarde bdd
+        sauveBdd();
 
         try {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("gestion.fxml"));
@@ -422,7 +384,6 @@ public class GestionDistributeursController {
             debloquerDistributeur(paneBC, btnDebloquerBC, labelTitreDistributeurBC);
         }
     }
-
     public void acheterBoissonsChaudes() {
         // verifie si le nombre maxi de distributeurs n'est pas atteint
         if(!isMaxiNbDitributeur(this.jeu.getJoueur().getBoissonsChaudes())){
@@ -435,6 +396,7 @@ public class GestionDistributeursController {
                 // debloque le distributeur si besoin
                 if (jeu.getJoueur().getBoissonsChaudes().getNbDistributeurs() == 1) {
                     jeu.getJoueur().setDistributeurBCActive(1);
+                    jeu.getJoueur().setDistributeursActive(1);
                     debloquerDistributeur(paneBC, btnDebloquerBC, labelTitreDistributeurBC);
                     // demarre la barre de progression du distributeur
                     progressBarStartBC(0, jeu.getParametres().getVitesseBC());
@@ -1499,153 +1461,34 @@ public class GestionDistributeursController {
      */
 
 
-
-    // partie pour les barres de progress Heure et Jour
-    public ProgressBar getProgressJour() {
-        return progressJour;
-    }
-
     /**
-     * declare la ProgressBar afin de pouvoir l'utiliser
-     * pour l'effet de remplissage
-     *
+     * Debut barres de progression externes
      * @return
      */
-    public ProgressBar getProgressOeufs() {
-        return progressOeufs;
+    /**
+     * Demarrage des barres de progression, dans l'ordre
+     * la ferme avec les oeufs => incrémente les oeufs
+     * les heures => incrément les heures
+     * demarrage des distributeurs
+     * demarrage des livraisons
+     */
+    public void demarrageProgress(){
+        // recuperation de l'etat des barres de progression
+        double vitesseOeuf = jeu.getParametres().getVitessePonteOeuf() - (jeu.getParametres().getVitessePonteOeuf() * jeu.getJoueur().getFerme().getEtatProgressOeuf());
+
+        jeu.getJoueur().getFerme().progressBarStartOeuf(1, jeu.getParametres().getVitessePonteOeuf(), vitesseOeuf, progressOeufs);
+        jeu.getCalendrier().progressHeure(1, jeu.getParametres().getVitessePonteOeuf(), vitesseOeuf);
+
+        // demarrage des livraisons
+        demarrageLivraisons();
     }
 
     /**
-     * Met à jour la barre de progression pour la journee
-     * avec un demarrage de la barre par rapport à la sauvegarde
-     *
-     * @param cycle   : 1 pour on effectue une seule fois
-     * @param vitesse : calculee suivant le temps restant à effectuer
-     */
-    public void progressBarStartTimelineJourneeEnCours(int cycle, double vitesse) {
-        ProgressBar getProgressJour = getProgressJour();
-        // Réinitialise la barre de progression à 0
-        getProgressJour.setProgress(this.jeu.getCalendrier().getProgressJour());
-        timelineCalendrier = new Timeline(
-                new KeyFrame(Duration.ZERO, new KeyValue(getProgressJour.progressProperty(), this.jeu.getCalendrier().getProgressJour())),
-                new KeyFrame(Duration.seconds(vitesse), e -> {
-                    System.out.println("jour terminé");
-                    // incremente un jour et remet l'heure à 1
-                    this.jeu.getCalendrier().setJourSuivant();
-                }, new KeyValue(getProgressJour.progressProperty(), 1))
-        );
-        timelineCalendrier.setOnFinished(event -> {
-            if (cycle == 1) {
-                // Lancer la deuxième exécution de la méthode progressBarStartTimeline
-                jeu.getCalendrier().setProgressJour(0);
-                // recalcul de la vitesse suivant le niveau de la barre de progression
-                progressBarStartTimelineJournee(cycle - 1, jeu.getCalendrier().getDureeJour() - jeu.getParametres().getVitessePonteOeuf());
-            }
-        });
-
-        if (cycle == 0) {
-            timelineCalendrier.setCycleCount(Animation.INDEFINITE);
-        } else {
-            timelineCalendrier.setCycleCount(cycle);
-        }
-        timelineCalendrier.play();
-    }
-
-
-    /**
-     * Methode qui affiche la progressbar du calendrier
-     * met a jour le calendrier avec le jour en cours, banquier...
-     *
-     * @param cycle
-     * @param vitesse
+     * Fin des barres de progression externes
+     * @return
      */
 
-    public void progressBarStartTimelineJournee(int cycle, double vitesse) {
-        ProgressBar getProgressJour = getProgressJour();
-        // Réinitialise la barre de progression à 0
-        getProgressJour.setProgress(0);
-        System.out.println("Progress barre : " + getProgressJour.getProgress());
-        timelineCalendrier = new Timeline(
-                new KeyFrame(Duration.ZERO, new KeyValue(getProgressJour.progressProperty(), 0)),
-                new KeyFrame(Duration.seconds(vitesse), e -> {
-                    System.out.println("Jour terminé ");
-                    this.jeu.getCalendrier().setJourSuivant();
-                }, new KeyValue(getProgressJour.progressProperty(), 1))
-        );
 
-        if (cycle == 0) {
-            timelineCalendrier.setCycleCount(Animation.INDEFINITE);
-        } else {
-            timelineCalendrier.setCycleCount(cycle);
-        }
-        timelineCalendrier.play();
-    }
-
-    /**
-     * TimeLine des heures
-     * grosse difference avec celle des jours : on affiche pas la barre de progression : se passe en coulisses
-     * recupere l'etat de la barre de progressOeuf pour l'avancer jusqu'au bout
-     * et commencer une autre timelineHeures classique
-     *
-     * @param cycle
-     * @param vitesse
-     */
-    public void progressBarStartTimelineHeureEnCours(int cycle, double vitesse) {
-        ProgressBar progressOeufs = getProgressOeufs();
-        // Réinitialise la barre de progression à 0
-        progressOeufs.setProgress(this.jeu.getJoueur().getFerme().getEtatProgressOeuf());
-        timelineHeure = new Timeline(
-                new KeyFrame(Duration.ZERO, new KeyValue(progressOeufs.progressProperty(), this.jeu.getJoueur().getFerme().getEtatProgressOeuf())),
-                new KeyFrame(Duration.seconds(vitesse), e -> {
-                    this.jeu.getCalendrier().setIncrementHeure();
-                    System.out.println("Heure actuelle : " + jeu.getCalendrier().getHeureActuelle());
-                    // ajoute le nombre de poules necesaires
-                    majFerme();
-                    System.out.println("Oeuf terminé");
-                }, new KeyValue(progressOeufs.progressProperty(), 1))
-        );
-        timelineHeure.setOnFinished(event -> {
-            // recalcul de la vitesse suivant le niveau de la barre de progression
-            progressBarStartTimelineHeure(cycle - 1, jeu.getParametres().getVitessePonteOeuf());
-        });
-
-        if (cycle == 0) {
-            timelineHeure.setCycleCount(Animation.INDEFINITE);
-        } else {
-            timelineHeure.setCycleCount(cycle);
-        }
-        timelineHeure.play();
-    }
-
-    /**
-     * Barre de progression invisible pour compter les heures
-     *
-     * @param cycle
-     * @param vitesse
-     */
-    public void progressBarStartTimelineHeure(int cycle, double vitesse) {
-        ProgressBar progressOeufs = getProgressOeufs();
-        // Réinitialise la barre de progression à 0
-        progressOeufs.setProgress(0);
-        timelineHeure = new Timeline(
-                new KeyFrame(Duration.ZERO, new KeyValue(progressOeufs.progressProperty(), 0)),
-                new KeyFrame(Duration.seconds(vitesse), e -> {
-                    System.out.println("Ajoute une heure");
-                    this.jeu.getCalendrier().setIncrementHeure();
-                    System.out.println("Heure actuelle : " + jeu.getCalendrier().getHeureActuelle());
-                    // ajoute le nombre de poules necesaires
-                    majFerme();
-                    System.out.println("Oeuf terminé");
-                }, new KeyValue(progressOeufs.progressProperty(), 1))
-        );
-
-        if (cycle == 0) {
-            timelineHeure.setCycleCount(Animation.INDEFINITE);
-        } else {
-            timelineHeure.setCycleCount(cycle);
-        }
-        timelineHeure.play();
-    }
 
     /**
      * Permet de stopper la timeline passée en paramètres
@@ -1698,16 +1541,6 @@ public class GestionDistributeursController {
         System.out.println("pause");
     }
 
-    /**
-     * A effectuer lorsqu'une heure est ecoulee
-     * ajoute un oeuf suivant le nombre de poules dans le poulailler
-     */
-    public void majFerme() {
-        long nbOeufsAAjouter = this.jeu.getJoueur().getFerme().getNbOeufs() + this.jeu.getJoueur().getFerme().getNbPoules();
-        this.jeu.getJoueur().getFerme().setNbOeufs(nbOeufsAAjouter);
-        System.out.println("ajout de " + nbOeufsAAjouter + " oeuf(s)");
-    }
-
 
     // Methodes communes
 
@@ -1727,429 +1560,35 @@ public class GestionDistributeursController {
         if(jeu.getJoueur().getLivraison1Active() == 1){
             // recuperation de l'etat de la barre de progression pour la livraison en scooter
             double vitesseScooter = jeu.getJoueur().getLivraisonScooter().getVitesseLivraion() - (jeu.getJoueur().getLivraisonScooter().getVitesseLivraion() * jeu.getJoueur().getLivraisonScooter().getEtatProgressLivraison());
-            progressBarStartScooterEnCours(1, vitesseScooter);
+            System.out.println("Vitesse scooter : " + vitesseScooter);
+            this.jeu.getJoueur().getLivraisonScooter().progressBarStartScooter(1, jeu.getJoueur().getLivraisonScooter().getVitesseLivraion(), vitesseScooter, progressScooter);
         }
         if(jeu.getJoueur().getLivraison2Active() == 1){
             // recuperation de l'etat de la barre de progression pour la livraison en camionette
             double vitesseCamionette = jeu.getJoueur().getLivraisonCamionette().getVitesseLivraion() - (jeu.getJoueur().getLivraisonCamionette().getVitesseLivraion() * jeu.getJoueur().getLivraisonCamionette().getEtatProgressLivraison());
             System.out.println("Vitesse camionette : " + vitesseCamionette);
-            progressBarStartCamionetteEnCours(1, vitesseCamionette);
+            this.jeu.getJoueur().getLivraisonCamionette().progressBarStartCamionette(1, jeu.getJoueur().getLivraisonCamionette().getVitesseLivraion(), vitesseCamionette, progressCamionette);
         }
         if(jeu.getJoueur().getLivraison3Active() == 1){
             // recuperation de l'etat de la barre de progression pour la livraison en petit camion
             double vitessePetitCamion = jeu.getJoueur().getLivraisonPetitCamion().getVitesseLivraion() - (jeu.getJoueur().getLivraisonPetitCamion().getVitesseLivraion() * jeu.getJoueur().getLivraisonPetitCamion().getEtatProgressLivraison());
             System.out.println("Vitesse petit camion : " + vitessePetitCamion);
-            progressBarStartPetitCamionEnCours(1, vitessePetitCamion);
+            this.jeu.getJoueur().getLivraisonPetitCamion().progressBarStartPetitCamion(1, jeu.getJoueur().getLivraisonPetitCamion().getVitesseLivraion(), vitessePetitCamion, progressPetitCamion);
         }
         if(jeu.getJoueur().getLivraison4Active() == 1){
             // recuperation de l'etat de la barre de progression pour la livraison en poids lours
             double vitessePoidsLourd = jeu.getJoueur().getLivraisonPoidsLourd().getVitesseLivraion() - (jeu.getJoueur().getLivraisonPoidsLourd().getVitesseLivraion() * jeu.getJoueur().getLivraisonPoidsLourd().getEtatProgressLivraison());
-            System.out.println("Vitesse petit camion : " + vitessePoidsLourd);
-            progressBarStartPodisLourdEnCours(1, vitessePoidsLourd);
+            System.out.println("Vitesse poids lourd : " + vitessePoidsLourd);
+            this.jeu.getJoueur().getLivraisonPoidsLourd().progressBarStartPoidsLourd(1, jeu.getJoueur().getLivraisonPoidsLourd().getVitesseLivraion(), vitessePoidsLourd, progressPoidsLourd);
         }
         if(jeu.getJoueur().getLivraison5Active() == 1){
             // recuperation de l'etat de la barre de progression pour la livraison en avion
             double vitesseAvion = jeu.getJoueur().getLivraisonAvion().getVitesseLivraion() - (jeu.getJoueur().getLivraisonAvion().getVitesseLivraion() * jeu.getJoueur().getLivraisonAvion().getEtatProgressLivraison());
             System.out.println("Vitesse avion : " + vitesseAvion);
-            progressBarStartAvionEnCours(1, vitesseAvion);
+            this.jeu.getJoueur().getLivraisonAvion().progressBarStartAvion(1, jeu.getJoueur().getLivraisonAvion().getVitesseLivraion(), vitesseAvion, progressAvion);
         }
     }
-    /**
-     * Met à jour la barre de progression pour distributeur de boissons chaudes
-     *
-     * @param cycle
-     * @param vitesse
-     */
-    public void progressBarStartScooterEnCours(int cycle, double vitesse) {
-        ProgressBar progressScooter = getProgressScooter();
-        // Réinitialise la barre de progression à 0
-        progressScooter.setProgress(this.jeu.getJoueur().getLivraisonScooter().getEtatProgressLivraison());
-        timelineScooter = new Timeline(
-                new KeyFrame(Duration.ZERO, new KeyValue(progressScooter.progressProperty(), this.jeu.getJoueur().getLivraisonScooter().getEtatProgressLivraison())),
-                new KeyFrame(Duration.seconds(vitesse), e -> {
-                    System.out.println("Course en scooter terminée");
-                    // ajoute une course au service de livraison
-                    this.majProgressScooter();
-                }, new KeyValue(progressScooter.progressProperty(), 1))
-        );
-        timelineScooter.setOnFinished(event -> {
-            if (cycle == 1) {
-                // Lancer la deuxième exécution de la méthode progressBarStartTimeline
-                jeu.getJoueur().getLivraisonScooter().setEtatProgressLivraison(0);
-                System.out.println("fin premiere barre");
-                // recalcul de la vitesse suivant le niveau de la barre de progression
-                progressBarStartScooter(cycle - 1, this.jeu.getJoueur().getLivraisonScooter().getVitesseLivraion());
-            }
-        });
-        if (cycle == 0) {
-            timelineScooter.setCycleCount(Animation.INDEFINITE);
-        } else {
-            timelineScooter.setCycleCount(cycle);
-        }
-        timelineScooter.play();
-    }
 
-    /**
-     * Barre de progressions Distributeur Boissons Chaudes
-     */
-    public void progressBarStartScooter(int cycle, double vitesse) {
-        ProgressBar progressScooter = getProgressScooter();
-        // Réinitialise la barre de progression à 0
-        progressScooter.setProgress(0);
-        timelineScooter = new Timeline(
-                new KeyFrame(Duration.ZERO, new KeyValue(progressScooter.progressProperty(), 0)),
-                new KeyFrame(Duration.seconds(vitesse), e -> {
-                    System.out.println("Distributeur de boissons chaudes prêt");
-                    // ajoute un nombre de marchandises correspondantes au nombre de distributeurs
-                    this.majProgressScooter();
-                }, new KeyValue(progressScooter.progressProperty(), 1))
-        );
-
-        if (cycle == 0) {
-            timelineScooter.setCycleCount(Animation.INDEFINITE);
-        } else {
-            timelineScooter.setCycleCount(cycle);
-        }
-        timelineScooter.play();
-    }
-
-    /**
-     * Met a jour le chiffre du nombre de livraisons effectuées
-     */
-    public void majProgressScooter() {
-        long nbLivraisonsEncours = jeu.getJoueur().getLivraisonScooter().getNbCourses();
-        int nbLivraisonsScooterEnCours = jeu.getJoueur().getLivraisonScooter().getNbVehicules();
-        long nouvNombre = nbLivraisonsEncours + nbLivraisonsScooterEnCours;
-        jeu.getJoueur().getLivraisonScooter().setNbCourses(nouvNombre);
-        System.out.println("maj du nombre de livraisons effectuées en scooter : " + nouvNombre);
-    }
-
-    /**
-     * Permet de gerer la barre de progression du scooter
-     * @return
-     */
-    public ProgressBar getProgressScooter() {
-        return progressScooter;
-    }
-
-    // progress camionettes
-    /**
-     * Met à jour la barre de progression pour le service de livraison de camionettes
-     *
-     * @param cycle
-     * @param vitesse
-     */
-
-    public void progressBarStartCamionetteEnCours(int cycle, double vitesse) {
-        ProgressBar progressCamionette = getProgressCamionette();
-        // Réinitialise la barre de progression à 0
-        progressCamionette.setProgress(this.jeu.getJoueur().getLivraisonCamionette().getEtatProgressLivraison());
-        timelineCamionette = new Timeline(
-                new KeyFrame(Duration.ZERO, new KeyValue(progressCamionette.progressProperty(), this.jeu.getJoueur().getLivraisonCamionette().getEtatProgressLivraison())),
-                new KeyFrame(Duration.seconds(vitesse), e -> {
-                    System.out.println("Course en camionette terminée");
-                    // ajoute une course au service de livraison en camionette
-                    this.majProgressCamionette();
-                }, new KeyValue(progressCamionette.progressProperty(), 1))
-        );
-        timelineCamionette.setOnFinished(event -> {
-            if (cycle == 1) {
-                // Lancer la deuxième exécution de la méthode progressBarStartTimeline
-                jeu.getJoueur().getLivraisonCamionette().setEtatProgressLivraison(0);
-                System.out.println("fin course camionette");
-                // recalcul de la vitesse suivant le niveau de la barre de progression
-                progressBarStartCamionette(cycle - 1, this.jeu.getJoueur().getLivraisonCamionette().getVitesseLivraion());
-            }
-        });
-        if (cycle == 0) {
-            timelineCamionette.setCycleCount(Animation.INDEFINITE);
-        } else {
-            timelineCamionette.setCycleCount(cycle);
-        }
-        timelineCamionette.play();
-    }
-
-    /**
-     * Barre de progressions Distributeur Boissons Chaudes
-     */
-    public void progressBarStartCamionette(int cycle, double vitesse) {
-        ProgressBar progressCamionette = getProgressCamionette();
-        // Réinitialise la barre de progression à 0
-        progressCamionette.setProgress(0);
-        timelineCamionette = new Timeline(
-                new KeyFrame(Duration.ZERO, new KeyValue(progressCamionette.progressProperty(), 0)),
-                new KeyFrame(Duration.seconds(vitesse), e -> {
-                    System.out.println("fin course camionette");
-                    // ajoute d'une course au service de livraion en camionette
-                    this.majProgressCamionette();
-                }, new KeyValue(progressCamionette.progressProperty(), 1))
-        );
-
-        if (cycle == 0) {
-            timelineCamionette.setCycleCount(Animation.INDEFINITE);
-        } else {
-            timelineCamionette.setCycleCount(cycle);
-        }
-        timelineCamionette.play();
-    }
-
-    /**
-     * Met a jour le chiffre du nombre de livraisons effectuées
-     */
-    public void majProgressCamionette() {
-        long nbLivraisonsEncours = jeu.getJoueur().getLivraisonCamionette().getNbCourses();
-        int nbLivraisonsCamionetteEnCours = jeu.getJoueur().getLivraisonCamionette().getNbVehicules();
-        long nouvNombre = nbLivraisonsEncours + nbLivraisonsCamionetteEnCours;
-        jeu.getJoueur().getLivraisonCamionette().setNbCourses(nouvNombre);
-        System.out.println("maj du nombre de livraisons effectuées en camionette : " + nouvNombre);
-    }
-
-    /**
-     * Permet de gerer la barre de progression du scooter
-     * @return
-     */
-    public ProgressBar getProgressCamionette() {
-        return progressCamionette;
-    }
-
-    // progress petit camion
-    /**
-     * Met à jour la barre de progression pour le service de livraison en petit camion
-     *
-     * @param cycle
-     * @param vitesse
-     */
-
-    public void progressBarStartPetitCamionEnCours(int cycle, double vitesse) {
-        ProgressBar progressPetitCamion = getProgressPetitCamion();
-        // Réinitialise la barre de progression à 0
-        progressPetitCamion.setProgress(this.jeu.getJoueur().getLivraisonPetitCamion().getEtatProgressLivraison());
-        timelinePetitCamion = new Timeline(
-                new KeyFrame(Duration.ZERO, new KeyValue(progressPetitCamion.progressProperty(), this.jeu.getJoueur().getLivraisonPetitCamion().getEtatProgressLivraison())),
-                new KeyFrame(Duration.seconds(vitesse), e -> {
-                    System.out.println("Course en petit camion terminée");
-                    // ajoute une course au service de livraison en petit camion
-                    this.majProgressPetitCamion();
-                }, new KeyValue(progressPetitCamion.progressProperty(), 1))
-        );
-        timelinePetitCamion.setOnFinished(event -> {
-            if (cycle == 1) {
-                // Lancer la deuxième exécution de la méthode progressBarStartTimeline
-                jeu.getJoueur().getLivraisonPetitCamion().setEtatProgressLivraison(0);
-                System.out.println("fin course camionette");
-                // recalcul de la vitesse suivant le niveau de la barre de progression
-                progressBarStartPetitCamion(cycle - 1, this.jeu.getJoueur().getLivraisonPetitCamion().getVitesseLivraion());
-            }
-        });
-        if (cycle == 0) {
-            timelinePetitCamion.setCycleCount(Animation.INDEFINITE);
-        } else {
-            timelinePetitCamion.setCycleCount(cycle);
-        }
-        timelinePetitCamion.play();
-    }
-
-    /**
-     * Barre de progressions service de livraison en petit camion
-     */
-    public void progressBarStartPetitCamion(int cycle, double vitesse) {
-        ProgressBar progressPetitCamion = getProgressPetitCamion();
-        // Réinitialise la barre de progression à 0
-        progressPetitCamion.setProgress(0);
-        timelinePetitCamion = new Timeline(
-                new KeyFrame(Duration.ZERO, new KeyValue(progressPetitCamion.progressProperty(), 0)),
-                new KeyFrame(Duration.seconds(vitesse), e -> {
-                    System.out.println("fin course petit camion");
-                    // ajoute d'une course au service de livraion en petit camion
-                    this.majProgressPetitCamion();
-                }, new KeyValue(progressPetitCamion.progressProperty(), 1))
-        );
-
-        if (cycle == 0) {
-            timelinePetitCamion.setCycleCount(Animation.INDEFINITE);
-        } else {
-            timelinePetitCamion.setCycleCount(cycle);
-        }
-        timelinePetitCamion.play();
-    }
-
-    /**
-     * Met a jour le chiffre du nombre de livraisons effectuées
-     */
-    public void majProgressPetitCamion() {
-        long nbLivraisonsEncours = jeu.getJoueur().getLivraisonPetitCamion().getNbCourses();
-        int nbLivraisonsPetitCamionEnCours = jeu.getJoueur().getLivraisonPetitCamion().getNbVehicules();
-        long nouvNombre = nbLivraisonsEncours + nbLivraisonsPetitCamionEnCours;
-        jeu.getJoueur().getLivraisonPetitCamion().setNbCourses(nouvNombre);
-        System.out.println("maj du nombre de livraisons effectuées en petit camion : " + nouvNombre);
-    }
-
-    /**
-     * Permet de gerer la barre de progression du petit camion
-     * @return
-     */
-    public ProgressBar getProgressPetitCamion() {
-        return progressPetitCamion;
-    }
-
-    // progress poids lourd
-    /**
-     * Met à jour la barre de progression pour le service de livraison en poids lourd
-     *
-     * @param cycle
-     * @param vitesse
-     */
-
-    public void progressBarStartPodisLourdEnCours(int cycle, double vitesse) {
-        ProgressBar progressPoidsLourd = getProgressPoidsLourd();
-        // Réinitialise la barre de progression à 0
-        progressPoidsLourd.setProgress(this.jeu.getJoueur().getLivraisonPoidsLourd().getEtatProgressLivraison());
-        timelinePoidsLourd = new Timeline(
-                new KeyFrame(Duration.ZERO, new KeyValue(progressPoidsLourd.progressProperty(), this.jeu.getJoueur().getLivraisonPoidsLourd().getEtatProgressLivraison())),
-                new KeyFrame(Duration.seconds(vitesse), e -> {
-                    System.out.println("Course en poids lourd terminée");
-                    // ajoute une course au service de livraison en poids lourd
-                    this.majProgressPoidsLourd();
-                }, new KeyValue(progressPoidsLourd.progressProperty(), 1))
-        );
-        timelinePoidsLourd.setOnFinished(event -> {
-            if (cycle == 1) {
-                // Lancer la deuxième exécution de la méthode progressBarStartTimeline
-                jeu.getJoueur().getLivraisonPoidsLourd().setEtatProgressLivraison(0);
-                System.out.println("fin course poids lourd");
-                // recalcul de la vitesse suivant le niveau de la barre de progression
-                progressBarStartPoidsLourd(cycle - 1, this.jeu.getJoueur().getLivraisonPoidsLourd().getVitesseLivraion());
-            }
-        });
-        if (cycle == 0) {
-            timelinePoidsLourd.setCycleCount(Animation.INDEFINITE);
-        } else {
-            timelinePoidsLourd.setCycleCount(cycle);
-        }
-        timelinePoidsLourd.play();
-    }
-
-    /**
-     * Barre de progressions service de livraison en petit camion
-     */
-    public void progressBarStartPoidsLourd(int cycle, double vitesse) {
-        ProgressBar progressPoidsLourd = getProgressPoidsLourd();
-        // Réinitialise la barre de progression à 0
-        progressPoidsLourd.setProgress(0);
-        timelinePoidsLourd = new Timeline(
-                new KeyFrame(Duration.ZERO, new KeyValue(progressPoidsLourd.progressProperty(), 0)),
-                new KeyFrame(Duration.seconds(vitesse), e -> {
-                    System.out.println("fin course petit camion");
-                    // ajoute d'une course au service de livraion en poids lourd
-                    this.majProgressPoidsLourd();
-                }, new KeyValue(progressPoidsLourd.progressProperty(), 1))
-        );
-
-        if (cycle == 0) {
-            timelinePoidsLourd.setCycleCount(Animation.INDEFINITE);
-        } else {
-            timelinePoidsLourd.setCycleCount(cycle);
-        }
-        timelinePoidsLourd.play();
-    }
-
-    /**
-     * Met a jour le chiffre du nombre de livraisons effectuées
-     */
-    public void majProgressPoidsLourd() {
-        long nbLivraisonsEncours = jeu.getJoueur().getLivraisonPoidsLourd().getNbCourses();
-        int nbLivraisonsPoidsLourdEnCours = jeu.getJoueur().getLivraisonPoidsLourd().getNbVehicules();
-        long nouvNombre = nbLivraisonsEncours + nbLivraisonsPoidsLourdEnCours;
-        jeu.getJoueur().getLivraisonPoidsLourd().setNbCourses(nouvNombre);
-        System.out.println("maj du nombre de livraisons effectuées en poids lourd : " + nouvNombre);
-    }
-
-    /**
-     * Permet de gerer la barre de progression du petit camion
-     * @return
-     */
-    public ProgressBar getProgressPoidsLourd() {
-        return progressPoidsLourd;
-    }
-// progress Avion
-    /**
-     * Met à jour la barre de progression pour le service de livraison en avion
-     *
-     * @param cycle
-     * @param vitesse
-     */
-
-    public void progressBarStartAvionEnCours(int cycle, double vitesse) {
-        ProgressBar progressAvion = getProgressAvion();
-        // Réinitialise la barre de progression à 0
-        progressAvion.setProgress(this.jeu.getJoueur().getLivraisonAvion().getEtatProgressLivraison());
-        timelineAvion = new Timeline(
-                new KeyFrame(Duration.ZERO, new KeyValue(progressAvion.progressProperty(), this.jeu.getJoueur().getLivraisonAvion().getEtatProgressLivraison())),
-                new KeyFrame(Duration.seconds(vitesse), e -> {
-                    System.out.println("Course en avion terminée");
-                    // ajoute une course au service de livraison en avion
-                    this.majProgressAvion();
-                }, new KeyValue(progressAvion.progressProperty(), 1))
-        );
-        timelineAvion.setOnFinished(event -> {
-            if (cycle == 1) {
-                // Lancer la deuxième exécution de la méthode progressBarStartTimeline
-                jeu.getJoueur().getLivraisonAvion().setEtatProgressLivraison(0);
-                System.out.println("fin course avion");
-                // recalcul de la vitesse suivant le niveau de la barre de progression
-                progressBarStartAvion(cycle - 1, this.jeu.getJoueur().getLivraisonAvion().getVitesseLivraion());
-            }
-        });
-        if (cycle == 0) {
-            timelineAvion.setCycleCount(Animation.INDEFINITE);
-        } else {
-            timelineAvion.setCycleCount(cycle);
-        }
-        timelineAvion.play();
-    }
-
-    /**
-     * Barre de progressions service de livraison en petit camion
-     */
-    public void progressBarStartAvion(int cycle, double vitesse) {
-        ProgressBar progressAvion = getProgressAvion();
-        // Réinitialise la barre de progression à 0
-        progressAvion.setProgress(0);
-        timelineAvion = new Timeline(
-                new KeyFrame(Duration.ZERO, new KeyValue(progressAvion.progressProperty(), 0)),
-                new KeyFrame(Duration.seconds(vitesse), e -> {
-                    System.out.println("fin course en avion");
-                    // ajoute d'une course au service de livraion en avion
-                    this.majProgressAvion();
-                }, new KeyValue(progressAvion.progressProperty(), 1))
-        );
-
-        if (cycle == 0) {
-            timelineAvion.setCycleCount(Animation.INDEFINITE);
-        } else {
-            timelineAvion.setCycleCount(cycle);
-        }
-        timelineAvion.play();
-    }
-
-    /**
-     * Met a jour le chiffre du nombre de livraisons effectuées en avion
-     */
-    public void majProgressAvion() {
-        long nbLivraisonsEncours = jeu.getJoueur().getLivraisonAvion().getNbCourses();
-        int nbLivraisonsAvionEnCours = jeu.getJoueur().getLivraisonAvion().getNbVehicules();
-        long nouvNombre = nbLivraisonsEncours + nbLivraisonsAvionEnCours;
-        jeu.getJoueur().getLivraisonAvion().setNbCourses(nouvNombre);
-        System.out.println("maj du nombre de livraisons effectuées en avion : " + nouvNombre);
-    }
-
-    /**
-     * Permet de gerer la barre de progression du petit camion
-     * @return
-     */
-    public ProgressBar getProgressAvion() {
-        return progressAvion;
-    }
     // sauvegardes
 
     /**
@@ -2158,7 +1597,6 @@ public class GestionDistributeursController {
      */
     public void fermetureProgress(){
         // sauvegarde des barres de progression
-        this.jeu.getCalendrier().setProgressJour(this.progressJour.getProgress());
         this.jeu.getJoueur().getFerme().setEtatProgressOeuf(this.progressOeufs.getProgress());
 
         // on recupere l'etat de la barre de progression des distributeurs
@@ -2174,20 +1612,47 @@ public class GestionDistributeursController {
         this.jeu.getJoueur().getLivraisonPoidsLourd().setEtatProgressLivraison(this.progressPoidsLourd.getProgress());
         this.jeu.getJoueur().getLivraisonAvion().setEtatProgressLivraison(this.progressAvion.getProgress());
 
+        // on recupere les barres de progression des livraisons
+        this.jeu.getJoueur().getLivraisonScooter().setEtatProgressLivraison(this.progressScooter.getProgress());
+        this.jeu.getJoueur().getLivraisonCamionette().setEtatProgressLivraison(this.progressCamionette.getProgress());
+        this.jeu.getJoueur().getLivraisonPetitCamion().setEtatProgressLivraison(this.progressPetitCamion.getProgress());
+        this.jeu.getJoueur().getLivraisonPoidsLourd().setEtatProgressLivraison(this.progressPoidsLourd.getProgress());
+        this.jeu.getJoueur().getLivraisonAvion().setEtatProgressLivraison(this.progressAvion.getProgress());
+
+        // on stoppe les barres de progression
+        jeu.getJoueur().getFerme().progressBarStop();
+        jeu.getCalendrier().progressBarStop();
+
+        jeu.getJoueur().getLivraisonScooter().progressBarStop();
+        jeu.getJoueur().getLivraisonCamionette().progressBarStop();
+        jeu.getJoueur().getLivraisonPetitCamion().progressBarStop();
+        jeu.getJoueur().getLivraisonPoidsLourd().progressBarStop();
+        jeu.getJoueur().getLivraisonAvion().progressBarStop();
+
         // on stoppe les barres de progression;
-        this.progressBarStop(timelineHeure);
-        this.progressBarStop(timelineCalendrier);
         this.progressBarStop(timelineBC);
         this.progressBarStop(timelineBF);
         this.progressBarStop(timelineCo);
         this.progressBarStop(timelineSa);
-        this.progressBarStop(timelineScooter);
-        this.progressBarStop(timelineCamionette);
-        this.progressBarStop(timelinePetitCamion);
-        this.progressBarStop(timelinePoidsLourd);
-        this.progressBarStop(timelineAvion);
+
+//        jeu.getJoueur().getBoissonsChaudes().progressBarStop();
+//        jeu.getJoueur().getBoissonsFraiches().progressBarStop();
+//        jeu.getJoueur().getConfiseries().progressBarStop();
+//        jeu.getJoueur().getSandwichs().progressBarStop();
 
         // on enregistre l'heure de switch de fenetre
         this.jeu.getJoueur().getFerme().setDateDeco(LocalDateTime.now());
+    }
+    /**
+     * Sauvegarde de la base de donnees
+     */
+    public void sauveBdd(){
+        System.out.println("fermeture fenetre : Sauvegarde");
+        try {
+            this.jeu.sauvegardejeu();
+            this.jeu.sauvegardeCredit();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 }

@@ -52,7 +52,6 @@
              <Pane fx:id="paneProgress" layoutX="185.0" layoutY="820.0" prefHeight="20.0" prefWidth="900.0" visible="true">
                  <children>
                      <ProgressBar fx:id="progressOeufs" cache="true" layoutX="0.0" layoutY="0.0" prefHeight="15.0" prefWidth="180.0" progress="0.0" />
-                     <ProgressBar fx:id="progressJour" layoutY="25.0" prefHeight="20.0" prefWidth="900.0" progress="0.0" />
                      <ProgressBar fx:id="progressBC" cache="true" layoutX="0.0" layoutY="50.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
                      <ProgressBar fx:id="progressBF" cache="true" layoutX="105.0" layoutY="50.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
                      <ProgressBar fx:id="progressCo" cache="true" layoutX="210.0" layoutY="50.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />

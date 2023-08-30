@@ -88,11 +88,6 @@
             <Button fx:id="btnBanque1" alignment="CENTER" disable="false" layoutX="18.0" layoutY="169.0" mnemonicParsing="false" onAction="#switchToBanque" text="Banque" />
          </children>
       </Pane>
-      <Pane fx:id="paneParentProgressJour" layoutX="140.0" layoutY="815.0" prefHeight="20.0" prefWidth="900.0">
-         <children>
-            <ProgressBar fx:id="progressJour" prefHeight="20.0" prefWidth="900.0" progress="0.0" />
-         </children>
-      </Pane>
         <Pane fx:id="paneProgress" layoutX="140.0" layoutY="840.0" prefHeight="60.0" prefWidth="900.0">
             <children>
              <ProgressBar id="progressOeufs" fx:id="progressOeufs" cache="true" layoutY="-45.0" prefHeight="20.0" prefWidth="120.0" progress="0.0" visible="true" />

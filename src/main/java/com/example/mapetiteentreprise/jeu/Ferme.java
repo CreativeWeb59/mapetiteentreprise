@@ -81,43 +81,6 @@ public class Ferme {
         System.out.println("valeur nouvelle barre : " + resultat);
     }
 
-
-    /**
-     * TimeLine des heures
-     * grosse difference avec celle des jours : on affiche pas la barre de progression : se passe en coulisses
-     * recupere l'etat de la barre de progressOeuf pour l'avancer jusqu'au bout
-     * et commencer une autre timelineHeures classique
-     *
-     * @param cycle
-     * @param vitesse
-     */
-//    public void progressBarStartTimelineHeureEnCours(int cycle, double vitesse) {
-//        ProgressBar progressOeufs = getProgressOeufs();
-//        // Réinitialise la barre de progression à 0
-//        progressOeufs.setProgress(this.jeu.getJoueur().getFerme().getEtatProgressOeuf());
-//        timelineHeure = new Timeline(
-//                new KeyFrame(Duration.ZERO, new KeyValue(progressOeufs.progressProperty(), this.jeu.getJoueur().getFerme().getEtatProgressOeuf())),
-//                new KeyFrame(Duration.seconds(vitesse), e -> {
-//                    this.jeu.getCalendrier().setIncrementHeure();
-//                    System.out.println("Heure actuelle : " + jeu.getCalendrier().getHeureActuelle());
-//                    // ajoute le nombre de poules necesaires
-//                    majFerme();
-//                    System.out.println("Oeuf terminé");
-//                }, new KeyValue(progressOeufs.progressProperty(), 1))
-//        );
-//        timelineHeure.setOnFinished(event -> {
-//            // recalcul de la vitesse suivant le niveau de la barre de progression
-//            progressBarStartTimelineHeure(cycle - 1, jeu.getParametres().getVitessePonteOeuf());
-//        });
-//
-//        if (cycle == 0) {
-//            timelineHeure.setCycleCount(Animation.INDEFINITE);
-//        } else {
-//            timelineHeure.setCycleCount(cycle);
-//        }
-//        timelineHeure.play();
-//    }
-
     /**
      * Barre de progression pour compter les oeufs
      * Ajoute un nombre d'oeufs équivalent au nombre de poules à chaque fin de cycle
@@ -168,11 +131,11 @@ public class Ferme {
         System.out.println("ajout de " + nbOeufsAAjouter + " oeuf(s)");
     }
     /**
-     * Permet de stopper la timeline passée en paramètres
+     * Permet de stopper la timelin
      */
     public void progressBarStop() {
         if (this.timelineOeufs != null) {
-            System.out.println("Arret de la barre de progression " + this.timelineOeufs);
+            System.out.println("Arret de la barre de progression timelineOeufs");
             this.timelineOeufs.stop();
             this.timelineOeufs = null;
         }

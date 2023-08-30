@@ -33,7 +33,7 @@ public class Calendrier {
     private double progressJour;
     private PieChart pieHorloge;
     private final int nbHeures = 10;
-    private Timeline timelineHeure;
+    private Timeline timelineHeure, timelineJour;
 
 
     public Calendrier(LocalDateTime dateDebutJeu, long numJour, int heureActuelle, double progressJour) {
@@ -313,6 +313,7 @@ public class Calendrier {
     public void setIncrementHeure() {
         if (this.getHeureActuelle() >= this.nbHeures) {
             this.setHeureActuelle(0);
+            this.setJourSuivant();
         }
         this.setHeureActuelle(this.getHeureActuelle() + 1);
     }
@@ -398,15 +399,13 @@ public class Calendrier {
     }
 
     /**
-     * Permet de stopper la timeline passée en paramètres
-     *
-     * @param
+     * Permet de stopper la timeline Heure
      */
     public void progressBarStop() {
         if (timelineHeure != null) {
-            System.out.println("Arret de la barre de progression " + this.timelineHeure);
             timelineHeure.stop();
             timelineHeure = null;
+            System.out.println("Arret de la barre de progression timelineHeure");
         }
     }
 }

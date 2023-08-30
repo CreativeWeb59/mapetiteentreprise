@@ -60,4 +60,12 @@ public abstract class Livraisons {
                 ", etatProgressLivraison=" + etatProgressLivraison +
                 '}';
     }
+    /**
+     * Met a jour le chiffre du nombre de livraisons effectuées
+     */
+    public void majLivraison() {
+        long nouvNombre = this.getNbCourses() + this.getNbVehicules();
+        this.setNbCourses(nouvNombre);
+        System.out.println("maj du nombre de livraisons effectuées : " + nouvNombre);
+    }
 }

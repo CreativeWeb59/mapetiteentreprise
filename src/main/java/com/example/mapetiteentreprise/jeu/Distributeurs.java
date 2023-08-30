@@ -1,5 +1,12 @@
 package com.example.mapetiteentreprise.jeu;
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.scene.control.ProgressBar;
+import javafx.util.Duration;
+
 import java.time.LocalDateTime;
 
 public abstract class Distributeurs {
@@ -67,5 +74,14 @@ public abstract class Distributeurs {
 
     public int getNbMaxiDistributeur() {
         return nbMaxiDistributeur;
+    }
+
+    /**
+     * Met a jour le chiffre du nombre de marchandises vendues par le distributeur
+     */
+    public void majDistributeur() {
+        long nouvNombre = this.getNbMarchandises() + this.getNbDistributeurs();
+        this.setNbMarchandises(nouvNombre);
+        System.out.println("maj du nombre de marchandises vendues dans les distributeurs : " + nouvNombre);
     }
 }
