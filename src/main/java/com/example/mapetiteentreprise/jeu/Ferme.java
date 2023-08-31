@@ -71,17 +71,6 @@ public class Ferme {
     }
 
     /**
-     * ajuste la barre de progress oeuf en fonction de la barre de progress jour et de l'heure actuelle
-     *
-     * @param progressJour
-     * @param heureActuelle
-     */
-    public void ajustementProgressOeuf(double progressJour, int heureActuelle) {
-        double resultat = (progressJour * 10) - heureActuelle;
-        System.out.println("valeur nouvelle barre : " + resultat);
-    }
-
-    /**
      * Barre de progression pour compter les oeufs
      * Ajoute un nombre d'oeufs équivalent au nombre de poules à chaque fin de cycle
      *

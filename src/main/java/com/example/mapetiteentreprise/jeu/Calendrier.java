@@ -319,7 +319,7 @@ public class Calendrier {
     }
 
     /**
-     * Barre de progression pour ajouter les heures et ensuite afficher le calendrier
+     * Timeline pour ajouter les heures et ensuite afficher le calendrier
      * ici pas de barre de progression : l'heure est basée sur la production de la ferme
      *
      * @param cycle                   : 0 pour cycle infini
@@ -328,17 +328,23 @@ public class Calendrier {
      * @param paneSemaine2            : pane de la semaine 2 pour l'afficher
      * @param prochaineDateMensualite : permet d'afficher la date de venue du banquier pour le paiement de la mensualité du crédit
      */
-    public void progressHeureCalendrier(int cycle, double vitesse, Pane paneSemaine1, Pane paneSemaine2, int prochaineDateMensualite) {
+    public void progressHeureCalendrier(int cycle, double vitesse, double vitesseAjustement,  Pane paneSemaine1, Pane paneSemaine2, long prochaineDateMensualite) {
         timelineHeure = new Timeline(
-                new KeyFrame(Duration.seconds(vitesse), e -> {
-                    System.out.println("jour terminé");
+                new KeyFrame(Duration.seconds(vitesseAjustement), e -> {
+                    System.out.println("heure terminée");
                     // incremente un jour et remet l'heure à 1
-                    this.setJourSuivant();
+                    this.setIncrementHeure();
                     // mise à jour du calendrier
                     this.afficheCalendrier(paneSemaine1, paneSemaine2, prochaineDateMensualite); // uniquement sur la page gestionController
                 })
         );
-
+        timelineHeure.setOnFinished(event -> {
+            if (cycle == 1) {
+                // recalcul de la vitesse suivant le niveau de la barre de progression
+                System.out.println("suite");
+                progressHeureCalendrier(cycle - 1, vitesse, vitesse, paneSemaine1, paneSemaine2, prochaineDateMensualite);
+            }
+        });
         if (cycle == 0) {
             timelineHeure.setCycleCount(Animation.INDEFINITE);
         } else {
@@ -385,7 +391,7 @@ public class Calendrier {
      * @param paneSemaine2            : affiche la semaine 2
      * @param prochaineDateMensualite si date prochaine mensualite superieure au jour en cours, affiche le banquier
      */
-    public void afficheCalendrier(Pane paneSemaine1, Pane paneSemaine2, int prochaineDateMensualite) {
+    public void afficheCalendrier(Pane paneSemaine1, Pane paneSemaine2, long prochaineDateMensualite) {
         // met en place la semaine en cours
         this.setSemainesEnCours();
         if (prochaineDateMensualite >= this.getNumJour()) {
@@ -408,4 +414,5 @@ public class Calendrier {
             System.out.println("Arret de la barre de progression timelineHeure");
         }
     }
+
 }

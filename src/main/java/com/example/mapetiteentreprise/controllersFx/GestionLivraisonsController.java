@@ -52,8 +52,7 @@ public class GestionLivraisonsController {
     @FXML
     private ProgressBar progressOeufs, progressBC, progressBF, progressSa, progressCo,
             progressScooter, progressCamionette, progressPetitCamion, progressPoidsLourd, progressAvion;
-    private Timeline timelineOeufs, timelineJour, timelineBC, timelineBF, timelineSa, timelineCo,
-            timelineScooter, timelineCamionette, timelinePetitCamion, timelinePoidsLourd, timelineAvion;
+    private Timeline timelineScooter, timelineCamionette, timelinePetitCamion, timelinePoidsLourd, timelineAvion;
     private ConnectionBdd connectionBdd = new ConnectionBdd();
     private BigDecimal gainEnAttenteScooter = new BigDecimal(0);
     private BigDecimal gainEnAttenteCamionette = new BigDecimal(0);

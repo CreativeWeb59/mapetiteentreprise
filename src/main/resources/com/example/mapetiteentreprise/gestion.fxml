@@ -5,107 +5,136 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="1024.0" prefWidth="1280.0" styleClass="fondsTableau" stylesheets="@css/main.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.mapetiteentreprise.controllersFx.GestionController">
+<AnchorPane prefHeight="1024.0" prefWidth="1280.0" styleClass="fondsTableau" stylesheets="@css/main.css"
+            xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.mapetiteentreprise.controllersFx.GestionController">
     <children>
         <Pane layoutX="240.0" layoutY="100.0" prefHeight="100.0" prefWidth="800.0">
             <children>
-                <Label id="titre2" fx:id="pseudoLabel" layoutX="3.0" layoutY="30.0" prefHeight="62.0" prefWidth="791.0" style="-fx-background-color: transparent;" text="Hello" />
+                <Label id="titre2" fx:id="pseudoLabel" layoutX="3.0" layoutY="30.0" prefHeight="62.0" prefWidth="791.0"
+                       style="-fx-background-color: transparent;" text="Hello"/>
             </children>
         </Pane>
         <Pane layoutX="140.0" layoutY="200.0" prefHeight="340.0" prefWidth="1000.0">
             <children>
                 <Pane prefHeight="300.0" prefWidth="200.0">
                     <children>
-                        <ImageView fitHeight="130.0" fitWidth="90.0" layoutX="55.0" layoutY="110.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="130.0" fitWidth="90.0" layoutX="55.0" layoutY="110.0" pickOnBounds="true"
+                                   preserveRatio="true">
                             <image>
-                                <Image url="@images/pouleOeuf.png" />
+                                <Image url="@images/pouleOeuf.png"/>
                             </image>
                         </ImageView>
-                        <Button fx:id="btnFerme" disable="true" layoutX="20.0" layoutY="250.0" mnemonicParsing="false" onAction="#switchToFerme" text="Gérer la ferme" visible="false" />
-                        <Button fx:id="btnAchatFerme" layoutX="9.0" layoutY="250.0" mnemonicParsing="false" onAction="#switchToAchatFerme" text="Acheter la Ferme" />
+                        <Button fx:id="btnFerme" disable="true" layoutX="20.0" layoutY="250.0" mnemonicParsing="false"
+                                onAction="#switchToFerme" text="Gérer la ferme" visible="false"/>
+                        <Button fx:id="btnAchatFerme" layoutX="9.0" layoutY="250.0" mnemonicParsing="false"
+                                onAction="#switchToAchatFerme" text="Acheter la Ferme"/>
                     </children>
                 </Pane>
                 <Pane layoutX="200.0" prefHeight="300.0" prefWidth="200.0">
                     <children>
-                        <ImageView fitHeight="130.0" fitWidth="90.0" layoutX="62.0" layoutY="96.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="130.0" fitWidth="90.0" layoutX="62.0" layoutY="96.0" pickOnBounds="true"
+                                   preserveRatio="true">
                             <image>
-                                <Image url="@images/distributeur.png" />
+                                <Image url="@images/distributeur.png"/>
                             </image>
                         </ImageView>
-                        <Button fx:id="btnDistributeurs" disable="true" layoutX="24.0" layoutY="250.0" mnemonicParsing="false" onAction="#switchToDistributeurs" text="Distributeurs" />
+                        <Button fx:id="btnDistributeurs" disable="true" layoutX="24.0" layoutY="250.0"
+                                mnemonicParsing="false" onAction="#switchToDistributeurs" text="Distributeurs"/>
                     </children>
                 </Pane>
                 <Pane layoutX="400.0" prefHeight="300.0" prefWidth="200.0">
                     <children>
-                        <ImageView fitHeight="100.0" fitWidth="110.0" layoutX="49.0" layoutY="100.0" pickOnBounds="true">
+                        <ImageView fitHeight="100.0" fitWidth="110.0" layoutX="49.0" layoutY="100.0"
+                                   pickOnBounds="true">
                             <image>
-                                <Image url="@images/livreur.png" />
+                                <Image url="@images/livreur.png"/>
                             </image>
                         </ImageView>
-                        <Button fx:id="btnLivraison" disable="true" layoutX="40.0" layoutY="250.0" mnemonicParsing="false" onAction="#switchToLivraisons" text="Livraisons" />
+                        <Button fx:id="btnLivraison" disable="true" layoutX="40.0" layoutY="250.0"
+                                mnemonicParsing="false" onAction="#switchToLivraisons" text="Livraisons"/>
                     </children>
                 </Pane>
                 <Pane layoutX="600.0" prefHeight="300.0" prefWidth="200.0">
                     <children>
-                        <ImageView fitHeight="113.0" fitWidth="183.0" layoutX="9.0" layoutY="97.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="113.0" fitWidth="183.0" layoutX="9.0" layoutY="97.0" pickOnBounds="true"
+                                   preserveRatio="true">
                             <image>
-                                <Image url="@images/usine.png" />
+                                <Image url="@images/usine.png"/>
                             </image>
                         </ImageView>
-                        <Button fx:id="btnLavage" layoutX="38.0" layoutY="250.0" mnemonicParsing="false" onAction="#switchToUsines" text="Usines" />
+                        <Button fx:id="btnLavage" layoutX="38.0" layoutY="250.0" mnemonicParsing="false"
+                                onAction="#switchToUsines" text="Usines"/>
                     </children>
                 </Pane>
                 <Pane layoutX="800.0" prefHeight="300.0" prefWidth="200.0">
                     <children>
-                        <Button fx:id="btnBanque" alignment="CENTER" disable="false" layoutX="50.0" layoutY="250.0" mnemonicParsing="false" onAction="#switchToBanque" text="Autre" />
+                        <Button fx:id="btnBanque" alignment="CENTER" disable="false" layoutX="50.0" layoutY="250.0"
+                                mnemonicParsing="false" onAction="#switchToBanque" text="Autre"/>
                     </children>
                 </Pane>
-                <Label fx:id="labelBlocageDistributeur" alignment="CENTER" contentDisplay="CENTER" layoutX="230.0" layoutY="310.0" style="-fx-background-color: transparent;" styleClass="label2" text="Débloqué à partir de 1.500 €" textFill="WHITE" wrapText="true">
+                <Label fx:id="labelBlocageDistributeur" alignment="CENTER" contentDisplay="CENTER" layoutX="230.0"
+                       layoutY="310.0" style="-fx-background-color: transparent;" styleClass="label2"
+                       text="Débloqué à partir de 1.500 €" textFill="WHITE" wrapText="true">
                     <font>
-                        <Font size="3.0" />
+                        <Font size="3.0"/>
                     </font>
                 </Label>
-                <Label fx:id="labelBlocageLivraison" alignment="CENTER" contentDisplay="CENTER" layoutX="430.0" layoutY="310.0" style="-fx-background-color: transparent;" styleClass="label2" text="Débloqué à partir de 1.500 €" textFill="WHITE" wrapText="true">
+                <Label fx:id="labelBlocageLivraison" alignment="CENTER" contentDisplay="CENTER" layoutX="430.0"
+                       layoutY="310.0" style="-fx-background-color: transparent;" styleClass="label2"
+                       text="Débloqué à partir de 1.500 €" textFill="WHITE" wrapText="true">
                     <font>
-                        <Font size="3.0" />
+                        <Font size="3.0"/>
                     </font>
                 </Label>
             </children>
         </Pane>
-      <Pane fx:id="paneSemaine1" layoutX="140.0" layoutY="562.0" prefHeight="120.0" prefWidth="910.0">
+        <Pane fx:id="paneSemaine1" layoutX="140.0" layoutY="562.0" prefHeight="120.0" prefWidth="910.0">
 
-      </Pane>
-      <Pane fx:id="paneSemaine2" layoutX="140.0" layoutY="690.0" prefHeight="120.0" prefWidth="910.0">
+        </Pane>
+        <Pane fx:id="paneSemaine2" layoutX="140.0" layoutY="690.0" prefHeight="120.0" prefWidth="910.0">
 
-      </Pane>
-      <Pane layoutX="1060.0" layoutY="560.0" prefHeight="232.0" prefWidth="140.0">
-         <children>
-            <ImageView fitHeight="130.0" fitWidth="76.0" layoutX="32.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@images/banquier.png" />
-               </image>
-            </ImageView>
-            <Button fx:id="btnBanque1" alignment="CENTER" disable="false" layoutX="18.0" layoutY="169.0" mnemonicParsing="false" onAction="#switchToBanque" text="Banque" />
-         </children>
-      </Pane>
+        </Pane>
+        <Pane layoutX="1060.0" layoutY="560.0" prefHeight="232.0" prefWidth="140.0">
+            <children>
+                <ImageView fitHeight="130.0" fitWidth="76.0" layoutX="32.0" layoutY="28.0" pickOnBounds="true"
+                           preserveRatio="true">
+                    <image>
+                        <Image url="@images/banquier.png"/>
+                    </image>
+                </ImageView>
+                <Button fx:id="btnBanque1" alignment="CENTER" disable="false" layoutX="18.0" layoutY="169.0"
+                        mnemonicParsing="false" onAction="#switchToBanque" text="Banque"/>
+            </children>
+        </Pane>
         <Pane fx:id="paneProgress" layoutX="140.0" layoutY="840.0" prefHeight="60.0" prefWidth="900.0">
             <children>
-             <ProgressBar id="progressOeufs" fx:id="progressOeufs" cache="true" layoutY="-45.0" prefHeight="20.0" prefWidth="120.0" progress="0.0" visible="true" />
-                <ProgressBar id="progressBC" fx:id="progressBC" cache="true" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
-                <ProgressBar id="progressBF" fx:id="progressBF" cache="true" layoutX="105.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
-                <ProgressBar id="progressCo" fx:id="progressCo" cache="true" layoutX="210.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
-                <ProgressBar id="progressSa" fx:id="progressSa" cache="true" layoutX="315.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
-                <ProgressBar fx:id="progressScooter" cache="true" layoutX="440.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
-                <ProgressBar fx:id="progressCamionette" cache="true" layoutX="545.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
-                <ProgressBar fx:id="progressPetitCamion" cache="true" layoutX="650.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
-                <ProgressBar fx:id="progressPoidsLourd" cache="true" layoutX="755.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
-                <ProgressBar fx:id="progressAvion" cache="true" layoutX="860.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
+                <ProgressBar id="progressOeufs" fx:id="progressOeufs" cache="true" layoutY="-25.0" prefHeight="20.0"
+                             prefWidth="120.0" progress="0.0" visible="true"/>
+                <ProgressBar id="progressBC" fx:id="progressBC" cache="true" prefHeight="15.0" prefWidth="100.0"
+                             progress="0.0"/>
+                <ProgressBar id="progressBF" fx:id="progressBF" cache="true" layoutX="105.0" prefHeight="15.0"
+                             prefWidth="100.0" progress="0.0"/>
+                <ProgressBar id="progressCo" fx:id="progressCo" cache="true" layoutX="210.0" prefHeight="15.0"
+                             prefWidth="100.0" progress="0.0"/>
+                <ProgressBar id="progressSa" fx:id="progressSa" cache="true" layoutX="315.0" prefHeight="15.0"
+                             prefWidth="100.0" progress="0.0"/>
+                <ProgressBar fx:id="progressScooter" cache="true" layoutX="440.0" prefHeight="15.0" prefWidth="100.0"
+                             progress="0.0"/>
+                <ProgressBar fx:id="progressCamionette" cache="true" layoutX="545.0" prefHeight="15.0" prefWidth="100.0"
+                             progress="0.0"/>
+                <ProgressBar fx:id="progressPetitCamion" cache="true" layoutX="650.0" prefHeight="15.0"
+                             prefWidth="100.0" progress="0.0"/>
+                <ProgressBar fx:id="progressPoidsLourd" cache="true" layoutX="755.0" prefHeight="15.0" prefWidth="100.0"
+                             progress="0.0"/>
+                <ProgressBar fx:id="progressAvion" cache="true" layoutX="860.0" prefHeight="15.0" prefWidth="100.0"
+                             progress="0.0"/>
             </children>
         </Pane>
         <Pane layoutX="240.0" layoutY="880.0" prefHeight="40.0" prefWidth="800.0">
             <children>
-                <Button layoutX="150.0" mnemonicParsing="false" onAction="#exitJeu" text="Enregistrer et Quitter" />
-                <Button layoutX="430.0" mnemonicParsing="false" onAction="#retourMenu" text="Menu principal" />
+                <Button layoutX="150.0" mnemonicParsing="false" onAction="#exitJeu" text="Enregistrer et Quitter"/>
+                <Button layoutX="430.0" mnemonicParsing="false" onAction="#retourMenu" text="Menu principal"/>
             </children>
         </Pane>
     </children>

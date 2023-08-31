@@ -13,16 +13,46 @@
             </children>
         </Pane>
 
-        <Pane layoutX="0.0" layoutY="340.0" prefHeight="340.0" prefWidth="1280.0">
+        <Pane layoutX="140.0" layoutY="340.0" prefHeight="340.0" prefWidth="1000.0">
             <children>
             <Pane fx:id="paneTextile" prefHeight="340.0" prefWidth="250.0">
                <children>
-                  <ImageView fitHeight="220.0" fitWidth="220.0" layoutX="16.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="138.0" fitWidth="138.0" layoutX="56.0" layoutY="95.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@images/textile.png" />
                      </image>
                   </ImageView>
                       <Button layoutX="42.0" layoutY="272.0" mnemonicParsing="false" onAction="#switchTextile" prefHeight="47.0" prefWidth="167.0" text="Textile" />
+               </children>
+            </Pane>
+                <Pane fx:id="paneJouets" layoutX="250.0" prefHeight="340.0" prefWidth="250.0">
+                    <children>
+                  <ImageView fitHeight="117.0" fitWidth="167.0" layoutX="43.0" layoutY="102.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/jouets.png" />
+                     </image>
+                  </ImageView>
+                        <Button layoutX="42.0" layoutY="272.0" mnemonicParsing="false" onAction="#switchJouets" prefHeight="47.0" prefWidth="167.0" text="Jouets" />
+                    </children>
+                </Pane>
+            <Pane fx:id="paneJouets1" layoutX="500.0" prefHeight="340.0" prefWidth="250.0">
+               <children>
+                  <ImageView fitHeight="100.0" fitWidth="199.0" layoutX="26.0" layoutY="120.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/aggro.png" />
+                     </image>
+                  </ImageView>
+                  <Button layoutX="37.0" layoutY="272.0" mnemonicParsing="false" onAction="#switchAgroAlimentaire" prefHeight="47.0" prefWidth="199.0" text="AggroAlimentaire" />
+               </children>
+            </Pane>
+            <Pane fx:id="paneJouets11" layoutX="750.0" prefHeight="340.0" prefWidth="250.0">
+               <children>
+                  <ImageView fitHeight="100.0" fitWidth="199.0" layoutX="77.0" layoutY="120.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/medicaments.png" />
+                     </image>
+                  </ImageView>
+                  <Button layoutX="37.0" layoutY="272.0" mnemonicParsing="false" onAction="#switchPharmaceutique" prefHeight="47.0" prefWidth="199.0" text="Pharmaceutique" />
                </children>
             </Pane>
             </children>

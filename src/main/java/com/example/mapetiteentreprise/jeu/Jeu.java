@@ -34,11 +34,8 @@
 package com.example.mapetiteentreprise.jeu;
 
 import com.example.mapetiteentreprise.bdd.*;
-import javafx.animation.Timeline;
 import javafx.application.Platform;
-import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.Pane;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;

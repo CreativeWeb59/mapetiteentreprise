@@ -7,9 +7,6 @@ import com.example.mapetiteentreprise.bdd.Credits;
 import com.example.mapetiteentreprise.bdd.CreditsService;
 import com.example.mapetiteentreprise.jeu.CreditEnCours;
 import com.example.mapetiteentreprise.jeu.Jeu;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -44,8 +41,6 @@ public class Banquecontroller {
     @FXML
     private ProgressBar progressOeufs, progressBC, progressBF, progressSa, progressCo,
             progressScooter, progressCamionette, progressPetitCamion, progressPoidsLourd, progressAvion;
-    private Timeline timelineOeufs, timelineJour, timelineBC, timelineBF, timelineSa, timelineCo,
-            timelineScooter, timelineCamionette, timelinePetitCamion, timelinePoidsLourd, timelineAvion;
     private Stage stage;
     private Scene scene;
     private Parent root;

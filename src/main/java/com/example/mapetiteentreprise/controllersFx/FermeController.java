@@ -1,5 +1,4 @@
 package com.example.mapetiteentreprise.controllersFx;
-
 import com.example.mapetiteentreprise.Main;
 import com.example.mapetiteentreprise.jeu.CreditEnCours;
 import com.example.mapetiteentreprise.jeu.Jeu;
@@ -27,7 +26,6 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
-
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.List;
@@ -47,7 +45,7 @@ public class FermeController {
     @FXML
     private Pane paneFerme, paneProgress;
     @FXML
-    private ProgressBar progressOeufs, progressJour, progressBC, progressBF, progressSa, progressCo,
+    private ProgressBar progressOeufs, progressBC, progressBF, progressSa, progressCo,
             progressScooter, progressCamionette, progressPetitCamion, progressPoidsLourd, progressAvion;
     private Timeline timelineOeufs;
     @FXML
@@ -437,9 +435,6 @@ public class FermeController {
      *
      * @return
      */
-    public ProgressBar getProgressJour() {
-        return progressJour;
-    }
 
     /**
      * declare le bouton afin de pouvoir l'utiliser

@@ -1,9 +1,7 @@
 package com.example.mapetiteentreprise.controllersFx;
 
 import com.example.mapetiteentreprise.Main;
-import com.example.mapetiteentreprise.actions.Outils;
 import com.example.mapetiteentreprise.jeu.Jeu;
-import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,7 +12,7 @@ import javafx.scene.control.ProgressBar;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
-public class GestionUsinesController {
+public class UsinesAgroAlimentaireController {
     @FXML
     private ProgressBar progressOeufs, progressBC, progressBF, progressSa, progressCo,
             progressScooter, progressCamionette, progressPetitCamion, progressPoidsLourd, progressAvion;
@@ -22,26 +20,28 @@ public class GestionUsinesController {
     private Scene scene;
     private Parent root;
     private Jeu jeu;
-
-    public void demarrer(Jeu jeu) {
+    public void demarrer(Jeu jeu){
         // Recuperation du jeu
         this.jeu = jeu;
         demarrageProgress();
     }
-
-    public void retourGestion(ActionEvent event) {
+    /**
+     * Retour au menu gestion des usines
+     * @param event
+     */
+    public void retourGestionUsines(ActionEvent event) {
         // fermeture des barres, enregistrement + stop et sauvegarde date deco
         fermetureProgress();
         // sauvegarde bdd
         sauveBdd();
 
         try {
-            FXMLLoader loader = new FXMLLoader(Main.class.getResource("gestion.fxml"));
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("gestionUsines.fxml"));
             root = loader.load();
-            GestionController gestionController = loader.getController();
+            GestionUsinesController gestionUsinesController = loader.getController();
             // on renvoi les infos a la fenetre suivante (tout est dans l'instance jeu)
 
-            gestionController.debutJeu(jeu);
+            gestionUsinesController.demarrer(jeu);
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -64,109 +64,6 @@ public class GestionUsinesController {
         // sauvegarde bdd
         sauveBdd();
     }
-
-    /**
-     * Bouton qui ouvre les usines de textile
-     */
-    public void switchTextile(ActionEvent event) {
-        // fermeture des barres, enregistrement + stop et sauvegarde date deco
-        fermetureProgress();
-        // sauvegarde bdd
-        sauveBdd();
-        try {
-            FXMLLoader loader = new FXMLLoader(Main.class.getResource("usinesTextile.fxml"));
-            root = loader.load();
-            UsinesTextileController usinesTextileController = loader.getController();
-            // on renvoi les infos a la fenetre suivante (tout est dans l'instance jeu)
-
-            usinesTextileController.demarrer(jeu);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-        stage.centerOnScreen();
-    }
-
-    /**
-     * Bouton qui ouvre les usines de jouet
-     */
-    public void switchJouets(ActionEvent event) {
-        // fermeture des barres, enregistrement + stop et sauvegarde date deco
-        fermetureProgress();
-        // sauvegarde bdd
-        sauveBdd();
-        try {
-            FXMLLoader loader = new FXMLLoader(Main.class.getResource("usinesJouet.fxml"));
-            root = loader.load();
-            UsinesJouetController usinesJouetController = loader.getController();
-            // on renvoi les infos a la fenetre suivante (tout est dans l'instance jeu)
-
-            usinesJouetController.demarrer(jeu);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-        stage.centerOnScreen();
-    }
-
-    /**
-     * Bouton qui ouvre les usines d'agroAlimentaire
-     */
-    public void switchAgroAlimentaire(ActionEvent event) {
-        // fermeture des barres, enregistrement + stop et sauvegarde date deco
-        fermetureProgress();
-        // sauvegarde bdd
-        sauveBdd();
-        try {
-            FXMLLoader loader = new FXMLLoader(Main.class.getResource("usinesAgroAlimentaire.fxml"));
-            root = loader.load();
-            UsinesAgroAlimentaireController usinesAgroAlimentaireController = loader.getController();
-            // on renvoi les infos a la fenetre suivante (tout est dans l'instance jeu)
-
-            usinesAgroAlimentaireController.demarrer(jeu);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-        stage.centerOnScreen();
-    }
-    /**
-     * Bouton qui ouvre les usines pharmaceutiques
-     */
-    public void switchPharmaceutique(ActionEvent event) {
-        // fermeture des barres, enregistrement + stop et sauvegarde date deco
-        fermetureProgress();
-        // sauvegarde bdd
-        sauveBdd();
-        try {
-            FXMLLoader loader = new FXMLLoader(Main.class.getResource("usinesPharmaceutique.fxml"));
-            root = loader.load();
-            UsinesPharmaceutiqueController usinesPharmaceutiqueController = loader.getController();
-            // on renvoi les infos a la fenetre suivante (tout est dans l'instance jeu)
-
-            usinesPharmaceutiqueController.demarrer(jeu);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-        stage.centerOnScreen();
-    }
     /**
      * Demarrage des barres de progression, dans l'ordre
      * la ferme avec les oeufs => incrémente les oeufs
@@ -174,7 +71,7 @@ public class GestionUsinesController {
      * demarrage des distributeurs
      * demarrage des livraisons
      */
-    public void demarrageProgress() {
+    public void demarrageProgress(){
         // recuperation de l'etat des barres de progression
         double vitesseOeuf = jeu.getParametres().getVitessePonteOeuf() - (jeu.getParametres().getVitessePonteOeuf() * jeu.getJoueur().getFerme().getEtatProgressOeuf());
 
@@ -188,7 +85,7 @@ public class GestionUsinesController {
         demarrageLivraisons();
     }
 
-    public void fermetureProgress() {
+    public void fermetureProgress(){
         // sauvegarde des barres de progression
         this.jeu.getJoueur().getFerme().setEtatProgressOeuf(this.progressOeufs.getProgress());
 
@@ -223,7 +120,7 @@ public class GestionUsinesController {
     /**
      * Sauvegarde de la base de donnees
      */
-    public void sauveBdd() {
+    public void sauveBdd(){
         System.out.println("fermeture fenetre : Sauvegarde");
         try {
             this.jeu.sauvegardejeu();
@@ -232,7 +129,6 @@ public class GestionUsinesController {
             System.out.println(e);
         }
     }
-
     /**
      * Permet d'ajuster les distributeurs et les demarrer s'ils sont actifs
      */
@@ -267,31 +163,31 @@ public class GestionUsinesController {
      * Demarrage des barres de progression des livraisons
      */
     public void demarrageLivraisons() {
-        if (jeu.getJoueur().getLivraison1Active() == 1) {
+        if(jeu.getJoueur().getLivraison1Active() == 1){
             // recuperation de l'etat de la barre de progression pour la livraison en scooter
             double vitesseScooter = jeu.getJoueur().getLivraisonScooter().getVitesseLivraion() - (jeu.getJoueur().getLivraisonScooter().getVitesseLivraion() * jeu.getJoueur().getLivraisonScooter().getEtatProgressLivraison());
             System.out.println("Vitesse scooter : " + vitesseScooter);
             this.jeu.getJoueur().getLivraisonScooter().progressBarStartScooter(1, jeu.getJoueur().getLivraisonScooter().getVitesseLivraion(), vitesseScooter, progressScooter);
         }
-        if (jeu.getJoueur().getLivraison2Active() == 1) {
+        if(jeu.getJoueur().getLivraison2Active() == 1){
             // recuperation de l'etat de la barre de progression pour la livraison en camionette
             double vitesseCamionette = jeu.getJoueur().getLivraisonCamionette().getVitesseLivraion() - (jeu.getJoueur().getLivraisonCamionette().getVitesseLivraion() * jeu.getJoueur().getLivraisonCamionette().getEtatProgressLivraison());
             System.out.println("Vitesse camionette : " + vitesseCamionette);
             this.jeu.getJoueur().getLivraisonCamionette().progressBarStartCamionette(1, jeu.getJoueur().getLivraisonCamionette().getVitesseLivraion(), vitesseCamionette, progressCamionette);
         }
-        if (jeu.getJoueur().getLivraison3Active() == 1) {
+        if(jeu.getJoueur().getLivraison3Active() == 1){
             // recuperation de l'etat de la barre de progression pour la livraison en petit camion
             double vitessePetitCamion = jeu.getJoueur().getLivraisonPetitCamion().getVitesseLivraion() - (jeu.getJoueur().getLivraisonPetitCamion().getVitesseLivraion() * jeu.getJoueur().getLivraisonPetitCamion().getEtatProgressLivraison());
             System.out.println("Vitesse petit camion : " + vitessePetitCamion);
             this.jeu.getJoueur().getLivraisonPetitCamion().progressBarStartPetitCamion(1, jeu.getJoueur().getLivraisonPetitCamion().getVitesseLivraion(), vitessePetitCamion, progressPetitCamion);
         }
-        if (jeu.getJoueur().getLivraison4Active() == 1) {
+        if(jeu.getJoueur().getLivraison4Active() == 1){
             // recuperation de l'etat de la barre de progression pour la livraison en poids lours
             double vitessePoidsLourd = jeu.getJoueur().getLivraisonPoidsLourd().getVitesseLivraion() - (jeu.getJoueur().getLivraisonPoidsLourd().getVitesseLivraion() * jeu.getJoueur().getLivraisonPoidsLourd().getEtatProgressLivraison());
             System.out.println("Vitesse poids lourd : " + vitessePoidsLourd);
             this.jeu.getJoueur().getLivraisonPoidsLourd().progressBarStartPoidsLourd(1, jeu.getJoueur().getLivraisonPoidsLourd().getVitesseLivraion(), vitessePoidsLourd, progressPoidsLourd);
         }
-        if (jeu.getJoueur().getLivraison5Active() == 1) {
+        if(jeu.getJoueur().getLivraison5Active() == 1){
             // recuperation de l'etat de la barre de progression pour la livraison en avion
             double vitesseAvion = jeu.getJoueur().getLivraisonAvion().getVitesseLivraion() - (jeu.getJoueur().getLivraisonAvion().getVitesseLivraion() * jeu.getJoueur().getLivraisonAvion().getEtatProgressLivraison());
             System.out.println("Vitesse avion : " + vitesseAvion);

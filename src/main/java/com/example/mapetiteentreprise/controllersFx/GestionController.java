@@ -2,7 +2,6 @@ package com.example.mapetiteentreprise.controllersFx;
 
 import com.example.mapetiteentreprise.Main;
 import com.example.mapetiteentreprise.actions.Outils;
-import com.example.mapetiteentreprise.jeu.CreditEnCours;
 import com.example.mapetiteentreprise.jeu.Jeu;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -38,8 +37,6 @@ public class GestionController {
     @FXML
     private ProgressBar progressOeufs, progressBC, progressBF, progressSa, progressCo,
             progressScooter, progressCamionette, progressPoidsLourd, progressPetitCamion, progressAvion;
-    private Timeline timelineCalendrier, timelineHeure, timelineBC, timelineBF, timelineSa, timelineCo,
-            timelineScooter, timelineCamionette, timelinePoidsLourd, timelinePetitCamion, timelineAvion;
 
     /**
      * Recupere le nom de la sauvegarde
@@ -361,7 +358,6 @@ public class GestionController {
         Platform.exit();
     }
 
-
     public void afficheCalendrier() {
         // met en place la semaine en cours
         this.jeu.getCalendrier().setSemainesEnCours();
@@ -377,6 +373,22 @@ public class GestionController {
         } else {
             jeu.getCalendrier().createSemaine1Calendrier(paneSemaine1, 0);
             jeu.getCalendrier().createSemaine2Calendrier(paneSemaine2, 0);
+        }
+    }
+
+    /**
+     * Renvoi la date de la prochaine mensualité si un crédit est en cours
+     * @return
+     */
+    public long prochaineDateMensualite() {
+        if (jeu.getJoueur().getCreditEnCours() != null) {
+            if (jeu.getJoueur().getCreditEnCours().getTermine() == 0) {
+                return jeu.getJoueur().getCreditEnCours().getDateProchaineMensualite();
+            } else {
+                return 0;
+            }
+        } else {
+            return 0;
         }
     }
 
@@ -458,7 +470,7 @@ public class GestionController {
         double vitesseOeuf = jeu.getParametres().getVitessePonteOeuf() - (jeu.getParametres().getVitessePonteOeuf() * jeu.getJoueur().getFerme().getEtatProgressOeuf());
 
         jeu.getJoueur().getFerme().progressBarStartOeuf(1, jeu.getParametres().getVitessePonteOeuf(), vitesseOeuf, progressOeufs);
-        jeu.getCalendrier().progressHeure(1, jeu.getParametres().getVitessePonteOeuf(), vitesseOeuf);
+        jeu.getCalendrier().progressHeureCalendrier(1, jeu.getParametres().getVitessePonteOeuf(), vitesseOeuf, paneSemaine1, paneSemaine2, prochaineDateMensualite());
 
         // demarrage des distributeurs
         demarrageDistributeurs();
