@@ -81,7 +81,11 @@ public class ConnectionBdd {
                 "poulailler1 INTEGER, poulailler2 INTEGER, poulailler3 INTEGER, poulailler4 INTEGER," +
                 "nbLivraison1 INTEGER, nbLivraison2 INTEGER, nbLivraison3 INTEGER, nbLivraison4 INTEGER, nbLivraison5 INTEGER," +
                 "nbCourses1 INTEGER, nbCourses2 INTEGER, nbCourses3 INTEGER, nbCourses4 INTEGER, nbCourses5 INTEGER," +
-                "etatProgressLivraison1 REAL, etatProgressLivraison2 REAL, etatProgressLivraison3 REAL, etatProgressLivraison4 REAL, etatProgressLivraison5 REAL)";
+                "etatProgressLivraison1 REAL, etatProgressLivraison2 REAL, etatProgressLivraison3 REAL, etatProgressLivraison4 REAL, etatProgressLivraison5 REAL," +
+                "usineTextileActive1 INTEGER, usineTextileActive2 INTEGER, usineTextileActive3 INTEGER, usineTextileActive4 INTEGER," +
+                "nbUsinesTextile1 INTEGER, nbUsinesTextile2 INTEGER, nbUsinesTextile3 INTEGER, nbUsinesTextile4 INTEGER," +
+                "nbMarchandisesUsineTextile1 INTEGER, nbMarchandisesUsineTextile2 INTEGER, nbMarchandisesUsineTextile3 INTEGER, nbMarchandisesUsineTextile4 INTEGER," +
+                "etatProgressUsineTextile1 REAL, etatProgressUsineTextile2 REAL, etatProgressUsineTextile3 REAL, etatProgressUsineTextile4 REAL)";
         Statement stmt = connection.createStatement();
         stmt.execute(sql);
         System.out.println("La table 'sauvegarde' a été créée avec succès.");

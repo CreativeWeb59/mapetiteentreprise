@@ -31,8 +31,15 @@ public class Joueur {
     private LivraisonPetitCamion livraisonPetitCamion;
     private LivraisonPoidsLourd livraisonPoidsLourd;
     private LivraisonAvion livraisonAvion;
+    private UsineTextile usineTextilePetite;
+    private UsineTextile usineTextileMoyenne;
+    private UsineTextile usineTextileGrande;
+    private UsineTextile usineTextileEnorme;
 
-    public Joueur(String pseudo, BigDecimal argent, Ferme ferme, BoissonsChaudes boissonsChaudes, BoissonsFraiches boissonsFraiches, Sandwichs sandwichs, Confiseries confiseries, CreditEnCours creditEnCours, int fermeActive, int distributeursActive, int distributeurBCActive, int distributeurBFActive, int distributeurCoActive, int distributeurSaActive, int poulailler1, int poulailler2, int poulailler3, int poulailler4, int livraison1Active, int livraison2Active, int livraison3Active, int livraison4Active, int livraison5Active, LivraisonScooter livraisonScooter, LivraisonCamionette livraisonCamionette, LivraisonPetitCamion livraisonPetitCamion, LivraisonPoidsLourd livraisonPoidsLourd, LivraisonAvion livraisonAvion) {
+    public Joueur(String pseudo, BigDecimal argent, Ferme ferme, BoissonsChaudes boissonsChaudes, BoissonsFraiches boissonsFraiches, Sandwichs sandwichs, Confiseries confiseries,
+                  CreditEnCours creditEnCours, int fermeActive, int distributeursActive, int distributeurBCActive, int distributeurBFActive, int distributeurCoActive, int distributeurSaActive,
+                  int poulailler1, int poulailler2, int poulailler3, int poulailler4, int livraison1Active, int livraison2Active, int livraison3Active, int livraison4Active, int livraison5Active,
+                  LivraisonScooter livraisonScooter, LivraisonCamionette livraisonCamionette, LivraisonPetitCamion livraisonPetitCamion, LivraisonPoidsLourd livraisonPoidsLourd, LivraisonAvion livraisonAvion) {
         this.pseudo = pseudo;
         this.argent = argent;
         this.ferme = ferme;
@@ -61,8 +68,13 @@ public class Joueur {
         this.livraisonPetitCamion = livraisonPetitCamion;
         this.livraisonPoidsLourd = livraisonPoidsLourd;
         this.livraisonAvion = livraisonAvion;
-    }
+        // construction des usines par defaut
+        this.usineTextilePetite = new UsineTextile("Petite usine de textile", 0,0, 0, 0);
+        this.usineTextileMoyenne = new UsineTextile("Moyenne usine de textile", 0, 0,0, 0);
+        this.usineTextileGrande = new UsineTextile("Grande usine de textile", 0, 0, 0,0);
+        this.usineTextileEnorme = new UsineTextile("Enorme usine de textile", 0, 0, 0,0);
 
+    }
     public String getPseudo() {
         return pseudo;
     }
@@ -287,6 +299,38 @@ public class Joueur {
         this.livraison5Active = livraison5Active;
     }
 
+    public UsineTextile getUsineTextilePetite() {
+        return usineTextilePetite;
+    }
+
+    public void setUsineTextilePetite(UsineTextile usineTextilePetite) {
+        this.usineTextilePetite = usineTextilePetite;
+    }
+
+    public UsineTextile getUsineTextileMoyenne() {
+        return usineTextileMoyenne;
+    }
+
+    public void setUsineTextileMoyenne(UsineTextile usineTextileMoyenne) {
+        this.usineTextileMoyenne = usineTextileMoyenne;
+    }
+
+    public UsineTextile getUsineTextileGrande() {
+        return usineTextileGrande;
+    }
+
+    public void setUsineTextileGrande(UsineTextile usineTextileGrande) {
+        this.usineTextileGrande = usineTextileGrande;
+    }
+
+    public UsineTextile getUsineTextileEnorme() {
+        return usineTextileEnorme;
+    }
+
+    public void setUsineTextileEnorme(UsineTextile usineTextileEnorme) {
+        this.usineTextileEnorme = usineTextileEnorme;
+    }
+
     @Override
     public String toString() {
         return "Joueur{" +
@@ -308,14 +352,20 @@ public class Joueur {
                 ", poulailler2=" + poulailler2 +
                 ", poulailler3=" + poulailler3 +
                 ", poulailler4=" + poulailler4 +
-                ", livraisonScooter=" + livraisonScooter +
-                ", livraisonPetitCamion=" + livraisonPetitCamion +
-                ", livraisonCamionette=" + livraisonCamionette +
-                ", livraisonPoidsLourd=" + livraisonPoidsLourd +
                 ", livraison1Active=" + livraison1Active +
                 ", livraison2Active=" + livraison2Active +
                 ", livraison3Active=" + livraison3Active +
                 ", livraison4Active=" + livraison4Active +
+                ", livraison5Active=" + livraison5Active +
+                ", livraisonScooter=" + livraisonScooter +
+                ", livraisonCamionette=" + livraisonCamionette +
+                ", livraisonPetitCamion=" + livraisonPetitCamion +
+                ", livraisonPoidsLourd=" + livraisonPoidsLourd +
+                ", livraisonAvion=" + livraisonAvion +
+                ", usineTextilePetite=" + usineTextilePetite +
+                ", usineTextileMoyenne=" + usineTextileMoyenne +
+                ", usineTextileGrande=" + usineTextileGrande +
+                ", usineTextileEnorme=" + usineTextileEnorme +
                 '}';
     }
 

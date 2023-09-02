@@ -34,6 +34,7 @@
 package com.example.mapetiteentreprise.jeu;
 
 import com.example.mapetiteentreprise.bdd.*;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.scene.layout.Pane;
 import java.math.BigDecimal;
@@ -51,7 +52,6 @@ public class Jeu {
     // la 2 est celle de la ferme
     // la 3, 4, 5, 6 celle des distributeurs...
     private List<AnimationsBarresProgress> barresDeProgressions = new ArrayList<>();
-
     private List<Poulaillers> poulaillersList = new ArrayList<>(); // liste des poulaillers dispos
 
     public Jeu(Joueur joueur, Sauvegarde sauvegarde, Parametres parametres, Calendrier calendrier) {
@@ -207,6 +207,12 @@ public class Jeu {
         getSauvegarde().setEtatProgressLivraison3(getJoueur().getLivraisonPetitCamion().getEtatProgressLivraison());
         getSauvegarde().setEtatProgressLivraison4(getJoueur().getLivraisonPoidsLourd().getEtatProgressLivraison());
         getSauvegarde().setEtatProgressLivraison5(getJoueur().getLivraisonAvion().getEtatProgressLivraison());
+
+        getSauvegarde().setUsineTextileActive1(getJoueur().getUsineTextilePetite().getUsineActive());
+        getSauvegarde().setNbUsinesTextile1(getJoueur().getUsineTextilePetite().getNbUsines());
+        getSauvegarde().setNbMarchandisesUsineTextile1(getJoueur().getUsineTextilePetite().getNbMarchandises());
+        getSauvegarde().setEtatProgressUsineTextile1(getJoueur().getUsineTextilePetite().getEtatProgressUsine());
+
 
         System.out.println("Nouvelles valeurs a sauvegarder" + getSauvegarde());
 

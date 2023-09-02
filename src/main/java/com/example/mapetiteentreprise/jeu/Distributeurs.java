@@ -1,12 +1,5 @@
 package com.example.mapetiteentreprise.jeu;
 
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
-import javafx.scene.control.ProgressBar;
-import javafx.util.Duration;
-
 import java.time.LocalDateTime;
 
 public abstract class Distributeurs {

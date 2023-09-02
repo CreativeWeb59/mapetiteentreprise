@@ -160,6 +160,9 @@ public class MainController {
         // ajout des types de poulaillers
         this.creationPoulailler();
 
+        // mise en place des valeurs dans les usines de textile
+        affectationToutesLesUsinesTextiles();
+
         connectionBdd.close();
         System.out.println("Le jeu complet içi : " + this.jeu);
         this.switchPageGestion(event);
@@ -253,15 +256,16 @@ public class MainController {
 
         // creation de la sauvegarde en bdd
         this.sauvegarde = new Sauvegarde(this.pseudo, parametres.getArgentDepart(),1, 1, 0, parametres.getNbPoules(), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                dateEncours, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, dateEncours, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0,0);
+                dateEncours, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, dateEncours, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0,0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
         sauvegardeService.addJoueur(sauvegarde);
 
+        // creation de toutes les activites
         this.creerActivites(true);
 
         // creation de la classe joueur
         Joueur joueur = new Joueur(this.pseudo, parametres.getArgentDepart(), this.ferme, this.boissonsChaudes, this.boissonsFraiches, this.sandwichs, this.confiseries,
                 this.creditEnCours, this.parametres.getFermeActive(), this.parametres.getDistributeursActive(), this.parametres.getDistributeurBCActive(),
-                this.parametres.getDistributeurBFActive(), this.parametres.getDistributeurSaActive(), this.parametres.getDistributeurCoActive(), 1, 0, 0, 0, 0, 0, 0, 0, 0,
+                this.parametres.getDistributeurBFActive(), this.parametres.getDistributeurCoActive(), this.parametres.getDistributeurSaActive(),1, 0, 0, 0, 0, 0, 0, 0, 0,
                 this.livraisonScooter, this.livraisonCamionette, this.livraisonPetitCamion, this.livraisonPoidsLourd, this.livraisonAvion);
 
         // creation du calendrier
@@ -271,6 +275,9 @@ public class MainController {
 
         // creation des poulaillers
         this.creationPoulailler();
+
+        // mise en place des valeurs dans les usines de textile
+        affectationToutesLesUsinesTextiles();
     }
 
     /**
@@ -384,4 +391,25 @@ public class MainController {
             this.btnSupprimer.setDisable(true);
         }
     }
+
+    /**
+     * Remplit chaque usine de textile
+     */
+    public void affectationToutesLesUsinesTextiles(){
+        System.out.println("usine : " + jeu.getJoueur().getUsineTextilePetite());
+        affectationValeursUsinesTextiles(jeu.getJoueur().getUsineTextilePetite(), sauvegarde.getUsineTextileActive1(), sauvegarde.getNbUsinesTextile1(), sauvegarde.getNbMarchandisesUsineTextile1(), sauvegarde.getEtatProgressUsineTextile1());
+        affectationValeursUsinesTextiles(jeu.getJoueur().getUsineTextileMoyenne(), sauvegarde.getUsineTextileActive2(), sauvegarde.getNbUsinesTextile2(), sauvegarde.getNbMarchandisesUsineTextile2(), sauvegarde.getEtatProgressUsineTextile2());
+        affectationValeursUsinesTextiles(jeu.getJoueur().getUsineTextileGrande(), sauvegarde.getUsineTextileActive3(), sauvegarde.getNbUsinesTextile3(), sauvegarde.getNbMarchandisesUsineTextile3(), sauvegarde.getEtatProgressUsineTextile3());
+        affectationValeursUsinesTextiles(jeu.getJoueur().getUsineTextileEnorme(), sauvegarde.getUsineTextileActive4(), sauvegarde.getNbUsinesTextile4(), sauvegarde.getNbMarchandisesUsineTextile4(), sauvegarde.getEtatProgressUsineTextile4());
+    }
+    /**
+     * Permet de remplir le contenu des usines de textile
+     */
+    public void affectationValeursUsinesTextiles(UsineTextile usineTextile, int usineActive,  int nbUsines, long nbMarchandises, double etatProgressUsine){
+        usineTextile.setUsineActive(usineActive);
+        usineTextile.setNbUsines(nbUsines);
+        usineTextile.setNbMarchandises(nbMarchandises);
+        usineTextile.setEtatProgressUsine(etatProgressUsine);
+    }
+
 }
