@@ -114,4 +114,8 @@ public class UsineTextile extends Usines{
             this.timelineUsineTextile = null;
         }
     }
+
+    public BigDecimal majGainsEnAttente(){
+        return this.getPrixFabrication().multiply(BigDecimal.valueOf(this.getNbMarchandises()));
+    }
 }

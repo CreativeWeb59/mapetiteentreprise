@@ -192,4 +192,17 @@ public class Outils {
     }
 
 
+    /**
+     * Retourne vrai si le distributeur est actif
+     *
+     * @param valeurLivraison
+     * @return
+     */
+    public static boolean isActif(int valeurLivraison) {
+        if (valeurLivraison == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

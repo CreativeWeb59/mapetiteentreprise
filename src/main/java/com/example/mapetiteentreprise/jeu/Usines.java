@@ -1,5 +1,10 @@
 package com.example.mapetiteentreprise.jeu;
 
+import com.example.mapetiteentreprise.actions.Outils;
+import javafx.scene.control.Button;
+
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 
 public abstract class Usines {
@@ -9,6 +14,8 @@ public abstract class Usines {
     private long nbMarchandises;
     private double etatProgressUsine = 0;
     private final int nbMaxiUsine = 400;
+    private final String monnaie = " €";
+    private final DecimalFormat decimalFormat = Outils.getDecimalFormatWithSpaceSeparator();
 
 
     public Usines(String nom, int usineActive, int nbUsines, long nbMarchandises, double etatProgressUsine) {
@@ -77,7 +84,12 @@ public abstract class Usines {
     }
 
     /**
-     * Methode pour ajouter un distributeur
+     * Methodes communes à toutes les usines
+     */
+
+
+    /**
+     * Methode pour ajouter une usine
      */
     public void ajoutUsine(){
         this.setNbUsines(this.getNbUsines() + 1);
@@ -92,4 +104,22 @@ public abstract class Usines {
         this.setNbMarchandises(nouvNombre);
         System.out.println("maj du nombre de marchandises fabriquées par l'usine : " + nouvNombre);
     }
+
+    /**
+     * Recup des marchandises produites dans les usines entre les switchs de fenetre
+     * et maj du bouton encaisser avec les gains encours
+     * @param btnEncaisser Donner le bouton à gérer pour afficher le montant à récupérer
+     * @param gainEnAttenteUsine donner les gains en attente pour les afficher sur le bouton
+     */
+    public void recupMarchandisesUsine(Button btnEncaisser, BigDecimal gainEnAttenteUsine) {
+        if (this.getNbMarchandises() > 0) {
+            btnEncaisser.setDisable(false);
+            // maj le montant sur le bouton Encaisser
+            String formattedString = "Encaisser " + decimalFormat.format(gainEnAttenteUsine) + monnaie;
+            btnEncaisser.setText(formattedString);
+        } else {
+            btnEncaisser.setDisable(true);
+        }
+    }
+
 }
