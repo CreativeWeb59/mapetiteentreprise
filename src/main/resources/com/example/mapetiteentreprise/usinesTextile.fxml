@@ -25,7 +25,7 @@
                            </font>
                         </Text>
                         <ImageView fitHeight="91.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
-                        <ProgressBar layoutX="23.0" layoutY="96.0" prefHeight="20.0" prefWidth="300.0" progress="0.0" />
+                        <ProgressBar fx:id="progressTextile1" layoutX="23.0" layoutY="96.0" prefHeight="20.0" prefWidth="300.0" progress="0.0" />
                         <Label fx:id="labelNbMarchandisesTextile1" layoutX="396.0" layoutY="91.0" prefHeight="29.0" prefWidth="54.0" text="0" />
                         <Label fx:id="labelNbUsineTextile1" layoutX="408.0" layoutY="10.0" prefHeight="29.0" prefWidth="75.0" text="Label" />
                         <Label fx:id="labelTarifUsineTextile1" layoutX="23.0" layoutY="46.0" prefHeight="29.0" prefWidth="390.0" text="Label" />
@@ -38,7 +38,7 @@
                               <Image url="@images/ustensiles.png" />
                            </image>
                         </ImageView>
-                        <Button fx:id="btnEncaisserUsineTextile1" layoutX="210.0" layoutY="40.0" mnemonicParsing="false" onAction="#retourGestionUsines" text="Encaisser" />
+                        <Button fx:id="btnEncaisserUsineTextile1" layoutX="210.0" layoutY="40.0" mnemonicParsing="false" onAction="#onBtnEncaisserUsineTextile1" text="Encaisser" />
                         <Button fx:id="btnAchatUsineTextile1" layoutX="120.0" layoutY="40.0" mnemonicParsing="false" text="Acheter petite usine" />
                      </children>
                   </Pane>

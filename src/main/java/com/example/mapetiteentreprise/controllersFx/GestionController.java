@@ -20,9 +20,9 @@ import java.text.DecimalFormat;
 
 public class GestionController {
     @FXML
-    private Label pseudoLabel, labelBlocageDistributeur, labelBlocageLivraison;
+    private Label pseudoLabel, labelBlocageDistributeur, labelBlocageLivraison, labelBlocageUsine;
     @FXML
-    private Button btnFerme, btnAchatFerme, btnDistributeurs, btnLivraison;
+    private Button btnFerme, btnAchatFerme, btnDistributeurs, btnLivraison, btnUsine;
     private Stage stage;
     private Scene scene;
     private Parent root;
@@ -59,6 +59,7 @@ public class GestionController {
         testFerme();
         testDistributeur();
         testLivraison();
+        testUsine();
 
         jeu.valeurEntreprise();
 
@@ -124,7 +125,26 @@ public class GestionController {
             labelBlocageLivraison.setText(formattedString);
         }
     }
-
+    /**
+     * On verifie si le joueur a assez d'argent pour acheter la premiere usine de textile
+     * ou s'il est actif
+     */
+    public void testUsine() {
+        // recuperation du prix de l'usine
+        BigDecimal tarifUsineTextile = jeu.getJoueur().getUsineTextilePetite().getPrixUsine();
+        System.out.println("Prix du scooter : " + tarifUsineTextile);
+        // active le bouton si livraison 1 active
+        // verifie si l'argent en banque permet d'acheter la petite usine de textile
+        if (jeu.getJoueur().getUsineTextilePetite().getUsineActive() == 1 || jeu.getJoueur().isArgent(tarifUsineTextile)) {
+            btnUsine.setDisable(false);
+            labelBlocageUsine.setVisible(false);
+        } else {
+            btnUsine.setDisable(true);
+            labelBlocageUsine.setVisible(true);
+            String formattedString = "Débloqué à partir de " + decimalFormat.format(tarifUsineTextile) + monnaie;
+            labelBlocageUsine.setText(formattedString);
+        }
+    }
     /**
      * Arrivee dans le jeu
      * desactivation de la ferme

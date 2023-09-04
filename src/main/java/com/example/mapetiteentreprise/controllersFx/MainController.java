@@ -410,6 +410,7 @@ public class MainController {
         usineTextile.setNbUsines(nbUsines);
         usineTextile.setNbMarchandises(nbMarchandises);
         usineTextile.setEtatProgressUsine(etatProgressUsine);
+        System.out.println("Set usines : " + usineTextile.getEtatProgressUsine());
     }
 
 }

@@ -104,6 +104,7 @@ public class UsineTextile extends Usines{
         }
         timelineUsineTextile.play();
     }
+
     /**
      * Permet de stopper la timeline
      */

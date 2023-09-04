@@ -205,4 +205,17 @@ public class Outils {
             return false;
         }
     }
+
+    /**
+     * arret de la barre de progression spécifié en parametres
+     * @param timeline
+     */
+    public static void progressBarStop(Timeline timeline) {
+        if (timeline != null) {
+            timeline.stop();
+            timeline = null;
+            System.out.println("Arret de la barre de progression " + timeline);
+        }
+        System.out.println("test");
+    }
 }
