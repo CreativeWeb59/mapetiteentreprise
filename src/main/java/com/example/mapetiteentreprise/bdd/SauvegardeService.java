@@ -291,10 +291,10 @@ public class SauvegardeService {
             long nbMarchandisesUsineTextile3 = resultSet.getInt("nbMarchandisesUsineTextile3");
             long nbMarchandisesUsineTextile4 = resultSet.getInt("nbMarchandisesUsineTextile4");
 
-            double etatProgressUsineTextile1 = resultSet.getInt("etatProgressUsineTextile1");
-            double etatProgressUsineTextile2 = resultSet.getInt("etatProgressUsineTextile2");
-            double etatProgressUsineTextile3 = resultSet.getInt("etatProgressUsineTextile3");
-            double etatProgressUsineTextile4 = resultSet.getInt("etatProgressUsineTextile4");
+            double etatProgressUsineTextile1 = resultSet.getDouble("etatProgressUsineTextile1");
+            double etatProgressUsineTextile2 = resultSet.getDouble("etatProgressUsineTextile2");
+            double etatProgressUsineTextile3 = resultSet.getDouble("etatProgressUsineTextile3");
+            double etatProgressUsineTextile4 = resultSet.getDouble("etatProgressUsineTextile4");
 
             LocalDateTime dateDeco = LocalDateTime.ofInstant(Instant.ofEpochMilli(timestampMillisDeco), ZoneId.systemDefault());
             LocalDateTime dateDebutJeu = LocalDateTime.ofInstant(Instant.ofEpochMilli(timestampMillisDebutJeu), ZoneId.systemDefault());
@@ -314,7 +314,7 @@ public class SauvegardeService {
                     nbMarchandisesUsineTextile1, nbMarchandisesUsineTextile2, nbMarchandisesUsineTextile3, nbMarchandisesUsineTextile4,
                     etatProgressUsineTextile1, etatProgressUsineTextile2, etatProgressUsineTextile3, etatProgressUsineTextile4);
             sauvegarde.setId(id);
-            System.out.println(sauvegarde);
+            System.out.println("Récuperation : " + sauvegarde);
             return sauvegarde;
         } else {
             System.out.println("Le joueur n'a pas ete trouvé");

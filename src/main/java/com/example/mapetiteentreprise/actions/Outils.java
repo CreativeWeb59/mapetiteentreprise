@@ -216,6 +216,5 @@ public class Outils {
             timeline = null;
             System.out.println("Arret de la barre de progression " + timeline);
         }
-        System.out.println("test");
     }
 }

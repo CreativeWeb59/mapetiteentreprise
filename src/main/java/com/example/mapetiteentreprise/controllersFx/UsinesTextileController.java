@@ -58,7 +58,6 @@ public class UsinesTextileController {
     public void demarrer(Jeu jeu) {
         // Recuperation du jeu
         this.jeu = jeu;
-        demarrageProgress();
 
         // recuperation des marchandises
         recupMarchandises();
@@ -109,6 +108,7 @@ public class UsinesTextileController {
      */
     public void onWindowClose(WindowEvent event) {
         // fermeture des barres, enregistrement + stop et sauvegarde date deco
+        System.out.println("Test 1");
         fermetureProgress();
         // sauvegarde bdd
         sauveBdd();
@@ -120,27 +120,32 @@ public class UsinesTextileController {
     public void acheterUsineTextilePetite() {
         acheterUsineTextile(this.jeu.getJoueur().getUsineTextilePetite(), progressTextile1);
     }
+
     /**
      * Ajout d'une petite usine
      */
     public void acheterUsineTextileMoyenne() {
         acheterUsineTextile(this.jeu.getJoueur().getUsineTextileMoyenne(), progressTextile2);
     }
+
     /**
      * Ajout d'une petite usine
      */
     public void acheterUsineTextileGrande() {
         acheterUsineTextile(this.jeu.getJoueur().getUsineTextileGrande(), progressTextile3);
     }
+
     /**
      * Ajout d'une petite usine
      */
     public void acheterUsineTextileEnorme() {
         acheterUsineTextile(this.jeu.getJoueur().getUsineTextileEnorme(), progressTextile4);
     }
+
     /**
      * Methode d'achat général d'une usine de textile
-     * @param usineTextile à acheter
+     *
+     * @param usineTextile    à acheter
      * @param progressTextile barre de progression de l'usine
      */
     public void acheterUsineTextile(UsineTextile usineTextile, ProgressBar progressTextile) {
@@ -167,11 +172,13 @@ public class UsinesTextileController {
         }
     }
 
-    public void onBtnEncaisserUsineTextile1(){
+    public void onBtnEncaisserUsineTextile1() {
         encaisserUsineTextile(this.jeu.getJoueur().getUsineTextilePetite(), btnEncaisserUsineTextile1, gainEnAttenteUsineTextile1);
     }
+
     /**
      * Bouton qui permet d'encaisser l'argent des usines de textile
+     *
      * @param usineTextile usine textile spécifiée
      */
     public void encaisserUsineTextile(UsineTextile usineTextile, Button btnEncaisserUsineTextile, BigDecimal gainEnAttenteUsineTextile) {
@@ -343,7 +350,6 @@ public class UsinesTextileController {
             System.out.println("Vitesse ajustement : " + vitesseUsineTextile1);
             System.out.println("etatBarreProgress : " + jeu.getJoueur().getUsineTextilePetite().getEtatProgressUsine());
 
-
             this.progressBarStartUsineTextile(1, jeu.getJoueur().getUsineTextilePetite().getVitesseUsineTextile(), vitesseUsineTextile1, jeu.getJoueur().getUsineTextilePetite(), progressTextile1, btnEncaisserUsineTextile1, this.gainEnAttenteUsineTextile1);
         }
     }
@@ -351,11 +357,11 @@ public class UsinesTextileController {
     /**
      * Barre de progression pour comptabiliser le stock de marchandises dans l'usine spécifiée en parametres
      *
-     * @param cycle         : 0 pour cycle infini
-     * @param vitesse       : vitesse de l'usine en secondes
+     * @param cycle             : 0 pour cycle infini
+     * @param vitesse           : vitesse de l'usine en secondes
      * @param vitesseAjustement
      * @param usineTextile
-     * @param progress    : barre de progress de la fabrication d'une marchandise
+     * @param progress          : barre de progress de la fabrication d'une marchandise
      * @param btnEncaisser
      */
     public void progressBarStartUsineTextile(int cycle, double vitesse, double vitesseAjustement, UsineTextile usineTextile, ProgressBar progress, Button btnEncaisser, BigDecimal gainEnAttenteUsineTextile) {
@@ -370,6 +376,7 @@ public class UsinesTextileController {
         timelineUsineTextile1 = new Timeline(
                 new KeyFrame(Duration.ZERO, new KeyValue(progress.progressProperty(), etatBarreProgress)),
                 new KeyFrame(Duration.seconds(vitesseAjustement), e -> {
+                    System.out.println("cycle");
                     // rend le bouton Encaisser actif
                     btnEncaisser.setDisable(false);
                     // ajoute le nombre de marchandises fabriquées par l'usine
@@ -377,14 +384,16 @@ public class UsinesTextileController {
                     System.out.println("Production de marchandises dans " + usineTextile.getNom() + " terminée");
                     // met à jour les gains en cours ainsi que le bouton encaisser
                     usineTextile.recupMarchandisesUsine(btnEncaisser, gainEnAttenteUsineTextile);
+                    // maj des labels
+                    this.miseEnPlace();
                 }, new KeyValue(progress.progressProperty(), 1))
         );
-        timelineUsineTextile1.setOnFinished(event -> {
-            if (cycle == 1) {
+        if (cycle == 1) {
+            timelineUsineTextile1.setOnFinished(event -> {
                 // recalcul de la vitesse suivant le niveau de la barre de progression
                 progressBarStartUsineTextile(cycle - 1, vitesse, vitesse, usineTextile, progress, btnEncaisser, gainEnAttenteUsineTextile);
-            }
-        });
+            });
+        }
         if (cycle == 0) {
             timelineUsineTextile1.setCycleCount(Animation.INDEFINITE);
         } else {
@@ -393,7 +402,9 @@ public class UsinesTextileController {
         timelineUsineTextile1.play();
     }
 
-
+    /**
+     * Fermeture des barres de progression
+     */
     public void fermetureProgress() {
         // sauvegarde des barres de progression
         this.jeu.getJoueur().getFerme().setEtatProgressOeuf(this.progressOeufs.getProgress());
@@ -413,7 +424,8 @@ public class UsinesTextileController {
 
         // on recupere les barres de progression des usines de textile
         this.jeu.getJoueur().getUsineTextilePetite().setEtatProgressUsine(this.progressTextile1.getProgress());
-
+        System.out.println("Recup barre usine textile1 : " + this.jeu.getJoueur().getUsineTextilePetite().getEtatProgressUsine());
+        System.out.println("Recup progress usinte textile1 : " + this.progressTextile1.getProgress());
 
         // on stoppe les barres de progression
         jeu.getJoueur().getFerme().progressBarStop();

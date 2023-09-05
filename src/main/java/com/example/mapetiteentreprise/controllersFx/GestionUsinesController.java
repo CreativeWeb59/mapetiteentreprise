@@ -4,6 +4,7 @@ import com.example.mapetiteentreprise.Main;
 import com.example.mapetiteentreprise.actions.Outils;
 import com.example.mapetiteentreprise.jeu.Jeu;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -63,6 +64,7 @@ public class GestionUsinesController {
         fermetureProgress();
         // sauvegarde bdd
         sauveBdd();
+        System.out.println("fermeture");
     }
 
     /**
@@ -77,18 +79,17 @@ public class GestionUsinesController {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("usinesTextile.fxml"));
             root = loader.load();
             UsinesTextileController usinesTextileController = loader.getController();
-            // on renvoi les infos a la fenetre suivante (tout est dans l'instance jeu)
-
             usinesTextileController.demarrer(jeu);
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            // Permet de récupérer le gestionnaire d'événements pour la fermeture de la fenêtre
+            stage.setOnCloseRequest(usinesTextileController::onWindowClose);
+            stage.show();
+            stage.centerOnScreen();
         } catch (Exception e) {
             System.out.println(e);
         }
-
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-        stage.centerOnScreen();
     }
 
     /**
@@ -142,6 +143,7 @@ public class GestionUsinesController {
         stage.show();
         stage.centerOnScreen();
     }
+
     /**
      * Bouton qui ouvre les usines pharmaceutiques
      */
@@ -167,6 +169,7 @@ public class GestionUsinesController {
         stage.show();
         stage.centerOnScreen();
     }
+
     /**
      * Demarrage des barres de progression, dans l'ordre
      * la ferme avec les oeufs => incrémente les oeufs

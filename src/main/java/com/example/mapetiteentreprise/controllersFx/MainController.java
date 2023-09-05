@@ -233,6 +233,10 @@ public class MainController {
         }
     }
 
+    /**
+     * Gère le nouton permettant de quitter le jeu
+     * @param event
+     */
     public void exitJeu(ActionEvent event) {
         // Code pour quitter l'application
         Platform.exit();
