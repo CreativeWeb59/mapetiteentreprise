@@ -5,7 +5,6 @@ import javafx.scene.control.Button;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
-import java.time.LocalDateTime;
 
 public abstract class Usines {
     private String nom;
@@ -16,6 +15,7 @@ public abstract class Usines {
     private final int nbMaxiUsine = 400;
     private final String monnaie = " €";
     private final DecimalFormat decimalFormat = Outils.getDecimalFormatWithSpaceSeparator();
+    private BigDecimal gainEnAttenteUsineTextile = new BigDecimal(0);
 
 
     public Usines(String nom, int usineActive, int nbUsines, long nbMarchandises, double etatProgressUsine) {

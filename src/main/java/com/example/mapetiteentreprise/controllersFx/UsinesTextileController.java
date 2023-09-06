@@ -36,6 +36,7 @@ public class UsinesTextileController {
             labelNbMarchandisesTextile1, labelNbMarchandisesTextile2, labelNbMarchandisesTextile3, labelNbMarchandisesTextile4;
     @FXML
     private Button btnAchatUsineTextile1, btnAchatUsineTextile2, btnAchatUsineTextile3, btnAchatUsineTextile4,
+            btnAchatUsineTextilePetite,
             btnEncaisserUsineTextile1, btnEncaisserUsineTextile2, btnEncaisserUsineTextile3, btnEncaisserUsineTextile14;
     private final DecimalFormat decimalFormat = Outils.getDecimalFormatWithSpaceSeparator();
     @FXML
@@ -44,10 +45,6 @@ public class UsinesTextileController {
             progressTextile1, progressTextile2, progressTextile3, progressTextile4;
     private Timeline timelineUsineTextile1, timelineUsineTextile2, timelineUsineTextile3, timelineUsineTextile4;
     private ConnectionBdd connectionBdd = new ConnectionBdd();
-    private BigDecimal gainEnAttenteUsineTextile1 = new BigDecimal(0);
-    private BigDecimal gainEnAttenteUsineTextile2 = new BigDecimal(0);
-    private BigDecimal gainEnAttenteUsineTextile3 = new BigDecimal(0);
-    private BigDecimal gainEnAttenteUsineTextile4 = new BigDecimal(0);
     @FXML
     private Pane paneProgress, paneTextile1, paneTextile2, paneTextile3, paneTextile4;
     private Stage stage;
@@ -241,8 +238,10 @@ public class UsinesTextileController {
         BigDecimal prixUsineTextile1 = jeu.getJoueur().getUsineTextilePetite().getPrixUsine();
         if (jeu.getJoueur().isArgent(prixUsineTextile1) && !this.jeu.getJoueur().getUsineTextilePetite().isMaxiNbUsines()) {
             btnAchatUsineTextile1.setDisable(false);
+            btnAchatUsineTextilePetite.setDisable(false);
         } else {
             btnAchatUsineTextile1.setDisable(true);
+            btnAchatUsineTextilePetite.setDisable(true);
         }
     }
 
