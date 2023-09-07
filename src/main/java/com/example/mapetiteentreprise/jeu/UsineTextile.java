@@ -7,36 +7,11 @@ import javafx.animation.Timeline;
 import javafx.scene.control.ProgressBar;
 import javafx.util.Duration;
 
-import java.math.BigDecimal;
-
 public class UsineTextile extends Usines{
-    private final BigDecimal prixUsine = BigDecimal.valueOf(200000); // prix d'une usine supplémentaire
-    private final BigDecimal prixFabrication = BigDecimal.valueOf(2000.00); // prix de vente d'un produit textile
-    // prix des vehicules
-    private final int nbMaxiUsine = 300;
-    // vitesse des livraisons
-    private final int vitesseUsineTextile = 60;
     private Timeline timelineUsineTextile;
 
     public UsineTextile(String nom, int usineActive, int nbUsines, long nbMarchandises, double etatProgressUsine) {
         super(nom, usineActive, nbUsines, nbMarchandises, etatProgressUsine);
-    }
-
-    public BigDecimal getPrixUsine() {
-        return prixUsine;
-    }
-
-    public BigDecimal getPrixFabrication() {
-        return prixFabrication;
-    }
-
-    @Override
-    public int getNbMaxiUsine() {
-        return nbMaxiUsine;
-    }
-
-    public int getVitesseUsineTextile() {
-        return vitesseUsineTextile;
     }
 
     public Timeline getTimelineUsineTextile() {
@@ -47,25 +22,7 @@ public class UsineTextile extends Usines{
         this.timelineUsineTextile = timelineUsineTextile;
     }
 
-    /**
-     * Methode pour ajouter une usine
-     */
-    public void ajoutUsine(){
-        this.setNbUsines(this.getNbUsines() + 1);
-    }
-    /**
-     * initialise le nombre de vehicules en cours ainsi que le nombre de vehicules maximum
-     */
-    public String setNbUsines() {
-        return this.getNbUsines() + " / " + this.getNbMaxiUsine();
-    }
-    /**
-     * renvoi true si le nombre maximum d'usine est atteint
-     * @return
-     */
-    public boolean isMaxiNbUsines(){
-        return this.getNbUsines() >= this.getNbMaxiUsine();
-    }
+
     /**
      * Barre de progression pour comptabiliser le stock de marchandises dans l'usine
      *
@@ -116,7 +73,5 @@ public class UsineTextile extends Usines{
         }
     }
 
-    public BigDecimal majGainsEnAttente(){
-        return this.getPrixFabrication().multiply(BigDecimal.valueOf(this.getNbMarchandises()));
-    }
+
 }

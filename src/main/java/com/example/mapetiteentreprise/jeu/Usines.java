@@ -12,10 +12,15 @@ public abstract class Usines {
     private int nbUsines;
     private long nbMarchandises;
     private double etatProgressUsine = 0;
-    private final int nbMaxiUsine = 400;
+    private int nbMaxiUsine = 400;
+
+    private BigDecimal prixUsine = BigDecimal.valueOf(200000); // prix d'une usine supplémentaire
+    private BigDecimal prixFabrication = BigDecimal.valueOf(2000.00); // prix de vente d'un produit textile
+    private int vitesseUsineTextile = 60;
+
     private final String monnaie = " €";
     private final DecimalFormat decimalFormat = Outils.getDecimalFormatWithSpaceSeparator();
-    private BigDecimal gainEnAttenteUsineTextile = new BigDecimal(0);
+    private BigDecimal gainEnAttenteUsine = new BigDecimal(0);
 
 
     public Usines(String nom, int usineActive, int nbUsines, long nbMarchandises, double etatProgressUsine) {
@@ -26,7 +31,6 @@ public abstract class Usines {
         this.etatProgressUsine = etatProgressUsine;
 
     }
-
     public String getNom() {
         return nom;
     }
@@ -71,6 +75,50 @@ public abstract class Usines {
         this.usineActive = usineActive;
     }
 
+    public void setNbMaxiUsine(int nbMaxiUsine) {
+        this.nbMaxiUsine = nbMaxiUsine;
+    }
+
+    public BigDecimal getPrixUsine() {
+        return prixUsine;
+    }
+
+    public void setPrixUsine(BigDecimal prixUsine) {
+        this.prixUsine = prixUsine;
+    }
+
+    public BigDecimal getPrixFabrication() {
+        return prixFabrication;
+    }
+
+    public void setPrixFabrication(BigDecimal prixFabrication) {
+        this.prixFabrication = prixFabrication;
+    }
+
+    public int getVitesseUsineTextile() {
+        return vitesseUsineTextile;
+    }
+
+    public void setVitesseUsineTextile(int vitesseUsineTextile) {
+        this.vitesseUsineTextile = vitesseUsineTextile;
+    }
+
+    public String getMonnaie() {
+        return monnaie;
+    }
+
+    public DecimalFormat getDecimalFormat() {
+        return decimalFormat;
+    }
+
+    public BigDecimal getGainEnAttenteUsine() {
+        return gainEnAttenteUsine;
+    }
+
+    public void setGainEnAttenteUsine(BigDecimal gainEnAttenteUsine) {
+        this.gainEnAttenteUsine = gainEnAttenteUsine;
+    }
+
     @Override
     public String toString() {
         return "Usines{" +
@@ -80,10 +128,15 @@ public abstract class Usines {
                 ", nbMarchandises=" + nbMarchandises +
                 ", etatProgressUsine=" + etatProgressUsine +
                 ", nbMaxiUsine=" + nbMaxiUsine +
+                ", prixUsine=" + prixUsine +
+                ", prixFabrication=" + prixFabrication +
+                ", vitesseUsineTextile=" + vitesseUsineTextile +
+                ", monnaie='" + monnaie + '\'' +
+                ", decimalFormat=" + decimalFormat +
+                ", gainEnAttenteUsine=" + gainEnAttenteUsine +
                 '}';
     }
-
-    /**
+/**
      * Methodes communes à toutes les usines
      */
 
@@ -121,5 +174,21 @@ public abstract class Usines {
             btnEncaisser.setDisable(true);
         }
     }
+    public BigDecimal majGainsEnAttente(){
+        return this.getPrixFabrication().multiply(BigDecimal.valueOf(this.getNbMarchandises()));
+    }
 
+    /**
+     * initialise le nombre de vehicules en cours ainsi que le nombre de vehicules maximum
+     */
+    public String setNbUsines() {
+        return this.getNbUsines() + " / " + this.getNbMaxiUsine();
+    }
+    /**
+     * renvoi true si le nombre maximum d'usine est atteint
+     * @return
+     */
+    public boolean isMaxiNbUsines(){
+        return this.getNbUsines() >= this.getNbMaxiUsine();
+    }
 }
