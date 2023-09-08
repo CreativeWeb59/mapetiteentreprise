@@ -162,15 +162,16 @@ public abstract class Usines {
      * Recup des marchandises produites dans les usines entre les switchs de fenetre
      * et maj du bouton encaisser avec les gains encours
      * @param btnEncaisser Donner le bouton à gérer pour afficher le montant à récupérer
-     * @param gainEnAttenteUsine donner les gains en attente pour les afficher sur le bouton
      */
-    public void recupMarchandisesUsine(Button btnEncaisser, BigDecimal gainEnAttenteUsine) {
+    public void majBtnEncaisser(Button btnEncaisser) {
         if (this.getNbMarchandises() > 0) {
             btnEncaisser.setDisable(false);
             // maj le montant sur le bouton Encaisser
-            String formattedString = "Encaisser " + decimalFormat.format(gainEnAttenteUsine) + monnaie;
+            String formattedString = "Encaisser " + decimalFormat.format(this.gainEnAttenteUsine) + monnaie;
             btnEncaisser.setText(formattedString);
         } else {
+            String formattedString = "Gains en attente...";
+            btnEncaisser.setText(formattedString);
             btnEncaisser.setDisable(true);
         }
     }

@@ -157,7 +157,7 @@ public class UsinesTextileController {
                     // demarre la barre de progression de l'usine
                     // recuperation de l'etat de la barre de progression pour la petite usine
                     double vitesseUsineTextile = usineTextile.getVitesseUsineTextile();
-                    this.progressBarStartUsineTextile(0, vitesseUsineTextile, vitesseUsineTextile, jeu.getJoueur().getUsineTextilePetite(), progressTextile, btnEncaisserUsineTextile1, this.gainEnAttenteUsineTextile1);
+                    this.progressBarStartUsineTextile(0, vitesseUsineTextile, vitesseUsineTextile, jeu.getJoueur().getUsineTextilePetite(), progressTextile, btnEncaisserUsineTextile1);
                 }
                 // mise a jour des valeurs
                 miseEnPlace();
@@ -170,7 +170,7 @@ public class UsinesTextileController {
     }
 
     public void onBtnEncaisserUsineTextile1() {
-        encaisserUsineTextile(this.jeu.getJoueur().getUsineTextilePetite(), btnEncaisserUsineTextile1, gainEnAttenteUsineTextile1);
+        encaisserUsineTextile(this.jeu.getJoueur().getUsineTextilePetite(), btnEncaisserUsineTextile1);
     }
 
     /**
@@ -178,15 +178,15 @@ public class UsinesTextileController {
      *
      * @param usineTextile usine textile spécifiée
      */
-    public void encaisserUsineTextile(UsineTextile usineTextile, Button btnEncaisserUsineTextile, BigDecimal gainEnAttenteUsineTextile) {
+    public void encaisserUsineTextile(UsineTextile usineTextile, Button btnEncaisserUsineTextile) {
         long nbMarchandisesUsineTextile = usineTextile.getNbMarchandises();
 
         usineTextile.setNbMarchandises(0); // raz le nombre de marchandises
-        jeu.getJoueur().setArgent(gainEnAttenteUsineTextile.add(jeu.getJoueur().getArgent())); // met a jour les nouveaux gains
+        jeu.getJoueur().setArgent(usineTextile.getGainEnAttenteUsine().add(jeu.getJoueur().getArgent())); // met a jour les nouveaux gains
 
-        String formattedGain = decimalFormat.format(gainEnAttenteUsineTextile) + monnaie;
+        String formattedGain = decimalFormat.format(usineTextile.getGainEnAttenteUsine()) + monnaie;
         // raz des gains en attente
-        gainEnAttenteUsineTextile = BigDecimal.valueOf(0.00);
+        usineTextile.setGainEnAttenteUsine(BigDecimal.valueOf(0.00));
 
         System.out.println("Vous venez de récupérer le prix de " + nbMarchandisesUsineTextile + " de l'usine de textile " + usineTextile.getNom() + ", vous avez gagné " + formattedGain + ".");
 
@@ -212,7 +212,7 @@ public class UsinesTextileController {
             btnEncaisserUsineTextile1.setVisible(true);
             btnAchatUsineTextile1.setVisible(false);
             System.out.println("Actif");
-            jeu.getJoueur().getUsineTextilePetite().recupMarchandisesUsine(btnEncaisserUsineTextile1, this.gainEnAttenteUsineTextile1);
+            this.jeu.getJoueur().getUsineTextilePetite().majBtnEncaisser(btnEncaisserUsineTextile1);
         } else {
             btnEncaisserUsineTextile1.setVisible(false);
             btnAchatUsineTextile1.setVisible(true);
@@ -248,9 +248,9 @@ public class UsinesTextileController {
     public void recupMarchandises() {
         // petite usine de textile
         // maj des gains en attente
-        this.gainEnAttenteUsineTextile1 = this.jeu.getJoueur().getUsineTextilePetite().majGainsEnAttente();
+        this.jeu.getJoueur().getUsineTextilePetite().setGainEnAttenteUsine(this.jeu.getJoueur().getUsineTextilePetite().majGainsEnAttente());
         // maj du bouton
-        this.jeu.getJoueur().getUsineTextilePetite().recupMarchandisesUsine(btnEncaisserUsineTextile1, this.gainEnAttenteUsineTextile1);
+        this.jeu.getJoueur().getUsineTextilePetite().majBtnEncaisser(btnEncaisserUsineTextile1);
     }
 
     /**
@@ -349,7 +349,7 @@ public class UsinesTextileController {
             System.out.println("Vitesse ajustement : " + vitesseUsineTextile1);
             System.out.println("etatBarreProgress : " + jeu.getJoueur().getUsineTextilePetite().getEtatProgressUsine());
 
-            this.progressBarStartUsineTextile(1, jeu.getJoueur().getUsineTextilePetite().getVitesseUsineTextile(), vitesseUsineTextile1, jeu.getJoueur().getUsineTextilePetite(), progressTextile1, btnEncaisserUsineTextile1, this.gainEnAttenteUsineTextile1);
+            this.progressBarStartUsineTextile(1, jeu.getJoueur().getUsineTextilePetite().getVitesseUsineTextile(), vitesseUsineTextile1, jeu.getJoueur().getUsineTextilePetite(), progressTextile1, btnEncaisserUsineTextile1);
         }
     }
 
@@ -363,7 +363,7 @@ public class UsinesTextileController {
      * @param progress          : barre de progress de la fabrication d'une marchandise
      * @param btnEncaisser
      */
-    public void progressBarStartUsineTextile(int cycle, double vitesse, double vitesseAjustement, UsineTextile usineTextile, ProgressBar progress, Button btnEncaisser, BigDecimal gainEnAttenteUsineTextile) {
+    public void progressBarStartUsineTextile(int cycle, double vitesse, double vitesseAjustement, UsineTextile usineTextile, ProgressBar progress, Button btnEncaisser) {
         double etatBarreProgress;
         if (cycle == 1) {
             progress.setProgress(usineTextile.getEtatProgressUsine());
@@ -380,9 +380,11 @@ public class UsinesTextileController {
                     btnEncaisser.setDisable(false);
                     // ajoute le nombre de marchandises fabriquées par l'usine
                     usineTextile.majUsine();
+                    // maj le montant des gains en attente
+                    recupMarchandises();
                     System.out.println("Production de marchandises dans " + usineTextile.getNom() + " terminée");
                     // met à jour les gains en cours ainsi que le bouton encaisser
-                    usineTextile.recupMarchandisesUsine(btnEncaisser, gainEnAttenteUsineTextile);
+                    usineTextile.majBtnEncaisser(btnEncaisser);
                     // maj des labels
                     this.miseEnPlace();
                 }, new KeyValue(progress.progressProperty(), 1))
@@ -390,7 +392,7 @@ public class UsinesTextileController {
         if (cycle == 1) {
             timelineUsineTextile1.setOnFinished(event -> {
                 // recalcul de la vitesse suivant le niveau de la barre de progression
-                progressBarStartUsineTextile(cycle - 1, vitesse, vitesse, usineTextile, progress, btnEncaisser, gainEnAttenteUsineTextile);
+                progressBarStartUsineTextile(cycle - 1, vitesse, vitesse, usineTextile, progress, btnEncaisser);
             });
         }
         if (cycle == 0) {
