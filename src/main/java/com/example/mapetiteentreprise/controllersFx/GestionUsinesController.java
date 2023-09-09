@@ -1,10 +1,7 @@
 package com.example.mapetiteentreprise.controllersFx;
 
 import com.example.mapetiteentreprise.Main;
-import com.example.mapetiteentreprise.actions.Outils;
 import com.example.mapetiteentreprise.jeu.Jeu;
-import javafx.animation.Timeline;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

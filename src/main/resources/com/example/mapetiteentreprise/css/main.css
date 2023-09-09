@@ -231,3 +231,9 @@ Label{
     -fx-text-fill: #2E86C1;
     -fx-background-color: transparent;
 }
+
+.fondsTextile1{
+    -fx-background-image: url("../images/fondsTextile1.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
