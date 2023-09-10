@@ -36,8 +36,8 @@ public class UsinesTextileController {
             labelNbMarchandisesTextile1, labelNbMarchandisesTextile2, labelNbMarchandisesTextile3, labelNbMarchandisesTextile4;
     @FXML
     private Button btnAchatUsineTextile1, btnAchatUsineTextile2, btnAchatUsineTextile3, btnAchatUsineTextile4,
-            btnAchatUsineTextilePetite,
-            btnEncaisserUsineTextile1, btnEncaisserUsineTextile2, btnEncaisserUsineTextile3, btnEncaisserUsineTextile14;
+            btnAchatUsineTextilePetite, btnAchatUsineTextileMoyenne, btnAchatUsineTextileGrande, btnAchatUsineTextileEnorme,
+            btnEncaisserUsineTextile1, btnEncaisserUsineTextile2, btnEncaisserUsineTextile3, btnEncaisserUsineTextile4;
     private final DecimalFormat decimalFormat = Outils.getDecimalFormatWithSpaceSeparator();
     @FXML
     private ProgressBar progressOeufs, progressBC, progressBF, progressSa, progressCo,
@@ -105,7 +105,6 @@ public class UsinesTextileController {
      */
     public void onWindowClose(WindowEvent event) {
         // fermeture des barres, enregistrement + stop et sauvegarde date deco
-        System.out.println("Test 1");
         fermetureProgress();
         // sauvegarde bdd
         sauveBdd();
@@ -115,28 +114,28 @@ public class UsinesTextileController {
      * Ajout d'une petite usine
      */
     public void acheterUsineTextilePetite() {
-        acheterUsineTextile(this.jeu.getJoueur().getUsineTextilePetite(), progressTextile1);
+        acheterUsineTextile(this.jeu.getJoueur().getUsineTextilePetite(), progressTextile1, 1);
     }
 
     /**
      * Ajout d'une petite usine
      */
     public void acheterUsineTextileMoyenne() {
-        acheterUsineTextile(this.jeu.getJoueur().getUsineTextileMoyenne(), progressTextile2);
+        acheterUsineTextile(this.jeu.getJoueur().getUsineTextileMoyenne(), progressTextile2, 2);
     }
 
     /**
      * Ajout d'une petite usine
      */
     public void acheterUsineTextileGrande() {
-        acheterUsineTextile(this.jeu.getJoueur().getUsineTextileGrande(), progressTextile3);
+        acheterUsineTextile(this.jeu.getJoueur().getUsineTextileGrande(), progressTextile3, 3);
     }
 
     /**
      * Ajout d'une petite usine
      */
     public void acheterUsineTextileEnorme() {
-        acheterUsineTextile(this.jeu.getJoueur().getUsineTextileEnorme(), progressTextile4);
+        acheterUsineTextile(this.jeu.getJoueur().getUsineTextileEnorme(), progressTextile4, 4);
     }
 
     /**
@@ -144,8 +143,9 @@ public class UsinesTextileController {
      *
      * @param usineTextile    à acheter
      * @param progressTextile barre de progression de l'usine
+     * @param numUsine        permet de savoir qu'elle usine pour lancer la bonne barre de progression
      */
-    public void acheterUsineTextile(UsineTextile usineTextile, ProgressBar progressTextile) {
+    public void acheterUsineTextile(UsineTextile usineTextile, ProgressBar progressTextile, int numUsine) {
         if (!usineTextile.isMaxiNbUsines()) {
             BigDecimal montantAchat = usineTextile.getPrixUsine();
             if (jeu.getJoueur().acheter(montantAchat)) {
@@ -157,7 +157,22 @@ public class UsinesTextileController {
                     // demarre la barre de progression de l'usine
                     // recuperation de l'etat de la barre de progression pour la petite usine
                     double vitesseUsineTextile = usineTextile.getVitesseUsineTextile();
-                    this.progressBarStartUsineTextile(0, vitesseUsineTextile, vitesseUsineTextile, jeu.getJoueur().getUsineTextilePetite(), progressTextile, btnEncaisserUsineTextile1);
+                    switch (numUsine) {
+                        case 1:
+                            this.progressBarStartUsineTextilePetite(0, vitesseUsineTextile, vitesseUsineTextile, jeu.getJoueur().getUsineTextilePetite(), progressTextile, btnEncaisserUsineTextile1);
+                            break;
+                        case 2:
+                            this.progressBarStartUsineTextileMoyenne(0, vitesseUsineTextile, vitesseUsineTextile, jeu.getJoueur().getUsineTextileMoyenne(), progressTextile, btnEncaisserUsineTextile2);
+                            break;
+                        case 3:
+                            this.progressBarStartUsineTextileGrande(0, vitesseUsineTextile, vitesseUsineTextile, jeu.getJoueur().getUsineTextileGrande(), progressTextile, btnEncaisserUsineTextile3);
+                            break;
+                        case 4:
+                            this.progressBarStartUsineTextileEnorme(0, vitesseUsineTextile, vitesseUsineTextile, jeu.getJoueur().getUsineTextileEnorme(), progressTextile, btnEncaisserUsineTextile4);
+                            break;
+                        default:
+                            System.out.println("erreur d'usine");
+                    }
                 }
                 // mise a jour des valeurs
                 miseEnPlace();
@@ -169,8 +184,32 @@ public class UsinesTextileController {
         }
     }
 
+    /**
+     * Gere le clic sur le bouton encaisser usine de textile petite
+     */
     public void onBtnEncaisserUsineTextile1() {
         encaisserUsineTextile(this.jeu.getJoueur().getUsineTextilePetite(), btnEncaisserUsineTextile1);
+    }
+
+    /**
+     * Gere le clic sur le bouton encaisser usine de textile moyenne
+     */
+    public void onBtnEncaisserUsineTextile2() {
+        encaisserUsineTextile(this.jeu.getJoueur().getUsineTextileMoyenne(), btnEncaisserUsineTextile2);
+    }
+
+    /**
+     * Gere le clic sur le bouton encaisser usine de textile grande
+     */
+    public void onBtnEncaisserUsineTextile3() {
+        encaisserUsineTextile(this.jeu.getJoueur().getUsineTextileGrande(), btnEncaisserUsineTextile3);
+    }
+
+    /**
+     * Gere le clic sur le bouton encaisser usine de textile enorme
+     */
+    public void onBtnEncaisserUsineTextile4() {
+        encaisserUsineTextile(this.jeu.getJoueur().getUsineTextilePetite(), btnEncaisserUsineTextile4);
     }
 
     /**
@@ -207,6 +246,45 @@ public class UsinesTextileController {
      * Affiche les bons boutons : Achat service de livraison / Encaisser
      */
     public void affichageBtn() {
+        affichageBtnTextile1();
+        affichageBtnTextile2();
+        affichageBtnTextile3();
+        affichageBtnTextile4();
+        testBtnAchats();
+    }
+
+    /**
+     * Active / desactive le bouton d'achat de vehicule de livraison pour chaque usine
+     */
+    public void testBtnAchats() {
+        // usine de textile petite
+        testBtnAchat(jeu.getJoueur().getUsineTextilePetite(), btnAchatUsineTextile1, btnAchatUsineTextilePetite);
+        // usine de textile moyenne
+        testBtnAchat(jeu.getJoueur().getUsineTextileMoyenne(), btnAchatUsineTextile2, btnAchatUsineTextileMoyenne);
+        // usine de textile grande
+        testBtnAchat(jeu.getJoueur().getUsineTextileGrande(), btnAchatUsineTextile3, btnAchatUsineTextileGrande);
+        // usine de textile enorme
+        testBtnAchat(jeu.getJoueur().getUsineTextileEnorme(), btnAchatUsineTextile4, btnAchatUsineTextileEnorme);
+    }
+    /**
+     * Active / desactive le bouton d'achat de vehicule de livraison pour l'usine et les boutons donnée en paramètres
+     * @param usineTextile usine à tester
+     * @param btnAchatUsine bouton de l'achat d'une usine (qui active l'usine en question)
+     * @param btnAjoutUsine bouton de l'ajout d'une usine (qui ajoute une usine quand usine déja activée)
+     */
+    public void testBtnAchat(UsineTextile usineTextile, Button btnAchatUsine, Button btnAjoutUsine){
+        if (jeu.getJoueur().isArgent(usineTextile.getPrixUsine()) && !usineTextile.isMaxiNbUsines()) {
+            btnAchatUsine.setDisable(false);
+            btnAjoutUsine.setDisable(false);
+        } else {
+            btnAchatUsine.setDisable(true);
+            btnAjoutUsine.setDisable(true);
+        }
+    }
+    /**
+     * gere l'affichage des boutons textile petite usine
+     */
+    public void affichageBtnTextile1() {
         // boutons du usine textile
         if (Outils.isActif(jeu.getJoueur().getUsineTextilePetite().getUsineActive())) {
             btnEncaisserUsineTextile1.setVisible(true);
@@ -227,24 +305,80 @@ public class UsinesTextileController {
             }
             System.out.println("non actif");
         }
-        testBtnAchats();
     }
-
     /**
-     * Active / desactive le bouton d'achat de vehicule de livraison
+     * gere l'affichage des boutons textile usine moyenne
      */
-    public void testBtnAchats() {
-        // scooter
-        BigDecimal prixUsineTextile1 = jeu.getJoueur().getUsineTextilePetite().getPrixUsine();
-        if (jeu.getJoueur().isArgent(prixUsineTextile1) && !this.jeu.getJoueur().getUsineTextilePetite().isMaxiNbUsines()) {
-            btnAchatUsineTextile1.setDisable(false);
-            btnAchatUsineTextilePetite.setDisable(false);
+    public void affichageBtnTextile2() {
+        // boutons du usine textile
+        if (Outils.isActif(jeu.getJoueur().getUsineTextileMoyenne().getUsineActive())) {
+            btnEncaisserUsineTextile2.setVisible(true);
+            btnAchatUsineTextile2.setVisible(false);
+            System.out.println("Actif");
+            this.jeu.getJoueur().getUsineTextileMoyenne().majBtnEncaisser(btnEncaisserUsineTextile2);
         } else {
-            btnAchatUsineTextile1.setDisable(true);
-            btnAchatUsineTextilePetite.setDisable(true);
+            btnEncaisserUsineTextile2.setVisible(false);
+            btnAchatUsineTextile2.setVisible(true);
+            if (jeu.getJoueur().isArgent(jeu.getJoueur().getUsineTextileMoyenne().getPrixUsine())) {
+                paneTextile2.setOpacity(1);
+                paneTextile2.setDisable(false);
+                btnAchatUsineTextile2.setDisable(false);
+            } else {
+                btnAchatUsineTextile2.setDisable(true);
+                paneTextile2.setOpacity(0.8);
+                paneTextile2.setDisable(true);
+            }
+            System.out.println("non actif");
         }
     }
-
+    /**
+     * gere l'affichage des boutons textile usine grande
+     */
+    public void affichageBtnTextile3() {
+        if (Outils.isActif(jeu.getJoueur().getUsineTextileGrande().getUsineActive())) {
+            btnEncaisserUsineTextile3.setVisible(true);
+            btnAchatUsineTextile3.setVisible(false);
+            System.out.println("Actif");
+            this.jeu.getJoueur().getUsineTextileGrande().majBtnEncaisser(btnEncaisserUsineTextile3);
+        } else {
+            btnEncaisserUsineTextile3.setVisible(false);
+            btnAchatUsineTextile3.setVisible(true);
+            if (jeu.getJoueur().isArgent(jeu.getJoueur().getUsineTextileGrande().getPrixUsine())) {
+                paneTextile3.setOpacity(1);
+                paneTextile3.setDisable(false);
+                btnAchatUsineTextile3.setDisable(false);
+            } else {
+                btnAchatUsineTextile3.setDisable(true);
+                paneTextile3.setOpacity(0.8);
+                paneTextile3.setDisable(true);
+            }
+            System.out.println("non actif");
+        }
+    }
+    /**
+     * gere l'affichage des boutons textile usine enorme
+     */
+    public void affichageBtnTextile4() {
+        if (Outils.isActif(jeu.getJoueur().getUsineTextileEnorme().getUsineActive())) {
+            btnEncaisserUsineTextile4.setVisible(true);
+            btnAchatUsineTextile4.setVisible(false);
+            System.out.println("Actif");
+            this.jeu.getJoueur().getUsineTextileEnorme().majBtnEncaisser(btnEncaisserUsineTextile4);
+        } else {
+            btnEncaisserUsineTextile4.setVisible(false);
+            btnAchatUsineTextile4.setVisible(true);
+            if (jeu.getJoueur().isArgent(jeu.getJoueur().getUsineTextileEnorme().getPrixUsine())) {
+                paneTextile4.setOpacity(1);
+                paneTextile4.setDisable(false);
+                btnAchatUsineTextile4.setDisable(false);
+            } else {
+                btnAchatUsineTextile4.setDisable(true);
+                paneTextile4.setOpacity(0.8);
+                paneTextile4.setDisable(true);
+            }
+            System.out.println("non actif");
+        }
+    }
     public void recupMarchandises() {
         // petite usine de textile
         // maj des gains en attente
@@ -259,6 +393,9 @@ public class UsinesTextileController {
     public void majLabels() {
         setLabelHaut();
         labelsUsineTextile1();
+        labelsUsineTextile2();
+        labelsUsineTextile3();
+        labelsUsineTextile4();
     }
 
     public void setLabelHaut() {
@@ -275,7 +412,33 @@ public class UsinesTextileController {
         setLabelTarifUsineTextile(this.jeu.getJoueur().getUsineTextilePetite(), labelTarifUsineTextile1);
         setLabelTarifUsineTextile(this.jeu.getJoueur().getUsineTextilePetite(), btnAchatUsineTextile1);
     }
-
+    /**
+     * Labels de l'usine de textile 2
+     */
+    public void labelsUsineTextile2() {
+        setNbUsineTextile(this.jeu.getJoueur().getUsineTextileMoyenne(), labelNbUsineTextile2);
+        setNbMarchandisesTextile(this.jeu.getJoueur().getUsineTextileMoyenne(), labelNbMarchandisesTextile2);
+        setLabelTarifUsineTextile(this.jeu.getJoueur().getUsineTextileMoyenne(), labelTarifUsineTextile2);
+        setLabelTarifUsineTextile(this.jeu.getJoueur().getUsineTextileMoyenne(), btnAchatUsineTextile2);
+    }
+    /**
+     * Labels de l'usine de textile 3
+     */
+    public void labelsUsineTextile3() {
+        setNbUsineTextile(this.jeu.getJoueur().getUsineTextileGrande(), labelNbUsineTextile3);
+        setNbMarchandisesTextile(this.jeu.getJoueur().getUsineTextileGrande(), labelNbMarchandisesTextile3);
+        setLabelTarifUsineTextile(this.jeu.getJoueur().getUsineTextileGrande(), labelTarifUsineTextile3);
+        setLabelTarifUsineTextile(this.jeu.getJoueur().getUsineTextileGrande(), btnAchatUsineTextile3);
+    }
+    /**
+     * Labels de l'usine de textile 4
+     */
+    public void labelsUsineTextile4() {
+        setNbUsineTextile(this.jeu.getJoueur().getUsineTextileEnorme(), labelNbUsineTextile4);
+        setNbMarchandisesTextile(this.jeu.getJoueur().getUsineTextileEnorme(), labelNbMarchandisesTextile4);
+        setLabelTarifUsineTextile(this.jeu.getJoueur().getUsineTextileEnorme(), labelTarifUsineTextile4);
+        setLabelTarifUsineTextile(this.jeu.getJoueur().getUsineTextileEnorme(), btnAchatUsineTextile4);
+    }
     /**
      * initialise le nombre d'usines en cours ainsi que le nombre d'usines maximum
      */
@@ -340,21 +503,34 @@ public class UsinesTextileController {
      * Demarre les usines lorsqu'elles sont actives
      */
     public void demarrageUsinesTextile() {
+        // usine de textile petite
         if (Outils.isActif(jeu.getJoueur().getUsineTextilePetite().getUsineActive())) {
             System.out.println("Demarrage " + jeu.getJoueur().getUsineTextilePetite().getNom());
-            // enable pane de la livraison
-//            this.debloquerLivraison(paneScooter, paneScooterD);
             double vitesseUsineTextile1 = jeu.getJoueur().getUsineTextilePetite().getVitesseUsineTextile() - (jeu.getJoueur().getUsineTextilePetite().getVitesseUsineTextile() * jeu.getJoueur().getUsineTextilePetite().getEtatProgressUsine());
-
-            System.out.println("Vitesse ajustement : " + vitesseUsineTextile1);
-            System.out.println("etatBarreProgress : " + jeu.getJoueur().getUsineTextilePetite().getEtatProgressUsine());
-
-            this.progressBarStartUsineTextile(1, jeu.getJoueur().getUsineTextilePetite().getVitesseUsineTextile(), vitesseUsineTextile1, jeu.getJoueur().getUsineTextilePetite(), progressTextile1, btnEncaisserUsineTextile1);
+            this.progressBarStartUsineTextilePetite(1, jeu.getJoueur().getUsineTextilePetite().getVitesseUsineTextile(), vitesseUsineTextile1, jeu.getJoueur().getUsineTextilePetite(), progressTextile1, btnEncaisserUsineTextile1);
+        }
+        // usine de textile moyenne
+        if (Outils.isActif(jeu.getJoueur().getUsineTextileMoyenne().getUsineActive())) {
+            System.out.println("Demarrage " + jeu.getJoueur().getUsineTextileMoyenne().getNom());
+            double vitesseUsineTextile2 = jeu.getJoueur().getUsineTextileMoyenne().getVitesseUsineTextile() - (jeu.getJoueur().getUsineTextileMoyenne().getVitesseUsineTextile() * jeu.getJoueur().getUsineTextileMoyenne().getEtatProgressUsine());
+            this.progressBarStartUsineTextileMoyenne(1, jeu.getJoueur().getUsineTextileMoyenne().getVitesseUsineTextile(), vitesseUsineTextile2, jeu.getJoueur().getUsineTextileMoyenne(), progressTextile2, btnEncaisserUsineTextile2);
+        }
+        // usine de textile grande
+        if (Outils.isActif(jeu.getJoueur().getUsineTextileGrande().getUsineActive())) {
+            System.out.println("Demarrage " + jeu.getJoueur().getUsineTextileGrande().getNom());
+            double vitesseUsineTextile3 = jeu.getJoueur().getUsineTextileGrande().getVitesseUsineTextile() - (jeu.getJoueur().getUsineTextileGrande().getVitesseUsineTextile() * jeu.getJoueur().getUsineTextileGrande().getEtatProgressUsine());
+            this.progressBarStartUsineTextileGrande(1, jeu.getJoueur().getUsineTextileGrande().getVitesseUsineTextile(), vitesseUsineTextile3, jeu.getJoueur().getUsineTextileGrande(), progressTextile3, btnEncaisserUsineTextile3);
+        }
+        // usine de textile enorme
+        if (Outils.isActif(jeu.getJoueur().getUsineTextileEnorme().getUsineActive())) {
+            System.out.println("Demarrage " + jeu.getJoueur().getUsineTextileEnorme().getNom());
+            double vitesseUsineTextile4 = jeu.getJoueur().getUsineTextileEnorme().getVitesseUsineTextile() - (jeu.getJoueur().getUsineTextileEnorme().getVitesseUsineTextile() * jeu.getJoueur().getUsineTextileEnorme().getEtatProgressUsine());
+            this.progressBarStartUsineTextileEnorme(1, jeu.getJoueur().getUsineTextileEnorme().getVitesseUsineTextile(), vitesseUsineTextile4, jeu.getJoueur().getUsineTextileEnorme(), progressTextile4, btnEncaisserUsineTextile4);
         }
     }
 
     /**
-     * Barre de progression pour comptabiliser le stock de marchandises dans l'usine spécifiée en parametres
+     * Barre de progression pour comptabiliser le stock de marchandises dans l'usine textile petite
      *
      * @param cycle             : 0 pour cycle infini
      * @param vitesse           : vitesse de l'usine en secondes
@@ -363,7 +539,7 @@ public class UsinesTextileController {
      * @param progress          : barre de progress de la fabrication d'une marchandise
      * @param btnEncaisser
      */
-    public void progressBarStartUsineTextile(int cycle, double vitesse, double vitesseAjustement, UsineTextile usineTextile, ProgressBar progress, Button btnEncaisser) {
+    public void progressBarStartUsineTextilePetite(int cycle, double vitesse, double vitesseAjustement, UsineTextile usineTextile, ProgressBar progress, Button btnEncaisser) {
         double etatBarreProgress;
         if (cycle == 1) {
             progress.setProgress(usineTextile.getEtatProgressUsine());
@@ -392,7 +568,7 @@ public class UsinesTextileController {
         if (cycle == 1) {
             timelineUsineTextile1.setOnFinished(event -> {
                 // recalcul de la vitesse suivant le niveau de la barre de progression
-                progressBarStartUsineTextile(cycle - 1, vitesse, vitesse, usineTextile, progress, btnEncaisser);
+                progressBarStartUsineTextilePetite(cycle - 1, vitesse, vitesse, usineTextile, progress, btnEncaisser);
             });
         }
         if (cycle == 0) {
@@ -401,6 +577,156 @@ public class UsinesTextileController {
             timelineUsineTextile1.setCycleCount(cycle);
         }
         timelineUsineTextile1.play();
+    }
+
+    /**
+     * Barre de progression pour comptabiliser le stock de marchandises dans l'usine de textile moyenne
+     *
+     * @param cycle             : 0 pour cycle infini
+     * @param vitesse           : vitesse de l'usine en secondes
+     * @param vitesseAjustement
+     * @param usineTextile
+     * @param progress          : barre de progress de la fabrication d'une marchandise
+     * @param btnEncaisser
+     */
+    public void progressBarStartUsineTextileMoyenne(int cycle, double vitesse, double vitesseAjustement, UsineTextile usineTextile, ProgressBar progress, Button btnEncaisser) {
+        double etatBarreProgress;
+        if (cycle == 1) {
+            progress.setProgress(usineTextile.getEtatProgressUsine());
+            etatBarreProgress = usineTextile.getEtatProgressUsine();
+        } else {
+            progress.setProgress(0);
+            etatBarreProgress = 0;
+        }
+        timelineUsineTextile2 = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(progress.progressProperty(), etatBarreProgress)),
+                new KeyFrame(Duration.seconds(vitesseAjustement), e -> {
+                    System.out.println("cycle");
+                    // rend le bouton Encaisser actif
+                    btnEncaisser.setDisable(false);
+                    // ajoute le nombre de marchandises fabriquées par l'usine
+                    usineTextile.majUsine();
+                    // maj le montant des gains en attente
+                    recupMarchandises();
+                    System.out.println("Production de marchandises dans " + usineTextile.getNom() + " terminée");
+                    // met à jour les gains en cours ainsi que le bouton encaisser
+                    usineTextile.majBtnEncaisser(btnEncaisser);
+                    // maj des labels
+                    this.miseEnPlace();
+                }, new KeyValue(progress.progressProperty(), 1))
+        );
+        if (cycle == 1) {
+            timelineUsineTextile2.setOnFinished(event -> {
+                // recalcul de la vitesse suivant le niveau de la barre de progression
+                progressBarStartUsineTextileMoyenne(cycle - 1, vitesse, vitesse, usineTextile, progress, btnEncaisser);
+            });
+        }
+        if (cycle == 0) {
+            timelineUsineTextile2.setCycleCount(Animation.INDEFINITE);
+        } else {
+            timelineUsineTextile2.setCycleCount(cycle);
+        }
+        timelineUsineTextile2.play();
+    }
+
+    /**
+     * Barre de progression pour comptabiliser le stock de marchandises dans l'usine textile grande
+     *
+     * @param cycle             : 0 pour cycle infini
+     * @param vitesse           : vitesse de l'usine en secondes
+     * @param vitesseAjustement
+     * @param usineTextile
+     * @param progress          : barre de progress de la fabrication d'une marchandise
+     * @param btnEncaisser
+     */
+    public void progressBarStartUsineTextileGrande(int cycle, double vitesse, double vitesseAjustement, UsineTextile usineTextile, ProgressBar progress, Button btnEncaisser) {
+        double etatBarreProgress;
+        if (cycle == 1) {
+            progress.setProgress(usineTextile.getEtatProgressUsine());
+            etatBarreProgress = usineTextile.getEtatProgressUsine();
+        } else {
+            progress.setProgress(0);
+            etatBarreProgress = 0;
+        }
+        timelineUsineTextile3 = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(progress.progressProperty(), etatBarreProgress)),
+                new KeyFrame(Duration.seconds(vitesseAjustement), e -> {
+                    System.out.println("cycle");
+                    // rend le bouton Encaisser actif
+                    btnEncaisser.setDisable(false);
+                    // ajoute le nombre de marchandises fabriquées par l'usine
+                    usineTextile.majUsine();
+                    // maj le montant des gains en attente
+                    recupMarchandises();
+                    System.out.println("Production de marchandises dans " + usineTextile.getNom() + " terminée");
+                    // met à jour les gains en cours ainsi que le bouton encaisser
+                    usineTextile.majBtnEncaisser(btnEncaisser);
+                    // maj des labels
+                    this.miseEnPlace();
+                }, new KeyValue(progress.progressProperty(), 1))
+        );
+        if (cycle == 1) {
+            timelineUsineTextile3.setOnFinished(event -> {
+                // recalcul de la vitesse suivant le niveau de la barre de progression
+                progressBarStartUsineTextileGrande(cycle - 1, vitesse, vitesse, usineTextile, progress, btnEncaisser);
+            });
+        }
+        if (cycle == 0) {
+            timelineUsineTextile3.setCycleCount(Animation.INDEFINITE);
+        } else {
+            timelineUsineTextile3.setCycleCount(cycle);
+        }
+        timelineUsineTextile3.play();
+    }
+
+    /**
+     * Barre de progression pour comptabiliser le stock de marchandises dans l'usine textile enorme
+     *
+     * @param cycle             : 0 pour cycle infini
+     * @param vitesse           : vitesse de l'usine en secondes
+     * @param vitesseAjustement
+     * @param usineTextile
+     * @param progress          : barre de progress de la fabrication d'une marchandise
+     * @param btnEncaisser
+     */
+    public void progressBarStartUsineTextileEnorme(int cycle, double vitesse, double vitesseAjustement, UsineTextile usineTextile, ProgressBar progress, Button btnEncaisser) {
+        double etatBarreProgress;
+        if (cycle == 1) {
+            progress.setProgress(usineTextile.getEtatProgressUsine());
+            etatBarreProgress = usineTextile.getEtatProgressUsine();
+        } else {
+            progress.setProgress(0);
+            etatBarreProgress = 0;
+        }
+        timelineUsineTextile4 = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(progress.progressProperty(), etatBarreProgress)),
+                new KeyFrame(Duration.seconds(vitesseAjustement), e -> {
+                    System.out.println("cycle");
+                    // rend le bouton Encaisser actif
+                    btnEncaisser.setDisable(false);
+                    // ajoute le nombre de marchandises fabriquées par l'usine
+                    usineTextile.majUsine();
+                    // maj le montant des gains en attente
+                    recupMarchandises();
+                    System.out.println("Production de marchandises dans " + usineTextile.getNom() + " terminée");
+                    // met à jour les gains en cours ainsi que le bouton encaisser
+                    usineTextile.majBtnEncaisser(btnEncaisser);
+                    // maj des labels
+                    this.miseEnPlace();
+                }, new KeyValue(progress.progressProperty(), 1))
+        );
+        if (cycle == 1) {
+            timelineUsineTextile4.setOnFinished(event -> {
+                // recalcul de la vitesse suivant le niveau de la barre de progression
+                progressBarStartUsineTextileEnorme(cycle - 1, vitesse, vitesse, usineTextile, progress, btnEncaisser);
+            });
+        }
+        if (cycle == 0) {
+            timelineUsineTextile4.setCycleCount(Animation.INDEFINITE);
+        } else {
+            timelineUsineTextile4.setCycleCount(cycle);
+        }
+        timelineUsineTextile4.play();
     }
 
     /**
@@ -425,8 +751,9 @@ public class UsinesTextileController {
 
         // on recupere les barres de progression des usines de textile
         this.jeu.getJoueur().getUsineTextilePetite().setEtatProgressUsine(this.progressTextile1.getProgress());
-        System.out.println("Recup barre usine textile1 : " + this.jeu.getJoueur().getUsineTextilePetite().getEtatProgressUsine());
-        System.out.println("Recup progress usinte textile1 : " + this.progressTextile1.getProgress());
+        this.jeu.getJoueur().getUsineTextileMoyenne().setEtatProgressUsine(this.progressTextile2.getProgress());
+        this.jeu.getJoueur().getUsineTextileGrande().setEtatProgressUsine(this.progressTextile3.getProgress());
+        this.jeu.getJoueur().getUsineTextileEnorme().setEtatProgressUsine(this.progressTextile4.getProgress());
 
         // on stoppe les barres de progression
         jeu.getJoueur().getFerme().progressBarStop();
@@ -441,6 +768,9 @@ public class UsinesTextileController {
         jeu.getJoueur().getLivraisonPoidsLourd().progressBarStop();
         jeu.getJoueur().getLivraisonAvion().progressBarStop();
         Outils.progressBarStop(timelineUsineTextile1);
+        Outils.progressBarStop(timelineUsineTextile2);
+        Outils.progressBarStop(timelineUsineTextile3);
+        Outils.progressBarStop(timelineUsineTextile4);
     }
 
     /**
