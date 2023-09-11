@@ -3,6 +3,7 @@ package com.example.mapetiteentreprise.actions;
 import com.example.mapetiteentreprise.jeu.Poulaillers;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.util.Duration;
 
@@ -21,8 +22,8 @@ public class Outils {
      * nombre maxi de caratères : 20
      * Caracteres autorisés : alphabet de a à z + chiffres de 0 à 9
      */
-    public static Resultat testPseudo(String chaine, int min, int max){
-        if(chaine.length()>0){
+    public static Resultat testPseudo(String chaine, int min, int max) {
+        if (chaine.length() > 0) {
             String chaineATraiter = miseEnFormePseudo(chaine);
 
             // Test taille de la chaine
@@ -47,10 +48,11 @@ public class Outils {
     /**
      * On passe la chaine tout en majuscule
      * on enlève tous les espaces
+     *
      * @param chaine
      * @return
      */
-    public static String miseEnFormePseudo(String chaine){
+    public static String miseEnFormePseudo(String chaine) {
         // tout minuscule
         chaine = chaine.toLowerCase();
 
@@ -64,22 +66,23 @@ public class Outils {
     /**
      * la chaine doit contenir les caractères de l'alphabet
      * et doit commencer forcement par une lettre : cad les 26 premiers caractères de la liste
+     *
      * @param chaine
      * @return
      */
-    public static Boolean isAlphabet(String chaine){
-        String[] alphabet = new String[]{"a", "b","c","d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u",
+    public static Boolean isAlphabet(String chaine) {
+        String[] alphabet = new String[]{"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u",
                 "v", "w", "x", "y", "z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
         // premier test sur le premier caractère qui doit être une lettre
         Boolean premierTest = false;
         String letrre1 = chaine.substring(0, 1);
         for (int i = 0; i < 26; i++) {
-            if(letrre1.equals(alphabet[i])){
+            if (letrre1.equals(alphabet[i])) {
                 premierTest = true;
             }
         }
         // deuxieme test sur tous les caractères
-        if (premierTest){
+        if (premierTest) {
             for (char c : chaine.toCharArray()) {
                 String caractere = String.valueOf(c);
                 boolean caractereAutorise = false;
@@ -102,13 +105,14 @@ public class Outils {
     /**
      * permet de verifer la taille d'une chaine de caractères
      * renvoi false si la taille n'est pas comprise entre les deux valeurs min et max
+     *
      * @param chaine
      * @param max
      * @param min
      * @return
      */
-    public static Boolean isTailleChaine(String chaine, int min, int max){
-        if (chaine.length()>=min && chaine.length()<=max){
+    public static Boolean isTailleChaine(String chaine, int min, int max) {
+        if (chaine.length() >= min && chaine.length() <= max) {
             return true;
         }
         return false;
@@ -116,6 +120,7 @@ public class Outils {
 
     /**
      * Formate les nombres décimaux avec séparateur de milliers
+     *
      * @return
      */
     public static DecimalFormat getDecimalFormatWithSpaceSeparator() {
@@ -127,20 +132,21 @@ public class Outils {
 
     /**
      * Calcule la difference entre deux dates
+     *
      * @param date1
      * @param date2
      * @return un long representant des secondes écoulées entre la date2 et la date1
      */
-    public static long differenceEntreDeuxDates(LocalDateTime date1, LocalDateTime date2){
+    public static long differenceEntreDeuxDates(LocalDateTime date1, LocalDateTime date2) {
         return ChronoUnit.SECONDS.between(date2, date1);
     }
 
     /**
      * Affichage du message d'erreur pendant un certain laps de temps donnée
      *
-     * @param labelErreur le label qui doit être affiché temporairement
+     * @param labelErreur   le label qui doit être affiché temporairement
      * @param messageErreur le message à inscrire
-     * @param delai délai d'affichage du message
+     * @param delai         délai d'affichage du message
      */
     public static void afficherMessageTemporaire(Label labelErreur, String messageErreur, int delai) {
         // affiche le label pour la gestion des erreurs
@@ -159,23 +165,41 @@ public class Outils {
     }
 
     /**
-     * Donne une position X pour centrer un objet (exemple bouton)
+     * Donne une position X pour centrer un objet horizontalement (exemple bouton)
      * par rapport à un un autre objet (par exemple image)
+     *
      * @param imagePosX
      * @param imageWidth
      * @param widthBtn
      * @return
      */
-    public static double centragePosX(double imagePosX, double imageWidth, double widthBtn){
+    public static double centragePosX(double imagePosX, double imageWidth, double widthBtn) {
+        double centrage = (imagePosX + (imageWidth / 2) - (widthBtn / 2));
+        System.out.println("imagePosX : " + imagePosX);
+        System.out.println("imageWidth : " + imageWidth);
+        System.out.println("widthBtn : " + widthBtn);
+        System.out.println("Centrage : " + centrage);
         return (imagePosX + (imageWidth / 2) - (widthBtn / 2));
     }
 
     /**
+     * centre un bouton dans son container
+     * @param bouton bouton à centrer
+     * @param tailleConteneur largeur du conteneur
+     */
+    public static void centrageBouton(Button bouton, double tailleConteneur) {
+        double valeur = (tailleConteneur - bouton.getWidth()) / 2;
+        bouton.setLayoutX(valeur);
+    }
+
+
+    /**
      * Recupere la capacite totale en poule de tous les poulaillers
      * en fonction de leur index
+     *
      * @return
      */
-    public static int capaciteMaxPoulaillers(List<Poulaillers> poulaillersList, int poulailler1, int poulailler2, int poulailler3, int poulailler4){
+    public static int capaciteMaxPoulaillers(List<Poulaillers> poulaillersList, int poulailler1, int poulailler2, int poulailler3, int poulailler4) {
         int capacite1 = poulaillersList.get(poulailler1).getCapacite();
         int capacite2 = poulaillersList.get(poulailler2).getCapacite();
         int capacite3 = poulaillersList.get(poulailler3).getCapacite();
@@ -185,9 +209,10 @@ public class Outils {
 
     /**
      * Permet modifier le texte du label donné en paramètre
+     *
      * @param label
      */
-    public static void setLabel(Label label, String texte){
+    public static void setLabel(Label label, String texte) {
         label.setText(texte);
     }
 
@@ -208,6 +233,7 @@ public class Outils {
 
     /**
      * arret de la barre de progression spécifié en parametres
+     *
      * @param timeline
      */
     public static void progressBarStop(Timeline timeline) {

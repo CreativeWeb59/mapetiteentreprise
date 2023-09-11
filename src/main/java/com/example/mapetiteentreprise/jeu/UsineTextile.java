@@ -7,6 +7,8 @@ import javafx.animation.Timeline;
 import javafx.scene.control.ProgressBar;
 import javafx.util.Duration;
 
+import java.math.BigDecimal;
+
 public class UsineTextile extends Usines{
     private Timeline timelineUsineTextile;
 
@@ -73,5 +75,40 @@ public class UsineTextile extends Usines{
         }
     }
 
-
+    /**
+     * Maj des valeurs de la petite usine de textile
+     * maxUsines, prix d'achat et prix de fabrication
+     */
+    public void setUsinePetite(){
+        this.setNbMaxiUsine(50);
+        this.setPrixUsine(BigDecimal.valueOf(500000));
+        this.setPrixFabrication(BigDecimal.valueOf(5000));
+    }
+    /**
+     * Maj des valeurs de la moyenne usine de textile
+     * maxUsines, prix d'achat et prix de fabrication
+     */
+    public void setUsineMoyenne(){
+        this.setNbMaxiUsine(50);
+        this.setPrixUsine(BigDecimal.valueOf(750000));
+        this.setPrixFabrication(BigDecimal.valueOf(7500));
+    }
+    /**
+     * Maj des valeurs de la grande usine de textile
+     * maxUsines, prix d'achat et prix de fabrication
+     */
+    public void setUsineGrande(){
+        this.setNbMaxiUsine(50);
+        this.setPrixUsine(BigDecimal.valueOf(1000000));
+        this.setPrixFabrication(BigDecimal.valueOf(10000));
+    }
+    /**
+     * Maj des valeurs de l'énorme usine de textile
+     * maxUsines, prix d'achat et prix de fabrication
+     */
+    public void setUsineEnorme(){
+        this.setNbMaxiUsine(50);
+        this.setPrixUsine(BigDecimal.valueOf(1500000));
+        this.setPrixFabrication(BigDecimal.valueOf(15000));
+    }
 }

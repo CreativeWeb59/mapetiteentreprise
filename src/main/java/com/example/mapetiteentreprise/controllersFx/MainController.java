@@ -163,6 +163,9 @@ public class MainController {
         // mise en place des valeurs dans les usines de textile
         affectationToutesLesUsinesTextiles();
 
+        // maj des tarifs dans les usines de textile
+        majTarifsUsines();
+
         connectionBdd.close();
         System.out.println("Le jeu complet içi : " + this.jeu);
         this.switchPageGestion(event);
@@ -282,6 +285,9 @@ public class MainController {
 
         // mise en place des valeurs dans les usines de textile
         affectationToutesLesUsinesTextiles();
+
+        // maj des tarifs dans les usines de textile
+        majTarifsUsines();
     }
 
     /**
@@ -417,4 +423,14 @@ public class MainController {
         System.out.println("Set usines : " + usineTextile.getEtatProgressUsine());
     }
 
+    /**
+     * Permet de mettre à jour les prix des différentes usines
+     * prix de vente, prix de fabrication et nombra max d'usines
+     */
+    public void majTarifsUsines(){
+        jeu.getJoueur().getUsineTextilePetite().setUsinePetite();
+        jeu.getJoueur().getUsineTextileMoyenne().setUsineMoyenne();
+        jeu.getJoueur().getUsineTextileGrande().setUsineGrande();
+        jeu.getJoueur().getUsineTextileEnorme().setUsineEnorme();
+    }
 }

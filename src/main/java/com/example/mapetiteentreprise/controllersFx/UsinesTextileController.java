@@ -9,6 +9,7 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -46,7 +47,8 @@ public class UsinesTextileController {
     private Timeline timelineUsineTextile1, timelineUsineTextile2, timelineUsineTextile3, timelineUsineTextile4;
     private ConnectionBdd connectionBdd = new ConnectionBdd();
     @FXML
-    private Pane paneProgress, paneTextile1, paneTextile2, paneTextile3, paneTextile4;
+    private Pane paneProgress, paneTextile1, paneTextile2, paneTextile3, paneTextile4,
+            paneTextile1D, paneTextile2D, paneTextile3D, paneTextile4D;
     private Stage stage;
     private Scene scene;
     private Parent root;
@@ -67,6 +69,10 @@ public class UsinesTextileController {
 
         // affichage des barres de progression (mode dev)
         jeu.afficheProgression(paneProgress);
+
+        System.out.println("largeur pane 2 : " + paneTextile2D.getWidth());
+        System.out.println("Largeur bouton 2 : " + btnAchatUsineTextile2.getWidth());
+        centrageBoutons();
     }
 
     /**
@@ -250,6 +256,10 @@ public class UsinesTextileController {
         affichageBtnTextile2();
         affichageBtnTextile3();
         affichageBtnTextile4();
+        affichageContenuPanes(jeu.getJoueur().getUsineTextilePetite(), paneTextile1, labelNbMarchandisesTextile1, labelNbUsineTextile1, labelTarifUsineTextile1, btnAchatUsineTextilePetite, btnEncaisserUsineTextile1, progressTextile1);
+        affichageContenuPanes(jeu.getJoueur().getUsineTextileMoyenne(), paneTextile2, labelNbMarchandisesTextile2, labelNbUsineTextile2, labelTarifUsineTextile2, btnAchatUsineTextileMoyenne, btnEncaisserUsineTextile2, progressTextile2);
+        affichageContenuPanes(jeu.getJoueur().getUsineTextileGrande(), paneTextile3, labelNbMarchandisesTextile3, labelNbUsineTextile3, labelTarifUsineTextile3, btnAchatUsineTextileGrande, btnEncaisserUsineTextile3, progressTextile3);
+        affichageContenuPanes(jeu.getJoueur().getUsineTextileEnorme(), paneTextile4, labelNbMarchandisesTextile4, labelNbUsineTextile4, labelTarifUsineTextile4, btnAchatUsineTextileEnorme, btnEncaisserUsineTextile4, progressTextile4);
         testBtnAchats();
     }
 
@@ -265,6 +275,44 @@ public class UsinesTextileController {
         testBtnAchat(jeu.getJoueur().getUsineTextileGrande(), btnAchatUsineTextile3, btnAchatUsineTextileGrande);
         // usine de textile enorme
         testBtnAchat(jeu.getJoueur().getUsineTextileEnorme(), btnAchatUsineTextile4, btnAchatUsineTextileEnorme);
+    }
+    /**
+     * Gere l'affichage ou non du contenu des panes pour afficher / masquer l'usine au demarrage
+     * @param usineTextile usine à afficher / masquer
+     * @param pane
+     * @param labelNb
+     * @param labelTarif
+     * @param labelTitre
+     * @param btnEncaisser
+     * @param btnPlus
+     * @param barreProgress
+     */
+    public void affichageContenuPanes(UsineTextile usineTextile, Pane pane, Label labelTitre, Label labelNb, Label labelTarif, Button btnPlus, Button btnEncaisser, ProgressBar barreProgress){
+        if (usineTextile.getUsineActive() == 1){
+            // opacity du pane
+            pane.setOpacity(1);
+            // on affiche les labels
+            labelTitre.setVisible(true);
+            labelNb.setVisible(true);
+            labelTarif.setVisible(true);
+            // on affiche les boutons
+            btnPlus.setVisible(true);
+            btnEncaisser.setVisible(true);
+            // on affiche la barre de progress
+            barreProgress.setVisible(true);
+        } else {
+            // opacity du pane
+            pane.setOpacity(0.6);
+            // on affiche les labels
+            labelTitre.setVisible(false);
+            labelNb.setVisible(false);
+            labelTarif.setVisible(false);
+            // on affiche les boutons
+            btnPlus.setVisible(false);
+            btnEncaisser.setVisible(false);
+            // on affiche la barre de progress
+            barreProgress.setVisible(false);
+        }
     }
     /**
      * Active / desactive le bouton d'achat de vehicule de livraison pour l'usine et les boutons donnée en paramètres
@@ -447,6 +495,18 @@ public class UsinesTextileController {
         labelUsine.setText(formattedString);
     }
 
+    /**
+     * Centre les boutons d'achat des usines
+     * Platform.runLater permet d'attendre le chargement des fenetres afin de récupérer les valeurs des boutons
+     */
+    public void centrageBoutons(){
+        Platform.runLater(() -> {
+            Outils.centrageBouton(btnAchatUsineTextile1, paneTextile1D.getWidth());
+            Outils.centrageBouton(btnAchatUsineTextile2, paneTextile2D.getWidth());
+            Outils.centrageBouton(btnAchatUsineTextile3, paneTextile3D.getWidth());
+            Outils.centrageBouton(btnAchatUsineTextile4, paneTextile4D.getWidth());
+        });
+    }
     /**
      * initialise le nombre de marchandises produites
      */

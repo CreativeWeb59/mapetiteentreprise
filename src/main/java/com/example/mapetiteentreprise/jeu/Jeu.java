@@ -213,6 +213,20 @@ public class Jeu {
         getSauvegarde().setNbMarchandisesUsineTextile1(getJoueur().getUsineTextilePetite().getNbMarchandises());
         getSauvegarde().setEtatProgressUsineTextile1(getJoueur().getUsineTextilePetite().getEtatProgressUsine());
 
+        getSauvegarde().setUsineTextileActive2(getJoueur().getUsineTextileMoyenne().getUsineActive());
+        getSauvegarde().setNbUsinesTextile2(getJoueur().getUsineTextileMoyenne().getNbUsines());
+        getSauvegarde().setNbMarchandisesUsineTextile2(getJoueur().getUsineTextileMoyenne().getNbMarchandises());
+        getSauvegarde().setEtatProgressUsineTextile2(getJoueur().getUsineTextileMoyenne().getEtatProgressUsine());
+
+        getSauvegarde().setUsineTextileActive3(getJoueur().getUsineTextileGrande().getUsineActive());
+        getSauvegarde().setNbUsinesTextile3(getJoueur().getUsineTextileGrande().getNbUsines());
+        getSauvegarde().setNbMarchandisesUsineTextile3(getJoueur().getUsineTextileGrande().getNbMarchandises());
+        getSauvegarde().setEtatProgressUsineTextile3(getJoueur().getUsineTextileGrande().getEtatProgressUsine());
+
+        getSauvegarde().setUsineTextileActive4(getJoueur().getUsineTextileEnorme().getUsineActive());
+        getSauvegarde().setNbUsinesTextile4(getJoueur().getUsineTextileEnorme().getNbUsines());
+        getSauvegarde().setNbMarchandisesUsineTextile4(getJoueur().getUsineTextileEnorme().getNbMarchandises());
+        getSauvegarde().setEtatProgressUsineTextile4(getJoueur().getUsineTextileEnorme().getEtatProgressUsine());
 
         System.out.println("Nouvelles valeurs a sauvegarder" + getSauvegarde());
 
