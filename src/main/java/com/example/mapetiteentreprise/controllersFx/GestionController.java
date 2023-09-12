@@ -36,7 +36,8 @@ public class GestionController {
     private Pane paneSemaine1, paneSemaine2, paneParentProgressJour, paneProgress;
     @FXML
     private ProgressBar progressOeufs, progressBC, progressBF, progressSa, progressCo,
-            progressScooter, progressCamionette, progressPoidsLourd, progressPetitCamion, progressAvion;
+            progressScooter, progressCamionette, progressPoidsLourd, progressPetitCamion, progressAvion,
+            progressTextile1, progressTextile2, progressTextile3, progressTextile4;
 
     /**
      * Recupere le nom de la sauvegarde
@@ -477,7 +478,31 @@ public class GestionController {
             this.jeu.getJoueur().getLivraisonAvion().progressBarStartAvion(1, jeu.getJoueur().getLivraisonAvion().getVitesseLivraion(), vitesseAvion, progressAvion);
         }
     }
-
+    /**
+     * Demarre les usines lorsqu'elles sont actives
+     */
+    public void demarrageUsinesTextile() {
+        if (Outils.isActif(jeu.getJoueur().getUsineTextilePetite().getUsineActive())) {
+            // recupertaion etat barre de progression usine de textil petite
+            double vitesseUsineTextile1 = jeu.getJoueur().getUsineTextilePetite().getVitesseUsineTextile() - (jeu.getJoueur().getUsineTextilePetite().getVitesseUsineTextile() * jeu.getJoueur().getUsineTextilePetite().getEtatProgressUsine());
+            this.jeu.getJoueur().getUsineTextilePetite().progressBarStartUsineTextile(1, this.jeu.getJoueur().getUsineTextilePetite().getVitesseUsineTextile(), vitesseUsineTextile1, progressTextile1);
+        }
+        if (Outils.isActif(jeu.getJoueur().getUsineTextileMoyenne().getUsineActive())) {
+            // recupertaion etat barre de progression usine de textil moyenne
+            double vitesseUsineTextile2 = jeu.getJoueur().getUsineTextileMoyenne().getVitesseUsineTextile() - (jeu.getJoueur().getUsineTextileMoyenne().getVitesseUsineTextile() * jeu.getJoueur().getUsineTextileMoyenne().getEtatProgressUsine());
+            this.jeu.getJoueur().getUsineTextileMoyenne().progressBarStartUsineTextile(1, this.jeu.getJoueur().getUsineTextileMoyenne().getVitesseUsineTextile(), vitesseUsineTextile2, progressTextile2);
+        }
+        if (Outils.isActif(jeu.getJoueur().getUsineTextileGrande().getUsineActive())) {
+            // recupertaion etat barre de progression usine de textil grande
+            double vitesseUsineTextile3 = jeu.getJoueur().getUsineTextileGrande().getVitesseUsineTextile() - (jeu.getJoueur().getUsineTextileGrande().getVitesseUsineTextile() * jeu.getJoueur().getUsineTextileGrande().getEtatProgressUsine());
+            this.jeu.getJoueur().getUsineTextileGrande().progressBarStartUsineTextile(1, this.jeu.getJoueur().getUsineTextileGrande().getVitesseUsineTextile(), vitesseUsineTextile3, progressTextile3);
+        }
+        if (Outils.isActif(jeu.getJoueur().getUsineTextileEnorme().getUsineActive())) {
+            // recupertaion etat barre de progression usine de textil enorme
+            double vitesseUsineTextile4 = jeu.getJoueur().getUsineTextileEnorme().getVitesseUsineTextile() - (jeu.getJoueur().getUsineTextileEnorme().getVitesseUsineTextile() * jeu.getJoueur().getUsineTextileEnorme().getEtatProgressUsine());
+            this.jeu.getJoueur().getUsineTextileEnorme().progressBarStartUsineTextile(1, this.jeu.getJoueur().getUsineTextileEnorme().getVitesseUsineTextile(), vitesseUsineTextile4, progressTextile4);
+        }
+    }
     /**
      * Demarrage des barres de progression, dans l'ordre
      * la ferme avec les oeufs => incrémente les oeufs
@@ -497,6 +522,9 @@ public class GestionController {
 
         // demarrage des livraisons
         demarrageLivraisons();
+
+        // demarrage des usines
+        demarrageUsinesTextile();
     }
 
     // sauvegardes
@@ -528,6 +556,12 @@ public class GestionController {
         this.jeu.getJoueur().getLivraisonPoidsLourd().setEtatProgressLivraison(this.progressPoidsLourd.getProgress());
         this.jeu.getJoueur().getLivraisonAvion().setEtatProgressLivraison(this.progressAvion.getProgress());
 
+        // on recupere les barres de progression des usines de textile
+        this.jeu.getJoueur().getUsineTextilePetite().setEtatProgressUsine(this.progressTextile1.getProgress());
+        this.jeu.getJoueur().getUsineTextileMoyenne().setEtatProgressUsine(this.progressTextile2.getProgress());
+        this.jeu.getJoueur().getUsineTextileGrande().setEtatProgressUsine(this.progressTextile3.getProgress());
+        this.jeu.getJoueur().getUsineTextileEnorme().setEtatProgressUsine(this.progressTextile4.getProgress());
+
         // on stoppe les barres de progression
         jeu.getJoueur().getFerme().progressBarStop();
         jeu.getCalendrier().progressBarStop();
@@ -540,6 +574,10 @@ public class GestionController {
         jeu.getJoueur().getLivraisonPetitCamion().progressBarStop();
         jeu.getJoueur().getLivraisonPoidsLourd().progressBarStop();
         jeu.getJoueur().getLivraisonAvion().progressBarStop();
+        jeu.getJoueur().getUsineTextilePetite().progressBarStop();
+        jeu.getJoueur().getUsineTextileMoyenne().progressBarStop();
+        jeu.getJoueur().getUsineTextileGrande().progressBarStop();
+        jeu.getJoueur().getUsineTextileEnorme().progressBarStop();
     }
     /**
      * Sauvegarde de la base de donnees

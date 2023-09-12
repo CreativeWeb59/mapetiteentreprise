@@ -74,22 +74,22 @@
                      <Button fx:id="btnEncaisserUsineTextile4" layoutX="440.0" layoutY="80.0" mnemonicParsing="false" onAction="#onBtnEncaisserUsineTextile4" text="Encaisser" />
                 </children>
             </Pane>
-            <Pane fx:id="paneTextile1D" layoutY="50.0" prefHeight="50.0" prefWidth="1200.0">
+            <Pane fx:id="paneTextile1D" focusTraversable="true" layoutY="50.0" prefHeight="50.0" prefWidth="1200.0">
                <children>
                   <Button fx:id="btnAchatUsineTextile1" alignment="CENTER" mnemonicParsing="false" onAction="#acheterUsineTextilePetite" text="Acheter petite usine" />
                </children>
             </Pane>
-             <Pane fx:id="paneTextile2D" layoutY="250.0" prefHeight="50.0" prefWidth="1200.0">
+             <Pane fx:id="paneTextile2D" focusTraversable="true" layoutY="250.0" prefHeight="50.0" prefWidth="1200.0">
                  <children>
                      <Button fx:id="btnAchatUsineTextile2" mnemonicParsing="false" onAction="#acheterUsineTextileMoyenne" text="Acheter usine moyenne" />
                  </children>
              </Pane>
-             <Pane fx:id="paneTextile3D" layoutY="450.0" prefHeight="50.0" prefWidth="1200.0">
+             <Pane fx:id="paneTextile3D" focusTraversable="true" layoutY="450.0" prefHeight="50.0" prefWidth="1200.0">
                  <children>
                      <Button fx:id="btnAchatUsineTextile3" mnemonicParsing="false" onAction="#acheterUsineTextileGrande" text="Acheter usine grande" />
                  </children>
              </Pane>
-             <Pane fx:id="paneTextile4D" layoutY="650.0" prefHeight="50.0" prefWidth="1200.0">
+             <Pane fx:id="paneTextile4D" focusTraversable="true" layoutY="650.0" prefHeight="50.0" prefWidth="1200.0">
                  <children>
                      <Button fx:id="btnAchatUsineTextile4" mnemonicParsing="false" onAction="#acheterUsineTextileEnorme" text="Acheter usine enorme" />
                  </children>

@@ -52,7 +52,8 @@ public class GestionDistributeursController {
     private Pane paneCo, paneGroupCo, paneSa, paneGroupSa, paneProgress;
     @FXML
     private ProgressBar progressBC, progressBF, progressSa, progressCo, progressOeufs,
-            progressScooter, progressCamionette, progressPetitCamion, progressPoidsLourd, progressAvion;
+            progressScooter, progressCamionette, progressPetitCamion, progressPoidsLourd, progressAvion,
+            progressTextile1, progressTextile2, progressTextile3, progressTextile4;
     private Timeline timelineBC, timelineBF, timelineSa, timelineCo;
 
     private BigDecimal gainEnAttenteBC = new BigDecimal(0);

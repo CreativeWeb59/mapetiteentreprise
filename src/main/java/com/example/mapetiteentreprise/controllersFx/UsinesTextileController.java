@@ -59,7 +59,7 @@ public class UsinesTextileController {
         this.jeu = jeu;
 
         // recuperation des marchandises
-        recupMarchandises();
+        recupMarchandisesToutes();
 
         // majLabels et boutons
         miseEnPlace();
@@ -427,12 +427,24 @@ public class UsinesTextileController {
             System.out.println("non actif");
         }
     }
-    public void recupMarchandises() {
+
+    public void recupMarchandisesToutes(){
+        recupMarchandises(this.jeu.getJoueur().getUsineTextilePetite(), btnEncaisserUsineTextile1);
+        recupMarchandises(this.jeu.getJoueur().getUsineTextileMoyenne(), btnEncaisserUsineTextile2);
+        recupMarchandises(this.jeu.getJoueur().getUsineTextileGrande(), btnEncaisserUsineTextile3);
+        recupMarchandises(this.jeu.getJoueur().getUsineTextileEnorme(), btnEncaisserUsineTextile4);
+    }
+    /**
+     * Maj les gains en attente à chaque fin de progression
+     * @param usine
+     * @param boutonEncaisser
+     */
+    public void recupMarchandises(UsineTextile usine, Button boutonEncaisser) {
         // petite usine de textile
         // maj des gains en attente
-        this.jeu.getJoueur().getUsineTextilePetite().setGainEnAttenteUsine(this.jeu.getJoueur().getUsineTextilePetite().majGainsEnAttente());
+        usine.setGainEnAttenteUsine(usine.majGainsEnAttente());
         // maj du bouton
-        this.jeu.getJoueur().getUsineTextilePetite().majBtnEncaisser(btnEncaisserUsineTextile1);
+        usine.majBtnEncaisser(boutonEncaisser);
     }
 
     /**
@@ -617,7 +629,7 @@ public class UsinesTextileController {
                     // ajoute le nombre de marchandises fabriquées par l'usine
                     usineTextile.majUsine();
                     // maj le montant des gains en attente
-                    recupMarchandises();
+                    recupMarchandises(this.jeu.getJoueur().getUsineTextilePetite(), btnEncaisserUsineTextile1);
                     System.out.println("Production de marchandises dans " + usineTextile.getNom() + " terminée");
                     // met à jour les gains en cours ainsi que le bouton encaisser
                     usineTextile.majBtnEncaisser(btnEncaisser);
@@ -667,7 +679,7 @@ public class UsinesTextileController {
                     // ajoute le nombre de marchandises fabriquées par l'usine
                     usineTextile.majUsine();
                     // maj le montant des gains en attente
-                    recupMarchandises();
+                    recupMarchandises(this.jeu.getJoueur().getUsineTextileMoyenne(), btnEncaisserUsineTextile2);
                     System.out.println("Production de marchandises dans " + usineTextile.getNom() + " terminée");
                     // met à jour les gains en cours ainsi que le bouton encaisser
                     usineTextile.majBtnEncaisser(btnEncaisser);
@@ -717,7 +729,7 @@ public class UsinesTextileController {
                     // ajoute le nombre de marchandises fabriquées par l'usine
                     usineTextile.majUsine();
                     // maj le montant des gains en attente
-                    recupMarchandises();
+                    recupMarchandises(this.jeu.getJoueur().getUsineTextileGrande(), btnEncaisserUsineTextile3);
                     System.out.println("Production de marchandises dans " + usineTextile.getNom() + " terminée");
                     // met à jour les gains en cours ainsi que le bouton encaisser
                     usineTextile.majBtnEncaisser(btnEncaisser);
@@ -767,7 +779,7 @@ public class UsinesTextileController {
                     // ajoute le nombre de marchandises fabriquées par l'usine
                     usineTextile.majUsine();
                     // maj le montant des gains en attente
-                    recupMarchandises();
+                    recupMarchandises(this.jeu.getJoueur().getUsineTextileEnorme(), btnEncaisserUsineTextile4);
                     System.out.println("Production de marchandises dans " + usineTextile.getNom() + " terminée");
                     // met à jour les gains en cours ainsi que le bouton encaisser
                     usineTextile.majBtnEncaisser(btnEncaisser);
