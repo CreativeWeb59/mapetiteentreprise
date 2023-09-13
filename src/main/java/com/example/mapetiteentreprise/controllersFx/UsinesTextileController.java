@@ -19,6 +19,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -49,6 +50,8 @@ public class UsinesTextileController {
     @FXML
     private Pane paneProgress, paneTextile1, paneTextile2, paneTextile3, paneTextile4,
             paneTextile1D, paneTextile2D, paneTextile3D, paneTextile4D;
+    @FXML
+    private ImageView imgTextile1, imgTextile2, imgTextile3, imgTextile4;
     private Stage stage;
     private Scene scene;
     private Parent root;
@@ -256,10 +259,10 @@ public class UsinesTextileController {
         affichageBtnTextile2();
         affichageBtnTextile3();
         affichageBtnTextile4();
-        affichageContenuPanes(jeu.getJoueur().getUsineTextilePetite(), paneTextile1, labelNbMarchandisesTextile1, labelNbUsineTextile1, labelTarifUsineTextile1, btnAchatUsineTextilePetite, btnEncaisserUsineTextile1, progressTextile1);
-        affichageContenuPanes(jeu.getJoueur().getUsineTextileMoyenne(), paneTextile2, labelNbMarchandisesTextile2, labelNbUsineTextile2, labelTarifUsineTextile2, btnAchatUsineTextileMoyenne, btnEncaisserUsineTextile2, progressTextile2);
-        affichageContenuPanes(jeu.getJoueur().getUsineTextileGrande(), paneTextile3, labelNbMarchandisesTextile3, labelNbUsineTextile3, labelTarifUsineTextile3, btnAchatUsineTextileGrande, btnEncaisserUsineTextile3, progressTextile3);
-        affichageContenuPanes(jeu.getJoueur().getUsineTextileEnorme(), paneTextile4, labelNbMarchandisesTextile4, labelNbUsineTextile4, labelTarifUsineTextile4, btnAchatUsineTextileEnorme, btnEncaisserUsineTextile4, progressTextile4);
+        affichageContenuPanes(jeu.getJoueur().getUsineTextilePetite(), paneTextile1, paneTextile1D, labelNbMarchandisesTextile1, labelNbUsineTextile1, labelTarifUsineTextile1, btnAchatUsineTextilePetite, btnEncaisserUsineTextile1, imgTextile1, progressTextile1);
+        affichageContenuPanes(jeu.getJoueur().getUsineTextileMoyenne(), paneTextile2, paneTextile2D, labelNbMarchandisesTextile2, labelNbUsineTextile2, labelTarifUsineTextile2, btnAchatUsineTextileMoyenne, btnEncaisserUsineTextile2, imgTextile2, progressTextile2);
+        affichageContenuPanes(jeu.getJoueur().getUsineTextileGrande(), paneTextile3, paneTextile3D, labelNbMarchandisesTextile3, labelNbUsineTextile3, labelTarifUsineTextile3, btnAchatUsineTextileGrande, btnEncaisserUsineTextile3, imgTextile3, progressTextile3);
+        affichageContenuPanes(jeu.getJoueur().getUsineTextileEnorme(), paneTextile4, paneTextile4D, labelNbMarchandisesTextile4, labelNbUsineTextile4, labelTarifUsineTextile4, btnAchatUsineTextileEnorme, btnEncaisserUsineTextile4, imgTextile4, progressTextile4);
         testBtnAchats();
     }
 
@@ -287,10 +290,12 @@ public class UsinesTextileController {
      * @param btnPlus
      * @param barreProgress
      */
-    public void affichageContenuPanes(UsineTextile usineTextile, Pane pane, Label labelTitre, Label labelNb, Label labelTarif, Button btnPlus, Button btnEncaisser, ProgressBar barreProgress){
+    public void affichageContenuPanes(UsineTextile usineTextile, Pane pane, Pane paneD, Label labelTitre, Label labelNb, Label labelTarif, Button btnPlus, Button btnEncaisser, ImageView imgTextile1, ProgressBar barreProgress){
         if (usineTextile.getUsineActive() == 1){
             // opacity du pane
             pane.setOpacity(1);
+            // on cache le paneD
+            paneD.setVisible(false);
             // on affiche les labels
             labelTitre.setVisible(true);
             labelNb.setVisible(true);
@@ -298,11 +303,15 @@ public class UsinesTextileController {
             // on affiche les boutons
             btnPlus.setVisible(true);
             btnEncaisser.setVisible(true);
+            // on cache l'image
+            imgTextile1.setVisible(false);
             // on affiche la barre de progress
             barreProgress.setVisible(true);
         } else {
             // opacity du pane
             pane.setOpacity(0.6);
+            // on affiche le paneD
+            paneD.setVisible(true);
             // on affiche les labels
             labelTitre.setVisible(false);
             labelNb.setVisible(false);
@@ -310,6 +319,8 @@ public class UsinesTextileController {
             // on affiche les boutons
             btnPlus.setVisible(false);
             btnEncaisser.setVisible(false);
+            // on cache l'image
+            imgTextile1.setVisible(false);
             // on affiche la barre de progress
             barreProgress.setVisible(false);
         }

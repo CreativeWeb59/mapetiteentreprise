@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
@@ -9,7 +10,7 @@
     <Pane layoutX="0.0" layoutY="0.0" prefHeight="200.0" prefWidth="1280.0">
         <children>
             <Label fx:id="labelHaut" layoutX="479.0" layoutY="39.0" prefHeight="29.0" prefWidth="321.0" style="-fx-background-color: transparent;" text="En banque" textFill="WHITE" />
-            <Button layoutX="518.0" layoutY="139.0" mnemonicParsing="false" onAction="#retourGestionUsines" text="Retour au menu" />
+            <Button layoutX="552.0" layoutY="131.0" mnemonicParsing="false" onAction="#retourGestionUsines" text="Retour au menu" />
         </children>
     </Pane>
         <Pane layoutX="40.0" layoutY="200.0" prefHeight="750.0" prefWidth="1200.0">
@@ -27,6 +28,11 @@
                    <Button fx:id="btnAchatUsineTextilePetite" layoutX="585.0" layoutY="23.0" mnemonicParsing="false" onAction="#acheterUsineTextilePetite" text="+" />
                   <Label fx:id="labelTarifUsineTextile1" layoutX="23.0" layoutY="46.0" prefHeight="29.0" prefWidth="371.0" style="-fx-background-color: transparent;" text="Label" textFill="WHITE" />
                   <Button fx:id="btnEncaisserUsineTextile1" layoutX="440.0" layoutY="80.0" mnemonicParsing="false" onAction="#onBtnEncaisserUsineTextile1" text="Encaisser" />
+                  <ImageView fx:id="imgTextile1" fitHeight="61.0" fitWidth="69.0" layoutX="360.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/textileRouge.png" />
+                     </image>
+                  </ImageView>
                </children>
             </Pane>
             <Pane fx:id="paneTextile2" layoutX="250.0" layoutY="200.0" prefHeight="150.0" prefWidth="700.0" styleClass="fondsTextile2">
@@ -42,6 +48,11 @@
                  <Button fx:id="btnAchatUsineTextileMoyenne" layoutX="585.0" layoutY="23.0" mnemonicParsing="false" onAction="#acheterUsineTextileMoyenne" text="+" />
                  <Label fx:id="labelTarifUsineTextile2" layoutX="23.0" layoutY="46.0" prefHeight="29.0" prefWidth="371.0" style="-fx-background-color: transparent;" text="Label" textFill="WHITE" />
                      <Button fx:id="btnEncaisserUsineTextile2" layoutX="440.0" layoutY="80.0" mnemonicParsing="false" onAction="#onBtnEncaisserUsineTextile2" text="Encaisser" />
+                 <ImageView fx:id="imgTextile2" fitHeight="61.0" fitWidth="69.0" layoutX="360.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                         <Image url="@images/textileJaune.png" />
+                     </image>
+                 </ImageView>
              </children>
             </Pane>
             <Pane fx:id="paneTextile3" layoutX="250.0" layoutY="400.0" prefHeight="150.0" prefWidth="700.0" styleClass="fondsTextile3">
@@ -57,6 +68,11 @@
                     <Button fx:id="btnAchatUsineTextileGrande" layoutX="585.0" layoutY="23.0" mnemonicParsing="false" onAction="#acheterUsineTextileGrande" text="+" />
                     <Label fx:id="labelTarifUsineTextile3" layoutX="23.0" layoutY="46.0" prefHeight="29.0" prefWidth="371.0" style="-fx-background-color: transparent;" text="Label" textFill="WHITE" />
                      <Button fx:id="btnEncaisserUsineTextile3" layoutX="440.0" layoutY="80.0" mnemonicParsing="false" onAction="#onBtnEncaisserUsineTextile3" text="Encaisser" />
+                    <ImageView fx:id="imgTextile3" fitHeight="61.0" fitWidth="69.0" layoutX="360.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@images/textileBlanc.png" />
+                        </image>
+                    </ImageView>
                 </children>
             </Pane>
             <Pane fx:id="paneTextile4" layoutX="250.0" layoutY="600.0" prefHeight="150.0" prefWidth="700.0" styleClass="fondsTextile4">
@@ -72,6 +88,11 @@
                     <Button fx:id="btnAchatUsineTextileEnorme" layoutX="585.0" layoutY="23.0" mnemonicParsing="false" onAction="#acheterUsineTextileEnorme" text="+" />
                     <Label fx:id="labelTarifUsineTextile4" layoutX="23.0" layoutY="46.0" prefHeight="29.0" prefWidth="371.0" style="-fx-background-color: transparent;" text="Label" textFill="WHITE" />
                      <Button fx:id="btnEncaisserUsineTextile4" layoutX="440.0" layoutY="80.0" mnemonicParsing="false" onAction="#onBtnEncaisserUsineTextile4" text="Encaisser" />
+                    <ImageView fx:id="imgTextile4" fitHeight="61.0" fitWidth="69.0" layoutX="360.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@images/textileVert.png" />
+                        </image>
+                    </ImageView>
                 </children>
             </Pane>
             <Pane fx:id="paneTextile1D" focusTraversable="true" layoutY="50.0" prefHeight="50.0" prefWidth="1200.0">
