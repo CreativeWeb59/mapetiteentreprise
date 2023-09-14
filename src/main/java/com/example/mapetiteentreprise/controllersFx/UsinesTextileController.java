@@ -218,7 +218,7 @@ public class UsinesTextileController {
      * Gere le clic sur le bouton encaisser usine de textile enorme
      */
     public void onBtnEncaisserUsineTextile4() {
-        encaisserUsineTextile(this.jeu.getJoueur().getUsineTextilePetite(), btnEncaisserUsineTextile4);
+        encaisserUsineTextile(this.jeu.getJoueur().getUsineTextileEnorme(), btnEncaisserUsineTextile4);
     }
 
     /**
@@ -303,8 +303,6 @@ public class UsinesTextileController {
             // on affiche les boutons
             btnPlus.setVisible(true);
             btnEncaisser.setVisible(true);
-            // on cache l'image
-            imgTextile1.setVisible(false);
             // on affiche la barre de progress
             barreProgress.setVisible(true);
         } else {
@@ -319,8 +317,6 @@ public class UsinesTextileController {
             // on affiche les boutons
             btnPlus.setVisible(false);
             btnEncaisser.setVisible(false);
-            // on cache l'image
-            imgTextile1.setVisible(false);
             // on affiche la barre de progress
             barreProgress.setVisible(false);
         }
@@ -349,7 +345,7 @@ public class UsinesTextileController {
             btnEncaisserUsineTextile1.setVisible(true);
             btnAchatUsineTextile1.setVisible(false);
             System.out.println("Actif");
-            this.jeu.getJoueur().getUsineTextilePetite().majBtnEncaisser(btnEncaisserUsineTextile1);
+            this.jeu.getJoueur().getUsineTextilePetite().majBtnEncaisser(btnEncaisserUsineTextile1, imgTextile1);
         } else {
             btnEncaisserUsineTextile1.setVisible(false);
             btnAchatUsineTextile1.setVisible(true);
@@ -374,7 +370,7 @@ public class UsinesTextileController {
             btnEncaisserUsineTextile2.setVisible(true);
             btnAchatUsineTextile2.setVisible(false);
             System.out.println("Actif");
-            this.jeu.getJoueur().getUsineTextileMoyenne().majBtnEncaisser(btnEncaisserUsineTextile2);
+            this.jeu.getJoueur().getUsineTextileMoyenne().majBtnEncaisser(btnEncaisserUsineTextile2, imgTextile2);
         } else {
             btnEncaisserUsineTextile2.setVisible(false);
             btnAchatUsineTextile2.setVisible(true);
@@ -398,7 +394,7 @@ public class UsinesTextileController {
             btnEncaisserUsineTextile3.setVisible(true);
             btnAchatUsineTextile3.setVisible(false);
             System.out.println("Actif");
-            this.jeu.getJoueur().getUsineTextileGrande().majBtnEncaisser(btnEncaisserUsineTextile3);
+            this.jeu.getJoueur().getUsineTextileGrande().majBtnEncaisser(btnEncaisserUsineTextile3, imgTextile3);
         } else {
             btnEncaisserUsineTextile3.setVisible(false);
             btnAchatUsineTextile3.setVisible(true);
@@ -422,7 +418,7 @@ public class UsinesTextileController {
             btnEncaisserUsineTextile4.setVisible(true);
             btnAchatUsineTextile4.setVisible(false);
             System.out.println("Actif");
-            this.jeu.getJoueur().getUsineTextileEnorme().majBtnEncaisser(btnEncaisserUsineTextile4);
+            this.jeu.getJoueur().getUsineTextileEnorme().majBtnEncaisser(btnEncaisserUsineTextile4, imgTextile4);
         } else {
             btnEncaisserUsineTextile4.setVisible(false);
             btnAchatUsineTextile4.setVisible(true);
@@ -440,22 +436,23 @@ public class UsinesTextileController {
     }
 
     public void recupMarchandisesToutes(){
-        recupMarchandises(this.jeu.getJoueur().getUsineTextilePetite(), btnEncaisserUsineTextile1);
-        recupMarchandises(this.jeu.getJoueur().getUsineTextileMoyenne(), btnEncaisserUsineTextile2);
-        recupMarchandises(this.jeu.getJoueur().getUsineTextileGrande(), btnEncaisserUsineTextile3);
-        recupMarchandises(this.jeu.getJoueur().getUsineTextileEnorme(), btnEncaisserUsineTextile4);
+        recupMarchandises(this.jeu.getJoueur().getUsineTextilePetite(), btnEncaisserUsineTextile1, imgTextile1);
+        recupMarchandises(this.jeu.getJoueur().getUsineTextileMoyenne(), btnEncaisserUsineTextile2, imgTextile2);
+        recupMarchandises(this.jeu.getJoueur().getUsineTextileGrande(), btnEncaisserUsineTextile3, imgTextile3);
+        recupMarchandises(this.jeu.getJoueur().getUsineTextileEnorme(), btnEncaisserUsineTextile4, imgTextile4);
     }
     /**
      * Maj les gains en attente à chaque fin de progression
      * @param usine
      * @param boutonEncaisser
      */
-    public void recupMarchandises(UsineTextile usine, Button boutonEncaisser) {
+    public void recupMarchandises(UsineTextile usine, Button boutonEncaisser, ImageView imageView) {
         // petite usine de textile
         // maj des gains en attente
         usine.setGainEnAttenteUsine(usine.majGainsEnAttente());
         // maj du bouton
-        usine.majBtnEncaisser(boutonEncaisser);
+        usine.majBtnEncaisser(boutonEncaisser, imageView);
+
     }
 
     /**
@@ -640,10 +637,10 @@ public class UsinesTextileController {
                     // ajoute le nombre de marchandises fabriquées par l'usine
                     usineTextile.majUsine();
                     // maj le montant des gains en attente
-                    recupMarchandises(this.jeu.getJoueur().getUsineTextilePetite(), btnEncaisserUsineTextile1);
+                    recupMarchandises(this.jeu.getJoueur().getUsineTextilePetite(), btnEncaisserUsineTextile1, imgTextile1);
                     System.out.println("Production de marchandises dans " + usineTextile.getNom() + " terminée");
                     // met à jour les gains en cours ainsi que le bouton encaisser
-                    usineTextile.majBtnEncaisser(btnEncaisser);
+                    usineTextile.majBtnEncaisser(btnEncaisser, imgTextile1);
                     // maj des labels
                     this.miseEnPlace();
                 }, new KeyValue(progress.progressProperty(), 1))
@@ -690,10 +687,10 @@ public class UsinesTextileController {
                     // ajoute le nombre de marchandises fabriquées par l'usine
                     usineTextile.majUsine();
                     // maj le montant des gains en attente
-                    recupMarchandises(this.jeu.getJoueur().getUsineTextileMoyenne(), btnEncaisserUsineTextile2);
+                    recupMarchandises(this.jeu.getJoueur().getUsineTextileMoyenne(), btnEncaisserUsineTextile2, imgTextile2);
                     System.out.println("Production de marchandises dans " + usineTextile.getNom() + " terminée");
                     // met à jour les gains en cours ainsi que le bouton encaisser
-                    usineTextile.majBtnEncaisser(btnEncaisser);
+                    usineTextile.majBtnEncaisser(btnEncaisser, imgTextile2);
                     // maj des labels
                     this.miseEnPlace();
                 }, new KeyValue(progress.progressProperty(), 1))
@@ -740,10 +737,10 @@ public class UsinesTextileController {
                     // ajoute le nombre de marchandises fabriquées par l'usine
                     usineTextile.majUsine();
                     // maj le montant des gains en attente
-                    recupMarchandises(this.jeu.getJoueur().getUsineTextileGrande(), btnEncaisserUsineTextile3);
+                    recupMarchandises(this.jeu.getJoueur().getUsineTextileGrande(), btnEncaisserUsineTextile3, imgTextile3);
                     System.out.println("Production de marchandises dans " + usineTextile.getNom() + " terminée");
                     // met à jour les gains en cours ainsi que le bouton encaisser
-                    usineTextile.majBtnEncaisser(btnEncaisser);
+                    usineTextile.majBtnEncaisser(btnEncaisser, imgTextile4);
                     // maj des labels
                     this.miseEnPlace();
                 }, new KeyValue(progress.progressProperty(), 1))
@@ -790,10 +787,10 @@ public class UsinesTextileController {
                     // ajoute le nombre de marchandises fabriquées par l'usine
                     usineTextile.majUsine();
                     // maj le montant des gains en attente
-                    recupMarchandises(this.jeu.getJoueur().getUsineTextileEnorme(), btnEncaisserUsineTextile4);
+                    recupMarchandises(this.jeu.getJoueur().getUsineTextileEnorme(), btnEncaisserUsineTextile4, imgTextile4);
                     System.out.println("Production de marchandises dans " + usineTextile.getNom() + " terminée");
                     // met à jour les gains en cours ainsi que le bouton encaisser
-                    usineTextile.majBtnEncaisser(btnEncaisser);
+                    usineTextile.majBtnEncaisser(btnEncaisser, imgTextile4);
                     // maj des labels
                     this.miseEnPlace();
                 }, new KeyValue(progress.progressProperty(), 1))

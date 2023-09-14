@@ -2,6 +2,7 @@ package com.example.mapetiteentreprise.jeu;
 
 import com.example.mapetiteentreprise.actions.Outils;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -163,16 +164,20 @@ public abstract class Usines {
      * et maj du bouton encaisser avec les gains encours
      * @param btnEncaisser Donner le bouton à gérer pour afficher le montant à récupérer
      */
-    public void majBtnEncaisser(Button btnEncaisser) {
+    public void majBtnEncaisser(Button btnEncaisser, ImageView imageView) {
         if (this.getNbMarchandises() > 0) {
             btnEncaisser.setDisable(false);
             // maj le montant sur le bouton Encaisser
             String formattedString = "Encaisser " + decimalFormat.format(this.gainEnAttenteUsine) + monnaie;
             btnEncaisser.setText(formattedString);
+            imageView.setVisible(true);
+            System.out.println("affichage de l'image");
         } else {
             String formattedString = "Gains en attente...";
             btnEncaisser.setText(formattedString);
             btnEncaisser.setDisable(true);
+            imageView.setVisible(false);
+            System.out.println("on enlève l'image");
         }
     }
     public BigDecimal majGainsEnAttente(){
