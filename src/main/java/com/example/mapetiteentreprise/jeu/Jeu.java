@@ -428,6 +428,27 @@ public class Jeu {
         }
         return valeur;
     }
+    public BigDecimal valeurUsinesTextile(){
+        BigDecimal valeur = BigDecimal.valueOf(0);
+        valeur = valeurUsineTextile(joueur.getUsineTextilePetite());
+        System.out.println("Valeur petite usine : " + valeur);
+        valeur = valeur.add(valeurUsineTextile(joueur.getUsineTextileMoyenne()));
+        System.out.println("Valeur moyenne usine : " + valeur);
+        valeur = valeur.add(valeurUsineTextile(joueur.getUsineTextileGrande()));
+        System.out.println("Valeur grande usine : " + valeur);
+        valeur = valeur.add(valeurUsineTextile(joueur.getUsineTextileEnorme()));
+        System.out.println("Valeur enorme usine : " + valeur);
+        return valeur;
+    }
+    public BigDecimal valeurUsineTextile(UsineTextile usineTextile){
+        BigDecimal valeur = BigDecimal.valueOf(0);
+        if(joueur.getUsineTextilePetite().getUsineActive() == 1){
+            int nbUsines = usineTextile.getNbUsines();
+            BigDecimal prixUsine = usineTextile.getPrixUsine() ;
+            valeur = prixUsine.multiply(BigDecimal.valueOf(nbUsines));
+        }
+        return valeur;
+    }
 
     /**
      * Affiche les barres de progression en mode dev
