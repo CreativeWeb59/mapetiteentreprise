@@ -10,6 +10,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -18,6 +19,8 @@ public class UsinesJouetController {
     private ProgressBar progressOeufs, progressBC, progressBF, progressSa, progressCo,
             progressScooter, progressCamionette, progressPetitCamion, progressPoidsLourd, progressAvion,
             progressTextile1, progressTextile2, progressTextile3, progressTextile4;
+    @FXML
+    private Pane paneProgress;
     private Stage stage;
     private Scene scene;
     private Parent root;
@@ -25,6 +28,10 @@ public class UsinesJouetController {
     public void demarrer(Jeu jeu){
         // Recuperation du jeu
         this.jeu = jeu;
+
+        // affichage des barres de progression (mode dev)
+        jeu.afficheProgression(paneProgress);
+
         demarrageProgress();
     }
     /**
