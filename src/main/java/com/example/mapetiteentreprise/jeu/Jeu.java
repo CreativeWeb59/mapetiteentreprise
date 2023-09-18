@@ -42,7 +42,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Jeu {
-    private final boolean dev = true;
+    private final boolean dev = false;
     private Joueur joueur;
     private Sauvegarde sauvegarde;
     private Parametres parametres;

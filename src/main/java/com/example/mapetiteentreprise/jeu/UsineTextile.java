@@ -80,7 +80,7 @@ public class UsineTextile extends Usines{
      * maxUsines, prix d'achat et prix de fabrication
      */
     public void setUsinePetite(){
-        this.setNbMaxiUsine(50);
+        this.setNbMaxiUsine(100);
         this.setPrixUsine(BigDecimal.valueOf(500000));
         this.setPrixFabrication(BigDecimal.valueOf(5000));
     }
@@ -89,7 +89,7 @@ public class UsineTextile extends Usines{
      * maxUsines, prix d'achat et prix de fabrication
      */
     public void setUsineMoyenne(){
-        this.setNbMaxiUsine(50);
+        this.setNbMaxiUsine(100);
         this.setPrixUsine(BigDecimal.valueOf(750000));
         this.setPrixFabrication(BigDecimal.valueOf(7500));
     }
@@ -98,7 +98,7 @@ public class UsineTextile extends Usines{
      * maxUsines, prix d'achat et prix de fabrication
      */
     public void setUsineGrande(){
-        this.setNbMaxiUsine(50);
+        this.setNbMaxiUsine(100);
         this.setPrixUsine(BigDecimal.valueOf(1000000));
         this.setPrixFabrication(BigDecimal.valueOf(10000));
     }
@@ -107,7 +107,7 @@ public class UsineTextile extends Usines{
      * maxUsines, prix d'achat et prix de fabrication
      */
     public void setUsineEnorme(){
-        this.setNbMaxiUsine(50);
+        this.setNbMaxiUsine(100);
         this.setPrixUsine(BigDecimal.valueOf(1500000));
         this.setPrixFabrication(BigDecimal.valueOf(15000));
     }
