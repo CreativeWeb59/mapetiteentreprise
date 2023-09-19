@@ -164,7 +164,10 @@ public class MainController {
         affectationToutesLesUsinesTextiles();
 
         // maj des tarifs dans les usines de textile
-        majTarifsUsines();
+        majTarifsUsinesTextile();
+
+        // maj tarifs dans les usines de jouets
+        majTarifsUsinesJouets();
 
         connectionBdd.close();
         System.out.println("Le jeu complet içi : " + this.jeu);
@@ -263,7 +266,8 @@ public class MainController {
 
         // creation de la sauvegarde en bdd
         this.sauvegarde = new Sauvegarde(this.pseudo, parametres.getArgentDepart(),1, 1, 0, parametres.getNbPoules(), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                dateEncours, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, dateEncours, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0,0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+                dateEncours, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, dateEncours, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0,0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
         sauvegardeService.addJoueur(sauvegarde);
 
         // creation de toutes les activites
@@ -286,8 +290,14 @@ public class MainController {
         // mise en place des valeurs dans les usines de textile
         affectationToutesLesUsinesTextiles();
 
+        // mise en place des valeurs dans les usines de jouets
+        affectationToutesLesUsinesJouets();
+
         // maj des tarifs dans les usines de textile
-        majTarifsUsines();
+        majTarifsUsinesTextile();
+
+        // maj des tarifs dans les usines de jouets
+        majTarifsUsinesJouets();
     }
 
     /**
@@ -427,10 +437,42 @@ public class MainController {
      * Permet de mettre à jour les prix des différentes usines
      * prix de vente, prix de fabrication et nombra max d'usines
      */
-    public void majTarifsUsines(){
+    public void majTarifsUsinesTextile(){
         jeu.getJoueur().getUsineTextilePetite().setUsinePetite();
         jeu.getJoueur().getUsineTextileMoyenne().setUsineMoyenne();
         jeu.getJoueur().getUsineTextileGrande().setUsineGrande();
         jeu.getJoueur().getUsineTextileEnorme().setUsineEnorme();
+    }
+
+    /**
+     * Remplit chaque usine de jouets
+     */
+    public void affectationToutesLesUsinesJouets(){
+        System.out.println("usine : " + jeu.getJoueur().getUsineJouetsPetite());
+        affectationValeursUsinesJouets(jeu.getJoueur().getUsineJouetsPetite(), sauvegarde.getUsineJouetsActive1(), sauvegarde.getNbUsinesJouets1(), sauvegarde.getNbMarchandisesUsineJouets1(), sauvegarde.getEtatProgressUsineJouets1());
+        affectationValeursUsinesJouets(jeu.getJoueur().getUsineJouetsMoyenne(), sauvegarde.getUsineJouetsActive2(), sauvegarde.getNbUsinesJouets2(), sauvegarde.getNbMarchandisesUsineJouets2(), sauvegarde.getEtatProgressUsineJouets2());
+        affectationValeursUsinesJouets(jeu.getJoueur().getUsineJouetsGrande(), sauvegarde.getUsineJouetsActive3(), sauvegarde.getNbUsinesJouets3(), sauvegarde.getNbMarchandisesUsineJouets3(), sauvegarde.getEtatProgressUsineJouets3());
+        affectationValeursUsinesJouets(jeu.getJoueur().getUsineJouetsEnorme(), sauvegarde.getUsineJouetsActive4(), sauvegarde.getNbUsinesJouets4(), sauvegarde.getNbMarchandisesUsineJouets4(), sauvegarde.getEtatProgressUsineJouets4());
+    }
+    /**
+     * Permet de remplir le contenu des usines de textile
+     */
+    public void affectationValeursUsinesJouets(UsineJouets usineJouets, int usineActive,  int nbUsines, long nbMarchandises, double etatProgressUsine){
+        usineJouets.setUsineActive(usineActive);
+        usineJouets.setNbUsines(nbUsines);
+        usineJouets.setNbMarchandises(nbMarchandises);
+        usineJouets.setEtatProgressUsine(etatProgressUsine);
+        System.out.println("Set usines : " + usineJouets.getEtatProgressUsine());
+    }
+
+    /**
+     * Permet de mettre à jour les prix des différentes usines
+     * prix de vente, prix de fabrication et nombra max d'usines
+     */
+    public void majTarifsUsinesJouets(){
+        jeu.getJoueur().getUsineJouetsPetite().setUsinePetite();
+        jeu.getJoueur().getUsineJouetsMoyenne().setUsineMoyenne();
+        jeu.getJoueur().getUsineJouetsGrande().setUsineGrande();
+        jeu.getJoueur().getUsineJouetsEnorme().setUsineEnorme();
     }
 }

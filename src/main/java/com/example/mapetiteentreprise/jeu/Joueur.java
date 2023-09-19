@@ -36,6 +36,11 @@ public class Joueur {
     private UsineTextile usineTextileGrande;
     private UsineTextile usineTextileEnorme;
 
+    private UsineJouets usineJouetsPetite;
+    private UsineJouets usineJouetsMoyenne;
+    private UsineJouets usineJouetsGrande;
+    private UsineJouets usineJouetsEnorme;
+
     public Joueur(String pseudo, BigDecimal argent, Ferme ferme, BoissonsChaudes boissonsChaudes, BoissonsFraiches boissonsFraiches, Sandwichs sandwichs, Confiseries confiseries,
                   CreditEnCours creditEnCours, int fermeActive, int distributeursActive, int distributeurBCActive, int distributeurBFActive, int distributeurCoActive, int distributeurSaActive,
                   int poulailler1, int poulailler2, int poulailler3, int poulailler4, int livraison1Active, int livraison2Active, int livraison3Active, int livraison4Active, int livraison5Active,
@@ -73,6 +78,10 @@ public class Joueur {
         this.usineTextileMoyenne = new UsineTextile("Moyenne usine de textile", 0, 0,0, 0);
         this.usineTextileGrande = new UsineTextile("Grande usine de textile", 0, 0, 0,0);
         this.usineTextileEnorme = new UsineTextile("Enorme usine de textile", 0, 0, 0,0);
+        this.usineJouetsPetite = new UsineJouets("Petite usine de jouets", 0, 0, 0, 0);
+        this.usineJouetsMoyenne = new UsineJouets("Moyenne usine de jouets", 0, 0, 0, 0);
+        this.usineJouetsGrande = new UsineJouets("Grande usine de jouets", 0, 0, 0, 0);
+        this.usineJouetsEnorme = new UsineJouets("Enorme usine de jouets", 0, 0, 0, 0);
 
     }
     public String getPseudo() {
@@ -331,6 +340,38 @@ public class Joueur {
         this.usineTextileEnorme = usineTextileEnorme;
     }
 
+    public UsineJouets getUsineJouetsPetite() {
+        return usineJouetsPetite;
+    }
+
+    public void setUsineJouetsPetite(UsineJouets usineJouetsPetite) {
+        this.usineJouetsPetite = usineJouetsPetite;
+    }
+
+    public UsineJouets getUsineJouetsMoyenne() {
+        return usineJouetsMoyenne;
+    }
+
+    public void setUsineJouetsMoyenne(UsineJouets usineJouetsMoyenne) {
+        this.usineJouetsMoyenne = usineJouetsMoyenne;
+    }
+
+    public UsineJouets getUsineJouetsGrande() {
+        return usineJouetsGrande;
+    }
+
+    public void setUsineJouetsGrande(UsineJouets usineJouetsGrande) {
+        this.usineJouetsGrande = usineJouetsGrande;
+    }
+
+    public UsineJouets getUsineJouetsEnorme() {
+        return usineJouetsEnorme;
+    }
+
+    public void setUsineJouetsEnorme(UsineJouets usineJouetsEnorme) {
+        this.usineJouetsEnorme = usineJouetsEnorme;
+    }
+
     @Override
     public String toString() {
         return "Joueur{" +
@@ -366,6 +407,10 @@ public class Joueur {
                 ", usineTextileMoyenne=" + usineTextileMoyenne +
                 ", usineTextileGrande=" + usineTextileGrande +
                 ", usineTextileEnorme=" + usineTextileEnorme +
+                ", usineJouetsPetite=" + usineJouetsPetite +
+                ", usineJouetsMoyenne=" + usineJouetsMoyenne +
+                ", usineJouetsGrande=" + usineJouetsGrande +
+                ", usineJouetsEnorme=" + usineJouetsEnorme +
                 '}';
     }
 
