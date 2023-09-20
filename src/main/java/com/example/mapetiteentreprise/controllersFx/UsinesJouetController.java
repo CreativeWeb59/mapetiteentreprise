@@ -15,6 +15,10 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 public class UsinesJouetController {
+    private final String monnaie = " €";
+    private final String separationTexte = System.getProperty("line.separator");
+
+
     @FXML
     private ProgressBar progressOeufs, progressBC, progressBF, progressSa, progressCo,
             progressScooter, progressCamionette, progressPetitCamion, progressPoidsLourd, progressAvion,
