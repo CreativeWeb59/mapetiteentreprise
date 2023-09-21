@@ -337,7 +337,7 @@ public class UsinesTextileController {
         }
     }
     /**
-     * gere l'affichage des boutons textile petite usine
+     * gere l'affichage des boutons jouets petite usine
      */
     public void affichageBtnTextile1() {
         // boutons du usine textile
