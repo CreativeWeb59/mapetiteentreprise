@@ -73,8 +73,6 @@ public class UsinesTextileController {
         // affichage des barres de progression (mode dev)
         jeu.afficheProgression(paneProgress);
 
-        System.out.println("largeur pane 2 : " + paneTextile2D.getWidth());
-        System.out.println("Largeur bouton 2 : " + btnAchatUsineTextile2.getWidth());
         centrageBoutons();
     }
 
