@@ -373,15 +373,15 @@ public class UsinesJouetController {
      */
     public void affichageBtnJouets1() {
         // boutons du usine textile
-        if (Outils.isActif(jeu.getJoueur().getUsineTextilePetite().getUsineActive())) {
+        if (Outils.isActif(jeu.getJoueur().getUsineJouetsPetite().getUsineActive())) {
             btnEncaisserUsineJouets1.setVisible(true);
             btnAchatUsineJouets1.setVisible(false);
             System.out.println("Actif");
-            this.jeu.getJoueur().getUsineTextilePetite().majBtnEncaisser(btnEncaisserUsineJouets1, imgJouets1);
+            this.jeu.getJoueur().getUsineJouetsPetite().majBtnEncaisser(btnEncaisserUsineJouets1, imgJouets1);
         } else {
             btnEncaisserUsineJouets1.setVisible(false);
             btnAchatUsineJouets1.setVisible(true);
-            if (jeu.getJoueur().isArgent(jeu.getJoueur().getUsineTextilePetite().getPrixUsine())) {
+            if (jeu.getJoueur().isArgent(jeu.getJoueur().getUsineJouetsPetite().getPrixUsine())) {
                 paneJouets1.setOpacity(1);
                 paneJouets1.setDisable(false);
                 btnAchatUsineJouets1.setDisable(false);
@@ -398,15 +398,15 @@ public class UsinesJouetController {
      */
     public void affichageBtnJouets2() {
         // boutons du usine textile
-        if (Outils.isActif(jeu.getJoueur().getUsineTextileMoyenne().getUsineActive())) {
+        if (Outils.isActif(jeu.getJoueur().getUsineJouetsMoyenne().getUsineActive())) {
             btnEncaisserUsineJouets2.setVisible(true);
             btnAchatUsineJouets2.setVisible(false);
             System.out.println("Actif");
-            this.jeu.getJoueur().getUsineTextileMoyenne().majBtnEncaisser(btnEncaisserUsineJouets2, imgJouets2);
+            this.jeu.getJoueur().getUsineJouetsMoyenne().majBtnEncaisser(btnEncaisserUsineJouets2, imgJouets2);
         } else {
             btnEncaisserUsineJouets2.setVisible(false);
             btnAchatUsineJouets2.setVisible(true);
-            if (jeu.getJoueur().isArgent(jeu.getJoueur().getUsineTextileMoyenne().getPrixUsine())) {
+            if (jeu.getJoueur().isArgent(jeu.getJoueur().getUsineJouetsMoyenne().getPrixUsine())) {
                 paneJouets2.setOpacity(1);
                 paneJouets2.setDisable(false);
                 btnAchatUsineJouets2.setDisable(false);
@@ -422,15 +422,15 @@ public class UsinesJouetController {
      * gere l'affichage des boutons textile usine grande
      */
     public void affichageBtnJouets3() {
-        if (Outils.isActif(jeu.getJoueur().getUsineTextileGrande().getUsineActive())) {
+        if (Outils.isActif(jeu.getJoueur().getUsineJouetsGrande().getUsineActive())) {
             btnEncaisserUsineJouets3.setVisible(true);
             btnAchatUsineJouets3.setVisible(false);
             System.out.println("Actif");
-            this.jeu.getJoueur().getUsineTextileGrande().majBtnEncaisser(btnEncaisserUsineJouets3, imgJouets3);
+            this.jeu.getJoueur().getUsineJouetsGrande().majBtnEncaisser(btnEncaisserUsineJouets3, imgJouets3);
         } else {
             btnEncaisserUsineJouets3.setVisible(false);
             btnAchatUsineJouets3.setVisible(true);
-            if (jeu.getJoueur().isArgent(jeu.getJoueur().getUsineTextileGrande().getPrixUsine())) {
+            if (jeu.getJoueur().isArgent(jeu.getJoueur().getUsineJouetsGrande().getPrixUsine())) {
                 paneJouets3.setOpacity(1);
                 paneJouets3.setDisable(false);
                 btnAchatUsineJouets3.setDisable(false);
@@ -446,15 +446,15 @@ public class UsinesJouetController {
      * gere l'affichage des boutons textile usine enorme
      */
     public void affichageBtnJouets4() {
-        if (Outils.isActif(jeu.getJoueur().getUsineTextileEnorme().getUsineActive())) {
+        if (Outils.isActif(jeu.getJoueur().getUsineJouetsEnorme().getUsineActive())) {
             btnEncaisserUsineJouets4.setVisible(true);
             btnAchatUsineJouets4.setVisible(false);
             System.out.println("Actif");
-            this.jeu.getJoueur().getUsineTextileEnorme().majBtnEncaisser(btnEncaisserUsineJouets4, imgJouets4);
+            this.jeu.getJoueur().getUsineJouetsEnorme().majBtnEncaisser(btnEncaisserUsineJouets4, imgJouets4);
         } else {
             btnEncaisserUsineJouets4.setVisible(false);
             btnAchatUsineJouets4.setVisible(true);
-            if (jeu.getJoueur().isArgent(jeu.getJoueur().getUsineTextileEnorme().getPrixUsine())) {
+            if (jeu.getJoueur().isArgent(jeu.getJoueur().getUsineJouetsEnorme().getPrixUsine())) {
                 paneJouets4.setOpacity(1);
                 paneJouets4.setDisable(false);
                 btnAchatUsineJouets4.setDisable(false);

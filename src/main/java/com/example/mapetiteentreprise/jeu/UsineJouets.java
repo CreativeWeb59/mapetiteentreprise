@@ -97,7 +97,7 @@ public class UsineJouets extends Usines{
      */
     public void setUsineEnorme(){
         this.setNbMaxiUsine(100);
-        this.setPrixUsine(BigDecimal.valueOf(3500000));
-        this.setPrixFabrication(BigDecimal.valueOf(35000));
+        this.setPrixUsine(BigDecimal.valueOf(4000000));
+        this.setPrixFabrication(BigDecimal.valueOf(40000));
     }
 }
