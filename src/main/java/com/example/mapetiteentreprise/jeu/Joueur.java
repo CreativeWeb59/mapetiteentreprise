@@ -82,7 +82,6 @@ public class Joueur {
         this.usineJouetsMoyenne = new UsineJouets("Moyenne usine de jouets", 0, 0, 0, 0);
         this.usineJouetsGrande = new UsineJouets("Grande usine de jouets", 0, 0, 0, 0);
         this.usineJouetsEnorme = new UsineJouets("Enorme usine de jouets", 0, 0, 0, 0);
-
     }
     public String getPseudo() {
         return pseudo;

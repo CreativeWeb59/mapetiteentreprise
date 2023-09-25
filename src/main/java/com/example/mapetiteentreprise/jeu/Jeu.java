@@ -208,6 +208,7 @@ public class Jeu {
         getSauvegarde().setEtatProgressLivraison4(getJoueur().getLivraisonPoidsLourd().getEtatProgressLivraison());
         getSauvegarde().setEtatProgressLivraison5(getJoueur().getLivraisonAvion().getEtatProgressLivraison());
 
+        // textiles
         getSauvegarde().setUsineTextileActive1(getJoueur().getUsineTextilePetite().getUsineActive());
         getSauvegarde().setNbUsinesTextile1(getJoueur().getUsineTextilePetite().getNbUsines());
         getSauvegarde().setNbMarchandisesUsineTextile1(getJoueur().getUsineTextilePetite().getNbMarchandises());
@@ -227,6 +228,27 @@ public class Jeu {
         getSauvegarde().setNbUsinesTextile4(getJoueur().getUsineTextileEnorme().getNbUsines());
         getSauvegarde().setNbMarchandisesUsineTextile4(getJoueur().getUsineTextileEnorme().getNbMarchandises());
         getSauvegarde().setEtatProgressUsineTextile4(getJoueur().getUsineTextileEnorme().getEtatProgressUsine());
+
+        // jouets
+        getSauvegarde().setUsineJouetsActive1(getJoueur().getUsineJouetsPetite().getUsineActive());
+        getSauvegarde().setNbUsinesJouets1(getJoueur().getUsineJouetsPetite().getNbUsines());
+        getSauvegarde().setNbMarchandisesUsineJouets1(getJoueur().getUsineJouetsPetite().getNbMarchandises());
+        getSauvegarde().setEtatProgressUsineJouets1(getJoueur().getUsineJouetsPetite().getEtatProgressUsine());
+
+        getSauvegarde().setUsineJouetsActive2(getJoueur().getUsineJouetsMoyenne().getUsineActive());
+        getSauvegarde().setNbUsinesJouets2(getJoueur().getUsineJouetsMoyenne().getNbUsines());
+        getSauvegarde().setNbMarchandisesUsineJouets2(getJoueur().getUsineJouetsMoyenne().getNbMarchandises());
+        getSauvegarde().setEtatProgressUsineJouets2(getJoueur().getUsineJouetsMoyenne().getEtatProgressUsine());
+
+        getSauvegarde().setUsineJouetsActive3(getJoueur().getUsineJouetsGrande().getUsineActive());
+        getSauvegarde().setNbUsinesJouets3(getJoueur().getUsineJouetsGrande().getNbUsines());
+        getSauvegarde().setNbMarchandisesUsineJouets3(getJoueur().getUsineJouetsGrande().getNbMarchandises());
+        getSauvegarde().setEtatProgressUsineJouets3(getJoueur().getUsineJouetsGrande().getEtatProgressUsine());
+
+        getSauvegarde().setUsineJouetsActive4(getJoueur().getUsineJouetsGrande().getUsineActive());
+        getSauvegarde().setNbUsinesJouets4(getJoueur().getUsineJouetsGrande().getNbUsines());
+        getSauvegarde().setNbMarchandisesUsineJouets4(getJoueur().getUsineJouetsGrande().getNbMarchandises());
+        getSauvegarde().setEtatProgressUsineJouets4(getJoueur().getUsineJouetsGrande().getEtatProgressUsine());
 
         System.out.println("Nouvelles valeurs a sauvegarder" + getSauvegarde());
 

@@ -13,120 +13,104 @@
             <Button layoutX="518.0" layoutY="139.0" mnemonicParsing="false" onAction="#retourGestionUsines" text="Retour au menu gestion" />
         </children>
     </Pane>
-    <Pane layoutX="90.0" layoutY="240.0" prefHeight="600.0" prefWidth="1100.0">
+    <Pane fx:id="panePrincipal" layoutX="90.0" layoutY="240.0" prefHeight="600.0" prefWidth="1100.0">
     <children>
-        <Pane prefHeight="120.0" prefWidth="1100.0" style="-fx-background-color: white;">
-            <children>
-                <Pane fx:id="paneJouets1" prefHeight="120.0" prefWidth="500.0">
-                    <children>
-                        <Text layoutY="12.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Petite Usine" textAlignment="CENTER" wrappingWidth="500.0">
-                            <font>
-                                <Font name="System Bold" size="18.0" />
-                            </font>
-                        </Text>
-                        <ProgressBar fx:id="progressJouets1" layoutX="7.0" layoutY="82.0" prefHeight="20.0" prefWidth="300.0" progress="0.0" />
-                        <Label fx:id="labelNbMarchandisesJouets1" layoutX="323.0" layoutY="78.0" prefHeight="29.0" prefWidth="54.0" style="-fx-background-color: transparent;" text="0" textFill="WHITE" />
-                        <Label fx:id="labelNbUsineJouets1" layoutX="323.0" layoutY="32.0" prefHeight="29.0" prefWidth="75.0" style="-fx-background-color: transparent;" text="Label" />
-                        <Button fx:id="btnAchatUsineJouetsPetite" layoutX="429.0" layoutY="23.0" mnemonicParsing="false" onAction="#acheterUsineJouetsPetite" text="+" />
-                        <Label fx:id="labelTarifUsineJouets1" layoutX="23.0" layoutY="46.0" prefHeight="29.0" prefWidth="300.0" style="-fx-background-color: transparent;" text="Label" />
-                        <Button fx:id="btnEncaisserUsineJouets1" layoutX="364.0" layoutY="59.0" mnemonicParsing="false" onAction="#onBtnEncaisserUsineJouets1" text="Encaisser" />
-                        <ImageView fx:id="imgJouets1" fitHeight="61.0" fitWidth="69.0" layoutX="216.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@images/textileRouge.png" />
-                            </image>
-                        </ImageView>
-                    </children>
-                </Pane>
-            </children>
-        </Pane>
-                <Pane layoutY="160.0" prefHeight="120.0" prefWidth="1100.0" style="-fx-background-color: white;">
-                    <children>
-                        <Pane fx:id="paneJouets2" prefHeight="120.0" prefWidth="500.0">
-                            <children>
-                                <Text layoutY="12.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Petite Usine" textAlignment="CENTER" wrappingWidth="500.0">
-                                    <font>
-                                        <Font name="System Bold" size="18.0" />
-                                    </font>
-                                </Text>
-                                <ProgressBar fx:id="progressJouets2" layoutX="7.0" layoutY="82.0" prefHeight="20.0" prefWidth="300.0" progress="0.0" />
-                                <Label fx:id="labelNbMarchandisesJouets2" layoutX="323.0" layoutY="78.0" prefHeight="29.0" prefWidth="54.0" style="-fx-background-color: transparent;" text="0" textFill="WHITE" />
-                                <Label fx:id="labelNbUsineJouets2" layoutX="323.0" layoutY="32.0" prefHeight="29.0" prefWidth="75.0" style="-fx-background-color: transparent;" text="Label" />
-                                <Button fx:id="btnAchatUsineJouetsMoyenne" layoutX="429.0" layoutY="23.0" mnemonicParsing="false" onAction="#acheterUsineJouetsMoyenne" text="+" />
-                                <Label fx:id="labelTarifUsineJouets2" layoutX="23.0" layoutY="46.0" prefHeight="29.0" prefWidth="300.0" style="-fx-background-color: transparent;" text="Label" />
-                                <Button fx:id="btnEncaisserUsineJouets2" layoutX="364.0" layoutY="59.0" mnemonicParsing="false" onAction="#onBtnEncaisserUsineJouets2" text="Encaisser" />
-                                <ImageView fx:id="imgJouets2" fitHeight="61.0" fitWidth="69.0" layoutX="216.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@images/textileRouge.png" />
-                                    </image>
-                                </ImageView>
-                            </children>
-                        </Pane>
-                    </children>
-                </Pane>
-                <Pane layoutY="320.0" prefHeight="120.0" prefWidth="1100.0" style="-fx-background-color: white;">
-                    <children>
-                        <Pane fx:id="paneJouets3" prefHeight="120.0" prefWidth="500.0">
-                            <children>
-                                <Text layoutY="12.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Grande Usine" textAlignment="CENTER" wrappingWidth="500.0">
-                                    <font>
-                                        <Font name="System Bold" size="18.0" />
-                                    </font>
-                                </Text>
-                                <ProgressBar fx:id="progressJouets3" layoutX="7.0" layoutY="82.0" prefHeight="20.0" prefWidth="300.0" progress="0.0" />
-                                <Label fx:id="labelNbMarchandisesJouets3" layoutX="323.0" layoutY="78.0" prefHeight="29.0" prefWidth="54.0" style="-fx-background-color: transparent;" text="0" textFill="WHITE" />
-                                <Label fx:id="labelNbUsineJouets3" layoutX="323.0" layoutY="32.0" prefHeight="29.0" prefWidth="75.0" style="-fx-background-color: transparent;" text="Label" />
-                                <Button fx:id="btnAchatUsineJouetsGrande" layoutX="429.0" layoutY="23.0" mnemonicParsing="false" onAction="#acheterUsineJouetsGrande" text="+" />
-                                <Label fx:id="labelTarifUsineJouets3" layoutX="23.0" layoutY="46.0" prefHeight="29.0" prefWidth="300.0" style="-fx-background-color: transparent;" text="Label" />
-                                <Button fx:id="btnEncaisserUsineJouets3" layoutX="364.0" layoutY="59.0" mnemonicParsing="false" onAction="#onBtnEncaisserUsineJouets3" text="Encaisser" />
-                                <ImageView fx:id="imgJouets3" fitHeight="61.0" fitWidth="69.0" layoutX="216.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@images/textileRouge.png" />
-                                    </image>
-                                </ImageView>
-                            </children>
-                        </Pane>
-                    </children>
-                </Pane>
-                <Pane layoutY="480.0" prefHeight="120.0" prefWidth="1100.0" style="-fx-background-color: white;">
-                    <children>
-                        <Pane fx:id="paneJouets4" prefHeight="120.0" prefWidth="500.0">
-                            <children>
-                                <Text layoutY="12.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Petite Usine" textAlignment="CENTER" wrappingWidth="500.0">
-                                    <font>
-                                        <Font name="System Bold" size="18.0" />
-                                    </font>
-                                </Text>
-                                <ProgressBar fx:id="progressJouets4" layoutX="7.0" layoutY="82.0" prefHeight="20.0" prefWidth="300.0" progress="0.0" />
-                                <Label fx:id="labelNbMarchandisesJouets4" layoutX="323.0" layoutY="78.0" prefHeight="29.0" prefWidth="54.0" style="-fx-background-color: transparent;" text="0" textFill="WHITE" />
-                                <Label fx:id="labelNbUsineJouets4" layoutX="323.0" layoutY="32.0" prefHeight="29.0" prefWidth="75.0" style="-fx-background-color: transparent;" text="Label" />
-                                <Button fx:id="btnAchatUsineJouetsEnorme" layoutX="429.0" layoutY="23.0" mnemonicParsing="false" onAction="#acheterUsineJouetsEnorme" text="+" />
-                                <Label fx:id="labelTarifUsineJouets4" layoutX="23.0" layoutY="46.0" prefHeight="29.0" prefWidth="300.0" style="-fx-background-color: transparent;" text="Label" />
-                                <Button fx:id="btnEncaisserUsineJouets4" layoutX="364.0" layoutY="59.0" mnemonicParsing="false" onAction="#onBtnEncaisserUsineJouets4" text="Encaisser" />
-                                <ImageView fx:id="imgJouets4" fitHeight="61.0" fitWidth="69.0" layoutX="216.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@images/textileRouge.png" />
-                                    </image>
-                                </ImageView>
-                            </children>
-                        </Pane>
-                    </children>
-                </Pane>
-        <Pane fx:id="paneJouets1D" focusTraversable="true" layoutY="50.0" prefHeight="50.0" prefWidth="1200.0">
+          <Pane fx:id="paneJouets1" prefHeight="120.0" prefWidth="800.0" style="-fx-background-color: white;">
+              <children>
+                  <Text layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Petite Usine" textAlignment="CENTER" wrappingWidth="800.0">
+                      <font>
+                          <Font name="System Bold" size="18.0" />
+                      </font>
+                  </Text>
+                  <ProgressBar fx:id="progressJouets1" layoutX="7.0" layoutY="82.0" prefHeight="20.0" prefWidth="300.0" progress="0.0" />
+                  <Label fx:id="labelNbMarchandisesJouets1" layoutX="323.0" layoutY="78.0" prefHeight="29.0" prefWidth="54.0" style="-fx-background-color: transparent;" text="0" textFill="WHITE" />
+                  <Label fx:id="labelNbUsineJouets1" layoutX="323.0" layoutY="32.0" prefHeight="29.0" prefWidth="75.0" style="-fx-background-color: transparent;" text="Label" />
+                  <Button fx:id="btnAchatUsineJouetsPetite" layoutX="740.0" layoutY="10.0" mnemonicParsing="false" onAction="#acheterUsineJouetsPetite" text="+" />
+                  <Label fx:id="labelTarifUsineJouets1" layoutX="680.0" layoutY="20.0" prefHeight="29.0" prefWidth="50.0" style="-fx-background-color: transparent;" text="Label" />
+                  <Button fx:id="btnEncaisserUsineJouets1" layoutX="540.0" layoutY="60.0" mnemonicParsing="false" onAction="#onBtnEncaisserUsineJouets1" text="Encaisser" />
+                  <ImageView fx:id="imgJouets1" fitHeight="61.0" fitWidth="69.0" layoutX="440.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                          <Image url="@images/usineJouets1.png" />
+                      </image>
+                  </ImageView>
+              </children>
+          </Pane>
+                  <Pane fx:id="paneJouets2" layoutY="160.0" prefHeight="120.0" prefWidth="800.0" style="-fx-background-color: white;">
+                      <children>
+                          <Text layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Moyenne Usine" textAlignment="CENTER" wrappingWidth="800.0">
+                              <font>
+                                  <Font name="System Bold" size="18.0" />
+                              </font>
+                          </Text>
+                          <ProgressBar fx:id="progressJouets2" layoutX="7.0" layoutY="82.0" prefHeight="20.0" prefWidth="300.0" progress="0.0" />
+                          <Label fx:id="labelNbMarchandisesJouets2" layoutX="323.0" layoutY="78.0" prefHeight="29.0" prefWidth="54.0" style="-fx-background-color: transparent;" text="0" textFill="WHITE" />
+                          <Label fx:id="labelNbUsineJouets2" layoutX="680.0" layoutY="20.0" prefHeight="29.0" prefWidth="50.0" style="-fx-background-color: transparent;" text="Label" />
+                          <Button fx:id="btnAchatUsineJouetsMoyenne" layoutX="740.0" layoutY="10.0" mnemonicParsing="false" onAction="#acheterUsineJouetsMoyenne" text="+" />
+                          <Label fx:id="labelTarifUsineJouets2" layoutX="23.0" layoutY="46.0" prefHeight="29.0" prefWidth="300.0" style="-fx-background-color: transparent;" text="Label" />
+                          <Button fx:id="btnEncaisserUsineJouets2" layoutX="540.0" layoutY="60.0" mnemonicParsing="false" onAction="#onBtnEncaisserUsineJouets2" text="Encaisser" />
+                          <ImageView fx:id="imgJouets2" fitHeight="61.0" fitWidth="69.0" layoutX="440.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+                              <image>
+                                  <Image url="@images/usineJouets2.png" />
+                              </image>
+                          </ImageView>
+                      </children>
+                  </Pane>
+                  <Pane fx:id="paneJouets3" layoutY="320.0" prefHeight="120.0" prefWidth="800.0" style="-fx-background-color: white;">
+                      <children>
+                          <Text layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Grande Usine" textAlignment="CENTER" wrappingWidth="800.0">
+                              <font>
+                                  <Font name="System Bold" size="18.0" />
+                              </font>
+                          </Text>
+                          <ProgressBar fx:id="progressJouets3" layoutX="7.0" layoutY="82.0" prefHeight="20.0" prefWidth="300.0" progress="0.0" />
+                          <Label fx:id="labelNbMarchandisesJouets3" layoutX="323.0" layoutY="78.0" prefHeight="29.0" prefWidth="54.0" style="-fx-background-color: transparent;" text="0" textFill="WHITE" />
+                          <Label fx:id="labelNbUsineJouets3" layoutX="323.0" layoutY="32.0" prefHeight="29.0" prefWidth="75.0" style="-fx-background-color: transparent;" text="Label" />
+                          <Button fx:id="btnAchatUsineJouetsGrande" layoutX="740.0" layoutY="10.0" mnemonicParsing="false" onAction="#acheterUsineJouetsGrande" text="+" />
+                          <Label fx:id="labelTarifUsineJouets3" layoutX="680.0" layoutY="20.0" prefHeight="29.0" prefWidth="50.0" style="-fx-background-color: transparent;" text="Label" />
+                          <Button fx:id="btnEncaisserUsineJouets3" layoutX="540.0" layoutY="60.0" mnemonicParsing="false" onAction="#onBtnEncaisserUsineJouets3" text="Encaisser" />
+                          <ImageView fx:id="imgJouets3" fitHeight="61.0" fitWidth="69.0" layoutX="440.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+                              <image>
+                                  <Image url="@images/usineJouets3.png" />
+                              </image>
+                          </ImageView>
+                      </children>
+                  </Pane>
+                  <Pane fx:id="paneJouets4" layoutY="480.0" prefHeight="120.0" prefWidth="800.0" style="-fx-background-color: white;">
+                      <children>
+                          <Text layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enorme Usine" textAlignment="CENTER" wrappingWidth="800.0">
+                              <font>
+                                  <Font name="System Bold" size="18.0" />
+                              </font>
+                          </Text>
+                          <ProgressBar fx:id="progressJouets4" layoutX="7.0" layoutY="82.0" prefHeight="20.0" prefWidth="300.0" progress="0.0" />
+                          <Label fx:id="labelNbMarchandisesJouets4" layoutX="323.0" layoutY="78.0" prefHeight="29.0" prefWidth="54.0" style="-fx-background-color: transparent;" text="0" textFill="WHITE" />
+                          <Label fx:id="labelNbUsineJouets4" layoutX="680.0" layoutY="20.0" prefHeight="29.0" prefWidth="50.0" style="-fx-background-color: transparent;" text="Label" />
+                          <Button fx:id="btnAchatUsineJouetsEnorme" layoutX="740.0" layoutY="10.0" mnemonicParsing="false" onAction="#acheterUsineJouetsEnorme" text="+" />
+                          <Label fx:id="labelTarifUsineJouets4" layoutX="23.0" layoutY="46.0" prefHeight="29.0" prefWidth="300.0" style="-fx-background-color: transparent;" text="Label" />
+                          <Button fx:id="btnEncaisserUsineJouets4" layoutX="540.0" layoutY="60.0" mnemonicParsing="false" onAction="#onBtnEncaisserUsineJouets4" text="Encaisser" />
+                          <ImageView fx:id="imgJouets4" fitHeight="61.0" fitWidth="69.0" layoutX="440.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+                              <image>
+                                  <Image url="@images/usineJouets4.png" />
+                              </image>
+                          </ImageView>
+                      </children>
+                  </Pane>
+        <Pane fx:id="paneJouets1D" focusTraversable="true" prefHeight="120.0" prefWidth="800.0">
             <children>
                 <Button fx:id="btnAchatUsineJouets1" alignment="CENTER" mnemonicParsing="false" onAction="#acheterUsineJouetsPetite" text="Acheter petite usine" />
             </children>
         </Pane>
-        <Pane fx:id="paneJouets2D" focusTraversable="true" layoutY="250.0" prefHeight="50.0" prefWidth="1200.0">
+        <Pane fx:id="paneJouets2D" focusTraversable="true" layoutY="160.0" prefHeight="120.0" prefWidth="800.0">
             <children>
                 <Button fx:id="btnAchatUsineJouets2" mnemonicParsing="false" onAction="#acheterUsineJouetsMoyenne" text="Acheter usine moyenne" />
             </children>
         </Pane>
-        <Pane fx:id="paneJouets3D" focusTraversable="true" layoutY="450.0" prefHeight="50.0" prefWidth="1200.0">
+        <Pane fx:id="paneJouets3D" focusTraversable="true" layoutY="320.0" prefHeight="120.0" prefWidth="800.0">
             <children>
                 <Button fx:id="btnAchatUsineJouets3" mnemonicParsing="false" onAction="#acheterUsineJouetsGrande" text="Acheter usine grande" />
             </children>
         </Pane>
-        <Pane fx:id="paneJouets4D" focusTraversable="true" layoutY="650.0" prefHeight="50.0" prefWidth="1200.0">
+        <Pane fx:id="paneJouets4D" focusTraversable="true" layoutY="480.0" prefHeight="120.0" prefWidth="800.0">
             <children>
                 <Button fx:id="btnAchatUsineJouets4" mnemonicParsing="false" onAction="#acheterUsineJouetsEnorme" text="Acheter usine enorme" />
             </children>

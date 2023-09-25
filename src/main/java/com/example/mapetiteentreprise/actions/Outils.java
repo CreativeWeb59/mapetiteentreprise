@@ -5,6 +5,7 @@ import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
 import java.text.DecimalFormat;
@@ -186,12 +187,27 @@ public class Outils {
      * centre un bouton dans son container
      * @param bouton bouton à centrer
      * @param tailleConteneur largeur du conteneur
+     * @param horizon true pour centrage horizontal, false pour centrage vertical
      */
-    public static void centrageBouton(Button bouton, double tailleConteneur) {
-        double valeur = (tailleConteneur - bouton.getWidth()) / 2;
-        bouton.setLayoutX(valeur);
-    }
+    public static void centrageBouton(Button bouton, double tailleConteneur, boolean horizon) {
+        if(horizon){
+            double valeur = (tailleConteneur - bouton.getWidth()) / 2;
+            bouton.setLayoutX(valeur);
+        } else {
+            double valeur = (tailleConteneur - bouton.getHeight()) / 2;
+            bouton.setLayoutY(valeur);
+        }
 
+    }
+    /**
+     * centre un bouton dans son container
+     * @param pane pane à centrer
+     * @param tailleConteneur largeur du conteneur
+     */
+    public static void centragePane(Pane pane, double tailleConteneur) {
+        double valeur = (tailleConteneur - pane.getWidth()) / 2;
+        pane.setLayoutX(valeur);
+    }
 
     /**
      * Recupere la capacite totale en poule de tous les poulaillers

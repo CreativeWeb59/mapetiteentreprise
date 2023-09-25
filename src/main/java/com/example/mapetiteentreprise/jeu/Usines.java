@@ -17,7 +17,7 @@ public abstract class Usines {
 
     private BigDecimal prixUsine = BigDecimal.valueOf(200000); // prix d'une usine supplémentaire
     private BigDecimal prixFabrication = BigDecimal.valueOf(2000.00); // prix de vente d'un produit textile
-    private int vitesseUsineTextile = 60;
+    private int vitesseUsine = 60;
 
     private final String monnaie = " €";
     private final DecimalFormat decimalFormat = Outils.getDecimalFormatWithSpaceSeparator();
@@ -96,12 +96,12 @@ public abstract class Usines {
         this.prixFabrication = prixFabrication;
     }
 
-    public int getVitesseUsineTextile() {
-        return vitesseUsineTextile;
+    public int getVitesseUsine() {
+        return vitesseUsine;
     }
 
-    public void setVitesseUsineTextile(int vitesseUsineTextile) {
-        this.vitesseUsineTextile = vitesseUsineTextile;
+    public void setVitesseUsine(int vitesseUsine) {
+        this.vitesseUsine = vitesseUsine;
     }
 
     public String getMonnaie() {
@@ -131,7 +131,7 @@ public abstract class Usines {
                 ", nbMaxiUsine=" + nbMaxiUsine +
                 ", prixUsine=" + prixUsine +
                 ", prixFabrication=" + prixFabrication +
-                ", vitesseUsineTextile=" + vitesseUsineTextile +
+                ", vitesseUsineTextile=" + vitesseUsine +
                 ", monnaie='" + monnaie + '\'' +
                 ", decimalFormat=" + decimalFormat +
                 ", gainEnAttenteUsine=" + gainEnAttenteUsine +

@@ -109,6 +109,10 @@
                 <ProgressBar fx:id="progressTextile2" cache="true" layoutX="105.0" layoutY="20.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
                 <ProgressBar fx:id="progressTextile3" cache="true" layoutX="210.0" layoutY="20.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
                 <ProgressBar fx:id="progressTextile4" cache="true" layoutX="315.0" layoutY="20.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
+                <ProgressBar fx:id="progressJouets1" cache="true" layoutX="440.0" layoutY="20.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
+                <ProgressBar fx:id="progressJouets2" cache="true" layoutX="545.0" layoutY="20.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
+                <ProgressBar fx:id="progressJouets3" cache="true" layoutX="650.0" layoutY="20.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
+                <ProgressBar fx:id="progressJouets4" cache="true" layoutX="755.0" layoutY="20.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
             </children>
         </Pane>
         <Pane layoutX="240.0" layoutY="880.0" prefHeight="40.0" prefWidth="800.0">

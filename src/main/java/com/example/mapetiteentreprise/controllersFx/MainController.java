@@ -166,6 +166,9 @@ public class MainController {
         // maj des tarifs dans les usines de textile
         majTarifsUsinesTextile();
 
+        // mise en place des valeurs dans les usines de jouets
+        affectationToutesLesUsinesJouets();
+
         // maj tarifs dans les usines de jouets
         majTarifsUsinesJouets();
 

@@ -44,7 +44,8 @@ public class UsinesTextileController {
     @FXML
     private ProgressBar progressOeufs, progressBC, progressBF, progressSa, progressCo,
             progressScooter, progressCamionette, progressPetitCamion, progressPoidsLourd, progressAvion,
-            progressTextile1, progressTextile2, progressTextile3, progressTextile4;
+            progressTextile1, progressTextile2, progressTextile3, progressTextile4,
+            progressJouets1, progressJouets2, progressJouets3, progressJouets4;
     private Timeline timelineUsineTextile1, timelineUsineTextile2, timelineUsineTextile3, timelineUsineTextile4;
     private ConnectionBdd connectionBdd = new ConnectionBdd();
     @FXML
@@ -163,7 +164,7 @@ public class UsinesTextileController {
                     usineTextile.setUsineActive(1);
                     // demarre la barre de progression de l'usine
                     // recuperation de l'etat de la barre de progression pour la petite usine
-                    double vitesseUsineTextile = usineTextile.getVitesseUsineTextile();
+                    double vitesseUsineTextile = usineTextile.getVitesseUsine();
                     switch (numUsine) {
                         case 1:
                             this.progressBarStartUsineTextilePetite(0, vitesseUsineTextile, vitesseUsineTextile, jeu.getJoueur().getUsineTextilePetite(), progressTextile, btnEncaisserUsineTextile1);
@@ -519,10 +520,10 @@ public class UsinesTextileController {
      */
     public void centrageBoutons(){
         Platform.runLater(() -> {
-            Outils.centrageBouton(btnAchatUsineTextile1, paneTextile1D.getWidth());
-            Outils.centrageBouton(btnAchatUsineTextile2, paneTextile2D.getWidth());
-            Outils.centrageBouton(btnAchatUsineTextile3, paneTextile3D.getWidth());
-            Outils.centrageBouton(btnAchatUsineTextile4, paneTextile4D.getWidth());
+            Outils.centrageBouton(btnAchatUsineTextile1, paneTextile1D.getWidth(), true);
+            Outils.centrageBouton(btnAchatUsineTextile2, paneTextile2D.getWidth(), true);
+            Outils.centrageBouton(btnAchatUsineTextile3, paneTextile3D.getWidth(),true);
+            Outils.centrageBouton(btnAchatUsineTextile4, paneTextile4D.getWidth(),true);
         });
     }
     /**
@@ -575,6 +576,7 @@ public class UsinesTextileController {
 
         // demarrage des usines
         demarrageUsinesTextile();
+        demarrageUsinesJouets();
     }
 
     /**
@@ -584,29 +586,53 @@ public class UsinesTextileController {
         // usine de textile petite
         if (Outils.isActif(jeu.getJoueur().getUsineTextilePetite().getUsineActive())) {
             System.out.println("Demarrage " + jeu.getJoueur().getUsineTextilePetite().getNom());
-            double vitesseUsineTextile1 = jeu.getJoueur().getUsineTextilePetite().getVitesseUsineTextile() - (jeu.getJoueur().getUsineTextilePetite().getVitesseUsineTextile() * jeu.getJoueur().getUsineTextilePetite().getEtatProgressUsine());
-            this.progressBarStartUsineTextilePetite(1, jeu.getJoueur().getUsineTextilePetite().getVitesseUsineTextile(), vitesseUsineTextile1, jeu.getJoueur().getUsineTextilePetite(), progressTextile1, btnEncaisserUsineTextile1);
+            double vitesseUsineTextile1 = jeu.getJoueur().getUsineTextilePetite().getVitesseUsine() - (jeu.getJoueur().getUsineTextilePetite().getVitesseUsine() * jeu.getJoueur().getUsineTextilePetite().getEtatProgressUsine());
+            this.progressBarStartUsineTextilePetite(1, jeu.getJoueur().getUsineTextilePetite().getVitesseUsine(), vitesseUsineTextile1, jeu.getJoueur().getUsineTextilePetite(), progressTextile1, btnEncaisserUsineTextile1);
         }
         // usine de textile moyenne
         if (Outils.isActif(jeu.getJoueur().getUsineTextileMoyenne().getUsineActive())) {
             System.out.println("Demarrage " + jeu.getJoueur().getUsineTextileMoyenne().getNom());
-            double vitesseUsineTextile2 = jeu.getJoueur().getUsineTextileMoyenne().getVitesseUsineTextile() - (jeu.getJoueur().getUsineTextileMoyenne().getVitesseUsineTextile() * jeu.getJoueur().getUsineTextileMoyenne().getEtatProgressUsine());
-            this.progressBarStartUsineTextileMoyenne(1, jeu.getJoueur().getUsineTextileMoyenne().getVitesseUsineTextile(), vitesseUsineTextile2, jeu.getJoueur().getUsineTextileMoyenne(), progressTextile2, btnEncaisserUsineTextile2);
+            double vitesseUsineTextile2 = jeu.getJoueur().getUsineTextileMoyenne().getVitesseUsine() - (jeu.getJoueur().getUsineTextileMoyenne().getVitesseUsine() * jeu.getJoueur().getUsineTextileMoyenne().getEtatProgressUsine());
+            this.progressBarStartUsineTextileMoyenne(1, jeu.getJoueur().getUsineTextileMoyenne().getVitesseUsine(), vitesseUsineTextile2, jeu.getJoueur().getUsineTextileMoyenne(), progressTextile2, btnEncaisserUsineTextile2);
         }
         // usine de textile grande
         if (Outils.isActif(jeu.getJoueur().getUsineTextileGrande().getUsineActive())) {
             System.out.println("Demarrage " + jeu.getJoueur().getUsineTextileGrande().getNom());
-            double vitesseUsineTextile3 = jeu.getJoueur().getUsineTextileGrande().getVitesseUsineTextile() - (jeu.getJoueur().getUsineTextileGrande().getVitesseUsineTextile() * jeu.getJoueur().getUsineTextileGrande().getEtatProgressUsine());
-            this.progressBarStartUsineTextileGrande(1, jeu.getJoueur().getUsineTextileGrande().getVitesseUsineTextile(), vitesseUsineTextile3, jeu.getJoueur().getUsineTextileGrande(), progressTextile3, btnEncaisserUsineTextile3);
+            double vitesseUsineTextile3 = jeu.getJoueur().getUsineTextileGrande().getVitesseUsine() - (jeu.getJoueur().getUsineTextileGrande().getVitesseUsine() * jeu.getJoueur().getUsineTextileGrande().getEtatProgressUsine());
+            this.progressBarStartUsineTextileGrande(1, jeu.getJoueur().getUsineTextileGrande().getVitesseUsine(), vitesseUsineTextile3, jeu.getJoueur().getUsineTextileGrande(), progressTextile3, btnEncaisserUsineTextile3);
         }
         // usine de textile enorme
         if (Outils.isActif(jeu.getJoueur().getUsineTextileEnorme().getUsineActive())) {
             System.out.println("Demarrage " + jeu.getJoueur().getUsineTextileEnorme().getNom());
-            double vitesseUsineTextile4 = jeu.getJoueur().getUsineTextileEnorme().getVitesseUsineTextile() - (jeu.getJoueur().getUsineTextileEnorme().getVitesseUsineTextile() * jeu.getJoueur().getUsineTextileEnorme().getEtatProgressUsine());
-            this.progressBarStartUsineTextileEnorme(1, jeu.getJoueur().getUsineTextileEnorme().getVitesseUsineTextile(), vitesseUsineTextile4, jeu.getJoueur().getUsineTextileEnorme(), progressTextile4, btnEncaisserUsineTextile4);
+            double vitesseUsineTextile4 = jeu.getJoueur().getUsineTextileEnorme().getVitesseUsine() - (jeu.getJoueur().getUsineTextileEnorme().getVitesseUsine() * jeu.getJoueur().getUsineTextileEnorme().getEtatProgressUsine());
+            this.progressBarStartUsineTextileEnorme(1, jeu.getJoueur().getUsineTextileEnorme().getVitesseUsine(), vitesseUsineTextile4, jeu.getJoueur().getUsineTextileEnorme(), progressTextile4, btnEncaisserUsineTextile4);
         }
     }
-
+    /**
+     * Demarre les usines de jouets lorsqu'elles sont actives
+     */
+    public void demarrageUsinesJouets() {
+        if (Outils.isActif(jeu.getJoueur().getUsineJouetsPetite().getUsineActive())) {
+            // recupertaion etat barre de progression usine de jouets petite
+            double vitesseUsineJouets1 = jeu.getJoueur().getUsineJouetsPetite().getVitesseUsine() - (jeu.getJoueur().getUsineJouetsPetite().getVitesseUsine() * jeu.getJoueur().getUsineJouetsPetite().getEtatProgressUsine());
+            this.jeu.getJoueur().getUsineJouetsPetite().progressBarStartUsineJouets(1, this.jeu.getJoueur().getUsineJouetsPetite().getVitesseUsine(), vitesseUsineJouets1, progressJouets1);
+        }
+        if (Outils.isActif(jeu.getJoueur().getUsineJouetsMoyenne().getUsineActive())) {
+            // recupertaion etat barre de progression usine de jouets moyenne
+            double vitesseUsineJouets2 = jeu.getJoueur().getUsineJouetsMoyenne().getVitesseUsine() - (jeu.getJoueur().getUsineJouetsMoyenne().getVitesseUsine() * jeu.getJoueur().getUsineJouetsMoyenne().getEtatProgressUsine());
+            this.jeu.getJoueur().getUsineJouetsMoyenne().progressBarStartUsineJouets(1, this.jeu.getJoueur().getUsineJouetsMoyenne().getVitesseUsine(), vitesseUsineJouets2, progressJouets2);
+        }
+        if (Outils.isActif(jeu.getJoueur().getUsineJouetsGrande().getUsineActive())) {
+            // recupertaion etat barre de progression usine de jouets grande
+            double vitesseUsineJouets3 = jeu.getJoueur().getUsineJouetsGrande().getVitesseUsine() - (jeu.getJoueur().getUsineJouetsGrande().getVitesseUsine() * jeu.getJoueur().getUsineJouetsGrande().getEtatProgressUsine());
+            this.jeu.getJoueur().getUsineJouetsGrande().progressBarStartUsineJouets(1, this.jeu.getJoueur().getUsineJouetsGrande().getVitesseUsine(), vitesseUsineJouets3, progressJouets3);
+        }
+        if (Outils.isActif(jeu.getJoueur().getUsineJouetsEnorme().getUsineActive())) {
+            // recupertaion etat barre de progression usine de jouets enorme
+            double vitesseUsineJouets4 = jeu.getJoueur().getUsineJouetsEnorme().getVitesseUsine() - (jeu.getJoueur().getUsineJouetsEnorme().getVitesseUsine() * jeu.getJoueur().getUsineJouetsEnorme().getEtatProgressUsine());
+            this.jeu.getJoueur().getUsineJouetsEnorme().progressBarStartUsineJouets(1, this.jeu.getJoueur().getUsineJouetsEnorme().getVitesseUsine(), vitesseUsineJouets4, progressJouets4);
+        }
+    }
     /**
      * Barre de progression pour comptabiliser le stock de marchandises dans l'usine textile petite
      *
@@ -833,6 +859,12 @@ public class UsinesTextileController {
         this.jeu.getJoueur().getUsineTextileGrande().setEtatProgressUsine(this.progressTextile3.getProgress());
         this.jeu.getJoueur().getUsineTextileEnorme().setEtatProgressUsine(this.progressTextile4.getProgress());
 
+        // on recupere les barres de progression des usines de jouets
+        this.jeu.getJoueur().getUsineJouetsPetite().setEtatProgressUsine(this.progressJouets1.getProgress());
+        this.jeu.getJoueur().getUsineJouetsMoyenne().setEtatProgressUsine(this.progressJouets2.getProgress());
+        this.jeu.getJoueur().getUsineJouetsGrande().setEtatProgressUsine(this.progressJouets3.getProgress());
+        this.jeu.getJoueur().getUsineJouetsEnorme().setEtatProgressUsine(this.progressJouets4.getProgress());
+
         // on stoppe les barres de progression
         jeu.getJoueur().getFerme().progressBarStop();
         jeu.getCalendrier().progressBarStop();
@@ -849,6 +881,10 @@ public class UsinesTextileController {
         Outils.progressBarStop(timelineUsineTextile2);
         Outils.progressBarStop(timelineUsineTextile3);
         Outils.progressBarStop(timelineUsineTextile4);
+        jeu.getJoueur().getUsineJouetsPetite().progressBarStop();
+        jeu.getJoueur().getUsineJouetsMoyenne().progressBarStop();
+        jeu.getJoueur().getUsineJouetsGrande().progressBarStop();
+        jeu.getJoueur().getUsineJouetsEnorme().progressBarStop();
     }
 
     /**
