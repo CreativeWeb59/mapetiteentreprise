@@ -252,3 +252,23 @@ Label{
     -fx-background-repeat: no-repeat;
     -fx-background-size: cover;
 }
+.fondsJouets1{
+    -fx-background-image: url("../images/fondsJouets1.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
+.fondsJouets2{
+    -fx-background-image: url("../images/fondsJouets2.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
+.fondsJouets3{
+    -fx-background-image: url("../images/fondsJouets3.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
+.fondsJouets4{
+    -fx-background-image: url("../images/fondsJouets4.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}

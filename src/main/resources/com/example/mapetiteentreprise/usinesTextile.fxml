@@ -26,7 +26,7 @@
                   <Label fx:id="labelNbMarchandisesTextile1" layoutX="334.0" layoutY="92.0" prefHeight="29.0" prefWidth="54.0" style="-fx-background-color: transparent;" text="0" textFill="WHITE" />
                   <Label fx:id="labelNbUsineTextile1" layoutX="504.0" layoutY="32.0" prefHeight="29.0" prefWidth="75.0" style="-fx-background-color: transparent;" text="Label" />
                    <Button fx:id="btnAchatUsineTextilePetite" layoutX="585.0" layoutY="23.0" mnemonicParsing="false" onAction="#acheterUsineTextilePetite" text="+" />
-                  <Label fx:id="labelTarifUsineTextile1" layoutX="23.0" layoutY="46.0" prefHeight="29.0" prefWidth="371.0" style="-fx-background-color: transparent;" text="Label" />
+                  <Label fx:id="labelTarifUsineTextile1" layoutX="23.0" layoutY="46.0" prefHeight="29.0" prefWidth="371.0" style="-fx-background-color: white;" text="Label" />
                   <Button fx:id="btnEncaisserUsineTextile1" layoutX="440.0" layoutY="80.0" mnemonicParsing="false" onAction="#onBtnEncaisserUsineTextile1" text="Encaisser" />
                   <ImageView fx:id="imgTextile1" fitHeight="61.0" fitWidth="69.0" layoutX="360.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true">
                      <image>

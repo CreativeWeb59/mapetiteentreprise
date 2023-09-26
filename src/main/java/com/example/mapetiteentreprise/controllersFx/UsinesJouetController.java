@@ -5,7 +5,6 @@ import com.example.mapetiteentreprise.actions.Outils;
 import com.example.mapetiteentreprise.bdd.ConnectionBdd;
 import com.example.mapetiteentreprise.jeu.Jeu;
 import com.example.mapetiteentreprise.jeu.UsineJouets;
-import com.example.mapetiteentreprise.jeu.UsineTextile;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -129,19 +128,19 @@ public class UsinesJouetController {
      * Ajout d'une usine de jouets moyenne
      */
     public void acheterUsineJouetsMoyenne() {
-        acheterUsineJouets(this.jeu.getJoueur().getUsineJouetsMoyenne(), progressJouets2, 1);
+        acheterUsineJouets(this.jeu.getJoueur().getUsineJouetsMoyenne(), progressJouets2, 2);
     }
     /**
      * Ajout d'une grande usine de jouets
      */
     public void acheterUsineJouetsGrande() {
-        acheterUsineJouets(this.jeu.getJoueur().getUsineJouetsGrande(), progressJouets3, 1);
+        acheterUsineJouets(this.jeu.getJoueur().getUsineJouetsGrande(), progressJouets3, 3);
     }
     /**
      * Ajout d'une enorme usine de jouets
      */
     public void acheterUsineJouetsEnorme() {
-        acheterUsineJouets(this.jeu.getJoueur().getUsineJouetsEnorme(), progressJouets4, 1);
+        acheterUsineJouets(this.jeu.getJoueur().getUsineJouetsEnorme(), progressJouets4, 4);
     }
     /**
      * Methode d'achat général d'une usine de textile

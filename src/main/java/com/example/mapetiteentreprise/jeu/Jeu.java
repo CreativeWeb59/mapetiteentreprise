@@ -245,10 +245,10 @@ public class Jeu {
         getSauvegarde().setNbMarchandisesUsineJouets3(getJoueur().getUsineJouetsGrande().getNbMarchandises());
         getSauvegarde().setEtatProgressUsineJouets3(getJoueur().getUsineJouetsGrande().getEtatProgressUsine());
 
-        getSauvegarde().setUsineJouetsActive4(getJoueur().getUsineJouetsGrande().getUsineActive());
-        getSauvegarde().setNbUsinesJouets4(getJoueur().getUsineJouetsGrande().getNbUsines());
-        getSauvegarde().setNbMarchandisesUsineJouets4(getJoueur().getUsineJouetsGrande().getNbMarchandises());
-        getSauvegarde().setEtatProgressUsineJouets4(getJoueur().getUsineJouetsGrande().getEtatProgressUsine());
+        getSauvegarde().setUsineJouetsActive4(getJoueur().getUsineJouetsEnorme().getUsineActive());
+        getSauvegarde().setNbUsinesJouets4(getJoueur().getUsineJouetsEnorme().getNbUsines());
+        getSauvegarde().setNbMarchandisesUsineJouets4(getJoueur().getUsineJouetsEnorme().getNbMarchandises());
+        getSauvegarde().setEtatProgressUsineJouets4(getJoueur().getUsineJouetsEnorme().getEtatProgressUsine());
 
         System.out.println("Nouvelles valeurs a sauvegarder" + getSauvegarde());
 
@@ -334,7 +334,11 @@ public class Jeu {
         System.out.println("Distributeurs : " + valeurDistributeurs);
         BigDecimal valeurLivraisons = ValeurLivraisons();
         System.out.println("Livraisons : " + ValeurLivraisons());
-        return valeurFermes.add(valeurDistributeurs.add(valeurPoules.add(valeurLivraisons)));
+        BigDecimal valeurUsinesTextile = valeurUsinesTextile();
+        System.out.println("Usines Textile : " + valeurUsinesTextile);
+        BigDecimal valeursUsinesJouets = valeurUsinesJouets();
+        System.out.println("Usines jouets : " + valeursUsinesJouets);
+        return valeurFermes.add(valeurDistributeurs.add(valeurPoules.add(valeurLivraisons).add(valeurUsinesTextile)));
     }
 
     /**
@@ -467,6 +471,32 @@ public class Jeu {
         if(joueur.getUsineTextilePetite().getUsineActive() == 1){
             int nbUsines = usineTextile.getNbUsines();
             BigDecimal prixUsine = usineTextile.getPrixUsine() ;
+            valeur = prixUsine.multiply(BigDecimal.valueOf(nbUsines));
+        }
+        return valeur;
+    }
+
+    /**
+     * Valeurs des usines de jouets
+     * @return
+     */
+    public BigDecimal valeurUsinesJouets(){
+        BigDecimal valeur = BigDecimal.valueOf(0);
+        valeur = valeurUsineJouets(joueur.getUsineJouetsPetite());
+        System.out.println("Valeur petite usine : " + valeur);
+        valeur = valeur.add(valeurUsineJouets(joueur.getUsineJouetsMoyenne()));
+        System.out.println("Valeur moyenne usine : " + valeur);
+        valeur = valeur.add(valeurUsineJouets(joueur.getUsineJouetsGrande()));
+        System.out.println("Valeur grande usine : " + valeur);
+        valeur = valeur.add(valeurUsineJouets(joueur.getUsineJouetsEnorme()));
+        System.out.println("Valeur enorme usine : " + valeur);
+        return valeur;
+    }
+    public BigDecimal valeurUsineJouets(UsineJouets usineJouets){
+        BigDecimal valeur = BigDecimal.valueOf(0);
+        if(joueur.getUsineJouetsPetite().getUsineActive() == 1){
+            int nbUsines = usineJouets.getNbUsines();
+            BigDecimal prixUsine = usineJouets.getPrixUsine() ;
             valeur = prixUsine.multiply(BigDecimal.valueOf(nbUsines));
         }
         return valeur;

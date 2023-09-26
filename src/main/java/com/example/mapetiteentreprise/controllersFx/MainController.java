@@ -465,7 +465,7 @@ public class MainController {
         usineJouets.setNbUsines(nbUsines);
         usineJouets.setNbMarchandises(nbMarchandises);
         usineJouets.setEtatProgressUsine(etatProgressUsine);
-        System.out.println("Set usines : " + usineJouets.getEtatProgressUsine());
+        System.out.println("Progression de l'usine : " + usineJouets.getEtatProgressUsine());
     }
 
     /**
