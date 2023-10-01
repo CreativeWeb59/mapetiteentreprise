@@ -120,7 +120,32 @@ public class Sauvegarde {
     private double etatProgressUsineJouets4;
 
 
-    public Sauvegarde(int id, String pseudo, BigDecimal argent, long numJourDeco, int heureDeco, double progressJour, int nbPoules, long nbOeufs, int fermeActive, int distributeursActive, int distributeurBCActive, int distributeurBFActive, int distributeurCoActive, int distributeurSaActive, int livraison1Active, int livraison2Active, int livraison3Active, int livraison4Active, int livraison5Active, double etatProgressOeuf, LocalDateTime dateDeco, int nbDistributeurBC, int nbDistributeurBF, int nbDistributeurSa, int nbDistributeurCo, long nbMarchandisesBC, long nbMarchandisesBF, long nbMarchandisesSa, long nbMarchandisesCo, double etatProgressBC, double etatProgressBF, double etatProgressSa, double etatProgressCo, LocalDateTime dateDebutJeu, int poulailler1, int poulailler2, int poulailler3, int poulailler4, int nbLivraison1, int nbLivraison2, int nbLivraison3, int nbLivraison4, int nbLivraison5, long nbCourses1, long nbCourses2, long nbCourses3, long nbCourses4, long nbCourses5, double etatProgressLivraison1, double etatProgressLivraison2, double etatProgressLivraison3, double etatProgressLivraison4, double etatProgressLivraison5, int usineTextileActive1, int usineTextileActive2, int usineTextileActive3, int usineTextileActive4, int nbUsinesTextile1, int nbUsinesTextile2, int nbUsinesTextile3, int nbUsinesTextile4, long nbMarchandisesUsineTextile1, long nbMarchandisesUsineTextile2, long nbMarchandisesUsineTextile3, long nbMarchandisesUsineTextile4, double etatProgressUsineTextile1, double etatProgressUsineTextile2, double etatProgressUsineTextile3, double etatProgressUsineTextile4, int usineJouetsActive1, int usineJouetsActive2, int usineJouetsActive3, int usineJouetsActive4, int nbUsinesJouets1, int nbUsinesJouets2, int nbUsinesJouets3, int nbUsinesJouets4, long nbMarchandisesUsineJouets1, long nbMarchandisesUsineJouets2, long nbMarchandisesUsineJouets3, long nbMarchandisesUsineJouets4, double etatProgressUsineJouets1, double etatProgressUsineJouets2, double etatProgressUsineJouets3, double etatProgressUsineJouets4) {
+
+
+    // activation des usines agro alimentaire
+    private int usineAgroAlimentaireActive1;
+    private int usineAgroAlimentaireActive2;
+    private int usineAgroAlimentaireActive3;
+    private int usineAgroAlimentaireActive4;
+
+    // nombre d'usines agro alimentaire
+    private int nbUsinesAgroAlimentaire1;
+    private int nbUsinesAgroAlimentaire2;
+    private int nbUsinesAgroAlimentaire3;
+    private int nbUsinesAgroAlimentaire4;
+
+    // nombre de marchandises fabriquées en usine agro alimentaire
+    private long nbMarchandisesUsineAgroAlimentaire1;
+    private long nbMarchandisesUsineAgroAlimentaire2;
+    private long nbMarchandisesUsineAgroAlimentaire3;
+    private long nbMarchandisesUsineAgroAlimentaire4;
+    // barres de progression usines agro alimentaire
+    private double etatProgressUsineAgroAlimentaire1;
+    private double etatProgressUsineAgroAlimentaire2;
+    private double etatProgressUsineAgroAlimentaire3;
+    private double etatProgressUsineAgroAlimentaire4;
+
+    public Sauvegarde(int id, String pseudo, BigDecimal argent, long numJourDeco, int heureDeco, double progressJour, int nbPoules, long nbOeufs, int fermeActive, int distributeursActive, int distributeurBCActive, int distributeurBFActive, int distributeurCoActive, int distributeurSaActive, int livraison1Active, int livraison2Active, int livraison3Active, int livraison4Active, int livraison5Active, double etatProgressOeuf, LocalDateTime dateDeco, int nbDistributeurBC, int nbDistributeurBF, int nbDistributeurSa, int nbDistributeurCo, long nbMarchandisesBC, long nbMarchandisesBF, long nbMarchandisesSa, long nbMarchandisesCo, double etatProgressBC, double etatProgressBF, double etatProgressSa, double etatProgressCo, LocalDateTime dateDebutJeu, int poulailler1, int poulailler2, int poulailler3, int poulailler4, int nbLivraison1, int nbLivraison2, int nbLivraison3, int nbLivraison4, int nbLivraison5, long nbCourses1, long nbCourses2, long nbCourses3, long nbCourses4, long nbCourses5, double etatProgressLivraison1, double etatProgressLivraison2, double etatProgressLivraison3, double etatProgressLivraison4, double etatProgressLivraison5, int usineTextileActive1, int usineTextileActive2, int usineTextileActive3, int usineTextileActive4, int nbUsinesTextile1, int nbUsinesTextile2, int nbUsinesTextile3, int nbUsinesTextile4, long nbMarchandisesUsineTextile1, long nbMarchandisesUsineTextile2, long nbMarchandisesUsineTextile3, long nbMarchandisesUsineTextile4, double etatProgressUsineTextile1, double etatProgressUsineTextile2, double etatProgressUsineTextile3, double etatProgressUsineTextile4, int usineJouetsActive1, int usineJouetsActive2, int usineJouetsActive3, int usineJouetsActive4, int nbUsinesJouets1, int nbUsinesJouets2, int nbUsinesJouets3, int nbUsinesJouets4, long nbMarchandisesUsineJouets1, long nbMarchandisesUsineJouets2, long nbMarchandisesUsineJouets3, long nbMarchandisesUsineJouets4, double etatProgressUsineJouets1, double etatProgressUsineJouets2, double etatProgressUsineJouets3, double etatProgressUsineJouets4, int usineAgroAlimentaireActive1, int usineAgroAlimentaireActive2, int usineAgroAlimentaireActive3, int usineAgroAlimentaireActive4, int nbUsinesAgroAlimentaire1, int nbUsinesAgroAlimentaire2, int nbUsinesAgroAlimentaire3, int nbUsinesAgroAlimentaire4, long nbMarchandisesUsineAgroAlimentaire1, long nbMarchandisesUsineAgroAlimentaire2, long nbMarchandisesUsineAgroAlimentaire3, long nbMarchandisesUsineAgroAlimentaire4, double etatProgressUsineAgroAlimentaire1, double etatProgressUsineAgroAlimentaire2, double etatProgressUsineAgroAlimentaire3, double etatProgressUsineAgroAlimentaire4) {
         this.id = id;
         this.pseudo = pseudo;
         this.argent = argent;
@@ -206,9 +231,25 @@ public class Sauvegarde {
         this.etatProgressUsineJouets2 = etatProgressUsineJouets2;
         this.etatProgressUsineJouets3 = etatProgressUsineJouets3;
         this.etatProgressUsineJouets4 = etatProgressUsineJouets4;
+        this.usineAgroAlimentaireActive1 = usineAgroAlimentaireActive1;
+        this.usineAgroAlimentaireActive2 = usineAgroAlimentaireActive2;
+        this.usineAgroAlimentaireActive3 = usineAgroAlimentaireActive3;
+        this.usineAgroAlimentaireActive4 = usineAgroAlimentaireActive4;
+        this.nbUsinesAgroAlimentaire1 = nbUsinesAgroAlimentaire1;
+        this.nbUsinesAgroAlimentaire2 = nbUsinesAgroAlimentaire2;
+        this.nbUsinesAgroAlimentaire3 = nbUsinesAgroAlimentaire3;
+        this.nbUsinesAgroAlimentaire4 = nbUsinesAgroAlimentaire4;
+        this.nbMarchandisesUsineAgroAlimentaire1 = nbMarchandisesUsineAgroAlimentaire1;
+        this.nbMarchandisesUsineAgroAlimentaire2 = nbMarchandisesUsineAgroAlimentaire2;
+        this.nbMarchandisesUsineAgroAlimentaire3 = nbMarchandisesUsineAgroAlimentaire3;
+        this.nbMarchandisesUsineAgroAlimentaire4 = nbMarchandisesUsineAgroAlimentaire4;
+        this.etatProgressUsineAgroAlimentaire1 = etatProgressUsineAgroAlimentaire1;
+        this.etatProgressUsineAgroAlimentaire2 = etatProgressUsineAgroAlimentaire2;
+        this.etatProgressUsineAgroAlimentaire3 = etatProgressUsineAgroAlimentaire3;
+        this.etatProgressUsineAgroAlimentaire4 = etatProgressUsineAgroAlimentaire4;
     }
 
-    public Sauvegarde(String pseudo, BigDecimal argent, long numJourDeco, int heureDeco, double progressJour, int nbPoules, long nbOeufs, int fermeActive, int distributeursActive, int distributeurBCActive, int distributeurBFActive, int distributeurCoActive, int distributeurSaActive, int livraison1Active, int livraison2Active, int livraison3Active, int livraison4Active, int livraison5Active, double etatProgressOeuf, LocalDateTime dateDeco, int nbDistributeurBC, int nbDistributeurBF, int nbDistributeurSa, int nbDistributeurCo, long nbMarchandisesBC, long nbMarchandisesBF, long nbMarchandisesSa, long nbMarchandisesCo, double etatProgressBC, double etatProgressBF, double etatProgressSa, double etatProgressCo, LocalDateTime dateDebutJeu, int poulailler1, int poulailler2, int poulailler3, int poulailler4, int nbLivraison1, int nbLivraison2, int nbLivraison3, int nbLivraison4, int nbLivraison5, long nbCourses1, long nbCourses2, long nbCourses3, long nbCourses4, long nbCourses5, double etatProgressLivraison1, double etatProgressLivraison2, double etatProgressLivraison3, double etatProgressLivraison4, double etatProgressLivraison5, int usineTextileActive1, int usineTextileActive2, int usineTextileActive3, int usineTextileActive4, int nbUsinesTextile1, int nbUsinesTextile2, int nbUsinesTextile3, int nbUsinesTextile4, long nbMarchandisesUsineTextile1, long nbMarchandisesUsineTextile2, long nbMarchandisesUsineTextile3, long nbMarchandisesUsineTextile4, double etatProgressUsineTextile1, double etatProgressUsineTextile2, double etatProgressUsineTextile3, double etatProgressUsineTextile4, int usineJouetsActive1, int usineJouetsActive2, int usineJouetsActive3, int usineJouetsActive4, int nbUsinesJouets1, int nbUsinesJouets2, int nbUsinesJouets3, int nbUsinesJouets4, long nbMarchandisesUsineJouets1, long nbMarchandisesUsineJouets2, long nbMarchandisesUsineJouets3, long nbMarchandisesUsineJouets4, double etatProgressUsineJouets1, double etatProgressUsineJouets2, double etatProgressUsineJouets3, double etatProgressUsineJouets4) {
+    public Sauvegarde(String pseudo, BigDecimal argent, long numJourDeco, int heureDeco, double progressJour, int nbPoules, long nbOeufs, int fermeActive, int distributeursActive, int distributeurBCActive, int distributeurBFActive, int distributeurCoActive, int distributeurSaActive, int livraison1Active, int livraison2Active, int livraison3Active, int livraison4Active, int livraison5Active, double etatProgressOeuf, LocalDateTime dateDeco, int nbDistributeurBC, int nbDistributeurBF, int nbDistributeurSa, int nbDistributeurCo, long nbMarchandisesBC, long nbMarchandisesBF, long nbMarchandisesSa, long nbMarchandisesCo, double etatProgressBC, double etatProgressBF, double etatProgressSa, double etatProgressCo, LocalDateTime dateDebutJeu, int poulailler1, int poulailler2, int poulailler3, int poulailler4, int nbLivraison1, int nbLivraison2, int nbLivraison3, int nbLivraison4, int nbLivraison5, long nbCourses1, long nbCourses2, long nbCourses3, long nbCourses4, long nbCourses5, double etatProgressLivraison1, double etatProgressLivraison2, double etatProgressLivraison3, double etatProgressLivraison4, double etatProgressLivraison5, int usineTextileActive1, int usineTextileActive2, int usineTextileActive3, int usineTextileActive4, int nbUsinesTextile1, int nbUsinesTextile2, int nbUsinesTextile3, int nbUsinesTextile4, long nbMarchandisesUsineTextile1, long nbMarchandisesUsineTextile2, long nbMarchandisesUsineTextile3, long nbMarchandisesUsineTextile4, double etatProgressUsineTextile1, double etatProgressUsineTextile2, double etatProgressUsineTextile3, double etatProgressUsineTextile4, int usineJouetsActive1, int usineJouetsActive2, int usineJouetsActive3, int usineJouetsActive4, int nbUsinesJouets1, int nbUsinesJouets2, int nbUsinesJouets3, int nbUsinesJouets4, long nbMarchandisesUsineJouets1, long nbMarchandisesUsineJouets2, long nbMarchandisesUsineJouets3, long nbMarchandisesUsineJouets4, double etatProgressUsineJouets1, double etatProgressUsineJouets2, double etatProgressUsineJouets3, double etatProgressUsineJouets4, int usineAgroAlimentaireActive1, int usineAgroAlimentaireActive2, int usineAgroAlimentaireActive3, int usineAgroAlimentaireActive4, int nbUsinesAgroAlimentaire1, int nbUsinesAgroAlimentaire2, int nbUsinesAgroAlimentaire3, int nbUsinesAgroAlimentaire4, long nbMarchandisesUsineAgroAlimentaire1, long nbMarchandisesUsineAgroAlimentaire2, long nbMarchandisesUsineAgroAlimentaire3, long nbMarchandisesUsineAgroAlimentaire4, double etatProgressUsineAgroAlimentaire1, double etatProgressUsineAgroAlimentaire2, double etatProgressUsineAgroAlimentaire3, double etatProgressUsineAgroAlimentaire4) {
         this.pseudo = pseudo;
         this.argent = argent;
         this.numJourDeco = numJourDeco;
@@ -293,6 +334,22 @@ public class Sauvegarde {
         this.etatProgressUsineJouets2 = etatProgressUsineJouets2;
         this.etatProgressUsineJouets3 = etatProgressUsineJouets3;
         this.etatProgressUsineJouets4 = etatProgressUsineJouets4;
+        this.usineAgroAlimentaireActive1 = usineAgroAlimentaireActive1;
+        this.usineAgroAlimentaireActive2 = usineAgroAlimentaireActive2;
+        this.usineAgroAlimentaireActive3 = usineAgroAlimentaireActive3;
+        this.usineAgroAlimentaireActive4 = usineAgroAlimentaireActive4;
+        this.nbUsinesAgroAlimentaire1 = nbUsinesAgroAlimentaire1;
+        this.nbUsinesAgroAlimentaire2 = nbUsinesAgroAlimentaire2;
+        this.nbUsinesAgroAlimentaire3 = nbUsinesAgroAlimentaire3;
+        this.nbUsinesAgroAlimentaire4 = nbUsinesAgroAlimentaire4;
+        this.nbMarchandisesUsineAgroAlimentaire1 = nbMarchandisesUsineAgroAlimentaire1;
+        this.nbMarchandisesUsineAgroAlimentaire2 = nbMarchandisesUsineAgroAlimentaire2;
+        this.nbMarchandisesUsineAgroAlimentaire3 = nbMarchandisesUsineAgroAlimentaire3;
+        this.nbMarchandisesUsineAgroAlimentaire4 = nbMarchandisesUsineAgroAlimentaire4;
+        this.etatProgressUsineAgroAlimentaire1 = etatProgressUsineAgroAlimentaire1;
+        this.etatProgressUsineAgroAlimentaire2 = etatProgressUsineAgroAlimentaire2;
+        this.etatProgressUsineAgroAlimentaire3 = etatProgressUsineAgroAlimentaire3;
+        this.etatProgressUsineAgroAlimentaire4 = etatProgressUsineAgroAlimentaire4;
     }
 
     public int getId() {
@@ -975,6 +1032,134 @@ public class Sauvegarde {
         this.etatProgressUsineJouets4 = etatProgressUsineJouets4;
     }
 
+    public int getUsineAgroAlimentaireActive1() {
+        return usineAgroAlimentaireActive1;
+    }
+
+    public void setUsineAgroAlimentaireActive1(int usineAgroAlimentaireActive1) {
+        this.usineAgroAlimentaireActive1 = usineAgroAlimentaireActive1;
+    }
+
+    public int getUsineAgroAlimentaireActive2() {
+        return usineAgroAlimentaireActive2;
+    }
+
+    public void setUsineAgroAlimentaireActive2(int usineAgroAlimentaireActive2) {
+        this.usineAgroAlimentaireActive2 = usineAgroAlimentaireActive2;
+    }
+
+    public int getUsineAgroAlimentaireActive3() {
+        return usineAgroAlimentaireActive3;
+    }
+
+    public void setUsineAgroAlimentaireActive3(int usineAgroAlimentaireActive3) {
+        this.usineAgroAlimentaireActive3 = usineAgroAlimentaireActive3;
+    }
+
+    public int getUsineAgroAlimentaireActive4() {
+        return usineAgroAlimentaireActive4;
+    }
+
+    public void setUsineAgroAlimentaireActive4(int usineAgroAlimentaireActive4) {
+        this.usineAgroAlimentaireActive4 = usineAgroAlimentaireActive4;
+    }
+
+    public int getNbUsinesAgroAlimentaire1() {
+        return nbUsinesAgroAlimentaire1;
+    }
+
+    public void setNbUsinesAgroAlimentaire1(int nbUsinesAgroAlimentaire1) {
+        this.nbUsinesAgroAlimentaire1 = nbUsinesAgroAlimentaire1;
+    }
+
+    public int getNbUsinesAgroAlimentaire2() {
+        return nbUsinesAgroAlimentaire2;
+    }
+
+    public void setNbUsinesAgroAlimentaire2(int nbUsinesAgroAlimentaire2) {
+        this.nbUsinesAgroAlimentaire2 = nbUsinesAgroAlimentaire2;
+    }
+
+    public int getNbUsinesAgroAlimentaire3() {
+        return nbUsinesAgroAlimentaire3;
+    }
+
+    public void setNbUsinesAgroAlimentaire3(int nbUsinesAgroAlimentaire3) {
+        this.nbUsinesAgroAlimentaire3 = nbUsinesAgroAlimentaire3;
+    }
+
+    public int getNbUsinesAgroAlimentaire4() {
+        return nbUsinesAgroAlimentaire4;
+    }
+
+    public void setNbUsinesAgroAlimentaire4(int nbUsinesAgroAlimentaire4) {
+        this.nbUsinesAgroAlimentaire4 = nbUsinesAgroAlimentaire4;
+    }
+
+    public long getNbMarchandisesUsineAgroAlimentaire1() {
+        return nbMarchandisesUsineAgroAlimentaire1;
+    }
+
+    public void setNbMarchandisesUsineAgroAlimentaire1(long nbMarchandisesUsineAgroAlimentaire1) {
+        this.nbMarchandisesUsineAgroAlimentaire1 = nbMarchandisesUsineAgroAlimentaire1;
+    }
+
+    public long getNbMarchandisesUsineAgroAlimentaire2() {
+        return nbMarchandisesUsineAgroAlimentaire2;
+    }
+
+    public void setNbMarchandisesUsineAgroAlimentaire2(long nbMarchandisesUsineAgroAlimentaire2) {
+        this.nbMarchandisesUsineAgroAlimentaire2 = nbMarchandisesUsineAgroAlimentaire2;
+    }
+
+    public long getNbMarchandisesUsineAgroAlimentaire3() {
+        return nbMarchandisesUsineAgroAlimentaire3;
+    }
+
+    public void setNbMarchandisesUsineAgroAlimentaire3(long nbMarchandisesUsineAgroAlimentaire3) {
+        this.nbMarchandisesUsineAgroAlimentaire3 = nbMarchandisesUsineAgroAlimentaire3;
+    }
+
+    public long getNbMarchandisesUsineAgroAlimentaire4() {
+        return nbMarchandisesUsineAgroAlimentaire4;
+    }
+
+    public void setNbMarchandisesUsineAgroAlimentaire4(long nbMarchandisesUsineAgroAlimentaire4) {
+        this.nbMarchandisesUsineAgroAlimentaire4 = nbMarchandisesUsineAgroAlimentaire4;
+    }
+
+    public double getEtatProgressUsineAgroAlimentaire1() {
+        return etatProgressUsineAgroAlimentaire1;
+    }
+
+    public void setEtatProgressUsineAgroAlimentaire1(double etatProgressUsineAgroAlimentaire1) {
+        this.etatProgressUsineAgroAlimentaire1 = etatProgressUsineAgroAlimentaire1;
+    }
+
+    public double getEtatProgressUsineAgroAlimentaire2() {
+        return etatProgressUsineAgroAlimentaire2;
+    }
+
+    public void setEtatProgressUsineAgroAlimentaire2(double etatProgressUsineAgroAlimentaire2) {
+        this.etatProgressUsineAgroAlimentaire2 = etatProgressUsineAgroAlimentaire2;
+    }
+
+    public double getEtatProgressUsineAgroAlimentaire3() {
+        return etatProgressUsineAgroAlimentaire3;
+    }
+
+    public void setEtatProgressUsineAgroAlimentaire3(double etatProgressUsineAgroAlimentaire3) {
+        this.etatProgressUsineAgroAlimentaire3 = etatProgressUsineAgroAlimentaire3;
+    }
+
+    public double getEtatProgressUsineAgroAlimentaire4() {
+        return etatProgressUsineAgroAlimentaire4;
+    }
+
+    public void setEtatProgressUsineAgroAlimentaire4(double etatProgressUsineAgroAlimentaire4) {
+        this.etatProgressUsineAgroAlimentaire4 = etatProgressUsineAgroAlimentaire4;
+    }
+
     @Override
     public String toString() {
         return "Sauvegarde{" +
@@ -1063,6 +1248,22 @@ public class Sauvegarde {
                 ", etatProgressUsineJouets2=" + etatProgressUsineJouets2 +
                 ", etatProgressUsineJouets3=" + etatProgressUsineJouets3 +
                 ", etatProgressUsineJouets4=" + etatProgressUsineJouets4 +
+                ", usineAgroAlimentaireActive1=" + usineAgroAlimentaireActive1 +
+                ", usineAgroAlimentaireActive2=" + usineAgroAlimentaireActive2 +
+                ", usineAgroAlimentaireActive3=" + usineAgroAlimentaireActive3 +
+                ", usineAgroAlimentaireActive4=" + usineAgroAlimentaireActive4 +
+                ", nbUsinesAgroAlimentaire1=" + nbUsinesAgroAlimentaire1 +
+                ", nbUsinesAgroAlimentaire2=" + nbUsinesAgroAlimentaire2 +
+                ", nbUsinesAgroAlimentaire3=" + nbUsinesAgroAlimentaire3 +
+                ", nbUsinesAgroAlimentaire4=" + nbUsinesAgroAlimentaire4 +
+                ", nbMarchandisesUsineAgroAlimentaire1=" + nbMarchandisesUsineAgroAlimentaire1 +
+                ", nbMarchandisesUsineAgroAlimentaire2=" + nbMarchandisesUsineAgroAlimentaire2 +
+                ", nbMarchandisesUsineAgroAlimentaire3=" + nbMarchandisesUsineAgroAlimentaire3 +
+                ", nbMarchandisesUsineAgroAlimentaire4=" + nbMarchandisesUsineAgroAlimentaire4 +
+                ", etatProgressUsineAgroAlimentaire1=" + etatProgressUsineAgroAlimentaire1 +
+                ", etatProgressUsineAgroAlimentaire2=" + etatProgressUsineAgroAlimentaire2 +
+                ", etatProgressUsineAgroAlimentaire3=" + etatProgressUsineAgroAlimentaire3 +
+                ", etatProgressUsineAgroAlimentaire4=" + etatProgressUsineAgroAlimentaire4 +
                 '}';
     }
 }

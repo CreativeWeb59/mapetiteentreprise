@@ -270,6 +270,7 @@ public class MainController {
         // creation de la sauvegarde en bdd
         this.sauvegarde = new Sauvegarde(this.pseudo, parametres.getArgentDepart(),1, 1, 0, parametres.getNbPoules(), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                 dateEncours, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, dateEncours, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0,0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
         sauvegardeService.addJoueur(sauvegarde);
 
@@ -295,6 +296,9 @@ public class MainController {
 
         // mise en place des valeurs dans les usines de jouets
         affectationToutesLesUsinesJouets();
+
+        // mise en place des valeurs dans les usines agro alimentaire
+        affectationToutesLesUsinesAgroAlimentaire();
 
         // maj des tarifs dans les usines de textile
         majTarifsUsinesTextile();
@@ -477,5 +481,37 @@ public class MainController {
         jeu.getJoueur().getUsineJouetsMoyenne().setUsineMoyenne();
         jeu.getJoueur().getUsineJouetsGrande().setUsineGrande();
         jeu.getJoueur().getUsineJouetsEnorme().setUsineEnorme();
+    }
+
+    /**
+     * Remplit chaque usine agro alimentaires
+     */
+    public void affectationToutesLesUsinesAgroAlimentaire(){
+        System.out.println("usine : " + jeu.getJoueur().getUsineAgroAlimentairePetite());
+        affectationValeursUsinesAgroAlimentaire(jeu.getJoueur().getUsineAgroAlimentairePetite(), sauvegarde.getUsineAgroAlimentaireActive1(), sauvegarde.getNbUsinesAgroAlimentaire1(), sauvegarde.getNbMarchandisesUsineAgroAlimentaire1(), sauvegarde.getEtatProgressUsineAgroAlimentaire1());
+        affectationValeursUsinesAgroAlimentaire(jeu.getJoueur().getUsineAgroAlimentaireMoyenne(), sauvegarde.getUsineAgroAlimentaireActive2(), sauvegarde.getNbUsinesAgroAlimentaire2(), sauvegarde.getNbMarchandisesUsineAgroAlimentaire2(), sauvegarde.getEtatProgressUsineAgroAlimentaire2());
+        affectationValeursUsinesAgroAlimentaire(jeu.getJoueur().getUsineAgroAlimentaireGrande(), sauvegarde.getUsineAgroAlimentaireActive3(), sauvegarde.getNbUsinesAgroAlimentaire3(), sauvegarde.getNbMarchandisesUsineAgroAlimentaire3(), sauvegarde.getEtatProgressUsineAgroAlimentaire3());
+        affectationValeursUsinesAgroAlimentaire(jeu.getJoueur().getUsineAgroAlimentaireEnorme(), sauvegarde.getUsineAgroAlimentaireActive4(), sauvegarde.getNbUsinesAgroAlimentaire4(), sauvegarde.getNbMarchandisesUsineAgroAlimentaire4(), sauvegarde.getEtatProgressUsineAgroAlimentaire4());
+    }
+    /**
+     * Permet de remplir le contenu des usines agro alimentaire
+     */
+    public void affectationValeursUsinesAgroAlimentaire(UsineAgroAlimentaire usineAgroAlimentaire, int usineActive,  int nbUsines, long nbMarchandises, double etatProgressUsine){
+        usineAgroAlimentaire.setUsineActive(usineActive);
+        usineAgroAlimentaire.setNbUsines(nbUsines);
+        usineAgroAlimentaire.setNbMarchandises(nbMarchandises);
+        usineAgroAlimentaire.setEtatProgressUsine(etatProgressUsine);
+        System.out.println("Progression de l'usine : " + usineAgroAlimentaire.getEtatProgressUsine());
+    }
+
+    /**
+     * Permet de mettre à jour les prix des différentes usines
+     * prix de vente, prix de fabrication et nombra max d'usines
+     */
+    public void majTarifsUsinesAgroAlimentaire(){
+        jeu.getJoueur().getUsineAgroAlimentairePetite().setUsinePetite();
+        jeu.getJoueur().getUsineAgroAlimentaireMoyenne().setUsineMoyenne();
+        jeu.getJoueur().getUsineAgroAlimentaireGrande().setUsineGrande();
+        jeu.getJoueur().getUsineAgroAlimentaireEnorme().setUsineEnorme();
     }
 }

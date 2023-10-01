@@ -2,26 +2,53 @@ package com.example.mapetiteentreprise.controllersFx;
 
 import com.example.mapetiteentreprise.Main;
 import com.example.mapetiteentreprise.actions.Outils;
+import com.example.mapetiteentreprise.bdd.ConnectionBdd;
 import com.example.mapetiteentreprise.jeu.Jeu;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+import java.text.DecimalFormat;
+
 public class UsinesAgroAlimentaireController {
+    private final String monnaie = " €";
+    private final String separationTexte = System.getProperty("line.separator");
+    private final DecimalFormat decimalFormat = Outils.getDecimalFormatWithSpaceSeparator();
+    @FXML
+    private Label labelHaut,
+            labelNbUsineAgroAlimentaire1, labelNbUsineAgroAlimentaire2, labelNbUsineAgroAlimentaire3, labelNbUsineAgroAlimentaire4,
+            labelTarifUsineAgroAlimentaire1, labelTarifUsineAgroAlimentaire2, labelTarifUsineAgroAlimentaire3, labelTarifUsineAgroAlimentaire4,
+            labelNbMarchandisesAgroAlimentaire1, labelNbMarchandisesAgroAlimentaire2, labelNbMarchandisesAgroAlimentaire3, labelNbMarchandisesAgroAlimentaire4;
+    @FXML
+    private Button btnAchatUsineAgroAlimentaire1, btnAchatUsineAgroAlimentaire2, btnAchatUsineAgroAlimentaire3, btnAchatUsineAgroAlimentaire4,
+            btnAchatUsineAgroAlimentairePetite, btnAchatUsineAgroAlimentaireMoyenne, btnAchatUsineAgroAlimentaireGrande, btnAchatUsineAgroAlimentaireEnorme,
+            btnEncaisserUsineAgroAlimentaire1, btnEncaisserUsineAgroAlimentaire2, btnEncaisserUsineAgroAlimentaire3, btnEncaisserUsineAgroAlimentaire4;
     @FXML
     private ProgressBar progressOeufs, progressBC, progressBF, progressSa, progressCo,
             progressScooter, progressCamionette, progressPetitCamion, progressPoidsLourd, progressAvion,
             progressTextile1, progressTextile2, progressTextile3, progressTextile4,
-            progressJouets1, progressJouets2, progressJouets3, progressJouets4;
+            progressJouets1, progressJouets2, progressJouets3, progressJouets4,
+            progressAgroAlimentaire1, progressAgroAlimentaire2, progressAgroAlimentaire3, progressAgroAlimentaire4;
+    private Timeline timelineUsineAgroAlimentaire1, timelineUsineAgroAlimentaire2, timelineUsineAgroAlimentaire3, timelineUsineAgroAlimentaire4;
+    private ConnectionBdd connectionBdd = new ConnectionBdd();
     @FXML
-    private Pane paneProgress;
+    private Pane paneProgress, paneAgroAlimentaire1, paneAgroAlimentaire2, paneAgroAlimentaire3, paneAgroAlimentaire4,
+            paneAgroAlimentaire1D, paneAgroAlimentaire2D, paneAgroAlimentaire3D, paneAgroAlimentaire4D,
+            panePrincipal;
+    @FXML
+    private ImageView imgAgroAlimentaire1, imgAgroAlimentaire2, imgAgroAlimentaire3, imgAgroAlimentaire4;
+    @FXML
     private Stage stage;
     private Scene scene;
     private Parent root;

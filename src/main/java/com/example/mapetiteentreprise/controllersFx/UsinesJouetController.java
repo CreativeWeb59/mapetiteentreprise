@@ -46,8 +46,7 @@ public class UsinesJouetController {
             progressScooter, progressCamionette, progressPetitCamion, progressPoidsLourd, progressAvion,
             progressTextile1, progressTextile2, progressTextile3, progressTextile4,
             progressJouets1, progressJouets2, progressJouets3, progressJouets4;
-    private Timeline timelineUsineTextile1, timelineUsineTextile2, timelineUsineTextile3, timelineUsineTextile4,
-            timelineUsineJouets1, timelineUsineJouets2, timelineUsineJouets3, timelineUsineJouets4;
+    private Timeline timelineUsineJouets1, timelineUsineJouets2, timelineUsineJouets3, timelineUsineJouets4;
     private ConnectionBdd connectionBdd = new ConnectionBdd();
     @FXML
     private Pane paneProgress, paneJouets1, paneJouets2, paneJouets3, paneJouets4,

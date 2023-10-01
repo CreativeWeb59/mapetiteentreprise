@@ -89,7 +89,11 @@ public class ConnectionBdd {
                 "usineJouetsActive1 INTEGER, usineJouetsActive2 INTEGER, usineJouetsActive3 INTEGER, usineJouetsActive4 INTEGER," +
                 "nbUsinesJouets1 INTEGER, nbUsinesJouets2 INTEGER, nbUsinesJouets3 INTEGER, nbUsinesJouets4 INTEGER," +
                 "nbMarchandisesUsineJouets1 INTEGER, nbMarchandisesUsineJouets2 INTEGER, nbMarchandisesUsineJouets3 INTEGER, nbMarchandisesUsineJouets4 INTEGER," +
-                "etatProgressUsineJouets1 REAL, etatProgressUsineJouets2 REAL, etatProgressUsineJouets3 REAL, etatProgressUsineJouets4 REAL" +
+                "etatProgressUsineJouets1 REAL, etatProgressUsineJouets2 REAL, etatProgressUsineJouets3 REAL, etatProgressUsineJouets4 REAL," +
+                "usineAgroAlimentaireActive1 INTEGER, usineAgroAlimentaireActive2 INTEGER, usineAgroAlimentaireActive3 INTEGER, usineAgroAlimentaireActive4 INTEGER," +
+                "nbUsinesAgroAlimentaire1 REAL, nbUsinesAgroAlimentaire2 REAL, nbUsinesAgroAlimentaire3 REAL, nbUsinesAgroAlimentaire4 REAL," +
+                "nbMarchandisesUsineAgroAlimentaire1 INTEGER, nbMarchandisesUsineAgroAlimentaire2 INTEGER, nbMarchandisesUsineAgroAlimentaire3 INTEGER, nbMarchandisesUsineAgroAlimentaire4 INTEGER," +
+                "etatProgressUsineAgroAlimentaire1 REAL, etatProgressUsineAgroAlimentaire2 REAL, etatProgressUsineAgroAlimentaire3 REAL, etatProgressUsineAgroAlimentaire4 REAL" +
                 ")";
         Statement stmt = connection.createStatement();
         stmt.execute(sql);

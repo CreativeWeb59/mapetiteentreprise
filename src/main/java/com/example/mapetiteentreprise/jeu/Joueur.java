@@ -41,6 +41,11 @@ public class Joueur {
     private UsineJouets usineJouetsGrande;
     private UsineJouets usineJouetsEnorme;
 
+    private UsineAgroAlimentaire usineAgroAlimentairePetite;
+    private UsineAgroAlimentaire usineAgroAlimentaireMoyenne;
+    private UsineAgroAlimentaire usineAgroAlimentaireGrande;
+    private UsineAgroAlimentaire usineAgroAlimentaireEnorme;
+
     public Joueur(String pseudo, BigDecimal argent, Ferme ferme, BoissonsChaudes boissonsChaudes, BoissonsFraiches boissonsFraiches, Sandwichs sandwichs, Confiseries confiseries,
                   CreditEnCours creditEnCours, int fermeActive, int distributeursActive, int distributeurBCActive, int distributeurBFActive, int distributeurCoActive, int distributeurSaActive,
                   int poulailler1, int poulailler2, int poulailler3, int poulailler4, int livraison1Active, int livraison2Active, int livraison3Active, int livraison4Active, int livraison5Active,
@@ -82,6 +87,10 @@ public class Joueur {
         this.usineJouetsMoyenne = new UsineJouets("Moyenne usine de jouets", 0, 0, 0, 0);
         this.usineJouetsGrande = new UsineJouets("Grande usine de jouets", 0, 0, 0, 0);
         this.usineJouetsEnorme = new UsineJouets("Enorme usine de jouets", 0, 0, 0, 0);
+        this.usineAgroAlimentairePetite = new UsineAgroAlimentaire("Petite usine agro alimentaire", 0, 0, 0, 0);
+        this.usineAgroAlimentaireMoyenne = new UsineAgroAlimentaire("Moyenne usine agro alimentaire", 0, 0, 0, 0);
+        this.usineAgroAlimentaireGrande = new UsineAgroAlimentaire("Grande usine agro alimentaire", 0, 0, 0, 0);
+        this.usineAgroAlimentaireEnorme = new UsineAgroAlimentaire("Enorme usine agro alimentaire", 0, 0, 0, 0);
     }
     public String getPseudo() {
         return pseudo;
@@ -371,6 +380,38 @@ public class Joueur {
         this.usineJouetsEnorme = usineJouetsEnorme;
     }
 
+    public UsineAgroAlimentaire getUsineAgroAlimentairePetite() {
+        return usineAgroAlimentairePetite;
+    }
+
+    public void setUsineAgroAlimentairePetite(UsineAgroAlimentaire usineAgroAlimentairePetite) {
+        this.usineAgroAlimentairePetite = usineAgroAlimentairePetite;
+    }
+
+    public UsineAgroAlimentaire getUsineAgroAlimentaireMoyenne() {
+        return usineAgroAlimentaireMoyenne;
+    }
+
+    public void setUsineAgroAlimentaireMoyenne(UsineAgroAlimentaire usineAgroAlimentaireMoyenne) {
+        this.usineAgroAlimentaireMoyenne = usineAgroAlimentaireMoyenne;
+    }
+
+    public UsineAgroAlimentaire getUsineAgroAlimentaireGrande() {
+        return usineAgroAlimentaireGrande;
+    }
+
+    public void setUsineAgroAlimentaireGrande(UsineAgroAlimentaire usineAgroAlimentaireGrande) {
+        this.usineAgroAlimentaireGrande = usineAgroAlimentaireGrande;
+    }
+
+    public UsineAgroAlimentaire getUsineAgroAlimentaireEnorme() {
+        return usineAgroAlimentaireEnorme;
+    }
+
+    public void setUsineAgroAlimentaireEnorme(UsineAgroAlimentaire usineAgroAlimentaireEnorme) {
+        this.usineAgroAlimentaireEnorme = usineAgroAlimentaireEnorme;
+    }
+
     @Override
     public String toString() {
         return "Joueur{" +
@@ -410,6 +451,10 @@ public class Joueur {
                 ", usineJouetsMoyenne=" + usineJouetsMoyenne +
                 ", usineJouetsGrande=" + usineJouetsGrande +
                 ", usineJouetsEnorme=" + usineJouetsEnorme +
+                ", usineAgroAlimentairePetite=" + usineAgroAlimentairePetite +
+                ", usineAgroAlimentaireMoyenne=" + usineAgroAlimentaireMoyenne +
+                ", usineAgroAlimentaireGrande=" + usineAgroAlimentaireGrande +
+                ", usineAgroAlimentaireEnorme=" + usineAgroAlimentaireEnorme +
                 '}';
     }
 

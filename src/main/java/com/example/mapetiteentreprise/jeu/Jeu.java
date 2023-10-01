@@ -34,7 +34,6 @@
 package com.example.mapetiteentreprise.jeu;
 
 import com.example.mapetiteentreprise.bdd.*;
-import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.scene.layout.Pane;
 import java.math.BigDecimal;
@@ -42,7 +41,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Jeu {
-    private final boolean dev = true;
+    private final boolean dev = false;
     private Joueur joueur;
     private Sauvegarde sauvegarde;
     private Parametres parametres;
@@ -249,6 +248,28 @@ public class Jeu {
         getSauvegarde().setNbUsinesJouets4(getJoueur().getUsineJouetsEnorme().getNbUsines());
         getSauvegarde().setNbMarchandisesUsineJouets4(getJoueur().getUsineJouetsEnorme().getNbMarchandises());
         getSauvegarde().setEtatProgressUsineJouets4(getJoueur().getUsineJouetsEnorme().getEtatProgressUsine());
+
+        // agro alimentaire
+        getSauvegarde().setUsineAgroAlimentaireActive1(getJoueur().getUsineAgroAlimentairePetite().getUsineActive());
+        getSauvegarde().setNbUsinesAgroAlimentaire1(getJoueur().getUsineAgroAlimentairePetite().getNbUsines());
+        getSauvegarde().setNbMarchandisesUsineAgroAlimentaire1(getJoueur().getUsineAgroAlimentairePetite().getNbMarchandises());
+        getSauvegarde().setEtatProgressUsineAgroAlimentaire1(getJoueur().getUsineAgroAlimentairePetite().getEtatProgressUsine());
+
+        getSauvegarde().setUsineAgroAlimentaireActive2(getJoueur().getUsineAgroAlimentaireMoyenne().getUsineActive());
+        getSauvegarde().setNbUsinesAgroAlimentaire2(getJoueur().getUsineAgroAlimentaireMoyenne().getNbUsines());
+        getSauvegarde().setNbMarchandisesUsineAgroAlimentaire2(getJoueur().getUsineAgroAlimentaireMoyenne().getNbMarchandises());
+        getSauvegarde().setEtatProgressUsineAgroAlimentaire2(getJoueur().getUsineAgroAlimentaireMoyenne().getEtatProgressUsine());
+
+        getSauvegarde().setUsineAgroAlimentaireActive3(getJoueur().getUsineAgroAlimentaireGrande().getUsineActive());
+        getSauvegarde().setNbUsinesAgroAlimentaire3(getJoueur().getUsineAgroAlimentaireGrande().getNbUsines());
+        getSauvegarde().setNbMarchandisesUsineAgroAlimentaire3(getJoueur().getUsineAgroAlimentaireGrande().getNbMarchandises());
+        getSauvegarde().setEtatProgressUsineAgroAlimentaire3(getJoueur().getUsineAgroAlimentaireGrande().getEtatProgressUsine());
+
+        getSauvegarde().setUsineAgroAlimentaireActive4(getJoueur().getUsineAgroAlimentaireEnorme().getUsineActive());
+        getSauvegarde().setNbUsinesAgroAlimentaire4(getJoueur().getUsineAgroAlimentaireEnorme().getNbUsines());
+        getSauvegarde().setNbMarchandisesUsineAgroAlimentaire4(getJoueur().getUsineAgroAlimentaireEnorme().getNbMarchandises());
+        getSauvegarde().setEtatProgressUsineAgroAlimentaire4(getJoueur().getUsineAgroAlimentaireEnorme().getEtatProgressUsine());
+
 
         System.out.println("Nouvelles valeurs a sauvegarder" + getSauvegarde());
 
@@ -513,4 +534,3 @@ public class Jeu {
         }
     }
 }
-// maj

@@ -10,10 +10,10 @@ import javafx.util.Duration;
 import java.math.BigDecimal;
 
 public class UsineJouets extends Usines{
+    private Timeline timelineUsineJouets;
     public UsineJouets(String nom, int usineActive, int nbUsines, long nbMarchandises, double etatProgressUsine) {
         super(nom, usineActive, nbUsines, nbMarchandises, etatProgressUsine);
     }
-    private Timeline timelineUsineJouets;
     /**
      * Barre de progression pour comptabiliser le stock de marchandises dans l'usine
      *
