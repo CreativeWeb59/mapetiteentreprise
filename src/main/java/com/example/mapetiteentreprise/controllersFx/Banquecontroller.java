@@ -62,10 +62,6 @@ public class Banquecontroller {
         // barres de progression
         demarrageProgress();
 
-        // demarrage des usines
-        demarrageUsinesTextile();
-        demarrageUsinesJouets();
-
         // affichage des barres de progression (mode dev)
         jeu.afficheProgression(paneProgress);
 
@@ -279,6 +275,7 @@ public class Banquecontroller {
 
         // demarrage des usines
         demarrageUsinesTextile();
+        demarrageUsinesJouets();
     }
     /**
      * Demarre les usines lorsqu'elles sont actives

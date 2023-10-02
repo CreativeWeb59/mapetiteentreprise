@@ -47,7 +47,7 @@ public class UsineTextile extends Usines{
                 new KeyFrame(Duration.seconds(vitesseAjustement), e -> {
                     // ajoute le nombre de marchandises fabriquées par l'usine
                     this.majUsine();
-                    System.out.println("usine textile terminés");
+                    System.out.println("usine textile terminée, " + this.getNom());
                 }, new KeyValue(progress.progressProperty(), 1))
         );
         timelineUsineTextile.setOnFinished(event -> {
