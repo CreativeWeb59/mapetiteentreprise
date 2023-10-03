@@ -6,6 +6,10 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.mapetiteentreprise.controllersFx.UsinesPharmaceutiqueController"
@@ -18,7 +22,109 @@
                 <Button layoutX="518.0" layoutY="139.0" mnemonicParsing="false" onAction="#retourGestionUsines" text="Retour au menu gestion" />
             </children>
         </Pane>
-        <Pane layoutX="140.0" layoutY="340.0" prefHeight="340.0" prefWidth="1000.0">
+        <Pane fx:id="panePrincipal" layoutX="90.0" layoutY="240.0" prefHeight="600.0" prefWidth="1100.0">
+            <children>
+                <Pane fx:id="panePharmaceutique1" prefHeight="140.0" prefWidth="800.0" styleClass="fondsPharmaceutique1">
+                    <children>
+                        <Text layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Petite Usine" textAlignment="CENTER" wrappingWidth="800.0">
+                            <font>
+                                <Font name="System Bold" size="18.0" />
+                            </font>
+                        </Text>
+                        <ProgressBar fx:id="progressPharmaceutique1" layoutX="30.0" layoutY="90.0" prefHeight="20.0" prefWidth="300.0" progress="0.0" />
+                        <Label fx:id="labelNbMarchandisesPharmaceutique1" layoutX="340.0" layoutY="86.0" prefHeight="29.0" prefWidth="54.0" style="-fx-background-color: transparent;" text="0" />
+                        <Label fx:id="labelNbUsinePharmaceutique1" layoutX="100.0" layoutY="30.0" prefHeight="29.0" prefWidth="60.0" style="-fx-background-color: transparent;" text="Label" />
+                        <Button fx:id="btnAchatUsinePharmaceutiquePetite" layoutX="40.0" layoutY="20.0" mnemonicParsing="false" onAction="#acheterUsinePharmaceutiquePetite" text="+" />
+                        <Label fx:id="labelTarifUsinePharmaceutique1" layoutX="200.0" layoutY="30.0" prefHeight="29.0" prefWidth="407.0" style="-fx-background-color: transparent;" text="Label" />
+                        <Button fx:id="btnEncaisserUsinePharmaceutique1" layoutX="460.0" layoutY="70.0" mnemonicParsing="false" onAction="#onBtnEncaisserUsinePharmaceutique1" text="Encaisser" />
+                        <ImageView fx:id="imgPharmaceutique1" fitHeight="128.0" fitWidth="128.0" layoutX="800.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@images/usineJouets1.png" />
+                            </image>
+                        </ImageView>
+                    </children>
+                </Pane>
+                <Pane fx:id="panePharmaceutique2" layoutY="160.0" prefHeight="140.0" prefWidth="800.0" styleClass="fondsPharmaceutique2">
+                    <children>
+                        <Text layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Moyenne Usine" textAlignment="CENTER" wrappingWidth="800.0">
+                            <font>
+                                <Font name="System Bold" size="18.0" />
+                            </font>
+                        </Text>
+                        <ProgressBar fx:id="progressPharmaceutique2" layoutX="30.0" layoutY="90.0" prefHeight="20.0" prefWidth="300.0" progress="0.0" />
+                        <Label fx:id="labelNbMarchandisesPharmaceutique2" layoutX="340.0" layoutY="86.0" prefHeight="29.0" prefWidth="54.0" style="-fx-background-color: transparent;" text="0" />
+                        <Label fx:id="labelNbUsinePharmaceutique2" layoutX="100.0" layoutY="30.0" prefHeight="29.0" prefWidth="60.0" style="-fx-background-color: transparent;" text="Label" />
+                        <Button fx:id="btnAchatUsinePharmaceutiqueMoyenne" layoutX="40.0" layoutY="20.0" mnemonicParsing="false" onAction="#acheterUsinePharmaceutiqueMoyenne" text="+" />
+                        <Label fx:id="labelTarifUsinePharmaceutique2" layoutX="200.0" layoutY="30.0" prefHeight="29.0" prefWidth="407.0" style="-fx-background-color: transparent;" text="Label" />
+                        <Button fx:id="btnEncaisserUsinePharmaceutique2" layoutX="460.0" layoutY="70.0" mnemonicParsing="false" onAction="#onBtnEncaisserUsinePharmaceutique2" text="Encaisser" />
+                        <ImageView fx:id="imgPharmaceutique2" fitHeight="100.0" fitWidth="100.0" layoutX="830.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@images/usineJouets2.png" />
+                            </image>
+                        </ImageView>
+                    </children>
+                </Pane>
+                <Pane fx:id="panePharmaceutique3" layoutY="320.0" prefHeight="140.0" prefWidth="800.0" styleClass="fondsPharmaceutique3">
+                    <children>
+                        <Text layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Grande Usine" textAlignment="CENTER" wrappingWidth="800.0">
+                            <font>
+                                <Font name="System Bold" size="18.0" />
+                            </font>
+                        </Text>
+                        <ProgressBar fx:id="progressPharmaceutique3" layoutX="30.0" layoutY="90.0" prefHeight="20.0" prefWidth="300.0" progress="0.0" />
+                        <Label fx:id="labelNbMarchandisesPharmaceutique3" layoutX="340.0" layoutY="86.0" prefHeight="29.0" prefWidth="54.0" style="-fx-background-color: transparent;" text="0" />
+                        <Label fx:id="labelNbUsinePharmaceutique3" layoutX="100.0" layoutY="30.0" prefHeight="29.0" prefWidth="60.0" style="-fx-background-color: transparent;" text="Label" />
+                        <Button fx:id="btnAchatUsinePharmaceutiqueGrande" layoutX="40.0" layoutY="20.0" mnemonicParsing="false" onAction="#acheterUsinePharmaceutiqueMoyenne" text="+" />
+                        <Label fx:id="labelTarifUsinePharmaceutique3" layoutX="200.0" layoutY="30.0" prefHeight="29.0" prefWidth="407.0" style="-fx-background-color: transparent;" text="Label" />
+                        <Button fx:id="btnEncaisserUsinePharmaceutique3" layoutX="460.0" layoutY="70.0" mnemonicParsing="false" onAction="#onBtnEncaisserUsinePharmaceutique3" text="Encaisser" />
+                        <ImageView fx:id="imgPharmaceutique3" fitHeight="128.0" fitWidth="128.0" layoutX="820.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@images/usineJouets3.png" />
+                            </image>
+                        </ImageView>
+                    </children>
+                </Pane>
+                <Pane fx:id="panePharmaceutique4" layoutY="480.0" prefHeight="140.0" prefWidth="800.0" styleClass="fondsPharmaceutique4">
+                    <children>
+                        <Text layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enorme Usine" textAlignment="CENTER" wrappingWidth="800.0">
+                            <font>
+                                <Font name="System Bold" size="18.0" />
+                            </font>
+                        </Text>
+                        <ProgressBar fx:id="progressPharmaceutique4" layoutX="30.0" layoutY="90.0" prefHeight="20.0" prefWidth="300.0" progress="0.0" />
+                        <Label fx:id="labelNbMarchandisesPharmaceutique4" layoutX="340.0" layoutY="86.0" prefHeight="29.0" prefWidth="54.0" style="-fx-background-color: transparent;" text="0" />
+                        <Label fx:id="labelNbUsinePharmaceutique4" layoutX="100.0" layoutY="30.0" prefHeight="29.0" prefWidth="60.0" style="-fx-background-color: transparent;" text="Label" />
+                        <Button fx:id="btnAchatUsinePharmaceutiqueEnorme" layoutX="40.0" layoutY="20.0" mnemonicParsing="false" onAction="#acheterUsinePharmaceutiqueEnorme" text="+" />
+                        <Label fx:id="labelTarifUsinePharmaceutique4" layoutX="200.0" layoutY="30.0" prefHeight="29.0" prefWidth="407.0" style="-fx-background-color: transparent;" text="Label" />
+                        <Button fx:id="btnEncaisserUsinePharmaceutique4" layoutX="460.0" layoutY="70.0" mnemonicParsing="false" onAction="#onBtnEncaisserUsinePharmaceutique4" text="Encaisser" />
+                        <ImageView fx:id="imgPharmaceutique4" fitHeight="128.0" fitWidth="128.0" layoutX="820.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@images/usineJouets4.png" />
+                            </image>
+                        </ImageView>
+                    </children>
+                </Pane>
+                <Pane fx:id="paneJouets1D" focusTraversable="true" prefHeight="120.0" prefWidth="800.0">
+                    <children>
+                        <Button fx:id="btnAchatUsineJouets1" alignment="CENTER" mnemonicParsing="false" onAction="#acheterUsinePharmaceutiquePetite" text="Acheter petite usine" />
+                    </children>
+                </Pane>
+                <Pane fx:id="paneJouets2D" focusTraversable="true" layoutY="160.0" prefHeight="120.0" prefWidth="800.0">
+                    <children>
+                        <Button fx:id="btnAchatUsineJouets2" mnemonicParsing="false" onAction="#acheterUsinePharmaceutiqueMoyenne" text="Acheter usine moyenne" />
+                    </children>
+                </Pane>
+                <Pane fx:id="paneJouets3D" focusTraversable="true" layoutY="320.0" prefHeight="120.0" prefWidth="800.0">
+                    <children>
+                        <Button fx:id="btnAchatUsineJouets3" mnemonicParsing="false" onAction="#acheterUsinePharmaceutiqueGrande" text="Acheter usine grande" />
+                    </children>
+                </Pane>
+                <Pane fx:id="paneJouets4D" focusTraversable="true" layoutY="480.0" prefHeight="120.0" prefWidth="800.0">
+                    <children>
+                        <Button fx:id="btnAchatUsineJouets4" mnemonicParsing="false" onAction="#acheterUsinePharmaceutiqueEnorme" text="Acheter usine enorme" />
+                    </children>
+                </Pane>
+            </children>
         </Pane>
         <Pane fx:id="paneProgress" layoutX="185.0" layoutY="820.0" prefHeight="20.0" prefWidth="900.0" visible="true">
             <children>

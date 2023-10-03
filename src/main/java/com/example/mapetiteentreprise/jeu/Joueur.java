@@ -46,6 +46,11 @@ public class Joueur {
     private UsineAgroAlimentaire usineAgroAlimentaireGrande;
     private UsineAgroAlimentaire usineAgroAlimentaireEnorme;
 
+    private UsinePharmaceutique usinePharmaceutiquePetite;
+    private UsinePharmaceutique usinePharmaceutiqueMoyenne;
+    private UsinePharmaceutique usinePharmaceutiqueGrande;
+    private UsinePharmaceutique usinePharmaceutiqueEnorme;
+
     public Joueur(String pseudo, BigDecimal argent, Ferme ferme, BoissonsChaudes boissonsChaudes, BoissonsFraiches boissonsFraiches, Sandwichs sandwichs, Confiseries confiseries,
                   CreditEnCours creditEnCours, int fermeActive, int distributeursActive, int distributeurBCActive, int distributeurBFActive, int distributeurCoActive, int distributeurSaActive,
                   int poulailler1, int poulailler2, int poulailler3, int poulailler4, int livraison1Active, int livraison2Active, int livraison3Active, int livraison4Active, int livraison5Active,
@@ -91,6 +96,10 @@ public class Joueur {
         this.usineAgroAlimentaireMoyenne = new UsineAgroAlimentaire("Moyenne usine agro alimentaire", 0, 0, 0, 0);
         this.usineAgroAlimentaireGrande = new UsineAgroAlimentaire("Grande usine agro alimentaire", 0, 0, 0, 0);
         this.usineAgroAlimentaireEnorme = new UsineAgroAlimentaire("Enorme usine agro alimentaire", 0, 0, 0, 0);
+        this.usinePharmaceutiquePetite = new UsinePharmaceutique("Petite usine pharmaceutique", 0, 0, 0, 0);
+        this.usinePharmaceutiqueMoyenne = new UsinePharmaceutique("Moyenne usine pharmaceutique", 0, 0, 0, 0);
+        this.usinePharmaceutiqueGrande = new UsinePharmaceutique("Grande usine pharmaceutique", 0, 0, 0, 0);
+        this.usinePharmaceutiqueEnorme = new UsinePharmaceutique("Enorme usine pharmaceutique", 0, 0, 0, 0);
     }
     public String getPseudo() {
         return pseudo;
@@ -412,6 +421,38 @@ public class Joueur {
         this.usineAgroAlimentaireEnorme = usineAgroAlimentaireEnorme;
     }
 
+    public UsinePharmaceutique getUsinePharmaceutiquePetite() {
+        return usinePharmaceutiquePetite;
+    }
+
+    public void setUsinePharmaceutiquePetite(UsinePharmaceutique usinePharmaceutiquePetite) {
+        this.usinePharmaceutiquePetite = usinePharmaceutiquePetite;
+    }
+
+    public UsinePharmaceutique getUsinePharmaceutiqueMoyenne() {
+        return usinePharmaceutiqueMoyenne;
+    }
+
+    public void setUsinePharmaceutiqueMoyenne(UsinePharmaceutique usinePharmaceutiqueMoyenne) {
+        this.usinePharmaceutiqueMoyenne = usinePharmaceutiqueMoyenne;
+    }
+
+    public UsinePharmaceutique getUsinePharmaceutiqueGrande() {
+        return usinePharmaceutiqueGrande;
+    }
+
+    public void setUsinePharmaceutiqueGrande(UsinePharmaceutique usinePharmaceutiqueGrande) {
+        this.usinePharmaceutiqueGrande = usinePharmaceutiqueGrande;
+    }
+
+    public UsinePharmaceutique getUsinePharmaceutiqueEnorme() {
+        return usinePharmaceutiqueEnorme;
+    }
+
+    public void setUsinePharmaceutiqueEnorme(UsinePharmaceutique usinePharmaceutiqueEnorme) {
+        this.usinePharmaceutiqueEnorme = usinePharmaceutiqueEnorme;
+    }
+
     @Override
     public String toString() {
         return "Joueur{" +
@@ -455,6 +496,10 @@ public class Joueur {
                 ", usineAgroAlimentaireMoyenne=" + usineAgroAlimentaireMoyenne +
                 ", usineAgroAlimentaireGrande=" + usineAgroAlimentaireGrande +
                 ", usineAgroAlimentaireEnorme=" + usineAgroAlimentaireEnorme +
+                ", usinePharmaceutiquePetite=" + usinePharmaceutiquePetite +
+                ", usinePharmaceutiqueMoyenne=" + usinePharmaceutiqueMoyenne +
+                ", usinePharmaceutiqueGrande=" + usinePharmaceutiqueGrande +
+                ", usinePharmaceutiqueEnorme=" + usinePharmaceutiqueEnorme +
                 '}';
     }
 

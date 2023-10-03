@@ -4,6 +4,11 @@ import com.example.mapetiteentreprise.Main;
 import com.example.mapetiteentreprise.actions.Outils;
 import com.example.mapetiteentreprise.bdd.ConnectionBdd;
 import com.example.mapetiteentreprise.jeu.Jeu;
+import com.example.mapetiteentreprise.jeu.UsineAgroAlimentaire;
+import com.example.mapetiteentreprise.jeu.UsineTextile;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,6 +23,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import javafx.util.Duration;
 
 import java.text.DecimalFormat;
 
@@ -39,6 +45,7 @@ public class UsinesAgroAlimentaireController {
             progressScooter, progressCamionette, progressPetitCamion, progressPoidsLourd, progressAvion,
             progressTextile1, progressTextile2, progressTextile3, progressTextile4,
             progressJouets1, progressJouets2, progressJouets3, progressJouets4,
+            progressPharmaceutique1, progressPharmaceutique2, progressPharmaceutique3, progressPharmaceutique4,
             progressAgroAlimentaire1, progressAgroAlimentaire2, progressAgroAlimentaire3, progressAgroAlimentaire4;
     private Timeline timelineUsineAgroAlimentaire1, timelineUsineAgroAlimentaire2, timelineUsineAgroAlimentaire3, timelineUsineAgroAlimentaire4;
     private ConnectionBdd connectionBdd = new ConnectionBdd();
@@ -61,6 +68,16 @@ public class UsinesAgroAlimentaireController {
         jeu.afficheProgression(paneProgress);
 
         demarrageProgress();
+
+        // recuperation des marchandises
+        recupMarchandisesToutes();
+
+        // majLabels et boutons
+        miseEnPlace();
+
+        centragePanesPrincipaux();
+        centrageBoutons();
+
     }
     /**
      * Retour au menu gestion des usines
@@ -124,6 +141,7 @@ public class UsinesAgroAlimentaireController {
         // demarrage des usines
         demarrageUsinesTextile();
         demarrageUsinesJouets();
+        demarrageUsinesAgroAlimentaire();
     }
 
     public void fermetureProgress(){
@@ -155,6 +173,18 @@ public class UsinesAgroAlimentaireController {
         this.jeu.getJoueur().getUsineJouetsGrande().setEtatProgressUsine(this.progressJouets3.getProgress());
         this.jeu.getJoueur().getUsineJouetsEnorme().setEtatProgressUsine(this.progressJouets4.getProgress());
 
+        // on recupere les barres de progression des usines agro alimentaire
+        this.jeu.getJoueur().getUsineAgroAlimentairePetite().setEtatProgressUsine(this.progressAgroAlimentaire1.getProgress());
+        this.jeu.getJoueur().getUsineAgroAlimentaireMoyenne().setEtatProgressUsine(this.progressAgroAlimentaire2.getProgress());
+        this.jeu.getJoueur().getUsineAgroAlimentaireGrande().setEtatProgressUsine(this.progressAgroAlimentaire3.getProgress());
+        this.jeu.getJoueur().getUsineAgroAlimentaireEnorme().setEtatProgressUsine(this.progressAgroAlimentaire4.getProgress());
+
+        // on recupere les barres de progression des usines pharmaceutique
+        this.jeu.getJoueur().getUsinePharmaceutiquePetite().setEtatProgressUsine(this.progressPharmaceutique1.getProgress());
+        this.jeu.getJoueur().getUsinePharmaceutiqueMoyenne().setEtatProgressUsine(this.progressPharmaceutique2.getProgress());
+        this.jeu.getJoueur().getUsinePharmaceutiqueGrande().setEtatProgressUsine(this.progressPharmaceutique3.getProgress());
+        this.jeu.getJoueur().getUsinePharmaceutiqueEnorme().setEtatProgressUsine(this.progressPharmaceutique4.getProgress());
+
         // on stoppe les barres de progression
         jeu.getJoueur().getFerme().progressBarStop();
         jeu.getCalendrier().progressBarStop();
@@ -175,6 +205,14 @@ public class UsinesAgroAlimentaireController {
         jeu.getJoueur().getUsineJouetsMoyenne().progressBarStop();
         jeu.getJoueur().getUsineJouetsGrande().progressBarStop();
         jeu.getJoueur().getUsineJouetsEnorme().progressBarStop();
+        Outils.progressBarStop(timelineUsineAgroAlimentaire1);
+        Outils.progressBarStop(timelineUsineAgroAlimentaire2);
+        Outils.progressBarStop(timelineUsineAgroAlimentaire3);
+        Outils.progressBarStop(timelineUsineAgroAlimentaire4);
+        jeu.getJoueur().getUsinePharmaceutiquePetite().progressBarStop();
+        jeu.getJoueur().getUsinePharmaceutiqueMoyenne().progressBarStop();
+        jeu.getJoueur().getUsinePharmaceutiqueGrande().progressBarStop();
+        jeu.getJoueur().getUsinePharmaceutiqueEnorme().progressBarStop();
     }
 
     /**
@@ -304,4 +342,260 @@ public class UsinesAgroAlimentaireController {
             this.jeu.getJoueur().getUsineJouetsEnorme().progressBarStartUsineJouets(1, this.jeu.getJoueur().getUsineJouetsEnorme().getVitesseUsine(), vitesseUsineJouets4, progressJouets4);
         }
     }
+    /**
+     * Demarre les usines de jouets lorsqu'elles sont actives
+     */
+    public void demarrageUsinesPharmaceutique() {
+        if (Outils.isActif(jeu.getJoueur().getUsinePharmaceutiquePetite().getUsineActive())) {
+            // recupertaion etat barre de progression usine pharmaceutique petite
+            double vitesseUsinePharmaceutique1 = jeu.getJoueur().getUsinePharmaceutiquePetite().getVitesseUsine() - (jeu.getJoueur().getUsinePharmaceutiquePetite().getVitesseUsine() * jeu.getJoueur().getUsinePharmaceutiquePetite().getEtatProgressUsine());
+            this.jeu.getJoueur().getUsinePharmaceutiquePetite().progressBarStartUsinePharmaceutique(1, this.jeu.getJoueur().getUsinePharmaceutiquePetite().getVitesseUsine(), vitesseUsinePharmaceutique1, progressJouets1);
+        }
+        if (Outils.isActif(jeu.getJoueur().getUsinePharmaceutiqueMoyenne().getUsineActive())) {
+            // recupertaion etat barre de progression usine pharmaceutique moyenne
+            double vitesseUsinePharmaceutique2 = jeu.getJoueur().getUsinePharmaceutiqueMoyenne().getVitesseUsine() - (jeu.getJoueur().getUsinePharmaceutiqueMoyenne().getVitesseUsine() * jeu.getJoueur().getUsinePharmaceutiqueMoyenne().getEtatProgressUsine());
+            this.jeu.getJoueur().getUsinePharmaceutiqueMoyenne().progressBarStartUsinePharmaceutique(1, this.jeu.getJoueur().getUsinePharmaceutiqueMoyenne().getVitesseUsine(), vitesseUsinePharmaceutique2, progressJouets2);
+        }
+        if (Outils.isActif(jeu.getJoueur().getUsinePharmaceutiqueGrande().getUsineActive())) {
+            // recupertaion etat barre de progression usine pharmaceutique grande
+            double vitesseUsinePharmaceutique3 = jeu.getJoueur().getUsinePharmaceutiqueGrande().getVitesseUsine() - (jeu.getJoueur().getUsinePharmaceutiqueGrande().getVitesseUsine() * jeu.getJoueur().getUsinePharmaceutiqueGrande().getEtatProgressUsine());
+            this.jeu.getJoueur().getUsinePharmaceutiqueGrande().progressBarStartUsinePharmaceutique(1, this.jeu.getJoueur().getUsinePharmaceutiqueGrande().getVitesseUsine(), vitesseUsinePharmaceutique3, progressJouets3);
+        }
+        if (Outils.isActif(jeu.getJoueur().getUsinePharmaceutiqueEnorme().getUsineActive())) {
+            // recupertaion etat barre de progression usine pharmaceutique enorme
+            double vitesseUsinePharmaceutique4 = jeu.getJoueur().getUsinePharmaceutiqueEnorme().getVitesseUsine() - (jeu.getJoueur().getUsinePharmaceutiqueEnorme().getVitesseUsine() * jeu.getJoueur().getUsinePharmaceutiqueEnorme().getEtatProgressUsine());
+            this.jeu.getJoueur().getUsinePharmaceutiqueEnorme().progressBarStartUsinePharmaceutique(1, this.jeu.getJoueur().getUsinePharmaceutiqueEnorme().getVitesseUsine(), vitesseUsinePharmaceutique4, progressJouets4);
+        }
+    }
+    /**
+     * Demarre les usines lorsqu'elles sont actives
+     */
+    public void demarrageUsinesAgroAlimentaire() {
+        // usine agro alimentaire petite
+        if (Outils.isActif(jeu.getJoueur().getUsineAgroAlimentairePetite().getUsineActive())) {
+            System.out.println("Demarrage " + jeu.getJoueur().getUsineAgroAlimentairePetite().getNom());
+            double vitesseUsineAgroAlimentaire1 = jeu.getJoueur().getUsineAgroAlimentairePetite().getVitesseUsine() - (jeu.getJoueur().getUsineAgroAlimentairePetite().getVitesseUsine() * jeu.getJoueur().getUsineAgroAlimentairePetite().getEtatProgressUsine());
+            this.progressBarStartUsineAgroAlimentairePetite(1, jeu.getJoueur().getUsineAgroAlimentairePetite().getVitesseUsine(), vitesseUsineAgroAlimentaire1, jeu.getJoueur().getUsineAgroAlimentairePetite(), progressTextile1, btnEncaisserUsineAgroAlimentaire1);
+        }
+        // usine agro alimentaire moyenne
+        if (Outils.isActif(jeu.getJoueur().getUsineAgroAlimentaireMoyenne().getUsineActive())) {
+            System.out.println("Demarrage " + jeu.getJoueur().getUsineAgroAlimentaireMoyenne().getNom());
+            double vitesseUsineAgroAlimentaire2 = jeu.getJoueur().getUsineAgroAlimentaireMoyenne().getVitesseUsine() - (jeu.getJoueur().getUsineAgroAlimentaireMoyenne().getVitesseUsine() * jeu.getJoueur().getUsineAgroAlimentaireMoyenne().getEtatProgressUsine());
+            this.progressBarStartUsineAgroAlimentaireMoyenne(1, jeu.getJoueur().getUsineAgroAlimentaireMoyenne().getVitesseUsine(), vitesseUsineAgroAlimentaire2, jeu.getJoueur().getUsineAgroAlimentaireMoyenne(), progressTextile2, btnEncaisserUsineAgroAlimentaire2);
+        }
+        // usine agro alimentaire grande
+        if (Outils.isActif(jeu.getJoueur().getUsineAgroAlimentaireGrande().getUsineActive())) {
+            System.out.println("Demarrage " + jeu.getJoueur().getUsineAgroAlimentaireGrande().getNom());
+            double vitesseUsineAgroAlimentaire3 = jeu.getJoueur().getUsineAgroAlimentaireGrande().getVitesseUsine() - (jeu.getJoueur().getUsineAgroAlimentaireGrande().getVitesseUsine() * jeu.getJoueur().getUsineAgroAlimentaireGrande().getEtatProgressUsine());
+            this.progressBarStartUsineAgroAlimentaireGrande(1, jeu.getJoueur().getUsineAgroAlimentaireGrande().getVitesseUsine(), vitesseUsineAgroAlimentaire3, jeu.getJoueur().getUsineAgroAlimentaireGrande(), progressTextile3, btnEncaisserUsineAgroAlimentaire3);
+        }
+        // usine agro alimentaire enorme
+        if (Outils.isActif(jeu.getJoueur().getUsineAgroAlimentaireEnorme().getUsineActive())) {
+            System.out.println("Demarrage " + jeu.getJoueur().getUsineAgroAlimentaireEnorme().getNom());
+            double vitesseUsineAgroAlimentaire4 = jeu.getJoueur().getUsineAgroAlimentaireEnorme().getVitesseUsine() - (jeu.getJoueur().getUsineAgroAlimentaireEnorme().getVitesseUsine() * jeu.getJoueur().getUsineAgroAlimentaireEnorme().getEtatProgressUsine());
+            this.progressBarStartUsineAgroAlimentaireEnorme(1, jeu.getJoueur().getUsineAgroAlimentaireEnorme().getVitesseUsine(), vitesseUsineAgroAlimentaire4, jeu.getJoueur().getUsineAgroAlimentaireEnorme(), progressTextile4, btnEncaisserUsineAgroAlimentaire4);
+        }
+    }
+
+    /**
+     * Barre de progression pour comptabiliser le stock de marchandises dans l'usine textile petite
+     *
+     * @param cycle             : 0 pour cycle infini
+     * @param vitesse           : vitesse de l'usine en secondes
+     * @param vitesseAjustement
+     * @param usineAgroAlimentaire
+     * @param progress          : barre de progress de la fabrication d'une marchandise
+     * @param btnEncaisser
+     */
+    public void progressBarStartUsineAgroAlimentairePetite(int cycle, double vitesse, double vitesseAjustement, UsineAgroAlimentaire usineAgroAlimentaire, ProgressBar progress, Button btnEncaisser) {
+        double etatBarreProgress;
+        if (cycle == 1) {
+            progress.setProgress(usineAgroAlimentaire.getEtatProgressUsine());
+            etatBarreProgress = usineAgroAlimentaire.getEtatProgressUsine();
+        } else {
+            progress.setProgress(0);
+            etatBarreProgress = 0;
+        }
+        timelineUsineAgroAlimentaire1 = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(progress.progressProperty(), etatBarreProgress)),
+                new KeyFrame(Duration.seconds(vitesseAjustement), e -> {
+                    System.out.println("cycle");
+                    // rend le bouton Encaisser actif
+                    btnEncaisser.setDisable(false);
+                    // ajoute le nombre de marchandises fabriquées par l'usine
+                    usineAgroAlimentaire.majUsine();
+                    // maj le montant des gains en attente
+                    recupMarchandises(this.jeu.getJoueur().getUsineTextilePetite(), btnEncaisserUsineAgroAlimentaire1, imgAgroAlimentaire1);
+                    System.out.println("Production de marchandises dans " + usineAgroAlimentaire.getNom() + " terminée");
+                    // met à jour les gains en cours ainsi que le bouton encaisser
+                    usineAgroAlimentaire.majBtnEncaisser(btnEncaisser, imgAgroAlimentaire1);
+                    // maj des labels
+                    this.miseEnPlace();
+                }, new KeyValue(progress.progressProperty(), 1))
+        );
+        if (cycle == 1) {
+            timelineUsineAgroAlimentaire1.setOnFinished(event -> {
+                // recalcul de la vitesse suivant le niveau de la barre de progression
+                progressBarStartUsineAgroAlimentairePetite(cycle - 1, vitesse, vitesse, usineAgroAlimentaire, progress, btnEncaisser);
+            });
+        }
+        if (cycle == 0) {
+            timelineUsineAgroAlimentaire1.setCycleCount(Animation.INDEFINITE);
+        } else {
+            timelineUsineAgroAlimentaire1.setCycleCount(cycle);
+        }
+        timelineUsineAgroAlimentaire1.play();
+    }
+
+    /**
+     * Barre de progression pour comptabiliser le stock de marchandises dans l'usine de textile moyenne
+     *
+     * @param cycle             : 0 pour cycle infini
+     * @param vitesse           : vitesse de l'usine en secondes
+     * @param vitesseAjustement
+     * @param usineAgroAlimentaire
+     * @param progress          : barre de progress de la fabrication d'une marchandise
+     * @param btnEncaisser
+     */
+    public void progressBarStartUsineAgroAlimentaireMoyenne(int cycle, double vitesse, double vitesseAjustement, UsineAgroAlimentaire usineAgroAlimentaire , ProgressBar progress, Button btnEncaisser) {
+        double etatBarreProgress;
+        if (cycle == 1) {
+            progress.setProgress(usineAgroAlimentaire.getEtatProgressUsine());
+            etatBarreProgress = usineAgroAlimentaire.getEtatProgressUsine();
+        } else {
+            progress.setProgress(0);
+            etatBarreProgress = 0;
+        }
+        timelineUsineAgroAlimentaire2 = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(progress.progressProperty(), etatBarreProgress)),
+                new KeyFrame(Duration.seconds(vitesseAjustement), e -> {
+                    System.out.println("cycle");
+                    // rend le bouton Encaisser actif
+                    btnEncaisser.setDisable(false);
+                    // ajoute le nombre de marchandises fabriquées par l'usine
+                    usineAgroAlimentaire.majUsine();
+                    // maj le montant des gains en attente
+                    recupMarchandises(this.jeu.getJoueur().getUsineTextileMoyenne(), btnEncaisserUsineAgroAlimentaire2, imgAgroAlimentaire2);
+                    System.out.println("Production de marchandises dans " + usineAgroAlimentaire.getNom() + " terminée");
+                    // met à jour les gains en cours ainsi que le bouton encaisser
+                    usineAgroAlimentaire.majBtnEncaisser(btnEncaisser, imgAgroAlimentaire2);
+                    // maj des labels
+                    this.miseEnPlace();
+                }, new KeyValue(progress.progressProperty(), 1))
+        );
+        if (cycle == 1) {
+            timelineUsineAgroAlimentaire2.setOnFinished(event -> {
+                // recalcul de la vitesse suivant le niveau de la barre de progression
+                progressBarStartUsineAgroAlimentaireMoyenne(cycle - 1, vitesse, vitesse, usineAgroAlimentaire, progress, btnEncaisser);
+            });
+        }
+        if (cycle == 0) {
+            timelineUsineAgroAlimentaire2.setCycleCount(Animation.INDEFINITE);
+        } else {
+            timelineUsineAgroAlimentaire2.setCycleCount(cycle);
+        }
+        timelineUsineAgroAlimentaire2.play();
+    }
+
+    /**
+     * Barre de progression pour comptabiliser le stock de marchandises dans l'usine textile grande
+     *
+     * @param cycle             : 0 pour cycle infini
+     * @param vitesse           : vitesse de l'usine en secondes
+     * @param vitesseAjustement
+     * @param usineAgroAlimentaire
+     * @param progress          : barre de progress de la fabrication d'une marchandise
+     * @param btnEncaisser
+     */
+    public void progressBarStartUsineAgroAlimentaireGrande(int cycle, double vitesse, double vitesseAjustement, UsineAgroAlimentaire usineAgroAlimentaire , ProgressBar progress, Button btnEncaisser) {
+        double etatBarreProgress;
+        if (cycle == 1) {
+            progress.setProgress(usineAgroAlimentaire.getEtatProgressUsine());
+            etatBarreProgress = usineAgroAlimentaire.getEtatProgressUsine();
+        } else {
+            progress.setProgress(0);
+            etatBarreProgress = 0;
+        }
+        timelineUsineAgroAlimentaire3 = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(progress.progressProperty(), etatBarreProgress)),
+                new KeyFrame(Duration.seconds(vitesseAjustement), e -> {
+                    System.out.println("cycle");
+                    // rend le bouton Encaisser actif
+                    btnEncaisser.setDisable(false);
+                    // ajoute le nombre de marchandises fabriquées par l'usine
+                    usineAgroAlimentaire.majUsine();
+                    // maj le montant des gains en attente
+                    recupMarchandises(this.jeu.getJoueur().getUsineTextileGrande(), btnEncaisserUsineAgroAlimentaire3, imgAgroAlimentaire3);
+                    System.out.println("Production de marchandises dans " + usineAgroAlimentaire.getNom() + " terminée");
+                    // met à jour les gains en cours ainsi que le bouton encaisser
+                    usineAgroAlimentaire.majBtnEncaisser(btnEncaisser, imgAgroAlimentaire3);
+                    // maj des labels
+                    this.miseEnPlace();
+                }, new KeyValue(progress.progressProperty(), 1))
+        );
+        if (cycle == 1) {
+            timelineUsineAgroAlimentaire3.setOnFinished(event -> {
+                // recalcul de la vitesse suivant le niveau de la barre de progression
+                progressBarStartUsineAgroAlimentaireGrande(cycle - 1, vitesse, vitesse, usineAgroAlimentaire, progress, btnEncaisser);
+            });
+        }
+        if (cycle == 0) {
+            timelineUsineAgroAlimentaire3.setCycleCount(Animation.INDEFINITE);
+        } else {
+            timelineUsineAgroAlimentaire3.setCycleCount(cycle);
+        }
+        timelineUsineAgroAlimentaire3.play();
+    }
+
+    /**
+     * Barre de progression pour comptabiliser le stock de marchandises dans l'usine textile enorme
+     *
+     * @param cycle             : 0 pour cycle infini
+     * @param vitesse           : vitesse de l'usine en secondes
+     * @param vitesseAjustement
+     * @param usineAgroAlimentaire
+     * @param progress          : barre de progress de la fabrication d'une marchandise
+     * @param btnEncaisser
+     */
+    public void progressBarStartUsineAgroAlimentaireEnorme(int cycle, double vitesse, double vitesseAjustement, UsineAgroAlimentaire usineAgroAlimentaire , ProgressBar progress, Button btnEncaisser) {
+        double etatBarreProgress;
+        if (cycle == 1) {
+            progress.setProgress(usineAgroAlimentaire.getEtatProgressUsine());
+            etatBarreProgress = usineAgroAlimentaire.getEtatProgressUsine();
+        } else {
+            progress.setProgress(0);
+            etatBarreProgress = 0;
+        }
+        timelineUsineAgroAlimentaire4 = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(progress.progressProperty(), etatBarreProgress)),
+                new KeyFrame(Duration.seconds(vitesseAjustement), e -> {
+                    System.out.println("cycle");
+                    // rend le bouton Encaisser actif
+                    btnEncaisser.setDisable(false);
+                    // ajoute le nombre de marchandises fabriquées par l'usine
+                    usineAgroAlimentaire.majUsine();
+                    // maj le montant des gains en attente
+                    recupMarchandises(this.jeu.getJoueur().getUsineTextileEnorme(), btnEncaisserUsineAgroAlimentaire4, imgAgroAlimentaire4);
+                    System.out.println("Production de marchandises dans " + usineAgroAlimentaire.getNom() + " terminée");
+                    // met à jour les gains en cours ainsi que le bouton encaisser
+                    usineAgroAlimentaire.majBtnEncaisser(btnEncaisser, imgAgroAlimentaire4);
+                    // maj des labels
+                    this.miseEnPlace();
+                }, new KeyValue(progress.progressProperty(), 1))
+        );
+        if (cycle == 1) {
+            timelineUsineAgroAlimentaire4.setOnFinished(event -> {
+                // recalcul de la vitesse suivant le niveau de la barre de progression
+                progressBarStartUsineAgroAlimentaireEnorme(cycle - 1, vitesse, vitesse, usineAgroAlimentaire, progress, btnEncaisser);
+            });
+        }
+        if (cycle == 0) {
+            timelineUsineAgroAlimentaire4.setCycleCount(Animation.INDEFINITE);
+        } else {
+            timelineUsineAgroAlimentaire4.setCycleCount(cycle);
+        }
+        timelineUsineAgroAlimentaire4.play();
+    }
+
+
 }
