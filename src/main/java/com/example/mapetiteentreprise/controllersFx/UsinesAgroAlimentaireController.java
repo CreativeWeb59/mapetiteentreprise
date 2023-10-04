@@ -5,11 +5,11 @@ import com.example.mapetiteentreprise.actions.Outils;
 import com.example.mapetiteentreprise.bdd.ConnectionBdd;
 import com.example.mapetiteentreprise.jeu.Jeu;
 import com.example.mapetiteentreprise.jeu.UsineAgroAlimentaire;
-import com.example.mapetiteentreprise.jeu.UsineTextile;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,6 +25,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 
 public class UsinesAgroAlimentaireController {
@@ -67,13 +68,13 @@ public class UsinesAgroAlimentaireController {
         // affichage des barres de progression (mode dev)
         jeu.afficheProgression(paneProgress);
 
-        demarrageProgress();
-
         // recuperation des marchandises
         recupMarchandisesToutes();
 
         // majLabels et boutons
         miseEnPlace();
+
+        demarrageProgress();
 
         centragePanesPrincipaux();
         centrageBoutons();
@@ -118,6 +119,464 @@ public class UsinesAgroAlimentaireController {
         // sauvegarde bdd
         sauveBdd();
     }
+
+    /**
+     * Ajout d'une petite usine
+     */
+    public void acheterUsineAgroAlimentairePetite() {
+        acheterUsineAgroAlimentaire(this.jeu.getJoueur().getUsineAgroAlimentairePetite(), progressAgroAlimentaire1, 1);
+    }
+
+    /**
+     * Ajout d'une petite usine
+     */
+    public void acheterUsineAgroAlimentaireMoyenne() {
+        acheterUsineAgroAlimentaire(this.jeu.getJoueur().getUsineAgroAlimentaireMoyenne(), progressAgroAlimentaire2, 2);
+    }
+
+    /**
+     * Ajout d'une petite usine
+     */
+    public void acheterUsineAgroAlimentaireGrande() {
+        acheterUsineAgroAlimentaire(this.jeu.getJoueur().getUsineAgroAlimentaireGrande(), progressAgroAlimentaire3, 3);
+    }
+
+    /**
+     * Ajout d'une petite usine
+     */
+    public void acheterUsineAgroAlimentaireEnorme() {
+        acheterUsineAgroAlimentaire(this.jeu.getJoueur().getUsineAgroAlimentaireEnorme(), progressAgroAlimentaire4, 4);
+    }
+
+    /**
+     * Methode d'achat général d'une usine de textile
+     *
+     * @param usineAgroAlimentaire    à acheter
+     * @param progressAgroAlimentaire barre de progression de l'usine
+     * @param numUsine        permet de savoir qu'elle usine pour lancer la bonne barre de progression
+     */
+    public void acheterUsineAgroAlimentaire(UsineAgroAlimentaire usineAgroAlimentaire, ProgressBar progressAgroAlimentaire, int numUsine) {
+        if (!usineAgroAlimentaire.isMaxiNbUsines()) {
+            BigDecimal montantAchat = usineAgroAlimentaire.getPrixUsine();
+            if (jeu.getJoueur().acheter(montantAchat)) {
+                usineAgroAlimentaire.ajoutUsine();
+                System.out.println("Achat d'une " + usineAgroAlimentaire.getNom() + " : " + usineAgroAlimentaire.getNbUsines());
+                // debloque le scooter si besoin
+                if (usineAgroAlimentaire.getNbUsines() == 1) {
+                    usineAgroAlimentaire.setUsineActive(1);
+                    // demarre la barre de progression de l'usine
+                    // recuperation de l'etat de la barre de progression pour la petite usine
+                    double vitesseUsineTextile = usineAgroAlimentaire.getVitesseUsine();
+                    switch (numUsine) {
+                        case 1:
+                            this.progressBarStartUsineAgroAlimentairePetite(0, vitesseUsineTextile, vitesseUsineTextile, jeu.getJoueur().getUsineAgroAlimentairePetite(), progressAgroAlimentaire, btnEncaisserUsineAgroAlimentaire1);
+                            break;
+                        case 2:
+                            this.progressBarStartUsineAgroAlimentaireMoyenne(0, vitesseUsineTextile, vitesseUsineTextile, jeu.getJoueur().getUsineAgroAlimentaireMoyenne(), progressAgroAlimentaire, btnEncaisserUsineAgroAlimentaire2);
+                            break;
+                        case 3:
+                            this.progressBarStartUsineAgroAlimentaireGrande(0, vitesseUsineTextile, vitesseUsineTextile, jeu.getJoueur().getUsineAgroAlimentaireGrande(), progressAgroAlimentaire, btnEncaisserUsineAgroAlimentaire3);
+                            break;
+                        case 4:
+                            this.progressBarStartUsineAgroAlimentaireEnorme(0, vitesseUsineTextile, vitesseUsineTextile, jeu.getJoueur().getUsineAgroAlimentaireEnorme(), progressAgroAlimentaire, btnEncaisserUsineAgroAlimentaire4);
+                            break;
+                        default:
+                            System.out.println("erreur d'usine");
+                    }
+                }
+                // mise a jour des valeurs
+                miseEnPlace();
+            } else {
+                System.out.println("Vous n'avez pas assez d'argent pour acheter une " + usineAgroAlimentaire.getNom() + " : ");
+            }
+        } else {
+            System.out.println("Vous avez trop de " + usineAgroAlimentaire.getNom() + " : ");
+        }
+    }
+
+    /**
+     * Gere le clic sur le bouton encaisser usine de textile petite
+     */
+    public void onBtnEncaisserUsineAgroAlimentaire1() {
+        encaisserUsineAgroAlimentaire(this.jeu.getJoueur().getUsineAgroAlimentairePetite(), btnEncaisserUsineAgroAlimentaire1);
+    }
+
+    /**
+     * Gere le clic sur le bouton encaisser usine de textile moyenne
+     */
+    public void onBtnEncaisserUsineAgroAlimentaire2() {
+        encaisserUsineAgroAlimentaire(this.jeu.getJoueur().getUsineAgroAlimentaireMoyenne(), btnEncaisserUsineAgroAlimentaire2);
+    }
+
+    /**
+     * Gere le clic sur le bouton encaisser usine de textile grande
+     */
+    public void onBtnEncaisserUsineAgroAlimentaire3() {
+        encaisserUsineAgroAlimentaire(this.jeu.getJoueur().getUsineAgroAlimentaireGrande(), btnEncaisserUsineAgroAlimentaire3);
+    }
+
+    /**
+     * Gere le clic sur le bouton encaisser usine de textile enorme
+     */
+    public void onBtnEncaisserUsineAgroAlimentaire4() {
+        encaisserUsineAgroAlimentaire(this.jeu.getJoueur().getUsineAgroAlimentaireEnorme(), btnEncaisserUsineAgroAlimentaire4);
+    }
+
+    /**
+     * Bouton qui permet d'encaisser l'argent des usines agro alimentaire
+     *
+     * @param usineAgroAlimentaire usine textile spécifiée
+     */
+    public void encaisserUsineAgroAlimentaire(UsineAgroAlimentaire usineAgroAlimentaire, Button btnEncaisserUsineAgroAlimentaire) {
+        long nbMarchandisesUsineTextile = usineAgroAlimentaire.getNbMarchandises();
+
+        usineAgroAlimentaire.setNbMarchandises(0); // raz le nombre de marchandises
+        jeu.getJoueur().setArgent(usineAgroAlimentaire.getGainEnAttenteUsine().add(jeu.getJoueur().getArgent())); // met a jour les nouveaux gains
+
+        String formattedGain = decimalFormat.format(usineAgroAlimentaire.getGainEnAttenteUsine()) + monnaie;
+        // raz des gains en attente
+        usineAgroAlimentaire.setGainEnAttenteUsine(BigDecimal.valueOf(0.00));
+
+        System.out.println("Vous venez de récupérer le prix de " + nbMarchandisesUsineTextile + " de l'usine de textile " + usineAgroAlimentaire.getNom() + ", vous avez gagné " + formattedGain + ".");
+
+        btnEncaisserUsineAgroAlimentaire.setDisable(true);
+        this.miseEnPlace();
+    }
+
+
+    /**
+     * Mise en place des labels et boutons
+     */
+    public void miseEnPlace() {
+        affichageBtn();
+        majLabels();
+    }
+
+    /**
+     * Affiche les bons boutons : Achat service de livraison / Encaisser
+     */
+    public void affichageBtn() {
+        affichageBtnAgroAlimentaire1();
+        affichageBtnAgroAlimentaire2();
+        affichageBtnAgroAlimentaire3();
+        affichageBtnAgroAlimentaire4();
+        affichageContenuPanes(jeu.getJoueur().getUsineAgroAlimentairePetite(), paneAgroAlimentaire1, paneAgroAlimentaire1D, labelNbMarchandisesAgroAlimentaire1, labelNbUsineAgroAlimentaire1, labelTarifUsineAgroAlimentaire1, btnAchatUsineAgroAlimentairePetite, btnEncaisserUsineAgroAlimentaire1, imgAgroAlimentaire1, progressTextile1);
+        affichageContenuPanes(jeu.getJoueur().getUsineAgroAlimentaireMoyenne(), paneAgroAlimentaire2, paneAgroAlimentaire2D, labelNbMarchandisesAgroAlimentaire2, labelNbUsineAgroAlimentaire2, labelTarifUsineAgroAlimentaire2, btnAchatUsineAgroAlimentaireMoyenne, btnEncaisserUsineAgroAlimentaire2, imgAgroAlimentaire2, progressTextile2);
+        affichageContenuPanes(jeu.getJoueur().getUsineAgroAlimentaireGrande(), paneAgroAlimentaire3, paneAgroAlimentaire3D, labelNbMarchandisesAgroAlimentaire3, labelNbUsineAgroAlimentaire3, labelTarifUsineAgroAlimentaire3, btnAchatUsineAgroAlimentaireGrande, btnEncaisserUsineAgroAlimentaire3, imgAgroAlimentaire3, progressTextile3);
+        affichageContenuPanes(jeu.getJoueur().getUsineAgroAlimentaireEnorme(), paneAgroAlimentaire4, paneAgroAlimentaire4D, labelNbMarchandisesAgroAlimentaire4, labelNbUsineAgroAlimentaire4, labelTarifUsineAgroAlimentaire4, btnAchatUsineAgroAlimentaireEnorme, btnEncaisserUsineAgroAlimentaire4, imgAgroAlimentaire4, progressTextile4);
+        testBtnAchats();
+    }
+
+    /**
+     * Active / desactive le bouton d'achat de vehicule de livraison pour chaque usine
+     */
+    public void testBtnAchats() {
+        // usine de textile petite
+        testBtnAchat(jeu.getJoueur().getUsineAgroAlimentairePetite(), btnAchatUsineAgroAlimentaire1, btnAchatUsineAgroAlimentairePetite);
+        // usine de textile moyenne
+        testBtnAchat(jeu.getJoueur().getUsineAgroAlimentaireMoyenne(), btnAchatUsineAgroAlimentaire2, btnAchatUsineAgroAlimentaireMoyenne);
+        // usine de textile grande
+        testBtnAchat(jeu.getJoueur().getUsineAgroAlimentaireGrande(), btnAchatUsineAgroAlimentaire3, btnAchatUsineAgroAlimentaireGrande);
+        // usine de textile enorme
+        testBtnAchat(jeu.getJoueur().getUsineAgroAlimentaireEnorme(), btnAchatUsineAgroAlimentaire4, btnAchatUsineAgroAlimentaireEnorme);
+    }
+    /**
+     * Gere l'affichage ou non du contenu des panes pour afficher / masquer l'usine au demarrage
+     * @param usineAgroAlimentaire usine à afficher / masquer
+     * @param pane
+     * @param labelNb
+     * @param labelTarif
+     * @param labelTitre
+     * @param btnEncaisser
+     * @param btnPlus
+     * @param barreProgress
+     */
+    public void affichageContenuPanes(UsineAgroAlimentaire usineAgroAlimentaire, Pane pane, Pane paneD, Label labelTitre, Label labelNb, Label labelTarif, Button btnPlus, Button btnEncaisser, ImageView imgAgroAlimentaire, ProgressBar barreProgress){
+        if (usineAgroAlimentaire.getUsineActive() == 1){
+            // opacity du pane
+            pane.setOpacity(1);
+            // on cache le paneD
+            paneD.setVisible(false);
+            // on affiche les labels
+            labelTitre.setVisible(true);
+            labelNb.setVisible(true);
+            labelTarif.setVisible(true);
+            // on affiche les boutons
+            btnPlus.setVisible(true);
+            btnEncaisser.setVisible(true);
+            // on affiche la barre de progress
+            barreProgress.setVisible(true);
+        } else {
+            // opacity du pane
+            pane.setOpacity(0.6);
+            // on affiche le paneD
+            paneD.setVisible(true);
+            // on affiche les labels
+            labelTitre.setVisible(false);
+            labelNb.setVisible(false);
+            labelTarif.setVisible(false);
+            // on affiche les boutons
+            btnPlus.setVisible(false);
+            btnEncaisser.setVisible(false);
+            // on affiche la barre de progress
+            barreProgress.setVisible(false);
+        }
+    }
+    /**
+     * Active / desactive le bouton d'achat de vehicule de livraison pour l'usine et les boutons donnée en paramètres
+     * @param usineAgroAlimentaire usine à tester
+     * @param btnAchatUsine bouton de l'achat d'une usine (qui active l'usine en question)
+     * @param btnAjoutUsine bouton de l'ajout d'une usine (qui ajoute une usine quand usine déja activée)
+     */
+    public void testBtnAchat(UsineAgroAlimentaire usineAgroAlimentaire, Button btnAchatUsine, Button btnAjoutUsine){
+        if (jeu.getJoueur().isArgent(usineAgroAlimentaire.getPrixUsine()) && !usineAgroAlimentaire.isMaxiNbUsines()) {
+            btnAchatUsine.setDisable(false);
+            btnAjoutUsine.setDisable(false);
+        } else {
+            btnAchatUsine.setDisable(true);
+            btnAjoutUsine.setDisable(true);
+        }
+    }
+    /**
+     * gere l'affichage des boutons jouets petite usine
+     */
+    public void affichageBtnAgroAlimentaire1() {
+        // boutons du usine agro alimentaire
+        if (Outils.isActif(jeu.getJoueur().getUsineAgroAlimentairePetite().getUsineActive())) {
+            btnEncaisserUsineAgroAlimentaire1.setVisible(true);
+            btnAchatUsineAgroAlimentaire1.setVisible(false);
+            System.out.println("Actif");
+            this.jeu.getJoueur().getUsineAgroAlimentairePetite().majBtnEncaisser(btnEncaisserUsineAgroAlimentaire1, imgAgroAlimentaire1);
+        } else {
+            btnEncaisserUsineAgroAlimentaire1.setVisible(false);
+            btnAchatUsineAgroAlimentaire1.setVisible(true);
+            if (jeu.getJoueur().isArgent(jeu.getJoueur().getUsineAgroAlimentairePetite().getPrixUsine())) {
+                paneAgroAlimentaire1.setOpacity(1);
+                paneAgroAlimentaire1.setDisable(false);
+                btnAchatUsineAgroAlimentaire1.setDisable(false);
+            } else {
+                btnAchatUsineAgroAlimentaire1.setDisable(true);
+                paneAgroAlimentaire1.setOpacity(0.8);
+                paneAgroAlimentaire1.setDisable(true);
+            }
+            System.out.println("non actif");
+        }
+    }
+    /**
+     * gere l'affichage des boutons textile usine moyenne
+     */
+    public void affichageBtnAgroAlimentaire2() {
+        // boutons du usine agro alimentaire
+        if (Outils.isActif(jeu.getJoueur().getUsineAgroAlimentaireMoyenne().getUsineActive())) {
+            btnEncaisserUsineAgroAlimentaire2.setVisible(true);
+            btnAchatUsineAgroAlimentaire2.setVisible(false);
+            System.out.println("Actif");
+            this.jeu.getJoueur().getUsineAgroAlimentaireMoyenne().majBtnEncaisser(btnEncaisserUsineAgroAlimentaire2, imgAgroAlimentaire2);
+        } else {
+            btnEncaisserUsineAgroAlimentaire2.setVisible(false);
+            btnAchatUsineAgroAlimentaire2.setVisible(true);
+            if (jeu.getJoueur().isArgent(jeu.getJoueur().getUsineAgroAlimentaireMoyenne().getPrixUsine())) {
+                paneAgroAlimentaire2.setOpacity(1);
+                paneAgroAlimentaire2.setDisable(false);
+                btnAchatUsineAgroAlimentaire2.setDisable(false);
+            } else {
+                btnAchatUsineAgroAlimentaire2.setDisable(true);
+                paneAgroAlimentaire2.setOpacity(0.8);
+                paneAgroAlimentaire2.setDisable(true);
+            }
+            System.out.println("non actif");
+        }
+    }
+    /**
+     * gere l'affichage des boutons agro alimentaire usine grande
+     */
+    public void affichageBtnAgroAlimentaire3() {
+        if (Outils.isActif(jeu.getJoueur().getUsineAgroAlimentaireGrande().getUsineActive())) {
+            btnEncaisserUsineAgroAlimentaire3.setVisible(true);
+            btnAchatUsineAgroAlimentaire3.setVisible(false);
+            System.out.println("Actif");
+            this.jeu.getJoueur().getUsineAgroAlimentaireGrande().majBtnEncaisser(btnEncaisserUsineAgroAlimentaire3, imgAgroAlimentaire3);
+        } else {
+            btnEncaisserUsineAgroAlimentaire3.setVisible(false);
+            btnAchatUsineAgroAlimentaire3.setVisible(true);
+            if (jeu.getJoueur().isArgent(jeu.getJoueur().getUsineAgroAlimentaireGrande().getPrixUsine())) {
+                paneAgroAlimentaire3.setOpacity(1);
+                paneAgroAlimentaire3.setDisable(false);
+                btnAchatUsineAgroAlimentaire3.setDisable(false);
+            } else {
+                btnAchatUsineAgroAlimentaire3.setDisable(true);
+                paneAgroAlimentaire3.setOpacity(0.8);
+                paneAgroAlimentaire3.setDisable(true);
+            }
+            System.out.println("non actif");
+        }
+    }
+    /**
+     * gere l'affichage des boutons agro alimentaire usine enorme
+     */
+    public void affichageBtnAgroAlimentaire4() {
+        if (Outils.isActif(jeu.getJoueur().getUsineAgroAlimentaireEnorme().getUsineActive())) {
+            btnEncaisserUsineAgroAlimentaire4.setVisible(true);
+            btnAchatUsineAgroAlimentaire4.setVisible(false);
+            System.out.println("Actif");
+            this.jeu.getJoueur().getUsineAgroAlimentaireEnorme().majBtnEncaisser(btnEncaisserUsineAgroAlimentaire4, imgAgroAlimentaire4);
+        } else {
+            btnEncaisserUsineAgroAlimentaire4.setVisible(false);
+            btnAchatUsineAgroAlimentaire4.setVisible(true);
+            if (jeu.getJoueur().isArgent(jeu.getJoueur().getUsineAgroAlimentaireEnorme().getPrixUsine())) {
+                paneAgroAlimentaire4.setOpacity(1);
+                paneAgroAlimentaire4.setDisable(false);
+                btnAchatUsineAgroAlimentaire4.setDisable(false);
+            } else {
+                btnAchatUsineAgroAlimentaire4.setDisable(true);
+                paneAgroAlimentaire4.setOpacity(0.8);
+                paneAgroAlimentaire4.setDisable(true);
+            }
+            System.out.println("non actif");
+        }
+    }
+
+    public void recupMarchandisesToutes(){
+        recupMarchandises(this.jeu.getJoueur().getUsineAgroAlimentairePetite(), btnEncaisserUsineAgroAlimentaire1, imgAgroAlimentaire1);
+        recupMarchandises(this.jeu.getJoueur().getUsineAgroAlimentaireMoyenne(), btnEncaisserUsineAgroAlimentaire2, imgAgroAlimentaire2);
+        recupMarchandises(this.jeu.getJoueur().getUsineAgroAlimentaireGrande(), btnEncaisserUsineAgroAlimentaire3, imgAgroAlimentaire3);
+        recupMarchandises(this.jeu.getJoueur().getUsineAgroAlimentaireEnorme(), btnEncaisserUsineAgroAlimentaire4, imgAgroAlimentaire4);
+    }
+    /**
+     * Maj les gains en attente à chaque fin de progression
+     * @param usine
+     * @param boutonEncaisser
+     */
+    public void recupMarchandises(UsineAgroAlimentaire usine, Button boutonEncaisser, ImageView imageView) {
+        // petite usine de textile
+        // maj des gains en attente
+        usine.setGainEnAttenteUsine(usine.majGainsEnAttente());
+        // maj du bouton
+        usine.majBtnEncaisser(boutonEncaisser, imageView);
+
+    }
+
+    /**
+     * Maj tous les labels necessaires
+     */
+    public void majLabels() {
+        setLabelHaut();
+        labelsUsineTextile1();
+        labelsUsineTextile2();
+        labelsUsineTextile3();
+        labelsUsineTextile4();
+    }
+
+    public void setLabelHaut() {
+        String formattedString = "En banque : " + decimalFormat.format(jeu.getJoueur().getArgent()) + monnaie;
+        this.labelHaut.setText(formattedString);
+    }
+
+    /**
+     * Labels de l'usine de textile 1
+     */
+    public void labelsUsineTextile1() {
+        setNbUsineAgroAlimentaire(this.jeu.getJoueur().getUsineAgroAlimentairePetite(), labelNbUsineAgroAlimentaire1);
+        setNbMarchandisesAgroAlimentaire(this.jeu.getJoueur().getUsineAgroAlimentaireMoyenne(), labelNbMarchandisesAgroAlimentaire1);
+        setLabelTarifUsineAgroAlimentaire(this.jeu.getJoueur().getUsineAgroAlimentaireGrande(), labelTarifUsineAgroAlimentaire1);
+        setLabelTarifUsineAgroAlimentaire(this.jeu.getJoueur().getUsineAgroAlimentaireEnorme(), btnAchatUsineAgroAlimentaire1);
+    }
+    /**
+     * Labels de l'usine de textile 2
+     */
+    public void labelsUsineTextile2() {
+        setNbUsineAgroAlimentaire(this.jeu.getJoueur().getUsineAgroAlimentaireMoyenne(), labelNbUsineAgroAlimentaire2);
+        setNbMarchandisesAgroAlimentaire(this.jeu.getJoueur().getUsineAgroAlimentaireMoyenne(), labelNbMarchandisesAgroAlimentaire2);
+        setLabelTarifUsineAgroAlimentaire(this.jeu.getJoueur().getUsineAgroAlimentaireMoyenne(), labelTarifUsineAgroAlimentaire2);
+        setLabelTarifUsineAgroAlimentaire(this.jeu.getJoueur().getUsineAgroAlimentaireMoyenne(), btnAchatUsineAgroAlimentaire2);
+    }
+    /**
+     * Labels de l'usine de textile 3
+     */
+    public void labelsUsineTextile3() {
+        setNbUsineAgroAlimentaire(this.jeu.getJoueur().getUsineAgroAlimentaireGrande(), labelNbUsineAgroAlimentaire3);
+        setNbMarchandisesAgroAlimentaire(this.jeu.getJoueur().getUsineAgroAlimentaireGrande(), labelNbMarchandisesAgroAlimentaire3);
+        setLabelTarifUsineAgroAlimentaire(this.jeu.getJoueur().getUsineAgroAlimentaireGrande(), labelTarifUsineAgroAlimentaire3);
+        setLabelTarifUsineAgroAlimentaire(this.jeu.getJoueur().getUsineAgroAlimentaireGrande(), btnAchatUsineAgroAlimentaire3);
+    }
+    /**
+     * Labels de l'usine de textile 4
+     */
+    public void labelsUsineTextile4() {
+        setNbUsineAgroAlimentaire(this.jeu.getJoueur().getUsineAgroAlimentaireEnorme(), labelNbUsineAgroAlimentaire4);
+        setNbMarchandisesAgroAlimentaire(this.jeu.getJoueur().getUsineAgroAlimentaireEnorme(), labelNbMarchandisesAgroAlimentaire4);
+        setLabelTarifUsineAgroAlimentaire(this.jeu.getJoueur().getUsineAgroAlimentaireEnorme(), labelTarifUsineAgroAlimentaire4);
+        setLabelTarifUsineAgroAlimentaire(this.jeu.getJoueur().getUsineAgroAlimentaireEnorme(), btnAchatUsineAgroAlimentaire4);
+    }
+    /**
+     * initialise le nombre d'usines en cours ainsi que le nombre d'usines maximum
+     */
+    public void setNbUsineAgroAlimentaire(UsineAgroAlimentaire usineAgroAlimentaire, Label labelUsine) {
+        String formattedString = usineAgroAlimentaire.setNbUsines();
+        labelUsine.setText(formattedString);
+    }
+
+    /**
+     * Centre les panes de chaque usine
+     * Platform.runLater permet d'attendre le chargement des fenetres afin de récupérer les valeurs des boutons
+     */
+    public void centragePanesPrincipaux(){
+        Platform.runLater(() -> {
+            Outils.centragePane(paneAgroAlimentaire1, panePrincipal.getWidth());
+            Outils.centragePane(paneAgroAlimentaire2, panePrincipal.getWidth());
+            Outils.centragePane(paneAgroAlimentaire3, panePrincipal.getWidth());
+            Outils.centragePane(paneAgroAlimentaire4, panePrincipal.getWidth());
+        });
+    }
+
+    /**
+     * Centre les boutons d'achat des usines
+     * Platform.runLater permet d'attendre le chargement des fenetres afin de récupérer les valeurs des boutons
+     */
+    public void centrageBoutons(){
+        Platform.runLater(() -> {
+            Outils.centrageBouton(btnAchatUsineAgroAlimentaire1, paneAgroAlimentaire1D.getWidth(), true);
+            Outils.centrageBouton(btnAchatUsineAgroAlimentaire2, paneAgroAlimentaire2D.getWidth(), true);
+            Outils.centrageBouton(btnAchatUsineAgroAlimentaire3, paneAgroAlimentaire3D.getWidth(),true);
+            Outils.centrageBouton(btnAchatUsineAgroAlimentaire4, paneAgroAlimentaire4D.getWidth(),true);
+        });
+    }
+    /**
+     * initialise le nombre de marchandises produites
+     */
+    public void setNbMarchandisesAgroAlimentaire(UsineAgroAlimentaire usineAgroAlimentaire, Label labelUsine) {
+        labelUsine.setText(usineAgroAlimentaire.getNbMarchandises() + "");
+    }
+
+    /**
+     * Inscrit le prix d'achat d'une usine dans le label
+     */
+    public void setLabelTarifUsineAgroAlimentaire(UsineAgroAlimentaire usineAgroAlimentaire, Label labelUsine) {
+        BigDecimal prixUsineTextile = usineAgroAlimentaire.getPrixUsine();
+        String nomVehicule = usineAgroAlimentaire.getNom();
+        String formattedString = "Acheter " + nomVehicule + " : " + decimalFormat.format(prixUsineTextile) + monnaie;
+        labelUsine.setText(formattedString);
+    }
+
+    /**
+     * Inscrit le prix d'achat d'une usine sur le bouton
+     */
+    public void setLabelTarifUsineAgroAlimentaire(UsineAgroAlimentaire usineAgroAlimentaire, Button btnAchatUsine) {
+        BigDecimal prixUsineTextile = usineAgroAlimentaire.getPrixUsine();
+        String nomVehicule = usineAgroAlimentaire.getNom();
+        String formattedString = "Acheter " + nomVehicule + " : " + decimalFormat.format(prixUsineTextile) + monnaie;
+        btnAchatUsine.setText(formattedString);
+    }
+
+
+
+
+
+
+
+
+
+
     /**
      * Demarrage des barres de progression, dans l'ordre
      * la ferme avec les oeufs => incrémente les oeufs
@@ -142,6 +601,7 @@ public class UsinesAgroAlimentaireController {
         demarrageUsinesTextile();
         demarrageUsinesJouets();
         demarrageUsinesAgroAlimentaire();
+        demarrageUsinesPharmaceutique();
     }
 
     public void fermetureProgress(){
@@ -425,7 +885,7 @@ public class UsinesAgroAlimentaireController {
                     // ajoute le nombre de marchandises fabriquées par l'usine
                     usineAgroAlimentaire.majUsine();
                     // maj le montant des gains en attente
-                    recupMarchandises(this.jeu.getJoueur().getUsineTextilePetite(), btnEncaisserUsineAgroAlimentaire1, imgAgroAlimentaire1);
+                    recupMarchandises(this.jeu.getJoueur().getUsineAgroAlimentairePetite(), btnEncaisserUsineAgroAlimentaire1, imgAgroAlimentaire1);
                     System.out.println("Production de marchandises dans " + usineAgroAlimentaire.getNom() + " terminée");
                     // met à jour les gains en cours ainsi que le bouton encaisser
                     usineAgroAlimentaire.majBtnEncaisser(btnEncaisser, imgAgroAlimentaire1);
@@ -475,7 +935,7 @@ public class UsinesAgroAlimentaireController {
                     // ajoute le nombre de marchandises fabriquées par l'usine
                     usineAgroAlimentaire.majUsine();
                     // maj le montant des gains en attente
-                    recupMarchandises(this.jeu.getJoueur().getUsineTextileMoyenne(), btnEncaisserUsineAgroAlimentaire2, imgAgroAlimentaire2);
+                    recupMarchandises(this.jeu.getJoueur().getUsineAgroAlimentaireMoyenne(), btnEncaisserUsineAgroAlimentaire2, imgAgroAlimentaire2);
                     System.out.println("Production de marchandises dans " + usineAgroAlimentaire.getNom() + " terminée");
                     // met à jour les gains en cours ainsi que le bouton encaisser
                     usineAgroAlimentaire.majBtnEncaisser(btnEncaisser, imgAgroAlimentaire2);
@@ -525,7 +985,7 @@ public class UsinesAgroAlimentaireController {
                     // ajoute le nombre de marchandises fabriquées par l'usine
                     usineAgroAlimentaire.majUsine();
                     // maj le montant des gains en attente
-                    recupMarchandises(this.jeu.getJoueur().getUsineTextileGrande(), btnEncaisserUsineAgroAlimentaire3, imgAgroAlimentaire3);
+                    recupMarchandises(this.jeu.getJoueur().getUsineAgroAlimentaireGrande(), btnEncaisserUsineAgroAlimentaire3, imgAgroAlimentaire3);
                     System.out.println("Production de marchandises dans " + usineAgroAlimentaire.getNom() + " terminée");
                     // met à jour les gains en cours ainsi que le bouton encaisser
                     usineAgroAlimentaire.majBtnEncaisser(btnEncaisser, imgAgroAlimentaire3);
@@ -575,7 +1035,7 @@ public class UsinesAgroAlimentaireController {
                     // ajoute le nombre de marchandises fabriquées par l'usine
                     usineAgroAlimentaire.majUsine();
                     // maj le montant des gains en attente
-                    recupMarchandises(this.jeu.getJoueur().getUsineTextileEnorme(), btnEncaisserUsineAgroAlimentaire4, imgAgroAlimentaire4);
+                    recupMarchandises(this.jeu.getJoueur().getUsineAgroAlimentaireEnorme(), btnEncaisserUsineAgroAlimentaire4, imgAgroAlimentaire4);
                     System.out.println("Production de marchandises dans " + usineAgroAlimentaire.getNom() + " terminée");
                     // met à jour les gains en cours ainsi que le bouton encaisser
                     usineAgroAlimentaire.majBtnEncaisser(btnEncaisser, imgAgroAlimentaire4);

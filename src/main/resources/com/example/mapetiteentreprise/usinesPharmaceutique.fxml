@@ -1,15 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<?import javafx.scene.text.Text?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.mapetiteentreprise.controllersFx.UsinesPharmaceutiqueController"
@@ -18,7 +13,8 @@
     <children>
         <Pane layoutX="0.0" layoutY="0.0" prefHeight="200.0" prefWidth="1280.0">
             <children>
-                <Label layoutX="479.0" layoutY="39.0" prefHeight="29.0" prefWidth="321.0" text="En banque" />
+                <Label fx:id="labelHaut" layoutX="479.0" layoutY="39.0" prefHeight="29.0" prefWidth="321.0"
+                       style="-fx-background-color: transparent;" text="En banque" textFill="WHITE"/>
                 <Button layoutX="518.0" layoutY="139.0" mnemonicParsing="false" onAction="#retourGestionUsines" text="Retour au menu gestion" />
             </children>
         </Pane>
@@ -104,24 +100,24 @@
                         </ImageView>
                     </children>
                 </Pane>
-                <Pane fx:id="paneJouets1D" focusTraversable="true" prefHeight="120.0" prefWidth="800.0">
+                <Pane fx:id="panePharmaceutique1D" focusTraversable="true" prefHeight="120.0" prefWidth="800.0">
                     <children>
-                        <Button fx:id="btnAchatUsineJouets1" alignment="CENTER" mnemonicParsing="false" onAction="#acheterUsinePharmaceutiquePetite" text="Acheter petite usine" />
+                        <Button fx:id="btnAchatUsinePharmaceutique1" alignment="CENTER" mnemonicParsing="false" onAction="#acheterUsinePharmaceutiquePetite" text="Acheter petite usine" />
                     </children>
                 </Pane>
-                <Pane fx:id="paneJouets2D" focusTraversable="true" layoutY="160.0" prefHeight="120.0" prefWidth="800.0">
+                <Pane fx:id="panePharmaceutique2D" focusTraversable="true" layoutY="160.0" prefHeight="120.0" prefWidth="800.0">
                     <children>
-                        <Button fx:id="btnAchatUsineJouets2" mnemonicParsing="false" onAction="#acheterUsinePharmaceutiqueMoyenne" text="Acheter usine moyenne" />
+                        <Button fx:id="btnAchatUsinePharmaceutique2" mnemonicParsing="false" onAction="#acheterUsinePharmaceutiqueMoyenne" text="Acheter usine moyenne" />
                     </children>
                 </Pane>
-                <Pane fx:id="paneJouets3D" focusTraversable="true" layoutY="320.0" prefHeight="120.0" prefWidth="800.0">
+                <Pane fx:id="panePharmaceutique3D" focusTraversable="true" layoutY="320.0" prefHeight="120.0" prefWidth="800.0">
                     <children>
-                        <Button fx:id="btnAchatUsineJouets3" mnemonicParsing="false" onAction="#acheterUsinePharmaceutiqueGrande" text="Acheter usine grande" />
+                        <Button fx:id="btnAchatUsinePharmaceutique3" mnemonicParsing="false" onAction="#acheterUsinePharmaceutiqueGrande" text="Acheter usine grande" />
                     </children>
                 </Pane>
-                <Pane fx:id="paneJouets4D" focusTraversable="true" layoutY="480.0" prefHeight="120.0" prefWidth="800.0">
+                <Pane fx:id="panePharmaceutique4D" focusTraversable="true" layoutY="480.0" prefHeight="120.0" prefWidth="800.0">
                     <children>
-                        <Button fx:id="btnAchatUsineJouets4" mnemonicParsing="false" onAction="#acheterUsinePharmaceutiqueEnorme" text="Acheter usine enorme" />
+                        <Button fx:id="btnAchatUsinePharmaceutique4" mnemonicParsing="false" onAction="#acheterUsinePharmaceutiqueEnorme" text="Acheter usine enorme" />
                     </children>
                 </Pane>
             </children>
@@ -146,6 +142,11 @@
                 <ProgressBar fx:id="progressJouets2" cache="true" layoutX="555.0" layoutY="70.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
                 <ProgressBar fx:id="progressJouets3" cache="true" layoutX="660.0" layoutY="70.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
                 <ProgressBar fx:id="progressJouets4" cache="true" layoutX="765.0" layoutY="70.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
+
+                <ProgressBar fx:id="progressAgroAlimentaire1" cache="true" layoutX="0.0" layoutY="90.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
+                <ProgressBar fx:id="progressAgroAlimentaire2" cache="true" layoutX="105.0" layoutY="90.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
+                <ProgressBar fx:id="progressAgroAlimentaire3" cache="true" layoutX="210.0" layoutY="90.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
+                <ProgressBar fx:id="progressAgroAlimentaire4" cache="true" layoutX="315.0" layoutY="90.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
             </children>
         </Pane>
     </children>

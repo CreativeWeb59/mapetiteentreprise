@@ -268,9 +268,13 @@ public class UsinesPharmaceutiqueController {
         affichageBtnPharmaceutique3();
         affichageBtnPharmaceutique4();
         affichageContenuPanes(jeu.getJoueur().getUsinePharmaceutiquePetite(), panePharmaceutique1, panePharmaceutique1D, labelNbMarchandisesPharmaceutique1, labelNbUsinePharmaceutique1, labelTarifUsinePharmaceutique1, btnAchatUsinePharmaceutiquePetite, btnEncaisserUsinePharmaceutique1, imgPharmaceutique1, progressPharmaceutique1);
+        System.out.println("btn1");
         affichageContenuPanes(jeu.getJoueur().getUsinePharmaceutiqueMoyenne(), panePharmaceutique2, panePharmaceutique2D, labelNbMarchandisesPharmaceutique2, labelNbUsinePharmaceutique2, labelTarifUsinePharmaceutique2, btnAchatUsinePharmaceutiqueMoyenne, btnEncaisserUsinePharmaceutique2, imgPharmaceutique2, progressPharmaceutique2);
+        System.out.println("btn2");
         affichageContenuPanes(jeu.getJoueur().getUsinePharmaceutiqueGrande(), panePharmaceutique3, panePharmaceutique3D, labelNbMarchandisesPharmaceutique3, labelNbUsinePharmaceutique3, labelTarifUsinePharmaceutique3, btnAchatUsinePharmaceutiqueGrande, btnEncaisserUsinePharmaceutique3, imgPharmaceutique3, progressPharmaceutique3);
+        System.out.println("btn3");
         affichageContenuPanes(jeu.getJoueur().getUsinePharmaceutiqueEnorme(), panePharmaceutique4, panePharmaceutique4D, labelNbMarchandisesPharmaceutique4, labelNbUsinePharmaceutique4, labelTarifUsinePharmaceutique4, btnAchatUsinePharmaceutiqueEnorme, btnEncaisserUsinePharmaceutique4, imgPharmaceutique4, progressPharmaceutique4);
+        System.out.println("btn4");
         testBtnAchats();
     }
 
@@ -618,6 +622,12 @@ public class UsinesPharmaceutiqueController {
         this.jeu.getJoueur().getUsineJouetsGrande().setEtatProgressUsine(this.progressJouets3.getProgress());
         this.jeu.getJoueur().getUsineJouetsEnorme().setEtatProgressUsine(this.progressJouets4.getProgress());
 
+        // on recupere les barres de progression des usines de jouets
+        this.jeu.getJoueur().getUsinePharmaceutiquePetite().setEtatProgressUsine(this.progressPharmaceutique1.getProgress());
+        this.jeu.getJoueur().getUsinePharmaceutiqueMoyenne().setEtatProgressUsine(this.progressPharmaceutique2.getProgress());
+        this.jeu.getJoueur().getUsinePharmaceutiqueGrande().setEtatProgressUsine(this.progressPharmaceutique3.getProgress());
+        this.jeu.getJoueur().getUsinePharmaceutiqueEnorme().setEtatProgressUsine(this.progressPharmaceutique4.getProgress());
+
         // on stoppe les barres de progression
         jeu.getJoueur().getFerme().progressBarStop();
         jeu.getCalendrier().progressBarStop();
@@ -638,6 +648,10 @@ public class UsinesPharmaceutiqueController {
         jeu.getJoueur().getUsineJouetsMoyenne().progressBarStop();
         jeu.getJoueur().getUsineJouetsGrande().progressBarStop();
         jeu.getJoueur().getUsineJouetsEnorme().progressBarStop();
+        Outils.progressBarStop(timelineUsinePharmaceutique1);
+        Outils.progressBarStop(timelineUsinePharmaceutique2);
+        Outils.progressBarStop(timelineUsinePharmaceutique3);
+        Outils.progressBarStop(timelineUsinePharmaceutique4);
     }
 
     /**
