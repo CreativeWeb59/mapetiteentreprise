@@ -20,7 +20,7 @@
         </Pane>
         <Pane fx:id="panePrincipal" layoutX="90.0" layoutY="240.0" prefHeight="600.0" prefWidth="1100.0">
             <children>
-                <Pane fx:id="panePharmaceutique1" prefHeight="140.0" prefWidth="800.0" styleClass="fondsPharmaceutique1">
+                <Pane fx:id="panePharmaceutique1" prefHeight="140.0" prefWidth="800.0" styleClass="fondsPaysage4">
                     <children>
                         <Text layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Petite Usine" textAlignment="CENTER" wrappingWidth="800.0">
                             <font>
@@ -40,7 +40,7 @@
                         </ImageView>
                     </children>
                 </Pane>
-                <Pane fx:id="panePharmaceutique2" layoutY="160.0" prefHeight="140.0" prefWidth="800.0" styleClass="fondsPharmaceutique2">
+                <Pane fx:id="panePharmaceutique2" layoutY="160.0" prefHeight="140.0" prefWidth="800.0" styleClass="fondsPaysage4">
                     <children>
                         <Text layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Moyenne Usine" textAlignment="CENTER" wrappingWidth="800.0">
                             <font>
@@ -60,7 +60,7 @@
                         </ImageView>
                     </children>
                 </Pane>
-                <Pane fx:id="panePharmaceutique3" layoutY="320.0" prefHeight="140.0" prefWidth="800.0" styleClass="fondsPharmaceutique3">
+                <Pane fx:id="panePharmaceutique3" layoutY="320.0" prefHeight="140.0" prefWidth="800.0" styleClass="fondsPaysage4">
                     <children>
                         <Text layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Grande Usine" textAlignment="CENTER" wrappingWidth="800.0">
                             <font>
@@ -80,7 +80,7 @@
                         </ImageView>
                     </children>
                 </Pane>
-                <Pane fx:id="panePharmaceutique4" layoutY="480.0" prefHeight="140.0" prefWidth="800.0" styleClass="fondsPharmaceutique4">
+                <Pane fx:id="panePharmaceutique4" layoutY="480.0" prefHeight="140.0" prefWidth="800.0" styleClass="fondsPaysage4">
                     <children>
                         <Text layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enorme Usine" textAlignment="CENTER" wrappingWidth="800.0">
                             <font>

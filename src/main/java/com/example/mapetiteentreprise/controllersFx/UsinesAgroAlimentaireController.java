@@ -535,10 +535,17 @@ public class UsinesAgroAlimentaireController {
      */
     public void centrageBoutons(){
         Platform.runLater(() -> {
-            Outils.centrageBouton(btnAchatUsineAgroAlimentaire1, paneAgroAlimentaire1D.getWidth(), true);
-            Outils.centrageBouton(btnAchatUsineAgroAlimentaire2, paneAgroAlimentaire2D.getWidth(), true);
-            Outils.centrageBouton(btnAchatUsineAgroAlimentaire3, paneAgroAlimentaire3D.getWidth(),true);
-            Outils.centrageBouton(btnAchatUsineAgroAlimentaire4, paneAgroAlimentaire4D.getWidth(),true);
+            // centrage horizontal
+            Outils.centrageBouton(btnAchatUsineAgroAlimentaire1, panePrincipal.getWidth(), true);
+            Outils.centrageBouton(btnAchatUsineAgroAlimentaire2, panePrincipal.getWidth(), true);
+            Outils.centrageBouton(btnAchatUsineAgroAlimentaire3, panePrincipal.getWidth(),true);
+            Outils.centrageBouton(btnAchatUsineAgroAlimentaire4, panePrincipal.getWidth(),true);
+
+            // centrage vertical
+            Outils.centrageBouton(btnAchatUsineAgroAlimentaire1, paneAgroAlimentaire1D.getHeight(), false);
+            Outils.centrageBouton(btnAchatUsineAgroAlimentaire2, paneAgroAlimentaire2D.getHeight(), false);
+            Outils.centrageBouton(btnAchatUsineAgroAlimentaire3, paneAgroAlimentaire3D.getHeight(), false);
+            Outils.centrageBouton(btnAchatUsineAgroAlimentaire4, paneAgroAlimentaire4D.getHeight(), false);
         });
     }
     /**
