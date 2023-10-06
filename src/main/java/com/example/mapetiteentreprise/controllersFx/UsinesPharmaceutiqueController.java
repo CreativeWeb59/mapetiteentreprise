@@ -46,7 +46,8 @@ public class UsinesPharmaceutiqueController {
             progressScooter, progressCamionette, progressPetitCamion, progressPoidsLourd, progressAvion,
             progressTextile1, progressTextile2, progressTextile3, progressTextile4,
             progressJouets1, progressJouets2, progressJouets3, progressJouets4,
-            progressPharmaceutique1, progressPharmaceutique2, progressPharmaceutique3, progressPharmaceutique4;
+            progressPharmaceutique1, progressPharmaceutique2, progressPharmaceutique3, progressPharmaceutique4,
+            progressAgroAlimentaire1, progressAgroAlimentaire2, progressAgroAlimentaire3, progressAgroAlimentaire4;
     private Timeline timelineUsinePharmaceutique1, timelineUsinePharmaceutique2, timelineUsinePharmaceutique3, timelineUsinePharmaceutique4;
     private ConnectionBdd connectionBdd = new ConnectionBdd();
     @FXML

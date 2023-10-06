@@ -52,7 +52,9 @@ public class GestionLivraisonsController {
             progressScooter, progressCamionette, progressPetitCamion, progressPoidsLourd, progressAvion,
             progressTextile1, progressTextile2, progressTextile3, progressTextile4,
             progressJouets1, progressJouets2, progressJouets3, progressJouets4;
-    private Timeline timelineScooter, timelineCamionette, timelinePetitCamion, timelinePoidsLourd, timelineAvion;
+    private Timeline timelineScooter, timelineCamionette, timelinePetitCamion, timelinePoidsLourd, timelineAvion,
+            progressPharmaceutique1, progressPharmaceutique2, progressPharmaceutique3, progressPharmaceutique4,
+            progressAgroAlimentaire1, progressAgroAlimentaire2, progressAgroAlimentaire3, progressAgroAlimentaire4;
     private ConnectionBdd connectionBdd = new ConnectionBdd();
     private BigDecimal gainEnAttenteScooter = new BigDecimal(0);
     private BigDecimal gainEnAttenteCamionette = new BigDecimal(0);

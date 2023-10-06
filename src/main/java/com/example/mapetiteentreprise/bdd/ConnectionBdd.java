@@ -1,8 +1,6 @@
 package com.example.mapetiteentreprise.bdd;
 
-import java.math.BigDecimal;
 import java.sql.*;
-import java.time.LocalDateTime;
 
 public class ConnectionBdd {
     private String DBPath = "Chemin aux base de donnée SQLite";
@@ -93,7 +91,11 @@ public class ConnectionBdd {
                 "usineAgroAlimentaireActive1 INTEGER, usineAgroAlimentaireActive2 INTEGER, usineAgroAlimentaireActive3 INTEGER, usineAgroAlimentaireActive4 INTEGER," +
                 "nbUsinesAgroAlimentaire1 REAL, nbUsinesAgroAlimentaire2 REAL, nbUsinesAgroAlimentaire3 REAL, nbUsinesAgroAlimentaire4 REAL," +
                 "nbMarchandisesUsineAgroAlimentaire1 INTEGER, nbMarchandisesUsineAgroAlimentaire2 INTEGER, nbMarchandisesUsineAgroAlimentaire3 INTEGER, nbMarchandisesUsineAgroAlimentaire4 INTEGER," +
-                "etatProgressUsineAgroAlimentaire1 REAL, etatProgressUsineAgroAlimentaire2 REAL, etatProgressUsineAgroAlimentaire3 REAL, etatProgressUsineAgroAlimentaire4 REAL" +
+                "etatProgressUsineAgroAlimentaire1 REAL, etatProgressUsineAgroAlimentaire2 REAL, etatProgressUsineAgroAlimentaire3 REAL, etatProgressUsineAgroAlimentaire4 REAL," +
+                "usinePharmaceutiqueActive1 INTEGER, usinePharmaceutiqueActive2 INTEGER, usinePharmaceutiqueActive3 INTEGER, usinePharmaceutiqueActive4 INTEGER," +
+                "nbUsinesPharmaceutique1 REAL, nbUsinesPharmaceutique2 REAL, nbUsinesPharmaceutique3 REAL, nbUsinesPharmaceutique4 REAL," +
+                "nbMarchandisesUsinePharmaceutique1 INTEGER, nbMarchandisesUsinePharmaceutique2 INTEGER, nbMarchandisesUsinePharmaceutique3 INTEGER, nbMarchandisesUsinePharmaceutique4 INTEGER," +
+                "etatProgressUsinePharmaceutique1 REAL, etatProgressUsinePharmaceutique2 REAL, etatProgressUsinePharmaceutique3 REAL, etatProgressUsinePharmaceutique4 REAL" +
                 ")";
         Statement stmt = connection.createStatement();
         stmt.execute(sql);

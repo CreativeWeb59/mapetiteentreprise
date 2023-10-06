@@ -270,6 +270,8 @@ public class Jeu {
         getSauvegarde().setNbMarchandisesUsineAgroAlimentaire4(getJoueur().getUsineAgroAlimentaireEnorme().getNbMarchandises());
         getSauvegarde().setEtatProgressUsineAgroAlimentaire4(getJoueur().getUsineAgroAlimentaireEnorme().getEtatProgressUsine());
 
+        // pharmaceutique
+
 
         System.out.println("Nouvelles valeurs a sauvegarder" + getSauvegarde());
 

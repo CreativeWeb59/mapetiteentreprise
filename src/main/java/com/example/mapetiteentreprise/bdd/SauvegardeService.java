@@ -97,12 +97,17 @@ public class SauvegardeService {
                 "usineAgroAlimentaireActive1, usineAgroAlimentaireActive2, usineAgroAlimentaireActive3, usineAgroAlimentaireActive4, " +
                 "nbUsinesAgroAlimentaire1, nbUsinesAgroAlimentaire2, nbUsinesAgroAlimentaire3, nbUsinesAgroAlimentaire4," +
                 "nbMarchandisesUsineAgroAlimentaire1, nbMarchandisesUsineAgroAlimentaire2, nbMarchandisesUsineAgroAlimentaire3, nbMarchandisesUsineAgroAlimentaire4," +
-                "etatProgressUsineAgroAlimentaire1, etatProgressUsineAgroAlimentaire2, etatProgressUsineAgroAlimentaire3, etatProgressUsineAgroAlimentaire4"+
+                "etatProgressUsineAgroAlimentaire1, etatProgressUsineAgroAlimentaire2, etatProgressUsineAgroAlimentaire3, etatProgressUsineAgroAlimentaire4,"+
+                "usinePharmaceutiqueActive1, usinePharmaceutiqueActive2, usinePharmaceutiqueActive3, usinePharmaceutiqueActive4, " +
+                "nbUsinesPharmaceutique1, nbUsinesPharmaceutique2, nbUsinesPharmaceutique3, nbUsinesPharmaceutique4," +
+                "nbMarchandisesUsinePharmaceutique1, nbMarchandisesUsinePharmaceutique2, nbMarchandisesUsinePharmaceutique3, nbMarchandisesUsinePharmaceutique4," +
+                "etatProgressUsinePharmaceutique1, etatProgressUsinePharmaceutique2, etatProgressUsinePharmaceutique3, etatProgressUsinePharmaceutique4"+
                 ") VALUES (" +
                 " ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?," +
                 " ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?," +
                 " ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?," +
                 " ?, ?, ?, ?, ?, ?, ?, ?," +
+                " ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?," +
                 " ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?," +
                 " ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?" +
                 ")";
@@ -228,6 +233,27 @@ public class SauvegardeService {
         stmt.setDouble(96, sauvegarde.getEtatProgressUsineAgroAlimentaire2());
         stmt.setDouble(97, sauvegarde.getEtatProgressUsineAgroAlimentaire3());
         stmt.setDouble(98, sauvegarde.getEtatProgressUsineAgroAlimentaire4());
+
+        // Agro Alimentaire
+        stmt.setInt(99, sauvegarde.getUsinePharmaceutiqueActive1());
+        stmt.setInt(100, sauvegarde.getUsinePharmaceutiqueActive2());
+        stmt.setInt(101, sauvegarde.getUsinePharmaceutiqueActive3());
+        stmt.setInt(102, sauvegarde.getUsinePharmaceutiqueActive4());
+
+        stmt.setInt(103, sauvegarde.getNbUsinesPharmaceutique1());
+        stmt.setInt(104, sauvegarde.getNbUsinesPharmaceutique2());
+        stmt.setInt(105, sauvegarde.getNbUsinesPharmaceutique3());
+        stmt.setInt(106, sauvegarde.getNbUsinesPharmaceutique4());
+
+        stmt.setLong(107, sauvegarde.getNbMarchandisesUsinePharmaceutique1());
+        stmt.setLong(108, sauvegarde.getNbMarchandisesUsinePharmaceutique2());
+        stmt.setLong(109, sauvegarde.getNbMarchandisesUsinePharmaceutique3());
+        stmt.setLong(110, sauvegarde.getNbMarchandisesUsinePharmaceutique4());
+
+        stmt.setDouble(111, sauvegarde.getEtatProgressUsinePharmaceutique1());
+        stmt.setDouble(112, sauvegarde.getEtatProgressUsinePharmaceutique2());
+        stmt.setDouble(113, sauvegarde.getEtatProgressUsinePharmaceutique3());
+        stmt.setDouble(114, sauvegarde.getEtatProgressUsinePharmaceutique4());
 
         try {
             stmt.executeUpdate();
@@ -378,6 +404,23 @@ public class SauvegardeService {
             double etatProgressUsineAgroAlimentaire3 = resultSet.getDouble("etatProgressUsineAgroAlimentaire3");
             double etatProgressUsineAgroAlimentaire4 = resultSet.getDouble("etatProgressUsineAgroAlimentaire4");
 
+            int usinePharmaceutiqueActive1 = resultSet.getInt("usinePharmaceutiqueActive1");
+            int usinePharmaceutiqueActive2 = resultSet.getInt("usinePharmaceutiqueActive2");
+            int usinePharmaceutiqueActive3 = resultSet.getInt("usinePharmaceutiqueActive3");
+            int usinePharmaceutiqueActive4 = resultSet.getInt("usinePharmaceutiqueActive4");
+            int nbUsinesPharmaceutique1 = resultSet.getInt("nbUsinesPharmaceutique1");
+            int nbUsinesPharmaceutique2 = resultSet.getInt("nbUsinesPharmaceutique2");
+            int nbUsinesPharmaceutique3 = resultSet.getInt("nbUsinesPharmaceutique3");
+            int nbUsinesPharmaceutique4 = resultSet.getInt("nbUsinesPharmaceutique4");
+            long nbMarchandisesUsinePharmaceutique1 = resultSet.getInt("nbMarchandisesUsinePharmaceutique1");
+            long nbMarchandisesUsinePharmaceutique2 = resultSet.getInt("nbMarchandisesUsinePharmaceutique2");
+            long nbMarchandisesUsinePharmaceutique3 = resultSet.getInt("nbMarchandisesUsinePharmaceutique3");
+            long nbMarchandisesUsinePharmaceutique4 = resultSet.getInt("nbMarchandisesUsinePharmaceutique4");
+            double etatProgressUsinePharmaceutique1 = resultSet.getDouble("etatProgressUsinePharmaceutique1");
+            double etatProgressUsinePharmaceutique2 = resultSet.getDouble("etatProgressUsinePharmaceutique2");
+            double etatProgressUsinePharmaceutique3 = resultSet.getDouble("etatProgressUsinePharmaceutique3");
+            double etatProgressUsinePharmaceutique4 = resultSet.getDouble("etatProgressUsinePharmaceutique4");
+
             LocalDateTime dateDeco = LocalDateTime.ofInstant(Instant.ofEpochMilli(timestampMillisDeco), ZoneId.systemDefault());
             LocalDateTime dateDebutJeu = LocalDateTime.ofInstant(Instant.ofEpochMilli(timestampMillisDebutJeu), ZoneId.systemDefault());
 
@@ -402,7 +445,11 @@ public class SauvegardeService {
                     usineAgroAlimentaireActive1, usineAgroAlimentaireActive2, usineAgroAlimentaireActive3, usineAgroAlimentaireActive4,
                     nbUsinesAgroAlimentaire1, nbUsinesAgroAlimentaire2, nbUsinesAgroAlimentaire3, nbUsinesAgroAlimentaire4,
                     nbMarchandisesUsineAgroAlimentaire1, nbMarchandisesUsineAgroAlimentaire2, nbMarchandisesUsineAgroAlimentaire3, nbMarchandisesUsineAgroAlimentaire4,
-                    etatProgressUsineAgroAlimentaire1, etatProgressUsineAgroAlimentaire2, etatProgressUsineAgroAlimentaire3, etatProgressUsineAgroAlimentaire4
+                    etatProgressUsineAgroAlimentaire1, etatProgressUsineAgroAlimentaire2, etatProgressUsineAgroAlimentaire3, etatProgressUsineAgroAlimentaire4,
+                    usinePharmaceutiqueActive1, usinePharmaceutiqueActive2, usinePharmaceutiqueActive3, usinePharmaceutiqueActive4,
+                    nbUsinesPharmaceutique1, nbUsinesPharmaceutique2, nbUsinesPharmaceutique3, nbUsinesPharmaceutique4,
+                    nbMarchandisesUsinePharmaceutique1, nbMarchandisesUsinePharmaceutique2, nbMarchandisesUsinePharmaceutique3, nbMarchandisesUsinePharmaceutique4,
+                    etatProgressUsinePharmaceutique1, etatProgressUsinePharmaceutique2, etatProgressUsinePharmaceutique3, etatProgressUsinePharmaceutique4
                     );
             sauvegarde.setId(id);
             System.out.println("Récuperation : " + sauvegarde);
@@ -438,7 +485,12 @@ public class SauvegardeService {
                 "usineAgroAlimentaireActive1 = ?, usineAgroAlimentaireActive2 = ?, usineAgroAlimentaireActive3 = ?, usineAgroAlimentaireActive4 = ?, " +
                 "nbUsinesAgroAlimentaire1 = ?, nbUsinesAgroAlimentaire2 = ?, nbUsinesAgroAlimentaire3 = ?, nbUsinesAgroAlimentaire4 = ?, " +
                 "nbMarchandisesUsineAgroAlimentaire1 = ?, nbMarchandisesUsineAgroAlimentaire2 = ?,nbMarchandisesUsineAgroAlimentaire3 = ?,nbMarchandisesUsineAgroAlimentaire4 = ?," +
-                "etatProgressUsineAgroAlimentaire1 = ?, etatProgressUsineAgroAlimentaire2 = ?,etatProgressUsineAgroAlimentaire3 = ?,etatProgressUsineAgroAlimentaire4 = ?"+
+                "etatProgressUsineAgroAlimentaire1 = ?, etatProgressUsineAgroAlimentaire2 = ?,etatProgressUsineAgroAlimentaire3 = ?,etatProgressUsineAgroAlimentaire4 = ?," +
+
+                "usinePharmaceutiqueActive1 = ?, usinePharmaceutiqueActive2 = ?, usinePharmaceutiqueActive3 = ?, usinePharmaceutiqueActive4 = ?, " +
+                "nbUsinesPharmaceutique1 = ?, nbUsinesPharmaceutique2 = ?, nbUsinesPharmaceutique3 = ?, nbUsinesPharmaceutique4 = ?, " +
+                "nbMarchandisesUsinePharmaceutique1 = ?, nbMarchandisesUsinePharmaceutique2 = ?,nbMarchandisesUsinePharmaceutique3 = ?,nbMarchandisesUsinePharmaceutique4 = ?," +
+                "etatProgressUsinePharmaceutique1 = ?, etatProgressUsinePharmaceutique2 = ?,etatProgressUsinePharmaceutique3 = ?,etatProgressUsinePharmaceutique4 = ?" +
                 " WHERE pseudo LIKE ?";
 
         System.out.println("Requete : " + sql);
@@ -553,10 +605,27 @@ public class SauvegardeService {
         stmt.setLong(92, sauvegarde.getNbMarchandisesUsineAgroAlimentaire2());
         stmt.setLong(93, sauvegarde.getNbMarchandisesUsineAgroAlimentaire3());
         stmt.setLong(94, sauvegarde.getNbMarchandisesUsineAgroAlimentaire4());
-        stmt.setDouble(95, sauvegarde.getEtatProgressUsineJouets1());
-        stmt.setDouble(96, sauvegarde.getEtatProgressUsineJouets2());
-        stmt.setDouble(97, sauvegarde.getEtatProgressUsineJouets3());
-        stmt.setDouble(98, sauvegarde.getEtatProgressUsineJouets4());
+        stmt.setDouble(95, sauvegarde.getEtatProgressUsineAgroAlimentaire1());
+        stmt.setDouble(96, sauvegarde.getEtatProgressUsineAgroAlimentaire2());
+        stmt.setDouble(97, sauvegarde.getEtatProgressUsineAgroAlimentaire3());
+        stmt.setDouble(98, sauvegarde.getEtatProgressUsineAgroAlimentaire4());
+
+        stmt.setInt(83, sauvegarde.getUsinePharmaceutiqueActive1());
+        stmt.setInt(84, sauvegarde.getUsinePharmaceutiqueActive2());
+        stmt.setInt(85, sauvegarde.getUsinePharmaceutiqueActive3());
+        stmt.setInt(86, sauvegarde.getUsinePharmaceutiqueActive4());
+        stmt.setInt(87, sauvegarde.getNbUsinesPharmaceutique1());
+        stmt.setInt(88, sauvegarde.getNbUsinesPharmaceutique2());
+        stmt.setInt(89, sauvegarde.getNbUsinesPharmaceutique3());
+        stmt.setInt(90, sauvegarde.getNbUsinesPharmaceutique4());
+        stmt.setLong(91, sauvegarde.getNbMarchandisesUsinePharmaceutique1());
+        stmt.setLong(92, sauvegarde.getNbMarchandisesUsinePharmaceutique2());
+        stmt.setLong(93, sauvegarde.getNbMarchandisesUsinePharmaceutique3());
+        stmt.setLong(94, sauvegarde.getNbMarchandisesUsinePharmaceutique4());
+        stmt.setDouble(95, sauvegarde.getEtatProgressUsinePharmaceutique1());
+        stmt.setDouble(96, sauvegarde.getEtatProgressUsinePharmaceutique2());
+        stmt.setDouble(97, sauvegarde.getEtatProgressUsinePharmaceutique3());
+        stmt.setDouble(98, sauvegarde.getEtatProgressUsinePharmaceutique4());
 
         stmt.setString(99, sauvegarde.getPseudo());
 

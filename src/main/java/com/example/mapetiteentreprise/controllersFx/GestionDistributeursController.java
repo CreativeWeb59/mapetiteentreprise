@@ -54,7 +54,9 @@ public class GestionDistributeursController {
     private ProgressBar progressBC, progressBF, progressSa, progressCo, progressOeufs,
             progressScooter, progressCamionette, progressPetitCamion, progressPoidsLourd, progressAvion,
             progressTextile1, progressTextile2, progressTextile3, progressTextile4,
-            progressJouets1, progressJouets2, progressJouets3, progressJouets4;
+            progressJouets1, progressJouets2, progressJouets3, progressJouets4,
+            progressPharmaceutique1, progressPharmaceutique2, progressPharmaceutique3, progressPharmaceutique4,
+            progressAgroAlimentaire1, progressAgroAlimentaire2, progressAgroAlimentaire3, progressAgroAlimentaire4;
     private Timeline timelineBC, timelineBF, timelineSa, timelineCo;
 
     private BigDecimal gainEnAttenteBC = new BigDecimal(0);

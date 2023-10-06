@@ -119,9 +119,6 @@ public class Sauvegarde {
     private double etatProgressUsineJouets3;
     private double etatProgressUsineJouets4;
 
-
-
-
     // activation des usines agro alimentaire
     private int usineAgroAlimentaireActive1;
     private int usineAgroAlimentaireActive2;
@@ -139,13 +136,40 @@ public class Sauvegarde {
     private long nbMarchandisesUsineAgroAlimentaire2;
     private long nbMarchandisesUsineAgroAlimentaire3;
     private long nbMarchandisesUsineAgroAlimentaire4;
+
     // barres de progression usines agro alimentaire
     private double etatProgressUsineAgroAlimentaire1;
     private double etatProgressUsineAgroAlimentaire2;
     private double etatProgressUsineAgroAlimentaire3;
     private double etatProgressUsineAgroAlimentaire4;
 
-    public Sauvegarde(int id, String pseudo, BigDecimal argent, long numJourDeco, int heureDeco, double progressJour, int nbPoules, long nbOeufs, int fermeActive, int distributeursActive, int distributeurBCActive, int distributeurBFActive, int distributeurCoActive, int distributeurSaActive, int livraison1Active, int livraison2Active, int livraison3Active, int livraison4Active, int livraison5Active, double etatProgressOeuf, LocalDateTime dateDeco, int nbDistributeurBC, int nbDistributeurBF, int nbDistributeurSa, int nbDistributeurCo, long nbMarchandisesBC, long nbMarchandisesBF, long nbMarchandisesSa, long nbMarchandisesCo, double etatProgressBC, double etatProgressBF, double etatProgressSa, double etatProgressCo, LocalDateTime dateDebutJeu, int poulailler1, int poulailler2, int poulailler3, int poulailler4, int nbLivraison1, int nbLivraison2, int nbLivraison3, int nbLivraison4, int nbLivraison5, long nbCourses1, long nbCourses2, long nbCourses3, long nbCourses4, long nbCourses5, double etatProgressLivraison1, double etatProgressLivraison2, double etatProgressLivraison3, double etatProgressLivraison4, double etatProgressLivraison5, int usineTextileActive1, int usineTextileActive2, int usineTextileActive3, int usineTextileActive4, int nbUsinesTextile1, int nbUsinesTextile2, int nbUsinesTextile3, int nbUsinesTextile4, long nbMarchandisesUsineTextile1, long nbMarchandisesUsineTextile2, long nbMarchandisesUsineTextile3, long nbMarchandisesUsineTextile4, double etatProgressUsineTextile1, double etatProgressUsineTextile2, double etatProgressUsineTextile3, double etatProgressUsineTextile4, int usineJouetsActive1, int usineJouetsActive2, int usineJouetsActive3, int usineJouetsActive4, int nbUsinesJouets1, int nbUsinesJouets2, int nbUsinesJouets3, int nbUsinesJouets4, long nbMarchandisesUsineJouets1, long nbMarchandisesUsineJouets2, long nbMarchandisesUsineJouets3, long nbMarchandisesUsineJouets4, double etatProgressUsineJouets1, double etatProgressUsineJouets2, double etatProgressUsineJouets3, double etatProgressUsineJouets4, int usineAgroAlimentaireActive1, int usineAgroAlimentaireActive2, int usineAgroAlimentaireActive3, int usineAgroAlimentaireActive4, int nbUsinesAgroAlimentaire1, int nbUsinesAgroAlimentaire2, int nbUsinesAgroAlimentaire3, int nbUsinesAgroAlimentaire4, long nbMarchandisesUsineAgroAlimentaire1, long nbMarchandisesUsineAgroAlimentaire2, long nbMarchandisesUsineAgroAlimentaire3, long nbMarchandisesUsineAgroAlimentaire4, double etatProgressUsineAgroAlimentaire1, double etatProgressUsineAgroAlimentaire2, double etatProgressUsineAgroAlimentaire3, double etatProgressUsineAgroAlimentaire4) {
+
+    // activation des usines pharmaceutique
+    private int usinePharmaceutiqueActive1;
+    private int usinePharmaceutiqueActive2;
+    private int usinePharmaceutiqueActive3;
+    private int usinePharmaceutiqueActive4;
+
+    // nombre d'usines pharmaceutique
+    private int nbUsinesPharmaceutique1;
+    private int nbUsinesPharmaceutique2;
+    private int nbUsinesPharmaceutique3;
+    private int nbUsinesPharmaceutique4;
+
+    // nombre de marchandises fabriquées en usine pharmaceutique
+    private long nbMarchandisesUsinePharmaceutique1;
+    private long nbMarchandisesUsinePharmaceutique2;
+    private long nbMarchandisesUsinePharmaceutique3;
+    private long nbMarchandisesUsinePharmaceutique4;
+
+    // barres de progression usines pharmaceutique
+    private double etatProgressUsinePharmaceutique1;
+    private double etatProgressUsinePharmaceutique2;
+    private double etatProgressUsinePharmaceutique3;
+    private double etatProgressUsinePharmaceutique4;
+
+
+    public Sauvegarde(int id, String pseudo, BigDecimal argent, long numJourDeco, int heureDeco, double progressJour, int nbPoules, long nbOeufs, int fermeActive, int distributeursActive, int distributeurBCActive, int distributeurBFActive, int distributeurCoActive, int distributeurSaActive, int livraison1Active, int livraison2Active, int livraison3Active, int livraison4Active, int livraison5Active, double etatProgressOeuf, LocalDateTime dateDeco, int nbDistributeurBC, int nbDistributeurBF, int nbDistributeurSa, int nbDistributeurCo, long nbMarchandisesBC, long nbMarchandisesBF, long nbMarchandisesSa, long nbMarchandisesCo, double etatProgressBC, double etatProgressBF, double etatProgressSa, double etatProgressCo, LocalDateTime dateDebutJeu, int poulailler1, int poulailler2, int poulailler3, int poulailler4, int nbLivraison1, int nbLivraison2, int nbLivraison3, int nbLivraison4, int nbLivraison5, long nbCourses1, long nbCourses2, long nbCourses3, long nbCourses4, long nbCourses5, double etatProgressLivraison1, double etatProgressLivraison2, double etatProgressLivraison3, double etatProgressLivraison4, double etatProgressLivraison5, int usineTextileActive1, int usineTextileActive2, int usineTextileActive3, int usineTextileActive4, int nbUsinesTextile1, int nbUsinesTextile2, int nbUsinesTextile3, int nbUsinesTextile4, long nbMarchandisesUsineTextile1, long nbMarchandisesUsineTextile2, long nbMarchandisesUsineTextile3, long nbMarchandisesUsineTextile4, double etatProgressUsineTextile1, double etatProgressUsineTextile2, double etatProgressUsineTextile3, double etatProgressUsineTextile4, int usineJouetsActive1, int usineJouetsActive2, int usineJouetsActive3, int usineJouetsActive4, int nbUsinesJouets1, int nbUsinesJouets2, int nbUsinesJouets3, int nbUsinesJouets4, long nbMarchandisesUsineJouets1, long nbMarchandisesUsineJouets2, long nbMarchandisesUsineJouets3, long nbMarchandisesUsineJouets4, double etatProgressUsineJouets1, double etatProgressUsineJouets2, double etatProgressUsineJouets3, double etatProgressUsineJouets4, int usineAgroAlimentaireActive1, int usineAgroAlimentaireActive2, int usineAgroAlimentaireActive3, int usineAgroAlimentaireActive4, int nbUsinesAgroAlimentaire1, int nbUsinesAgroAlimentaire2, int nbUsinesAgroAlimentaire3, int nbUsinesAgroAlimentaire4, long nbMarchandisesUsineAgroAlimentaire1, long nbMarchandisesUsineAgroAlimentaire2, long nbMarchandisesUsineAgroAlimentaire3, long nbMarchandisesUsineAgroAlimentaire4, double etatProgressUsineAgroAlimentaire1, double etatProgressUsineAgroAlimentaire2, double etatProgressUsineAgroAlimentaire3, double etatProgressUsineAgroAlimentaire4, int usinePharmaceutiqueActive1, int usinePharmaceutiqueActive2, int usinePharmaceutiqueActive3, int usinePharmaceutiqueActive4, int nbUsinesPharmaceutique1, int nbUsinesPharmaceutique2, int nbUsinesPharmaceutique3, int nbUsinesPharmaceutique4, long nbMarchandisesUsinePharmaceutique1, long nbMarchandisesUsinePharmaceutique2, long nbMarchandisesUsinePharmaceutique3, long nbMarchandisesUsinePharmaceutique4, double etatProgressUsinePharmaceutique1, double etatProgressUsinePharmaceutique2, double etatProgressUsinePharmaceutique3, double etatProgressUsinePharmaceutique4) {
         this.id = id;
         this.pseudo = pseudo;
         this.argent = argent;
@@ -247,9 +271,25 @@ public class Sauvegarde {
         this.etatProgressUsineAgroAlimentaire2 = etatProgressUsineAgroAlimentaire2;
         this.etatProgressUsineAgroAlimentaire3 = etatProgressUsineAgroAlimentaire3;
         this.etatProgressUsineAgroAlimentaire4 = etatProgressUsineAgroAlimentaire4;
+        this.usinePharmaceutiqueActive1 = usinePharmaceutiqueActive1;
+        this.usinePharmaceutiqueActive2 = usinePharmaceutiqueActive2;
+        this.usinePharmaceutiqueActive3 = usinePharmaceutiqueActive3;
+        this.usinePharmaceutiqueActive4 = usinePharmaceutiqueActive4;
+        this.nbUsinesPharmaceutique1 = nbUsinesPharmaceutique1;
+        this.nbUsinesPharmaceutique2 = nbUsinesPharmaceutique2;
+        this.nbUsinesPharmaceutique3 = nbUsinesPharmaceutique3;
+        this.nbUsinesPharmaceutique4 = nbUsinesPharmaceutique4;
+        this.nbMarchandisesUsinePharmaceutique1 = nbMarchandisesUsinePharmaceutique1;
+        this.nbMarchandisesUsinePharmaceutique2 = nbMarchandisesUsinePharmaceutique2;
+        this.nbMarchandisesUsinePharmaceutique3 = nbMarchandisesUsinePharmaceutique3;
+        this.nbMarchandisesUsinePharmaceutique4 = nbMarchandisesUsinePharmaceutique4;
+        this.etatProgressUsinePharmaceutique1 = etatProgressUsinePharmaceutique1;
+        this.etatProgressUsinePharmaceutique2 = etatProgressUsinePharmaceutique2;
+        this.etatProgressUsinePharmaceutique3 = etatProgressUsinePharmaceutique3;
+        this.etatProgressUsinePharmaceutique4 = etatProgressUsinePharmaceutique4;
     }
 
-    public Sauvegarde(String pseudo, BigDecimal argent, long numJourDeco, int heureDeco, double progressJour, int nbPoules, long nbOeufs, int fermeActive, int distributeursActive, int distributeurBCActive, int distributeurBFActive, int distributeurCoActive, int distributeurSaActive, int livraison1Active, int livraison2Active, int livraison3Active, int livraison4Active, int livraison5Active, double etatProgressOeuf, LocalDateTime dateDeco, int nbDistributeurBC, int nbDistributeurBF, int nbDistributeurSa, int nbDistributeurCo, long nbMarchandisesBC, long nbMarchandisesBF, long nbMarchandisesSa, long nbMarchandisesCo, double etatProgressBC, double etatProgressBF, double etatProgressSa, double etatProgressCo, LocalDateTime dateDebutJeu, int poulailler1, int poulailler2, int poulailler3, int poulailler4, int nbLivraison1, int nbLivraison2, int nbLivraison3, int nbLivraison4, int nbLivraison5, long nbCourses1, long nbCourses2, long nbCourses3, long nbCourses4, long nbCourses5, double etatProgressLivraison1, double etatProgressLivraison2, double etatProgressLivraison3, double etatProgressLivraison4, double etatProgressLivraison5, int usineTextileActive1, int usineTextileActive2, int usineTextileActive3, int usineTextileActive4, int nbUsinesTextile1, int nbUsinesTextile2, int nbUsinesTextile3, int nbUsinesTextile4, long nbMarchandisesUsineTextile1, long nbMarchandisesUsineTextile2, long nbMarchandisesUsineTextile3, long nbMarchandisesUsineTextile4, double etatProgressUsineTextile1, double etatProgressUsineTextile2, double etatProgressUsineTextile3, double etatProgressUsineTextile4, int usineJouetsActive1, int usineJouetsActive2, int usineJouetsActive3, int usineJouetsActive4, int nbUsinesJouets1, int nbUsinesJouets2, int nbUsinesJouets3, int nbUsinesJouets4, long nbMarchandisesUsineJouets1, long nbMarchandisesUsineJouets2, long nbMarchandisesUsineJouets3, long nbMarchandisesUsineJouets4, double etatProgressUsineJouets1, double etatProgressUsineJouets2, double etatProgressUsineJouets3, double etatProgressUsineJouets4, int usineAgroAlimentaireActive1, int usineAgroAlimentaireActive2, int usineAgroAlimentaireActive3, int usineAgroAlimentaireActive4, int nbUsinesAgroAlimentaire1, int nbUsinesAgroAlimentaire2, int nbUsinesAgroAlimentaire3, int nbUsinesAgroAlimentaire4, long nbMarchandisesUsineAgroAlimentaire1, long nbMarchandisesUsineAgroAlimentaire2, long nbMarchandisesUsineAgroAlimentaire3, long nbMarchandisesUsineAgroAlimentaire4, double etatProgressUsineAgroAlimentaire1, double etatProgressUsineAgroAlimentaire2, double etatProgressUsineAgroAlimentaire3, double etatProgressUsineAgroAlimentaire4) {
+    public Sauvegarde(String pseudo, BigDecimal argent, long numJourDeco, int heureDeco, double progressJour, int nbPoules, long nbOeufs, int fermeActive, int distributeursActive, int distributeurBCActive, int distributeurBFActive, int distributeurCoActive, int distributeurSaActive, int livraison1Active, int livraison2Active, int livraison3Active, int livraison4Active, int livraison5Active, double etatProgressOeuf, LocalDateTime dateDeco, int nbDistributeurBC, int nbDistributeurBF, int nbDistributeurSa, int nbDistributeurCo, long nbMarchandisesBC, long nbMarchandisesBF, long nbMarchandisesSa, long nbMarchandisesCo, double etatProgressBC, double etatProgressBF, double etatProgressSa, double etatProgressCo, LocalDateTime dateDebutJeu, int poulailler1, int poulailler2, int poulailler3, int poulailler4, int nbLivraison1, int nbLivraison2, int nbLivraison3, int nbLivraison4, int nbLivraison5, long nbCourses1, long nbCourses2, long nbCourses3, long nbCourses4, long nbCourses5, double etatProgressLivraison1, double etatProgressLivraison2, double etatProgressLivraison3, double etatProgressLivraison4, double etatProgressLivraison5, int usineTextileActive1, int usineTextileActive2, int usineTextileActive3, int usineTextileActive4, int nbUsinesTextile1, int nbUsinesTextile2, int nbUsinesTextile3, int nbUsinesTextile4, long nbMarchandisesUsineTextile1, long nbMarchandisesUsineTextile2, long nbMarchandisesUsineTextile3, long nbMarchandisesUsineTextile4, double etatProgressUsineTextile1, double etatProgressUsineTextile2, double etatProgressUsineTextile3, double etatProgressUsineTextile4, int usineJouetsActive1, int usineJouetsActive2, int usineJouetsActive3, int usineJouetsActive4, int nbUsinesJouets1, int nbUsinesJouets2, int nbUsinesJouets3, int nbUsinesJouets4, long nbMarchandisesUsineJouets1, long nbMarchandisesUsineJouets2, long nbMarchandisesUsineJouets3, long nbMarchandisesUsineJouets4, double etatProgressUsineJouets1, double etatProgressUsineJouets2, double etatProgressUsineJouets3, double etatProgressUsineJouets4, int usineAgroAlimentaireActive1, int usineAgroAlimentaireActive2, int usineAgroAlimentaireActive3, int usineAgroAlimentaireActive4, int nbUsinesAgroAlimentaire1, int nbUsinesAgroAlimentaire2, int nbUsinesAgroAlimentaire3, int nbUsinesAgroAlimentaire4, long nbMarchandisesUsineAgroAlimentaire1, long nbMarchandisesUsineAgroAlimentaire2, long nbMarchandisesUsineAgroAlimentaire3, long nbMarchandisesUsineAgroAlimentaire4, double etatProgressUsineAgroAlimentaire1, double etatProgressUsineAgroAlimentaire2, double etatProgressUsineAgroAlimentaire3, double etatProgressUsineAgroAlimentaire4, int usinePharmaceutiqueActive1, int usinePharmaceutiqueActive2, int usinePharmaceutiqueActive3, int usinePharmaceutiqueActive4, int nbUsinesPharmaceutique1, int nbUsinesPharmaceutique2, int nbUsinesPharmaceutique3, int nbUsinesPharmaceutique4, long nbMarchandisesUsinePharmaceutique1, long nbMarchandisesUsinePharmaceutique2, long nbMarchandisesUsinePharmaceutique3, long nbMarchandisesUsinePharmaceutique4, double etatProgressUsinePharmaceutique1, double etatProgressUsinePharmaceutique2, double etatProgressUsinePharmaceutique3, double etatProgressUsinePharmaceutique4) {
         this.pseudo = pseudo;
         this.argent = argent;
         this.numJourDeco = numJourDeco;
@@ -350,6 +390,22 @@ public class Sauvegarde {
         this.etatProgressUsineAgroAlimentaire2 = etatProgressUsineAgroAlimentaire2;
         this.etatProgressUsineAgroAlimentaire3 = etatProgressUsineAgroAlimentaire3;
         this.etatProgressUsineAgroAlimentaire4 = etatProgressUsineAgroAlimentaire4;
+        this.usinePharmaceutiqueActive1 = usinePharmaceutiqueActive1;
+        this.usinePharmaceutiqueActive2 = usinePharmaceutiqueActive2;
+        this.usinePharmaceutiqueActive3 = usinePharmaceutiqueActive3;
+        this.usinePharmaceutiqueActive4 = usinePharmaceutiqueActive4;
+        this.nbUsinesPharmaceutique1 = nbUsinesPharmaceutique1;
+        this.nbUsinesPharmaceutique2 = nbUsinesPharmaceutique2;
+        this.nbUsinesPharmaceutique3 = nbUsinesPharmaceutique3;
+        this.nbUsinesPharmaceutique4 = nbUsinesPharmaceutique4;
+        this.nbMarchandisesUsinePharmaceutique1 = nbMarchandisesUsinePharmaceutique1;
+        this.nbMarchandisesUsinePharmaceutique2 = nbMarchandisesUsinePharmaceutique2;
+        this.nbMarchandisesUsinePharmaceutique3 = nbMarchandisesUsinePharmaceutique3;
+        this.nbMarchandisesUsinePharmaceutique4 = nbMarchandisesUsinePharmaceutique4;
+        this.etatProgressUsinePharmaceutique1 = etatProgressUsinePharmaceutique1;
+        this.etatProgressUsinePharmaceutique2 = etatProgressUsinePharmaceutique2;
+        this.etatProgressUsinePharmaceutique3 = etatProgressUsinePharmaceutique3;
+        this.etatProgressUsinePharmaceutique4 = etatProgressUsinePharmaceutique4;
     }
 
     public int getId() {
@@ -1160,6 +1216,134 @@ public class Sauvegarde {
         this.etatProgressUsineAgroAlimentaire4 = etatProgressUsineAgroAlimentaire4;
     }
 
+    public int getUsinePharmaceutiqueActive1() {
+        return usinePharmaceutiqueActive1;
+    }
+
+    public void setUsinePharmaceutiqueActive1(int usinePharmaceutiqueActive1) {
+        this.usinePharmaceutiqueActive1 = usinePharmaceutiqueActive1;
+    }
+
+    public int getUsinePharmaceutiqueActive2() {
+        return usinePharmaceutiqueActive2;
+    }
+
+    public void setUsinePharmaceutiqueActive2(int usinePharmaceutiqueActive2) {
+        this.usinePharmaceutiqueActive2 = usinePharmaceutiqueActive2;
+    }
+
+    public int getUsinePharmaceutiqueActive3() {
+        return usinePharmaceutiqueActive3;
+    }
+
+    public void setUsinePharmaceutiqueActive3(int usinePharmaceutiqueActive3) {
+        this.usinePharmaceutiqueActive3 = usinePharmaceutiqueActive3;
+    }
+
+    public int getUsinePharmaceutiqueActive4() {
+        return usinePharmaceutiqueActive4;
+    }
+
+    public void setUsinePharmaceutiqueActive4(int usinePharmaceutiqueActive4) {
+        this.usinePharmaceutiqueActive4 = usinePharmaceutiqueActive4;
+    }
+
+    public int getNbUsinesPharmaceutique1() {
+        return nbUsinesPharmaceutique1;
+    }
+
+    public void setNbUsinesPharmaceutique1(int nbUsinesPharmaceutique1) {
+        this.nbUsinesPharmaceutique1 = nbUsinesPharmaceutique1;
+    }
+
+    public int getNbUsinesPharmaceutique2() {
+        return nbUsinesPharmaceutique2;
+    }
+
+    public void setNbUsinesPharmaceutique2(int nbUsinesPharmaceutique2) {
+        this.nbUsinesPharmaceutique2 = nbUsinesPharmaceutique2;
+    }
+
+    public int getNbUsinesPharmaceutique3() {
+        return nbUsinesPharmaceutique3;
+    }
+
+    public void setNbUsinesPharmaceutique3(int nbUsinesPharmaceutique3) {
+        this.nbUsinesPharmaceutique3 = nbUsinesPharmaceutique3;
+    }
+
+    public int getNbUsinesPharmaceutique4() {
+        return nbUsinesPharmaceutique4;
+    }
+
+    public void setNbUsinesPharmaceutique4(int nbUsinesPharmaceutique4) {
+        this.nbUsinesPharmaceutique4 = nbUsinesPharmaceutique4;
+    }
+
+    public long getNbMarchandisesUsinePharmaceutique1() {
+        return nbMarchandisesUsinePharmaceutique1;
+    }
+
+    public void setNbMarchandisesUsinePharmaceutique1(long nbMarchandisesUsinePharmaceutique1) {
+        this.nbMarchandisesUsinePharmaceutique1 = nbMarchandisesUsinePharmaceutique1;
+    }
+
+    public long getNbMarchandisesUsinePharmaceutique2() {
+        return nbMarchandisesUsinePharmaceutique2;
+    }
+
+    public void setNbMarchandisesUsinePharmaceutique2(long nbMarchandisesUsinePharmaceutique2) {
+        this.nbMarchandisesUsinePharmaceutique2 = nbMarchandisesUsinePharmaceutique2;
+    }
+
+    public long getNbMarchandisesUsinePharmaceutique3() {
+        return nbMarchandisesUsinePharmaceutique3;
+    }
+
+    public void setNbMarchandisesUsinePharmaceutique3(long nbMarchandisesUsinePharmaceutique3) {
+        this.nbMarchandisesUsinePharmaceutique3 = nbMarchandisesUsinePharmaceutique3;
+    }
+
+    public long getNbMarchandisesUsinePharmaceutique4() {
+        return nbMarchandisesUsinePharmaceutique4;
+    }
+
+    public void setNbMarchandisesUsinePharmaceutique4(long nbMarchandisesUsinePharmaceutique4) {
+        this.nbMarchandisesUsinePharmaceutique4 = nbMarchandisesUsinePharmaceutique4;
+    }
+
+    public double getEtatProgressUsinePharmaceutique1() {
+        return etatProgressUsinePharmaceutique1;
+    }
+
+    public void setEtatProgressUsinePharmaceutique1(double etatProgressUsinePharmaceutique1) {
+        this.etatProgressUsinePharmaceutique1 = etatProgressUsinePharmaceutique1;
+    }
+
+    public double getEtatProgressUsinePharmaceutique2() {
+        return etatProgressUsinePharmaceutique2;
+    }
+
+    public void setEtatProgressUsinePharmaceutique2(double etatProgressUsinePharmaceutique2) {
+        this.etatProgressUsinePharmaceutique2 = etatProgressUsinePharmaceutique2;
+    }
+
+    public double getEtatProgressUsinePharmaceutique3() {
+        return etatProgressUsinePharmaceutique3;
+    }
+
+    public void setEtatProgressUsinePharmaceutique3(double etatProgressUsinePharmaceutique3) {
+        this.etatProgressUsinePharmaceutique3 = etatProgressUsinePharmaceutique3;
+    }
+
+    public double getEtatProgressUsinePharmaceutique4() {
+        return etatProgressUsinePharmaceutique4;
+    }
+
+    public void setEtatProgressUsinePharmaceutique4(double etatProgressUsinePharmaceutique4) {
+        this.etatProgressUsinePharmaceutique4 = etatProgressUsinePharmaceutique4;
+    }
+
     @Override
     public String toString() {
         return "Sauvegarde{" +
@@ -1264,6 +1448,22 @@ public class Sauvegarde {
                 ", etatProgressUsineAgroAlimentaire2=" + etatProgressUsineAgroAlimentaire2 +
                 ", etatProgressUsineAgroAlimentaire3=" + etatProgressUsineAgroAlimentaire3 +
                 ", etatProgressUsineAgroAlimentaire4=" + etatProgressUsineAgroAlimentaire4 +
+                ", usinePharmaceutiqueActive1=" + usinePharmaceutiqueActive1 +
+                ", usinePharmaceutiqueActive2=" + usinePharmaceutiqueActive2 +
+                ", usinePharmaceutiqueActive3=" + usinePharmaceutiqueActive3 +
+                ", usinePharmaceutiqueActive4=" + usinePharmaceutiqueActive4 +
+                ", nbUsinesPharmaceutique1=" + nbUsinesPharmaceutique1 +
+                ", nbUsinesPharmaceutique2=" + nbUsinesPharmaceutique2 +
+                ", nbUsinesPharmaceutique3=" + nbUsinesPharmaceutique3 +
+                ", nbUsinesPharmaceutique4=" + nbUsinesPharmaceutique4 +
+                ", nbMarchandisesUsinePharmaceutique1=" + nbMarchandisesUsinePharmaceutique1 +
+                ", nbMarchandisesUsinePharmaceutique2=" + nbMarchandisesUsinePharmaceutique2 +
+                ", nbMarchandisesUsinePharmaceutique3=" + nbMarchandisesUsinePharmaceutique3 +
+                ", nbMarchandisesUsinePharmaceutique4=" + nbMarchandisesUsinePharmaceutique4 +
+                ", etatProgressUsinePharmaceutique1=" + etatProgressUsinePharmaceutique1 +
+                ", etatProgressUsinePharmaceutique2=" + etatProgressUsinePharmaceutique2 +
+                ", etatProgressUsinePharmaceutique3=" + etatProgressUsinePharmaceutique3 +
+                ", etatProgressUsinePharmaceutique4=" + etatProgressUsinePharmaceutique4 +
                 '}';
     }
 }

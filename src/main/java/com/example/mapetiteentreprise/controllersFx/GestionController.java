@@ -38,7 +38,9 @@ public class GestionController {
     private ProgressBar progressOeufs, progressBC, progressBF, progressSa, progressCo,
             progressScooter, progressCamionette, progressPoidsLourd, progressPetitCamion, progressAvion,
             progressTextile1, progressTextile2, progressTextile3, progressTextile4,
-            progressJouets1, progressJouets2, progressJouets3, progressJouets4;
+            progressJouets1, progressJouets2, progressJouets3, progressJouets4,
+            progressPharmaceutique1, progressPharmaceutique2, progressPharmaceutique3, progressPharmaceutique4,
+            progressAgroAlimentaire1, progressAgroAlimentaire2, progressAgroAlimentaire3, progressAgroAlimentaire4;
 
     /**
      * Recupere le nom de la sauvegarde
