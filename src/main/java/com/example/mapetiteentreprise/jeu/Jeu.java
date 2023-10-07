@@ -271,7 +271,25 @@ public class Jeu {
         getSauvegarde().setEtatProgressUsineAgroAlimentaire4(getJoueur().getUsineAgroAlimentaireEnorme().getEtatProgressUsine());
 
         // pharmaceutique
+        getSauvegarde().setUsinePharmaceutiqueActive1(getJoueur().getUsinePharmaceutiquePetite().getUsineActive());
+        getSauvegarde().setNbUsinesPharmaceutique1(getJoueur().getUsinePharmaceutiquePetite().getNbUsines());
+        getSauvegarde().setNbMarchandisesUsinePharmaceutique1(getJoueur().getUsinePharmaceutiquePetite().getNbMarchandises());
+        getSauvegarde().setEtatProgressUsinePharmaceutique1(getJoueur().getUsinePharmaceutiquePetite().getEtatProgressUsine());
 
+        getSauvegarde().setUsinePharmaceutiqueActive2(getJoueur().getUsinePharmaceutiqueMoyenne().getUsineActive());
+        getSauvegarde().setNbUsinesPharmaceutique2(getJoueur().getUsinePharmaceutiqueMoyenne().getNbUsines());
+        getSauvegarde().setNbMarchandisesUsinePharmaceutique2(getJoueur().getUsinePharmaceutiqueMoyenne().getNbMarchandises());
+        getSauvegarde().setEtatProgressUsinePharmaceutique2(getJoueur().getUsinePharmaceutiqueMoyenne().getEtatProgressUsine());
+
+        getSauvegarde().setUsinePharmaceutiqueActive3(getJoueur().getUsinePharmaceutiqueGrande().getUsineActive());
+        getSauvegarde().setNbUsinesPharmaceutique3(getJoueur().getUsinePharmaceutiqueGrande().getNbUsines());
+        getSauvegarde().setNbMarchandisesUsinePharmaceutique3(getJoueur().getUsinePharmaceutiqueGrande().getNbMarchandises());
+        getSauvegarde().setEtatProgressUsinePharmaceutique3(getJoueur().getUsinePharmaceutiqueGrande().getEtatProgressUsine());
+
+        getSauvegarde().setUsinePharmaceutiqueActive4(getJoueur().getUsinePharmaceutiqueEnorme().getUsineActive());
+        getSauvegarde().setNbUsinesPharmaceutique4(getJoueur().getUsinePharmaceutiqueEnorme().getNbUsines());
+        getSauvegarde().setNbMarchandisesUsinePharmaceutique4(getJoueur().getUsinePharmaceutiqueEnorme().getNbMarchandises());
+        getSauvegarde().setEtatProgressUsinePharmaceutique4(getJoueur().getUsinePharmaceutiqueEnorme().getEtatProgressUsine());
 
         System.out.println("Nouvelles valeurs a sauvegarder" + getSauvegarde());
 

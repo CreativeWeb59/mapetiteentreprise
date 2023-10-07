@@ -160,17 +160,7 @@ public class MainController {
         // ajout des types de poulaillers
         this.creationPoulailler();
 
-        // mise en place des valeurs dans les usines de textile
-        affectationToutesLesUsinesTextiles();
-
-        // maj des tarifs dans les usines de textile
-        majTarifsUsinesTextile();
-
-        // mise en place des valeurs dans les usines de jouets
-        affectationToutesLesUsinesJouets();
-
-        // maj tarifs dans les usines de jouets
-        majTarifsUsinesJouets();
+        creationUsines();
 
         connectionBdd.close();
         System.out.println("Le jeu complet içi : " + this.jeu);
@@ -270,6 +260,7 @@ public class MainController {
         // creation de la sauvegarde en bdd
         this.sauvegarde = new Sauvegarde(this.pseudo, parametres.getArgentDepart(),1, 1, 0, parametres.getNbPoules(), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                 dateEncours, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, dateEncours, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0,0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
         sauvegardeService.addJoueur(sauvegarde);
@@ -419,6 +410,27 @@ public class MainController {
         }
     }
 
+    public void creationUsines(){
+        // mise en place des valeurs dans les usines de textile
+        affectationToutesLesUsinesTextiles();
+        // maj des tarifs dans les usines de textile
+        majTarifsUsinesTextile();
+
+        // mise en place des valeurs dans les usines de jouets
+        affectationToutesLesUsinesJouets();
+        // maj tarifs dans les usines de jouets
+        majTarifsUsinesJouets();
+
+        // mise en place des valeurs dans les usines agro alimentaire
+        affectationToutesLesUsinesAgroAlimentaire();
+        // maj tarifs dans les usines agro alimentaire
+        majTarifsUsinesAgroAlimentaire();
+
+        // mise en place des valeurs dans les usines pharmaceutique
+        affectationToutesLesUsinesPharmaceutique();
+        // maj tarifs dans les usines pharmaceutique
+        majTarifsUsinesPharmaceutique();
+    }
     /**
      * Remplit chaque usine de textile
      */
@@ -513,5 +525,36 @@ public class MainController {
         jeu.getJoueur().getUsineAgroAlimentaireMoyenne().setUsineMoyenne();
         jeu.getJoueur().getUsineAgroAlimentaireGrande().setUsineGrande();
         jeu.getJoueur().getUsineAgroAlimentaireEnorme().setUsineEnorme();
+    }
+    /**
+     * Remplit chaque usine pharmaceutique
+     */
+    public void affectationToutesLesUsinesPharmaceutique(){
+        System.out.println("usine : " + jeu.getJoueur().getUsinePharmaceutiquePetite());
+        affectationValeursUsinesPharmaceutique(jeu.getJoueur().getUsinePharmaceutiquePetite(), sauvegarde.getUsinePharmaceutiqueActive1(), sauvegarde.getNbUsinesPharmaceutique1(), sauvegarde.getNbMarchandisesUsinePharmaceutique1(), sauvegarde.getEtatProgressUsinePharmaceutique1());
+        affectationValeursUsinesPharmaceutique(jeu.getJoueur().getUsinePharmaceutiqueMoyenne(), sauvegarde.getUsinePharmaceutiqueActive2(), sauvegarde.getNbUsinesPharmaceutique2(), sauvegarde.getNbMarchandisesUsinePharmaceutique2(), sauvegarde.getEtatProgressUsinePharmaceutique2());
+        affectationValeursUsinesPharmaceutique(jeu.getJoueur().getUsinePharmaceutiqueGrande(), sauvegarde.getUsinePharmaceutiqueActive3(), sauvegarde.getNbUsinesPharmaceutique3(), sauvegarde.getNbMarchandisesUsinePharmaceutique3(), sauvegarde.getEtatProgressUsinePharmaceutique3());
+        affectationValeursUsinesPharmaceutique(jeu.getJoueur().getUsinePharmaceutiqueEnorme(), sauvegarde.getUsinePharmaceutiqueActive4(), sauvegarde.getNbUsinesPharmaceutique4(), sauvegarde.getNbMarchandisesUsinePharmaceutique4(), sauvegarde.getEtatProgressUsinePharmaceutique4());
+    }
+    /**
+     * Permet de remplir le contenu des usines pharmaceutique
+     */
+    public void affectationValeursUsinesPharmaceutique(UsinePharmaceutique usinePharmaceutique, int usineActive,  int nbUsines, long nbMarchandises, double etatProgressUsine){
+        usinePharmaceutique.setUsineActive(usineActive);
+        usinePharmaceutique.setNbUsines(nbUsines);
+        usinePharmaceutique.setNbMarchandises(nbMarchandises);
+        usinePharmaceutique.setEtatProgressUsine(etatProgressUsine);
+        System.out.println("Progression de l'usine : " + usinePharmaceutique.getEtatProgressUsine());
+    }
+
+    /**
+     * Permet de mettre à jour les prix des différentes usines
+     * prix de vente, prix de fabrication et nombre max d'usines pharmaceutique
+     */
+    public void majTarifsUsinesPharmaceutique(){
+        jeu.getJoueur().getUsinePharmaceutiquePetite().setUsinePetite();
+        jeu.getJoueur().getUsinePharmaceutiqueMoyenne().setUsineMoyenne();
+        jeu.getJoueur().getUsinePharmaceutiqueGrande().setUsineGrande();
+        jeu.getJoueur().getUsinePharmaceutiqueEnorme().setUsineEnorme();
     }
 }
