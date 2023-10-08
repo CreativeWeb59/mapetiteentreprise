@@ -3,7 +3,6 @@ package com.example.mapetiteentreprise.controllersFx;
 import com.example.mapetiteentreprise.Main;
 import com.example.mapetiteentreprise.actions.Outils;
 import com.example.mapetiteentreprise.jeu.Jeu;
-import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -531,6 +530,50 @@ public class GestionController {
             this.jeu.getJoueur().getUsineJouetsEnorme().progressBarStartUsineJouets(1, this.jeu.getJoueur().getUsineJouetsEnorme().getVitesseUsine(), vitesseUsineJouets4, progressJouets4);
         }
     }
+    public void demarrageUsinesAgroAlimentaire(){
+        if (Outils.isActif(jeu.getJoueur().getUsineAgroAlimentairePetite().getUsineActive())) {
+            // recupertaion etat barre de progression usine de jouets petite
+            double vitesseUsineAgroAlimentaire1 = jeu.getJoueur().getUsineAgroAlimentairePetite().getVitesseUsine() - (jeu.getJoueur().getUsineAgroAlimentairePetite().getVitesseUsine() * jeu.getJoueur().getUsineAgroAlimentairePetite().getEtatProgressUsine());
+            this.jeu.getJoueur().getUsineAgroAlimentairePetite().progressBarStartUsineAgroAlimentaire(1, this.jeu.getJoueur().getUsineAgroAlimentairePetite().getVitesseUsine(), vitesseUsineAgroAlimentaire1, progressAgroAlimentaire1);
+        }
+        if (Outils.isActif(jeu.getJoueur().getUsineAgroAlimentaireMoyenne().getUsineActive())) {
+            // recupertaion etat barre de progression usine de jouets moyenne
+            double vitesseUsineAgroAlimentaire2 = jeu.getJoueur().getUsineAgroAlimentaireMoyenne().getVitesseUsine() - (jeu.getJoueur().getUsineAgroAlimentaireMoyenne().getVitesseUsine() * jeu.getJoueur().getUsineAgroAlimentaireMoyenne().getEtatProgressUsine());
+            this.jeu.getJoueur().getUsineAgroAlimentaireMoyenne().progressBarStartUsineAgroAlimentaire(1, this.jeu.getJoueur().getUsineAgroAlimentaireMoyenne().getVitesseUsine(), vitesseUsineAgroAlimentaire2, progressAgroAlimentaire2);
+        }
+        if (Outils.isActif(jeu.getJoueur().getUsineAgroAlimentaireGrande().getUsineActive())) {
+            // recupertaion etat barre de progression usine de jouets grande
+            double vitesseUsineAgroAlimentaire3 = jeu.getJoueur().getUsineAgroAlimentaireGrande().getVitesseUsine() - (jeu.getJoueur().getUsineAgroAlimentaireGrande().getVitesseUsine() * jeu.getJoueur().getUsineAgroAlimentaireGrande().getEtatProgressUsine());
+            this.jeu.getJoueur().getUsineAgroAlimentaireGrande().progressBarStartUsineAgroAlimentaire(1, this.jeu.getJoueur().getUsineAgroAlimentaireGrande().getVitesseUsine(), vitesseUsineAgroAlimentaire3, progressAgroAlimentaire3);
+        }
+        if (Outils.isActif(jeu.getJoueur().getUsineAgroAlimentaireEnorme().getUsineActive())) {
+            // recupertaion etat barre de progression usine de jouets enorme
+            double vitesseUsineAgroAlimentaire4 = jeu.getJoueur().getUsineAgroAlimentaireEnorme().getVitesseUsine() - (jeu.getJoueur().getUsineAgroAlimentaireEnorme().getVitesseUsine() * jeu.getJoueur().getUsineAgroAlimentaireEnorme().getEtatProgressUsine());
+            this.jeu.getJoueur().getUsineAgroAlimentaireEnorme().progressBarStartUsineAgroAlimentaire(1, this.jeu.getJoueur().getUsineAgroAlimentaireEnorme().getVitesseUsine(), vitesseUsineAgroAlimentaire4, progressAgroAlimentaire4);
+        }
+    }
+    public void demarrageUsinesPharmaceutique(){
+        if (Outils.isActif(jeu.getJoueur().getUsinePharmaceutiquePetite().getUsineActive())) {
+            // recupertaion etat barre de progression usine de jouets petite
+            double vitesseUsinePharmaceutique1 = jeu.getJoueur().getUsinePharmaceutiquePetite().getVitesseUsine() - (jeu.getJoueur().getUsinePharmaceutiquePetite().getVitesseUsine() * jeu.getJoueur().getUsinePharmaceutiquePetite().getEtatProgressUsine());
+            this.jeu.getJoueur().getUsinePharmaceutiquePetite().progressBarStartUsinePharmaceutique(1, this.jeu.getJoueur().getUsinePharmaceutiquePetite().getVitesseUsine(), vitesseUsinePharmaceutique1, progressPharmaceutique1);
+        }
+        if (Outils.isActif(jeu.getJoueur().getUsinePharmaceutiqueMoyenne().getUsineActive())) {
+            // recupertaion etat barre de progression usine de jouets moyenne
+            double vitesseUsinePharmaceutique2 = jeu.getJoueur().getUsinePharmaceutiqueMoyenne().getVitesseUsine() - (jeu.getJoueur().getUsinePharmaceutiqueMoyenne().getVitesseUsine() * jeu.getJoueur().getUsinePharmaceutiqueMoyenne().getEtatProgressUsine());
+            this.jeu.getJoueur().getUsinePharmaceutiqueMoyenne().progressBarStartUsinePharmaceutique(1, this.jeu.getJoueur().getUsinePharmaceutiqueMoyenne().getVitesseUsine(), vitesseUsinePharmaceutique2, progressPharmaceutique1);
+        }
+        if (Outils.isActif(jeu.getJoueur().getUsinePharmaceutiqueGrande().getUsineActive())) {
+            // recupertaion etat barre de progression usine de jouets grande
+            double vitesseUsinePharmaceutique3 = jeu.getJoueur().getUsinePharmaceutiqueGrande().getVitesseUsine() - (jeu.getJoueur().getUsinePharmaceutiqueGrande().getVitesseUsine() * jeu.getJoueur().getUsinePharmaceutiqueGrande().getEtatProgressUsine());
+            this.jeu.getJoueur().getUsinePharmaceutiqueGrande().progressBarStartUsinePharmaceutique(1, this.jeu.getJoueur().getUsinePharmaceutiqueGrande().getVitesseUsine(), vitesseUsinePharmaceutique3, progressPharmaceutique1);
+        }
+        if (Outils.isActif(jeu.getJoueur().getUsinePharmaceutiqueEnorme().getUsineActive())) {
+            // recupertaion etat barre de progression usine de jouets enorme
+            double vitesseUsinePharmaceutique4 = jeu.getJoueur().getUsinePharmaceutiqueEnorme().getVitesseUsine() - (jeu.getJoueur().getUsinePharmaceutiqueEnorme().getVitesseUsine() * jeu.getJoueur().getUsinePharmaceutiqueEnorme().getEtatProgressUsine());
+            this.jeu.getJoueur().getUsinePharmaceutiqueEnorme().progressBarStartUsinePharmaceutique(1, this.jeu.getJoueur().getUsinePharmaceutiqueEnorme().getVitesseUsine(), vitesseUsinePharmaceutique4, progressPharmaceutique1);
+        }
+    }
     /**
      * Demarrage des barres de progression, dans l'ordre
      * la ferme avec les oeufs => incrémente les oeufs
@@ -554,6 +597,8 @@ public class GestionController {
         // demarrage des usines
         demarrageUsinesTextile();
         demarrageUsinesJouets();
+        demarrageUsinesAgroAlimentaire();
+        demarrageUsinesPharmaceutique();
     }
 
     // sauvegardes
@@ -597,6 +642,18 @@ public class GestionController {
         this.jeu.getJoueur().getUsineJouetsGrande().setEtatProgressUsine(this.progressJouets3.getProgress());
         this.jeu.getJoueur().getUsineJouetsEnorme().setEtatProgressUsine(this.progressJouets4.getProgress());
 
+        // on recupere les barres de progression des usines Agro alimentaire
+        this.jeu.getJoueur().getUsineAgroAlimentairePetite().setEtatProgressUsine(this.progressAgroAlimentaire1.getProgress());
+        this.jeu.getJoueur().getUsineAgroAlimentaireMoyenne().setEtatProgressUsine(this.progressAgroAlimentaire2.getProgress());
+        this.jeu.getJoueur().getUsineAgroAlimentaireGrande().setEtatProgressUsine(this.progressAgroAlimentaire3.getProgress());
+        this.jeu.getJoueur().getUsineAgroAlimentaireEnorme().setEtatProgressUsine(this.progressAgroAlimentaire4.getProgress());
+
+        // on recupere les barres de progression des usines Pharmaceutique
+        this.jeu.getJoueur().getUsinePharmaceutiquePetite().setEtatProgressUsine(this.progressPharmaceutique1.getProgress());
+        this.jeu.getJoueur().getUsinePharmaceutiqueMoyenne().setEtatProgressUsine(this.progressPharmaceutique2.getProgress());
+        this.jeu.getJoueur().getUsinePharmaceutiqueGrande().setEtatProgressUsine(this.progressPharmaceutique3.getProgress());
+        this.jeu.getJoueur().getUsinePharmaceutiqueEnorme().setEtatProgressUsine(this.progressPharmaceutique4.getProgress());
+
         // on stoppe les barres de progression
         jeu.getJoueur().getFerme().progressBarStop();
         jeu.getCalendrier().progressBarStop();
@@ -617,6 +674,14 @@ public class GestionController {
         jeu.getJoueur().getUsineJouetsMoyenne().progressBarStop();
         jeu.getJoueur().getUsineJouetsGrande().progressBarStop();
         jeu.getJoueur().getUsineJouetsEnorme().progressBarStop();
+        jeu.getJoueur().getUsineAgroAlimentairePetite().progressBarStop();
+        jeu.getJoueur().getUsineAgroAlimentaireMoyenne().progressBarStop();
+        jeu.getJoueur().getUsineAgroAlimentaireGrande().progressBarStop();
+        jeu.getJoueur().getUsineAgroAlimentaireEnorme().progressBarStop();
+        jeu.getJoueur().getUsinePharmaceutiquePetite().progressBarStop();
+        jeu.getJoueur().getUsinePharmaceutiquePetite().progressBarStop();
+        jeu.getJoueur().getUsinePharmaceutiquePetite().progressBarStop();
+        jeu.getJoueur().getUsinePharmaceutiquePetite().progressBarStop();
     }
     /**
      * Sauvegarde de la base de donnees

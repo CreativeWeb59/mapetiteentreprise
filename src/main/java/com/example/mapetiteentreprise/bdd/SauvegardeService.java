@@ -610,24 +610,24 @@ public class SauvegardeService {
         stmt.setDouble(97, sauvegarde.getEtatProgressUsineAgroAlimentaire3());
         stmt.setDouble(98, sauvegarde.getEtatProgressUsineAgroAlimentaire4());
 
-        stmt.setInt(83, sauvegarde.getUsinePharmaceutiqueActive1());
-        stmt.setInt(84, sauvegarde.getUsinePharmaceutiqueActive2());
-        stmt.setInt(85, sauvegarde.getUsinePharmaceutiqueActive3());
-        stmt.setInt(86, sauvegarde.getUsinePharmaceutiqueActive4());
-        stmt.setInt(87, sauvegarde.getNbUsinesPharmaceutique1());
-        stmt.setInt(88, sauvegarde.getNbUsinesPharmaceutique2());
-        stmt.setInt(89, sauvegarde.getNbUsinesPharmaceutique3());
-        stmt.setInt(90, sauvegarde.getNbUsinesPharmaceutique4());
-        stmt.setLong(91, sauvegarde.getNbMarchandisesUsinePharmaceutique1());
-        stmt.setLong(92, sauvegarde.getNbMarchandisesUsinePharmaceutique2());
-        stmt.setLong(93, sauvegarde.getNbMarchandisesUsinePharmaceutique3());
-        stmt.setLong(94, sauvegarde.getNbMarchandisesUsinePharmaceutique4());
-        stmt.setDouble(95, sauvegarde.getEtatProgressUsinePharmaceutique1());
-        stmt.setDouble(96, sauvegarde.getEtatProgressUsinePharmaceutique2());
-        stmt.setDouble(97, sauvegarde.getEtatProgressUsinePharmaceutique3());
-        stmt.setDouble(98, sauvegarde.getEtatProgressUsinePharmaceutique4());
+        stmt.setInt(99, sauvegarde.getUsinePharmaceutiqueActive1());
+        stmt.setInt(100, sauvegarde.getUsinePharmaceutiqueActive2());
+        stmt.setInt(101, sauvegarde.getUsinePharmaceutiqueActive3());
+        stmt.setInt(102, sauvegarde.getUsinePharmaceutiqueActive4());
+        stmt.setInt(103, sauvegarde.getNbUsinesPharmaceutique1());
+        stmt.setInt(104, sauvegarde.getNbUsinesPharmaceutique2());
+        stmt.setInt(105, sauvegarde.getNbUsinesPharmaceutique3());
+        stmt.setInt(106, sauvegarde.getNbUsinesPharmaceutique4());
+        stmt.setLong(107, sauvegarde.getNbMarchandisesUsinePharmaceutique1());
+        stmt.setLong(108, sauvegarde.getNbMarchandisesUsinePharmaceutique2());
+        stmt.setLong(109, sauvegarde.getNbMarchandisesUsinePharmaceutique3());
+        stmt.setLong(110, sauvegarde.getNbMarchandisesUsinePharmaceutique4());
+        stmt.setDouble(111, sauvegarde.getEtatProgressUsinePharmaceutique1());
+        stmt.setDouble(112, sauvegarde.getEtatProgressUsinePharmaceutique2());
+        stmt.setDouble(113, sauvegarde.getEtatProgressUsinePharmaceutique3());
+        stmt.setDouble(114, sauvegarde.getEtatProgressUsinePharmaceutique4());
 
-        stmt.setString(99, sauvegarde.getPseudo());
+        stmt.setString(115, sauvegarde.getPseudo());
 
         // Insertion des données
         try {

@@ -264,7 +264,7 @@ public class UsinesJouetController {
          * Demarre les usines de jouets lorsqu'elles sont actives
          */
         demarrageUsinesPharmaceutique();
-//        demarrageUsinesAgroAlimentaire();
+        demarrageUsinesAgroAlimentaire();
     }
 
     public void recupMarchandisesToutes(){
@@ -595,15 +595,6 @@ public class UsinesJouetController {
         btnAchatUsine.setText(formattedString);
     }
 
-
-
-
-
-
-
-
-
-
     public void fermetureProgress(){
         // sauvegarde des barres de progression
         this.jeu.getJoueur().getFerme().setEtatProgressOeuf(this.progressOeufs.getProgress());
@@ -633,6 +624,18 @@ public class UsinesJouetController {
         this.jeu.getJoueur().getUsineJouetsGrande().setEtatProgressUsine(this.progressJouets3.getProgress());
         this.jeu.getJoueur().getUsineJouetsEnorme().setEtatProgressUsine(this.progressJouets4.getProgress());
 
+        // on recupere les barres de progression des usines Agro alimentaire
+        this.jeu.getJoueur().getUsineAgroAlimentairePetite().setEtatProgressUsine(this.progressAgroAlimentaire1.getProgress());
+        this.jeu.getJoueur().getUsineAgroAlimentaireMoyenne().setEtatProgressUsine(this.progressAgroAlimentaire2.getProgress());
+        this.jeu.getJoueur().getUsineAgroAlimentaireGrande().setEtatProgressUsine(this.progressAgroAlimentaire3.getProgress());
+        this.jeu.getJoueur().getUsineAgroAlimentaireEnorme().setEtatProgressUsine(this.progressAgroAlimentaire4.getProgress());
+
+        // on recupere les barres de progression des usines Pharmaceutique
+        this.jeu.getJoueur().getUsinePharmaceutiquePetite().setEtatProgressUsine(this.progressPharmaceutique1.getProgress());
+        this.jeu.getJoueur().getUsinePharmaceutiqueMoyenne().setEtatProgressUsine(this.progressPharmaceutique2.getProgress());
+        this.jeu.getJoueur().getUsinePharmaceutiqueGrande().setEtatProgressUsine(this.progressPharmaceutique3.getProgress());
+        this.jeu.getJoueur().getUsinePharmaceutiqueEnorme().setEtatProgressUsine(this.progressPharmaceutique4.getProgress());
+
         // on stoppe les barres de progression
         jeu.getJoueur().getFerme().progressBarStop();
         jeu.getCalendrier().progressBarStop();
@@ -653,6 +656,14 @@ public class UsinesJouetController {
         Outils.progressBarStop(timelineUsineJouets2);
         Outils.progressBarStop(timelineUsineJouets3);
         Outils.progressBarStop(timelineUsineJouets4);
+        jeu.getJoueur().getUsineAgroAlimentairePetite().progressBarStop();
+        jeu.getJoueur().getUsineAgroAlimentaireMoyenne().progressBarStop();
+        jeu.getJoueur().getUsineAgroAlimentaireGrande().progressBarStop();
+        jeu.getJoueur().getUsineAgroAlimentaireEnorme().progressBarStop();
+        jeu.getJoueur().getUsinePharmaceutiquePetite().progressBarStop();
+        jeu.getJoueur().getUsinePharmaceutiquePetite().progressBarStop();
+        jeu.getJoueur().getUsinePharmaceutiquePetite().progressBarStop();
+        jeu.getJoueur().getUsinePharmaceutiquePetite().progressBarStop();
     }
 
     /**
@@ -782,7 +793,28 @@ public class UsinesJouetController {
             this.jeu.getJoueur().getUsinePharmaceutiqueEnorme().progressBarStartUsinePharmaceutique(1, this.jeu.getJoueur().getUsinePharmaceutiqueEnorme().getVitesseUsine(), vitesseUsinePharmaceutique4, progressJouets4);
         }
     }
-
+    public void demarrageUsinesAgroAlimentaire(){
+        if (Outils.isActif(jeu.getJoueur().getUsineAgroAlimentairePetite().getUsineActive())) {
+            // recupertaion etat barre de progression usine de jouets petite
+            double vitesseUsineAgroAlimentaire1 = jeu.getJoueur().getUsineAgroAlimentairePetite().getVitesseUsine() - (jeu.getJoueur().getUsineAgroAlimentairePetite().getVitesseUsine() * jeu.getJoueur().getUsineAgroAlimentairePetite().getEtatProgressUsine());
+            this.jeu.getJoueur().getUsineAgroAlimentairePetite().progressBarStartUsineAgroAlimentaire(1, this.jeu.getJoueur().getUsineAgroAlimentairePetite().getVitesseUsine(), vitesseUsineAgroAlimentaire1, progressAgroAlimentaire1);
+        }
+        if (Outils.isActif(jeu.getJoueur().getUsineAgroAlimentaireMoyenne().getUsineActive())) {
+            // recupertaion etat barre de progression usine de jouets moyenne
+            double vitesseUsineAgroAlimentaire2 = jeu.getJoueur().getUsineAgroAlimentaireMoyenne().getVitesseUsine() - (jeu.getJoueur().getUsineAgroAlimentaireMoyenne().getVitesseUsine() * jeu.getJoueur().getUsineAgroAlimentaireMoyenne().getEtatProgressUsine());
+            this.jeu.getJoueur().getUsineAgroAlimentaireMoyenne().progressBarStartUsineAgroAlimentaire(1, this.jeu.getJoueur().getUsineAgroAlimentaireMoyenne().getVitesseUsine(), vitesseUsineAgroAlimentaire2, progressAgroAlimentaire2);
+        }
+        if (Outils.isActif(jeu.getJoueur().getUsineAgroAlimentaireGrande().getUsineActive())) {
+            // recupertaion etat barre de progression usine de jouets grande
+            double vitesseUsineAgroAlimentaire3 = jeu.getJoueur().getUsineAgroAlimentaireGrande().getVitesseUsine() - (jeu.getJoueur().getUsineAgroAlimentaireGrande().getVitesseUsine() * jeu.getJoueur().getUsineAgroAlimentaireGrande().getEtatProgressUsine());
+            this.jeu.getJoueur().getUsineAgroAlimentaireGrande().progressBarStartUsineAgroAlimentaire(1, this.jeu.getJoueur().getUsineAgroAlimentaireGrande().getVitesseUsine(), vitesseUsineAgroAlimentaire3, progressAgroAlimentaire3);
+        }
+        if (Outils.isActif(jeu.getJoueur().getUsineAgroAlimentaireEnorme().getUsineActive())) {
+            // recupertaion etat barre de progression usine de jouets enorme
+            double vitesseUsineAgroAlimentaire4 = jeu.getJoueur().getUsineAgroAlimentaireEnorme().getVitesseUsine() - (jeu.getJoueur().getUsineAgroAlimentaireEnorme().getVitesseUsine() * jeu.getJoueur().getUsineAgroAlimentaireEnorme().getEtatProgressUsine());
+            this.jeu.getJoueur().getUsineAgroAlimentaireEnorme().progressBarStartUsineAgroAlimentaire(1, this.jeu.getJoueur().getUsineAgroAlimentaireEnorme().getVitesseUsine(), vitesseUsineAgroAlimentaire4, progressAgroAlimentaire4);
+        }
+    }
     /**
      * Demarre les usines lorsqu'elles sont actives
      */
