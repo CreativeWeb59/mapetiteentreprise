@@ -371,15 +371,27 @@ public class Jeu {
         System.out.println("Fermes : " + valeurFermes);
         BigDecimal valeurPoules = valeurPoules();
         System.out.println("Poules : " + valeurPoules);
+
+        BigDecimal valFermePoules = valeurPoules.add(valeurFermes);
+
         BigDecimal valeurDistributeurs = valeurDistributeurs();
         System.out.println("Distributeurs : " + valeurDistributeurs);
+
         BigDecimal valeurLivraisons = ValeurLivraisons();
         System.out.println("Livraisons : " + ValeurLivraisons());
+
         BigDecimal valeurUsinesTextile = valeurUsinesTextile();
         System.out.println("Usines Textile : " + valeurUsinesTextile);
+
         BigDecimal valeursUsinesJouets = valeurUsinesJouets();
         System.out.println("Usines jouets : " + valeursUsinesJouets);
-        return valeurFermes.add(valeurDistributeurs.add(valeurPoules.add(valeurLivraisons).add(valeurUsinesTextile)));
+
+        BigDecimal valeurUsines = valeurUsinesTextile.add(valeursUsinesJouets);
+
+        BigDecimal sommeTotale = valeurDistributeurs.add(valFermePoules.add(valeurLivraisons.add(valeurUsines)));
+        System.out.println("Valeur finale : " + sommeTotale);
+
+        return sommeTotale;
     }
 
     /**

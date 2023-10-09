@@ -251,6 +251,7 @@ public class Banquecontroller {
      * @return
      */
     public BigDecimal montantAPreter(){
+        System.out.println("Valeur du montant à preter : " + jeu.valeurEntreprise().divide(BigDecimal.valueOf(2)));
         return jeu.valeurEntreprise().divide(BigDecimal.valueOf(2));
     }
 

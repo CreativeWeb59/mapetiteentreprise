@@ -78,6 +78,14 @@
                 <ProgressBar fx:id="progressJouets2" cache="true" layoutX="555.0" layoutY="70.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
                 <ProgressBar fx:id="progressJouets3" cache="true" layoutX="660.0" layoutY="70.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
                 <ProgressBar fx:id="progressJouets4" cache="true" layoutX="765.0" layoutY="70.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
+                <ProgressBar fx:id="progressAgroAlimentaire1" cache="true" layoutX="0.0" layoutY="90.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
+                <ProgressBar fx:id="progressAgroAlimentaire2" cache="true" layoutX="105.0" layoutY="90.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
+                <ProgressBar fx:id="progressAgroAlimentaire3" cache="true" layoutX="210.0" layoutY="90.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
+                <ProgressBar fx:id="progressAgroAlimentaire4" cache="true" layoutX="315.0" layoutY="90.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
+                <ProgressBar fx:id="progressPharmaceutique1" cache="true" layoutX="450.0" layoutY="90.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
+                <ProgressBar fx:id="progressPharmaceutique2" cache="true" layoutX="555.0" layoutY="90.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
+                <ProgressBar fx:id="progressPharmaceutique3" cache="true" layoutX="660.0" layoutY="90.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
+                <ProgressBar fx:id="progressPharmaceutique4" cache="true" layoutX="765.0" layoutY="90.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />
             </children>
         </Pane>
     </children>
