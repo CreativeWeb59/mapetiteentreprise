@@ -5,16 +5,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.mapetiteentreprise.controllersFx.UsinesAgroAlimentaireController"
-            prefHeight="1024.0" prefWidth="1280.0"
-            styleClass="fondsUsine" stylesheets="@css/main.css">
+<AnchorPane prefHeight="1024.0" prefWidth="1280.0" styleClass="fondsUsine" stylesheets="@css/main.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.mapetiteentreprise.controllersFx.UsinesAgroAlimentaireController">
     <children>
         <Pane layoutX="0.0" layoutY="0.0" prefHeight="200.0" prefWidth="1280.0">
             <children>
-                <Label fx:id="labelHaut" layoutX="479.0" layoutY="39.0" prefHeight="29.0" prefWidth="321.0"
-                       style="-fx-background-color: transparent;" text="En banque" textFill="WHITE"/>
+                <Label fx:id="labelHaut" layoutX="479.0" layoutY="39.0" prefHeight="29.0" prefWidth="321.0" style="-fx-background-color: transparent;" text="En banque" textFill="WHITE" />
                 <Button layoutX="518.0" layoutY="139.0" mnemonicParsing="false" onAction="#retourGestionUsines" text="Retour au menu gestion" />
             </children>
         </Pane>
@@ -122,7 +117,7 @@
                 </Pane>
             </children>
         </Pane>
-        <Pane fx:id="paneProgress" layoutX="185.0" layoutY="820.0" prefHeight="20.0" prefWidth="900.0" visible="true">
+        <Pane fx:id="paneProgress" layoutX="185.0" layoutY="860.0" prefHeight="20.0" prefWidth="900.0" visible="true">
             <children>
                 <ProgressBar fx:id="progressOeufs" cache="true" layoutX="0.0" layoutY="30.0" prefHeight="15.0" prefWidth="180.0" progress="0.0" />
                 <ProgressBar fx:id="progressBC" cache="true" layoutX="0.0" layoutY="50.0" prefHeight="15.0" prefWidth="100.0" progress="0.0" />

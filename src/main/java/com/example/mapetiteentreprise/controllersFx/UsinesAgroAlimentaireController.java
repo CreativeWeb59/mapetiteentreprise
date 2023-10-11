@@ -764,22 +764,22 @@ public class UsinesAgroAlimentaireController {
      */
     public void demarrageUsinesTextile() {
         if (Outils.isActif(jeu.getJoueur().getUsineTextilePetite().getUsineActive())) {
-            // recupertaion etat barre de progression usine de textil petite
+            // recupertaion etat barre de progression usine de textile petite
             double vitesseUsineTextile1 = jeu.getJoueur().getUsineTextilePetite().getVitesseUsine() - (jeu.getJoueur().getUsineTextilePetite().getVitesseUsine() * jeu.getJoueur().getUsineTextilePetite().getEtatProgressUsine());
             this.jeu.getJoueur().getUsineTextilePetite().progressBarStartUsineTextile(1, this.jeu.getJoueur().getUsineTextilePetite().getVitesseUsine(), vitesseUsineTextile1, progressTextile1);
         }
         if (Outils.isActif(jeu.getJoueur().getUsineTextileMoyenne().getUsineActive())) {
-            // recupertaion etat barre de progression usine de textil moyenne
+            // recupertaion etat barre de progression usine de textile moyenne
             double vitesseUsineTextile2 = jeu.getJoueur().getUsineTextileMoyenne().getVitesseUsine() - (jeu.getJoueur().getUsineTextileMoyenne().getVitesseUsine() * jeu.getJoueur().getUsineTextileMoyenne().getEtatProgressUsine());
             this.jeu.getJoueur().getUsineTextileMoyenne().progressBarStartUsineTextile(1, this.jeu.getJoueur().getUsineTextileMoyenne().getVitesseUsine(), vitesseUsineTextile2, progressTextile2);
         }
         if (Outils.isActif(jeu.getJoueur().getUsineTextileGrande().getUsineActive())) {
-            // recupertaion etat barre de progression usine de textil grande
+            // recupertaion etat barre de progression usine de textile grande
             double vitesseUsineTextile3 = jeu.getJoueur().getUsineTextileGrande().getVitesseUsine() - (jeu.getJoueur().getUsineTextileGrande().getVitesseUsine() * jeu.getJoueur().getUsineTextileGrande().getEtatProgressUsine());
             this.jeu.getJoueur().getUsineTextileGrande().progressBarStartUsineTextile(1, this.jeu.getJoueur().getUsineTextileGrande().getVitesseUsine(), vitesseUsineTextile3, progressTextile3);
         }
         if (Outils.isActif(jeu.getJoueur().getUsineTextileEnorme().getUsineActive())) {
-            // recupertaion etat barre de progression usine de textil enorme
+            // recupertaion etat barre de progression usine de textile enorme
             double vitesseUsineTextile4 = jeu.getJoueur().getUsineTextileEnorme().getVitesseUsine() - (jeu.getJoueur().getUsineTextileEnorme().getVitesseUsine() * jeu.getJoueur().getUsineTextileEnorme().getEtatProgressUsine());
             this.jeu.getJoueur().getUsineTextileEnorme().progressBarStartUsineTextile(1, this.jeu.getJoueur().getUsineTextileEnorme().getVitesseUsine(), vitesseUsineTextile4, progressTextile4);
         }

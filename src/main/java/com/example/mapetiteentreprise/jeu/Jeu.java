@@ -410,7 +410,7 @@ public class Jeu {
         BigDecimal valeur = BigDecimal.valueOf(0);
 
         for (int i = 0; i < index.length; i++) {
-            for (int j = 0; j < index.length; j++) {
+            for (int j = 1; j <= (index.length + 1); j++) {
                 if (index[i] >= j) {
                     System.out.println("Valeur de j : " + getPoulaillersList().get(j).getPrixPoulailler());
                     valeur = valeur.add(getPoulaillersList().get(j).getPrixPoulailler());
@@ -566,4 +566,3 @@ public class Jeu {
         }
     }
 }
-// maj

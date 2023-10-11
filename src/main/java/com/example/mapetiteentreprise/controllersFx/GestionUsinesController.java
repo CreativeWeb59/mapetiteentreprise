@@ -267,6 +267,14 @@ public class GestionUsinesController {
         jeu.getJoueur().getUsineJouetsMoyenne().progressBarStop();
         jeu.getJoueur().getUsineJouetsGrande().progressBarStop();
         jeu.getJoueur().getUsineJouetsEnorme().progressBarStop();
+        jeu.getJoueur().getUsineAgroAlimentairePetite().progressBarStop();
+        jeu.getJoueur().getUsineAgroAlimentaireMoyenne().progressBarStop();
+        jeu.getJoueur().getUsineAgroAlimentaireGrande().progressBarStop();
+        jeu.getJoueur().getUsineAgroAlimentaireEnorme().progressBarStop();
+        jeu.getJoueur().getUsinePharmaceutiquePetite().progressBarStop();
+        jeu.getJoueur().getUsinePharmaceutiquePetite().progressBarStop();
+        jeu.getJoueur().getUsinePharmaceutiquePetite().progressBarStop();
+        jeu.getJoueur().getUsinePharmaceutiquePetite().progressBarStop();
     }
 
     /**
