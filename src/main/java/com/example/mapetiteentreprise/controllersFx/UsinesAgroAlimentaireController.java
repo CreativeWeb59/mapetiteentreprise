@@ -260,10 +260,10 @@ public class UsinesAgroAlimentaireController {
         affichageBtnAgroAlimentaire2();
         affichageBtnAgroAlimentaire3();
         affichageBtnAgroAlimentaire4();
-        affichageContenuPanes(jeu.getJoueur().getUsineAgroAlimentairePetite(), paneAgroAlimentaire1, paneAgroAlimentaire1D, labelNbMarchandisesAgroAlimentaire1, labelNbUsineAgroAlimentaire1, labelTarifUsineAgroAlimentaire1, btnAchatUsineAgroAlimentairePetite, btnEncaisserUsineAgroAlimentaire1, imgAgroAlimentaire1, progressTextile1);
-        affichageContenuPanes(jeu.getJoueur().getUsineAgroAlimentaireMoyenne(), paneAgroAlimentaire2, paneAgroAlimentaire2D, labelNbMarchandisesAgroAlimentaire2, labelNbUsineAgroAlimentaire2, labelTarifUsineAgroAlimentaire2, btnAchatUsineAgroAlimentaireMoyenne, btnEncaisserUsineAgroAlimentaire2, imgAgroAlimentaire2, progressTextile2);
-        affichageContenuPanes(jeu.getJoueur().getUsineAgroAlimentaireGrande(), paneAgroAlimentaire3, paneAgroAlimentaire3D, labelNbMarchandisesAgroAlimentaire3, labelNbUsineAgroAlimentaire3, labelTarifUsineAgroAlimentaire3, btnAchatUsineAgroAlimentaireGrande, btnEncaisserUsineAgroAlimentaire3, imgAgroAlimentaire3, progressTextile3);
-        affichageContenuPanes(jeu.getJoueur().getUsineAgroAlimentaireEnorme(), paneAgroAlimentaire4, paneAgroAlimentaire4D, labelNbMarchandisesAgroAlimentaire4, labelNbUsineAgroAlimentaire4, labelTarifUsineAgroAlimentaire4, btnAchatUsineAgroAlimentaireEnorme, btnEncaisserUsineAgroAlimentaire4, imgAgroAlimentaire4, progressTextile4);
+        affichageContenuPanes(jeu.getJoueur().getUsineAgroAlimentairePetite(), paneAgroAlimentaire1, paneAgroAlimentaire1D, labelNbMarchandisesAgroAlimentaire1, labelNbUsineAgroAlimentaire1, labelTarifUsineAgroAlimentaire1, btnAchatUsineAgroAlimentairePetite, btnEncaisserUsineAgroAlimentaire1, imgAgroAlimentaire1, progressAgroAlimentaire1);
+        affichageContenuPanes(jeu.getJoueur().getUsineAgroAlimentaireMoyenne(), paneAgroAlimentaire2, paneAgroAlimentaire2D, labelNbMarchandisesAgroAlimentaire2, labelNbUsineAgroAlimentaire2, labelTarifUsineAgroAlimentaire2, btnAchatUsineAgroAlimentaireMoyenne, btnEncaisserUsineAgroAlimentaire2, imgAgroAlimentaire2, progressAgroAlimentaire2);
+        affichageContenuPanes(jeu.getJoueur().getUsineAgroAlimentaireGrande(), paneAgroAlimentaire3, paneAgroAlimentaire3D, labelNbMarchandisesAgroAlimentaire3, labelNbUsineAgroAlimentaire3, labelTarifUsineAgroAlimentaire3, btnAchatUsineAgroAlimentaireGrande, btnEncaisserUsineAgroAlimentaire3, imgAgroAlimentaire3, progressAgroAlimentaire3);
+        affichageContenuPanes(jeu.getJoueur().getUsineAgroAlimentaireEnorme(), paneAgroAlimentaire4, paneAgroAlimentaire4D, labelNbMarchandisesAgroAlimentaire4, labelNbUsineAgroAlimentaire4, labelTarifUsineAgroAlimentaire4, btnAchatUsineAgroAlimentaireEnorme, btnEncaisserUsineAgroAlimentaire4, imgAgroAlimentaire4, progressAgroAlimentaire4);
         testBtnAchats();
     }
 
