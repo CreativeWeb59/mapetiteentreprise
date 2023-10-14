@@ -290,6 +290,7 @@ public class UsinesAgroAlimentaireController {
      * @param btnEncaisser
      * @param btnPlus
      * @param barreProgress
+     * pour la maj
      */
     public void affichageContenuPanes(UsineAgroAlimentaire usineAgroAlimentaire, Pane pane, Pane paneD, Label labelTitre, Label labelNb, Label labelTarif, Button btnPlus, Button btnEncaisser, ImageView imgAgroAlimentaire, ProgressBar barreProgress){
         if (usineAgroAlimentaire.getUsineActive() == 1){
