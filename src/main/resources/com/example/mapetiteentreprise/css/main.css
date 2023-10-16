@@ -277,3 +277,18 @@ Label{
     -fx-background-repeat: no-repeat;
     -fx-background-size: cover;
 }
+.fondsAgroalimentaire2{
+    -fx-background-image: url("../images/fondsAgroalimentaire2.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
+.fondsAgroalimentaire3{
+    -fx-background-image: url("../images/fondsAgroalimentaire3.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
+.fondsAgroalimentaire4{
+    -fx-background-image: url("../images/fondsAgroalimentaire4.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}

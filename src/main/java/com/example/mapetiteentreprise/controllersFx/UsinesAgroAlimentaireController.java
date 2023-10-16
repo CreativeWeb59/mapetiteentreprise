@@ -462,10 +462,10 @@ public class UsinesAgroAlimentaireController {
      */
     public void majLabels() {
         setLabelHaut();
-        labelsUsineTextile1();
-        labelsUsineTextile2();
-        labelsUsineTextile3();
-        labelsUsineTextile4();
+        labelsUsineAgroAlimentaire1();
+        labelsUsineAgroAlimentaire2();
+        labelsUsineAgroAlimentaire3();
+        labelsUsineAgroAlimentaire4();
     }
 
     public void setLabelHaut() {
@@ -476,16 +476,16 @@ public class UsinesAgroAlimentaireController {
     /**
      * Labels de l'usine de textile 1
      */
-    public void labelsUsineTextile1() {
+    public void labelsUsineAgroAlimentaire1() {
         setNbUsineAgroAlimentaire(this.jeu.getJoueur().getUsineAgroAlimentairePetite(), labelNbUsineAgroAlimentaire1);
-        setNbMarchandisesAgroAlimentaire(this.jeu.getJoueur().getUsineAgroAlimentaireMoyenne(), labelNbMarchandisesAgroAlimentaire1);
-        setLabelTarifUsineAgroAlimentaire(this.jeu.getJoueur().getUsineAgroAlimentaireGrande(), labelTarifUsineAgroAlimentaire1);
-        setLabelTarifUsineAgroAlimentaire(this.jeu.getJoueur().getUsineAgroAlimentaireEnorme(), btnAchatUsineAgroAlimentaire1);
+        setNbMarchandisesAgroAlimentaire(this.jeu.getJoueur().getUsineAgroAlimentairePetite(), labelNbMarchandisesAgroAlimentaire1);
+        setLabelTarifUsineAgroAlimentaire(this.jeu.getJoueur().getUsineAgroAlimentairePetite(), labelTarifUsineAgroAlimentaire1);
+        setLabelTarifUsineAgroAlimentaire(this.jeu.getJoueur().getUsineAgroAlimentairePetite(), btnAchatUsineAgroAlimentaire1);
     }
     /**
      * Labels de l'usine de textile 2
      */
-    public void labelsUsineTextile2() {
+    public void labelsUsineAgroAlimentaire2() {
         setNbUsineAgroAlimentaire(this.jeu.getJoueur().getUsineAgroAlimentaireMoyenne(), labelNbUsineAgroAlimentaire2);
         setNbMarchandisesAgroAlimentaire(this.jeu.getJoueur().getUsineAgroAlimentaireMoyenne(), labelNbMarchandisesAgroAlimentaire2);
         setLabelTarifUsineAgroAlimentaire(this.jeu.getJoueur().getUsineAgroAlimentaireMoyenne(), labelTarifUsineAgroAlimentaire2);
@@ -494,7 +494,7 @@ public class UsinesAgroAlimentaireController {
     /**
      * Labels de l'usine de textile 3
      */
-    public void labelsUsineTextile3() {
+    public void labelsUsineAgroAlimentaire3() {
         setNbUsineAgroAlimentaire(this.jeu.getJoueur().getUsineAgroAlimentaireGrande(), labelNbUsineAgroAlimentaire3);
         setNbMarchandisesAgroAlimentaire(this.jeu.getJoueur().getUsineAgroAlimentaireGrande(), labelNbMarchandisesAgroAlimentaire3);
         setLabelTarifUsineAgroAlimentaire(this.jeu.getJoueur().getUsineAgroAlimentaireGrande(), labelTarifUsineAgroAlimentaire3);
@@ -503,7 +503,7 @@ public class UsinesAgroAlimentaireController {
     /**
      * Labels de l'usine de textile 4
      */
-    public void labelsUsineTextile4() {
+    public void labelsUsineAgroAlimentaire4() {
         setNbUsineAgroAlimentaire(this.jeu.getJoueur().getUsineAgroAlimentaireEnorme(), labelNbUsineAgroAlimentaire4);
         setNbMarchandisesAgroAlimentaire(this.jeu.getJoueur().getUsineAgroAlimentaireEnorme(), labelNbMarchandisesAgroAlimentaire4);
         setLabelTarifUsineAgroAlimentaire(this.jeu.getJoueur().getUsineAgroAlimentaireEnorme(), labelTarifUsineAgroAlimentaire4);
@@ -843,25 +843,25 @@ public class UsinesAgroAlimentaireController {
         if (Outils.isActif(jeu.getJoueur().getUsineAgroAlimentairePetite().getUsineActive())) {
             System.out.println("Demarrage " + jeu.getJoueur().getUsineAgroAlimentairePetite().getNom());
             double vitesseUsineAgroAlimentaire1 = jeu.getJoueur().getUsineAgroAlimentairePetite().getVitesseUsine() - (jeu.getJoueur().getUsineAgroAlimentairePetite().getVitesseUsine() * jeu.getJoueur().getUsineAgroAlimentairePetite().getEtatProgressUsine());
-            this.progressBarStartUsineAgroAlimentairePetite(1, jeu.getJoueur().getUsineAgroAlimentairePetite().getVitesseUsine(), vitesseUsineAgroAlimentaire1, jeu.getJoueur().getUsineAgroAlimentairePetite(), progressTextile1, btnEncaisserUsineAgroAlimentaire1);
+            this.progressBarStartUsineAgroAlimentairePetite(1, jeu.getJoueur().getUsineAgroAlimentairePetite().getVitesseUsine(), vitesseUsineAgroAlimentaire1, jeu.getJoueur().getUsineAgroAlimentairePetite(), progressAgroAlimentaire1, btnEncaisserUsineAgroAlimentaire1);
         }
         // usine agro alimentaire moyenne
         if (Outils.isActif(jeu.getJoueur().getUsineAgroAlimentaireMoyenne().getUsineActive())) {
             System.out.println("Demarrage " + jeu.getJoueur().getUsineAgroAlimentaireMoyenne().getNom());
             double vitesseUsineAgroAlimentaire2 = jeu.getJoueur().getUsineAgroAlimentaireMoyenne().getVitesseUsine() - (jeu.getJoueur().getUsineAgroAlimentaireMoyenne().getVitesseUsine() * jeu.getJoueur().getUsineAgroAlimentaireMoyenne().getEtatProgressUsine());
-            this.progressBarStartUsineAgroAlimentaireMoyenne(1, jeu.getJoueur().getUsineAgroAlimentaireMoyenne().getVitesseUsine(), vitesseUsineAgroAlimentaire2, jeu.getJoueur().getUsineAgroAlimentaireMoyenne(), progressTextile2, btnEncaisserUsineAgroAlimentaire2);
+            this.progressBarStartUsineAgroAlimentaireMoyenne(1, jeu.getJoueur().getUsineAgroAlimentaireMoyenne().getVitesseUsine(), vitesseUsineAgroAlimentaire2, jeu.getJoueur().getUsineAgroAlimentaireMoyenne(), progressAgroAlimentaire2, btnEncaisserUsineAgroAlimentaire2);
         }
         // usine agro alimentaire grande
         if (Outils.isActif(jeu.getJoueur().getUsineAgroAlimentaireGrande().getUsineActive())) {
             System.out.println("Demarrage " + jeu.getJoueur().getUsineAgroAlimentaireGrande().getNom());
             double vitesseUsineAgroAlimentaire3 = jeu.getJoueur().getUsineAgroAlimentaireGrande().getVitesseUsine() - (jeu.getJoueur().getUsineAgroAlimentaireGrande().getVitesseUsine() * jeu.getJoueur().getUsineAgroAlimentaireGrande().getEtatProgressUsine());
-            this.progressBarStartUsineAgroAlimentaireGrande(1, jeu.getJoueur().getUsineAgroAlimentaireGrande().getVitesseUsine(), vitesseUsineAgroAlimentaire3, jeu.getJoueur().getUsineAgroAlimentaireGrande(), progressTextile3, btnEncaisserUsineAgroAlimentaire3);
+            this.progressBarStartUsineAgroAlimentaireGrande(1, jeu.getJoueur().getUsineAgroAlimentaireGrande().getVitesseUsine(), vitesseUsineAgroAlimentaire3, jeu.getJoueur().getUsineAgroAlimentaireGrande(), progressAgroAlimentaire3, btnEncaisserUsineAgroAlimentaire3);
         }
         // usine agro alimentaire enorme
         if (Outils.isActif(jeu.getJoueur().getUsineAgroAlimentaireEnorme().getUsineActive())) {
             System.out.println("Demarrage " + jeu.getJoueur().getUsineAgroAlimentaireEnorme().getNom());
             double vitesseUsineAgroAlimentaire4 = jeu.getJoueur().getUsineAgroAlimentaireEnorme().getVitesseUsine() - (jeu.getJoueur().getUsineAgroAlimentaireEnorme().getVitesseUsine() * jeu.getJoueur().getUsineAgroAlimentaireEnorme().getEtatProgressUsine());
-            this.progressBarStartUsineAgroAlimentaireEnorme(1, jeu.getJoueur().getUsineAgroAlimentaireEnorme().getVitesseUsine(), vitesseUsineAgroAlimentaire4, jeu.getJoueur().getUsineAgroAlimentaireEnorme(), progressTextile4, btnEncaisserUsineAgroAlimentaire4);
+            this.progressBarStartUsineAgroAlimentaireEnorme(1, jeu.getJoueur().getUsineAgroAlimentaireEnorme().getVitesseUsine(), vitesseUsineAgroAlimentaire4, jeu.getJoueur().getUsineAgroAlimentaireEnorme(), progressAgroAlimentaire4, btnEncaisserUsineAgroAlimentaire4);
         }
     }
 

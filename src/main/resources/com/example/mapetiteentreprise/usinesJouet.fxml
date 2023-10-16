@@ -24,7 +24,7 @@
                   </Text>
                   <ProgressBar fx:id="progressJouets1" layoutX="30.0" layoutY="90.0" prefHeight="20.0" prefWidth="300.0" progress="0.0" />
                   <Label fx:id="labelNbMarchandisesJouets1" layoutX="340.0" layoutY="86.0" prefHeight="29.0" prefWidth="54.0" style="-fx-background-color: transparent;" text="0" />
-                  <Label fx:id="labelNbUsineJouets1" layoutX="100.0" layoutY="30.0" prefHeight="29.0" prefWidth="60.0" style="-fx-background-color: transparent;" text="Label" />
+                  <Label fx:id="labelNbUsineJouets1" layoutX="100.0" layoutY="30.0" prefHeight="29.0" prefWidth="80.0" style="-fx-background-color: transparent;" text="Label" />
                   <Button fx:id="btnAchatUsineJouetsPetite" layoutX="40.0" layoutY="20.0" mnemonicParsing="false" onAction="#acheterUsineJouetsPetite" text="+" />
                   <Label fx:id="labelTarifUsineJouets1" layoutX="200.0" layoutY="30.0" prefHeight="29.0" prefWidth="407.0" style="-fx-background-color: transparent;" text="Label" />
                   <Button fx:id="btnEncaisserUsineJouets1" layoutX="460.0" layoutY="70.0" mnemonicParsing="false" onAction="#onBtnEncaisserUsineJouets1" text="Encaisser" />
@@ -44,7 +44,7 @@
                           </Text>
                           <ProgressBar fx:id="progressJouets2" layoutX="30.0" layoutY="90.0" prefHeight="20.0" prefWidth="300.0" progress="0.0" />
                           <Label fx:id="labelNbMarchandisesJouets2" layoutX="340.0" layoutY="86.0" prefHeight="29.0" prefWidth="54.0" style="-fx-background-color: transparent;" text="0" />
-                          <Label fx:id="labelNbUsineJouets2" layoutX="100.0" layoutY="30.0" prefHeight="29.0" prefWidth="60.0" style="-fx-background-color: transparent;" text="Label" />
+                          <Label fx:id="labelNbUsineJouets2" layoutX="100.0" layoutY="30.0" prefHeight="29.0" prefWidth="80.0" style="-fx-background-color: transparent;" text="Label" />
                           <Button fx:id="btnAchatUsineJouetsMoyenne" layoutX="40.0" layoutY="20.0" mnemonicParsing="false" onAction="#acheterUsineJouetsMoyenne" text="+" />
                           <Label fx:id="labelTarifUsineJouets2" layoutX="200.0" layoutY="30.0" prefHeight="29.0" prefWidth="407.0" style="-fx-background-color: transparent;" text="Label" />
                           <Button fx:id="btnEncaisserUsineJouets2" layoutX="460.0" layoutY="70.0" mnemonicParsing="false" onAction="#onBtnEncaisserUsineJouets2" text="Encaisser" />
@@ -64,8 +64,8 @@
                           </Text>
                           <ProgressBar fx:id="progressJouets3" layoutX="30.0" layoutY="90.0" prefHeight="20.0" prefWidth="300.0" progress="0.0" />
                           <Label fx:id="labelNbMarchandisesJouets3" layoutX="340.0" layoutY="86.0" prefHeight="29.0" prefWidth="54.0" style="-fx-background-color: transparent;" text="0" />
-                          <Label fx:id="labelNbUsineJouets3" layoutX="100.0" layoutY="30.0" prefHeight="29.0" prefWidth="60.0" style="-fx-background-color: transparent;" text="Label" />
-                          <Button fx:id="btnAchatUsineJouetsGrande" layoutX="40.0" layoutY="20.0" mnemonicParsing="false" onAction="#acheterUsineJouetsMoyenne" text="+" />
+                          <Label fx:id="labelNbUsineJouets3" layoutX="100.0" layoutY="30.0" prefHeight="29.0" prefWidth="80.0" style="-fx-background-color: transparent;" text="Label" />
+                          <Button fx:id="btnAchatUsineJouetsGrande" layoutX="40.0" layoutY="20.0" mnemonicParsing="false" onAction="#acheterUsineJouetsGrande" text="+" />
                           <Label fx:id="labelTarifUsineJouets3" layoutX="200.0" layoutY="30.0" prefHeight="29.0" prefWidth="407.0" style="-fx-background-color: transparent;" text="Label" />
                           <Button fx:id="btnEncaisserUsineJouets3" layoutX="460.0" layoutY="70.0" mnemonicParsing="false" onAction="#onBtnEncaisserUsineJouets3" text="Encaisser" />
                           <ImageView fx:id="imgJouets3" fitHeight="128.0" fitWidth="128.0" layoutX="820.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
@@ -84,7 +84,7 @@
                           </Text>
                           <ProgressBar fx:id="progressJouets4" layoutX="30.0" layoutY="90.0" prefHeight="20.0" prefWidth="300.0" progress="0.0" />
                           <Label fx:id="labelNbMarchandisesJouets4" layoutX="340.0" layoutY="86.0" prefHeight="29.0" prefWidth="54.0" style="-fx-background-color: transparent;" text="0" />
-                          <Label fx:id="labelNbUsineJouets4" layoutX="100.0" layoutY="30.0" prefHeight="29.0" prefWidth="60.0" style="-fx-background-color: transparent;" text="Label" />
+                          <Label fx:id="labelNbUsineJouets4" layoutX="100.0" layoutY="30.0" prefHeight="29.0" prefWidth="80.0" style="-fx-background-color: transparent;" text="Label" />
                           <Button fx:id="btnAchatUsineJouetsEnorme" layoutX="40.0" layoutY="20.0" mnemonicParsing="false" onAction="#acheterUsineJouetsEnorme" text="+" />
                           <Label fx:id="labelTarifUsineJouets4" layoutX="200.0" layoutY="30.0" prefHeight="29.0" prefWidth="407.0" style="-fx-background-color: transparent;" text="Label" />
                           <Button fx:id="btnEncaisserUsineJouets4" layoutX="460.0" layoutY="70.0" mnemonicParsing="false" onAction="#onBtnEncaisserUsineJouets4" text="Encaisser" />
