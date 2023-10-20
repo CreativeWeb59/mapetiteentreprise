@@ -769,7 +769,7 @@ public class UsinesJouetController {
         }
     }
     /**
-     * Demarre les usines de jouets lorsqu'elles sont actives
+     * Demarre les usines de jouets lorsqu'elles sont actives ou pas
      */
     public void demarrageUsinesPharmaceutique() {
         if (Outils.isActif(jeu.getJoueur().getUsinePharmaceutiquePetite().getUsineActive())) {
