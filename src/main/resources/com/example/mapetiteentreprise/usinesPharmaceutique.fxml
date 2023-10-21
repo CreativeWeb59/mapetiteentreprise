@@ -20,7 +20,7 @@
         </Pane>
         <Pane fx:id="panePrincipal" layoutX="90.0" layoutY="240.0" prefHeight="600.0" prefWidth="1100.0">
             <children>
-                <Pane fx:id="panePharmaceutique1" prefHeight="140.0" prefWidth="800.0" styleClass="fondsPaysage4">
+                <Pane fx:id="panePharmaceutique1" prefHeight="140.0" prefWidth="800.0" styleClass="fondsPharmaceutique1">
                     <children>
                         <Text layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Petite Usine" textAlignment="CENTER" wrappingWidth="800.0">
                             <font>
@@ -28,7 +28,7 @@
                             </font>
                         </Text>
                         <ProgressBar fx:id="progressPharmaceutique1" layoutX="30.0" layoutY="90.0" prefHeight="20.0" prefWidth="300.0" progress="0.0" />
-                        <Label fx:id="labelNbMarchandisesPharmaceutique1" layoutX="340.0" layoutY="86.0" prefHeight="29.0" prefWidth="54.0" style="-fx-background-color: transparent;" text="0" />
+                        <Label fx:id="labelNbMarchandisesPharmaceutique1" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="340.0" layoutY="86.0" prefHeight="30.0" prefWidth="70.0" style="-fx-background-color: transparent;" text="0" />
                         <Label fx:id="labelNbUsinePharmaceutique1" layoutX="100.0" layoutY="30.0" prefHeight="29.0" prefWidth="60.0" style="-fx-background-color: transparent;" text="Label" />
                         <Button fx:id="btnAchatUsinePharmaceutiquePetite" layoutX="40.0" layoutY="20.0" mnemonicParsing="false" onAction="#acheterUsinePharmaceutiquePetite" text="+" />
                         <Label fx:id="labelTarifUsinePharmaceutique1" layoutX="200.0" layoutY="30.0" prefHeight="29.0" prefWidth="407.0" style="-fx-background-color: transparent;" text="Label" />

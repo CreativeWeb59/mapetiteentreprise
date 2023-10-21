@@ -292,3 +292,8 @@ Label{
     -fx-background-repeat: no-repeat;
     -fx-background-size: cover;
 }
+.fondsPharmaceutique1{
+    -fx-background-image: url("../images/fondsPharma.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
