@@ -48,6 +48,7 @@ public class SauvegardeService {
 
         String query = "SELECT pseudo FROM sauvegarde WHERE pseudo LIKE ?";
         try {
+
             PreparedStatement statement = connectionBdd.prepareStatement(query);
             statement.setString(1, pseudo);
             ResultSet resultSet = statement.executeQuery();
