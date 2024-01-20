@@ -7,7 +7,7 @@
     <groupId>com.example</groupId>
     <artifactId>MaPetiteEntreprise</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>MaPetiteEntreprise</name>
+    <name>MonPetitBassin</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -60,7 +60,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>com.example.mapetiteentreprise/com.example.mapetiteentreprise.HelloApplication
+                            <mainClass>com.example.monPetitBassincom.example.monpetitbassin.HelloApplication
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>

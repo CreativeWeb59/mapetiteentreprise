@@ -1,0 +1,12 @@
+Button{
+	-fx-background-repeat: no-repeat;
+	-fx-background-size: cover;
+	-fx-background-radius: 4;
+	-fx-padding: 5 5 5 5;
+}
+.btnThermometre{
+    -fx-background-image: url("../images/thermometre.png");
+}
+.btnNourriture{
+    -fx-background-image: url("../images/nourriture.png");
+}

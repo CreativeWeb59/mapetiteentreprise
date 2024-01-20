@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="1900.0" prefWidth="900.0" stylesheets="@css/main.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.monPetitBassin.controllersFx.MainController">
+    <children>
+        <Pane prefHeight="900.0" prefWidth="1900.0">
+            <children>
+                <Label id="titre" fx:id="titre" alignment="CENTER" contentDisplay="CENTER" layoutX="377.0" layoutY="199.0" prefHeight="30.0" prefWidth="494.0" style="-fx-background-color: transparent;" text="Mon petit bassin" textAlignment="CENTER" textFill="#544d4d">
+                    <font>
+                        <Font name="Cambria" size="29.0" />
+                    </font>
+                </Label>
+            <Button layoutX="488.0" layoutY="330.0" mnemonicParsing="false" onAction="#jouer" prefHeight="62.0" prefWidth="234.0" text="Jouer" />
+            </children>
+        </Pane>
+    </children>
+</AnchorPane>
